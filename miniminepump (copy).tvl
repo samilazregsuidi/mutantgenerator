@@ -1,0 +1,9 @@
+root MinePump {
+	group allOf  {
+		opt MethaneQuery,
+		WaterSensor group [0..*] {
+			Low,
+			High
+		}
+	}
+}

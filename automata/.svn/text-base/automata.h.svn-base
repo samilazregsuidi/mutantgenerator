@@ -1,0 +1,77 @@
+/*
+ * FINITE STATE MACHINES (FSMs)
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
+struct fsm_ {
+	struct symTabNode_* symTab;
+	struct fsmNode_* init;	// The initial node
+	ptList nodes;			// List of ptFsmNode	- This list contains all nodes of the FSM in an arbitrary order.
+	ptLList labels;			// List of ptFsmNode	- This list is indexed by label and contains for each label the labelled node.
+	ptList transitions;		// List of ptFsmTrans	- This list contains all transitions of the FSM in an arbitrary order.
+	ptList looseEnds;		// List of ptFsmTrans	- For model construction: contains those transitions that do not have an end state.
+	ptLList looseGotos; 	// List of ptFsmTrans	- For model construction: contains those transitions (indexed by label name) that have yet to be connected to a state with this label.
+	ptList looseBreaks;		// List of ptFsmTrans	- For model construction: contains those transitions that were generated because of a break statement and are waiting to be matched to a DO.
+	byte hasLooseFeatures;	//	 					- For model construction: whether or not the last statement in the FSM was a feature expression.  If true, then in normal mode, the looseFeatures variable contains the expression; in optimised spin mode, looseFeaturesValue contains its value
+	ptBoolFct looseFeatures;// 						- For model construction: a feature expression that was previously read and has to be attached to the next transition
+	byte looseFeaturesValue;// 						- For model construction in optimised spin mode: when a feature expression evaluates to false, then this flag will be set so that the transition that follows is ignored
+};
+typedef struct fsm_   tFsm;
+typedef struct fsm_* ptFsm;
+
+#define N_ACCEPT 	1
+#define N_PROGRESS 	2
+#define N_END 		4
+#define N_ATOMIC    8	// The inner nodes of an atomic block have this flag set; the semantics of execution is thus:
+						// if a transition was chosen that leads to an N_ATOMIC node, then the outgoing transition of
+						// that node must be fired, and so on.  An atomic node can only have one outgoing transition.
+struct fsmNode_ {
+	int flags;
+	int lineNb;
+	ptList trans;
+	ptList trans_in;
+};
+typedef struct fsmNode_   tFsmNode;
+typedef struct fsmNode_* ptFsmNode;
+
+struct fsmTrans_ {
+	int lineNb;
+	byte hasFeatures;
+	ptBoolFct features;
+#ifdef CEGAR
+	ptBoolFct origFeatures;
+#endif
+	byte featuresValue;
+	struct fsmNode_* source;
+	struct expNode_* expression;
+	struct fsmNode_* target;
+};
+typedef struct fsmTrans_   tFsmTrans;
+typedef struct fsmTrans_* ptFsmTrans;
+
+typedef struct _expression2BoolReturn_ {
+	ptBoolFct boolFctResult;
+	ptSymTabNode symbol;
+	byte boolResult;
+	byte isFeatureExpression;
+} tExpression2BoolReturn;
+
+
+/*
+ * API
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
+ptFsm createFsm();
+void destroyFsm(ptFsm fsm);
+void destroyFsmNode(ptFsmNode node);
+void destroyFsmTrans(ptFsmTrans trans);
+ptFsmNode copyFsmNode(ptFsm fsm, ptFsmNode node);
+ptFsmTrans copyFsmTrans(ptFsm fsm, ptFsmNode source, ptFsmTrans trans);
+void printFsm(ptFsm fsm, int level, char* title);
+ptFsm stmnt2fsm(ptFsm prefix, ptExpNode stmnt, ptSymTabNode symTab);
+
+ptSymTabNode expressionSymbolLookUpRight(ptExpNode expression); // Returns the rightmost successor of the expression node.
+ptSymTabNode expressionSymbolLookUpLeft(ptExpNode expression); // Returns the leftmost successor of the expression node.
+
+tExpression2BoolReturn expression2Bool(ptExpNode expression, ptSymTabNode symTab); // Transforms 'expression' into a feature expression (i.e. a propositional formula), which is returned.
+char * feature2String(ptExpNode expression, ptSymTabNode feature, ptSymTabNode * _symbol, int * _type); // Returns a string corresponding to the feature referenced by 'expression'. Symbol 'feature' is the symbol of the rightmost field of the feature.
+

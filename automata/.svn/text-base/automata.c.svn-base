@@ -1,0 +1,1201 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "error.h"
+#include "main.h"
+#include "list.h"
+#include "stack.h"
+#include "boolFct.h"
+#include "hashtableGen.h"
+#include "symbols.h"
+#include "automata.h"
+
+/*
+ * FINITE STATE MACHINES (FSMs)
+ * * * * * * * * * * * * * * * * * * * * * * * */
+
+ptFsm createFsm() {
+	ptFsm fsm = (ptFsm) malloc(sizeof(tFsm));
+	if(!fsm) failure("Out of memory (creating fsm).\n");
+	fsm->init = NULL;
+	fsm->transitions = NULL;
+	fsm->looseEnds = NULL;
+	fsm->looseBreaks = NULL;
+	fsm->labels = NULL;
+	fsm->looseGotos = NULL;
+	fsm->hasLooseFeatures = false;
+	fsm->looseFeatures = NULL;
+	fsm->looseFeaturesValue = false;
+	fsm->nodes = NULL;
+	fsm->symTab = NULL;
+	return fsm;
+}
+
+/**
+ * Destroys an FSM and all that's linked to it.
+ */
+void destroyFsm(ptFsm fsm) {
+	ptList node = fsm->nodes;
+	while(node) {
+		destroyFsmNode((ptFsmNode) node->value);
+	}
+	listDestroy(fsm->nodes);
+	node = fsm->transitions;
+	while(node) {
+		destroyFsmTrans((ptFsmTrans) node->value);
+	}
+	listDestroy(fsm->transitions);
+	listDestroy(fsm->looseEnds);
+	listDestroy(fsm->looseBreaks);
+	llistDestroy(fsm->looseGotos);
+	llistDestroy(fsm->labels);
+	if(fsm->symTab) destroySymTab(fsm->symTab);
+	free(fsm);
+}
+
+/**
+ * Destroys the FSM, but not the invidivual nodes transitions or the symtab.
+ */
+void destroyFsmSkeleton(ptFsm fsm) {
+	listDestroy(fsm->nodes);
+	listDestroy(fsm->transitions);
+	listDestroy(fsm->looseEnds);
+	listDestroy(fsm->looseBreaks);
+	llistDestroy(fsm->looseGotos);
+	llistDestroy(fsm->labels);
+	free(fsm);
+}
+
+/**
+ * Creates a node and adds it to the node list of the fsm.
+ * The node has to be manually attached to a transition.
+ */
+ptFsmNode createFsmNode(ptFsm fsm, int flags, int lineNb, char* labels[NBLABELS]) {
+	// printf("createFsmNode(line %d)\n", lineNb);
+	if(!fsm) failure("[automata/createFsmNode] fsm cannot be NULL.\n");
+	ptFsmNode node = (ptFsmNode) malloc(sizeof(tFsmNode));
+	if(!node) failure("[automata/createFsmNode] Out of memory (creating fsmNode).\n");
+	node->flags = flags;
+	node->lineNb = lineNb;
+	node->trans = NULL;
+	node->trans_in = NULL;
+	int i;
+	if(labels) for(i = 0; i < NBLABELS; i++) if(labels[i]) fsm->labels = llistAdd(fsm->labels, labels[i], node);
+	fsm->nodes = listAdd(fsm->nodes, node);
+	return node;
+}
+
+/**
+ * Creates a transition and adds it to the node list of the fsm.
+ */
+ptFsmTrans createFsmTrans(ptFsm fsm, ptFsmNode source, ptExpNode expression, byte hasFeatures, ptBoolFct features, byte featuresValue, int lineNb) {
+	// printf("createFsmTrans(line %d)\n", lineNb);
+	if(!fsm) failure("[automata/createFsmTrans] fsm cannot be NULL.\n");
+	ptFsmTrans trans = (ptFsmTrans) malloc(sizeof(tFsmTrans));
+	if(!trans) failure("[automata/createFsmTrans] Out of memory (creating fsmTrans).\n");
+	trans->source = source;
+	trans->target = NULL;
+	trans->hasFeatures = hasFeatures;
+#ifndef CEGAR
+	trans->features = features;
+#else
+	trans->features = NULL;
+	trans->origFeatures = features;
+#endif
+	trans->featuresValue = featuresValue;
+	trans->expression = expression;
+	trans->lineNb = lineNb;
+	fsm->transitions = listAdd(fsm->transitions, trans);
+	source->trans = listAdd(source->trans, trans);
+	return trans;
+}
+
+/**
+ * Destroys the node; but not the attached transitions records (their list however *is* destroyed).
+ */
+void destroyFsmNode(ptFsmNode node) {
+	listDestroy(node->trans);
+	listDestroy(node->trans_in);
+	free(node);
+}
+
+/**
+ * Destroys a transition; but not the attached nodes.
+ */
+void destroyFsmTrans(ptFsmTrans trans) {
+	if(trans->expression) destroyExpNode(trans->expression);
+	if(trans->features) destroyBool(trans->features);
+#ifdef CEGAR
+	if(trans->origFeatures) destroyBool(trans->origFeatures);
+#endif
+	free(trans);
+}
+
+/**
+ * Copies and FSM node and add it to the node list of an FSM.
+ */
+ptFsmNode copyFsmNode(ptFsm fsm, ptFsmNode node) {
+	return createFsmNode(fsm, node->flags, node->lineNb, NULL);
+}
+
+/**
+ * Copies and FSM transition and add it to the transition list of an FSM and of the transition list of the corresponding source node in this FSM.
+ */
+ptFsmTrans copyFsmTrans(ptFsm fsm, ptFsmNode source, ptFsmTrans trans) {
+	return createFsmTrans(fsm, source, trans->expression, trans->hasFeatures, trans->features, trans->featuresValue, trans->lineNb);
+}
+
+void printFsmNode(ptFsmNode node, ptList printed, int level) {
+	printed = listAdd(printed, node);
+	spaces(level);
+	printf("NL%03d", node->lineNb);
+	if(node->flags != 0) printf(", flags:%s%s%s%s.", (node->flags & N_ACCEPT) == N_ACCEPT ? " accept" : "", (node->flags & N_END) == N_END ? " end" : "", (node->flags & N_PROGRESS) == N_PROGRESS ? " progress" : "", (node->flags & N_ATOMIC) == N_ATOMIC ? " atomic" : "");
+	ptList tmp = node->trans_in;
+	printf("   [in:");
+	while(tmp) {
+		printf("  %03d", ((ptFsmTrans)tmp->value)->lineNb);
+		tmp = tmp->next;
+	}
+	printf("]\n");
+	ptList lTrans = node->trans;
+	ptFsmTrans trans;
+	while(lTrans != NULL) {
+		trans = (ptFsmTrans) lTrans->value;
+		spaces(level);
+		printf("  ----(TL%03d, %s, %s", trans->lineNb, trans->expression ? getExpTypeName(trans->expression->type) : "no expression", trans->features ? "" : "no feature expression");
+		if(trans->features) printBool(trans->features);
+#ifdef CEGAR
+		if(trans->origFeatures) {
+			printf(" (originally: ");
+			printBool(trans->origFeatures);
+			printf(")");
+		}
+#endif
+		printf(")---> ");
+		if(trans->target) {
+			if(!listFind(printed, trans->target)) {
+				printf("\n");
+				printFsmNode(trans->target, printed, level + LEVEL_STEP);
+			} else {
+				printf("NL%03d\n", trans->target->lineNb);
+			}
+		} else {
+			printf("(loose end)\n");
+		}
+		lTrans = lTrans->next;
+	}
+}
+
+void printFsm(ptFsm fsm, int level, char* title) {
+	if(fsm != NULL) {
+		spaces(level);
+		int nbnodes = listCount(fsm->nodes);
+		int nbtrans = listCount(fsm->transitions);
+		if(title) printf("FSM [%s], %d node(s), %d transition(s):\n", title, nbnodes, nbtrans);
+		if(fsm->symTab) printSymTab(fsm->symTab, level, title);
+		if(fsm->labels) {
+			spaces(level);
+			printf("Labels:\n");
+			ptLList node = fsm->labels;
+			while(node) {
+				spaces(level);
+				printf(" - NL%03d <-- %s\n", ((ptFsmNode) node->value)->lineNb, node->label);
+				node = node->next;
+			}
+		}
+		if(fsm->looseEnds) {
+			spaces(level);
+			printf("Loose ends:\n");
+			ptList node = fsm->looseEnds;
+			while(node) {
+				spaces(level);
+				printf(" - TL%03d\n", ((ptFsmTrans) node->value)->lineNb);
+				node = node->next;
+			}
+		}
+		if(fsm->looseBreaks) {
+			spaces(level);
+			printf("Loose breaks:\n");
+			ptList node = fsm->looseBreaks;
+			while(node) {
+				spaces(level);
+				printf(" - TL%03d\n", ((ptFsmTrans) node->value)->lineNb);
+				node = node->next;
+			}
+		}
+		if(fsm->looseGotos) {
+			spaces(level);
+			printf("Loose GOTOs:\n");
+			ptLList node = fsm->looseGotos;
+			while(node) {
+				spaces(level);
+				printf(" - NL%03d --> %s\n", ((ptFsmTrans) node->value)->lineNb, node->label);
+				node = node->next;
+			}
+		}
+		spaces(level);
+		printf("Transitions:\n");
+		ptList printed = listAdd(NULL, NULL);
+		if(fsm->init) printFsmNode(fsm->init, printed, level);
+		listDestroy(printed);
+	} else {
+		spaces(level);
+		printf("SymTab of [%s] is empty.\n", title);
+	}
+	return;
+}
+
+/**
+ * Tests whether an expression is a feature expression, can be tested with .isFeatureExpression.
+ *
+ * Otherwise, the return value depends on whether optimisedSpinMode is on or not.
+ *  - with optimisedSpinMode off: .boolFctResult contains an equivalent boolean function is returned.
+ *  - with optimisedSpinMode  on: .boolResult contains the value of the boolean expression for the initial
+ *                                values of the feature variables is returned.
+ */
+tExpression2BoolReturn expression2Bool(ptExpNode expression, ptSymTabNode symTab) {
+	tExpression2BoolReturn result, subfeat1, subfeat2;
+	ptSymTabNode feature, container;
+	byte countFeature;
+
+	result.boolFctResult = NULL;
+	result.boolResult = false;
+	result.isFeatureExpression = false;
+	result.symbol = NULL;
+#ifdef DEBUG
+	printf("expression2Bool (%s)\n", getExpTypeName(expression->type));
+#endif
+	switch(expression->type) {
+		case(E_STMNT_EXPR):
+			result = expression2Bool(expression->children[0], symTab);
+			return result;
+		case(E_EXPR_PAR):
+			return expression2Bool(expression->children[0], symTab);
+
+		case(E_EXPR_GT):
+		case(E_EXPR_LT):
+		case(E_EXPR_GE):
+		case(E_EXPR_LE):
+		case(E_EXPR_EQ):
+		case(E_EXPR_NE):
+		countFeature = 0;
+		int countValue;
+		if(expression->children[0]->type == E_EXPR_COUNT) {
+			if(expression->children[1]->type != E_EXPR_CONST) {
+				warning("Comparison between clones number and non-constant expression are evaluated at runtime (line %d)\n.", expression->lineNb);
+				result.isFeatureExpression = true;
+				expression->iVal = 1; // Means it is a dynamic feature
+			}
+			else {
+				result = expression2Bool(expression->children[0], symTab);
+				countFeature = 1;
+				countValue = expression->children[1]->iVal;
+			}
+		}
+		if(expression->children[1]->type == E_EXPR_COUNT) {
+			if(expression->children[0]->type != E_EXPR_CONST) {
+				warning("Comparison between clones number and non-constant expression are evaluated at runtime (line %d)\n.", expression->lineNb);
+				result.isFeatureExpression = true;
+				expression->iVal = 1; // Means it is a dynamic feature
+			}
+			else {
+				result = expression2Bool(expression->children[1], symTab);
+				countFeature = 1;
+				countValue = expression->children[0]->iVal;
+			}
+		}
+		if(countFeature) {
+			if(result.symbol->bound < 2) {
+				warning("Comparison between clones number and non-constant expression are evaluated at runtime (line %d)\n.", expression->lineNb);
+				expression->iVal = 1; // Means it is a dynamic feature
+			}
+			result.isFeatureExpression = true;
+			char varName[strlen(result.symbol->name)+13];
+			char * suffix;
+			if(result.symbol->type == T_FEAT)
+				suffix = "";
+			else
+				suffix = ".is_in";
+			int k;
+			switch(expression->type) {
+				case(E_EXPR_GT):
+					if(countValue >= result.symbol->bound)
+						result.boolFctResult = negateBool(getTrue());
+					else if(countValue >= 0) { /* If #F > 3 then F[3].is_in and below are required */
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue, suffix);
+						result.boolFctResult = createVariable(varName);
+					}
+					else result.boolFctResult = getTrue();
+					break;
+				case(E_EXPR_LT):
+					if(countValue <= 0)
+						result.boolFctResult = negateBool(getTrue());
+					else if(countValue <= result.symbol->bound) /* If #F < 3 then F[2].is_in and above are forbidden */ {
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue -1, suffix);
+						result.boolFctResult = negateBool(createVariable(varName));
+					}
+					else result.boolFctResult = getTrue();
+					break;
+				case(E_EXPR_GE):
+					if(countValue > result.symbol->bound)
+						result.boolFctResult = negateBool(getTrue());
+					else if(countValue > 0) { /* If #F >= 3 then F[2].is_in and below are required */
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue-1, suffix);
+						result.boolFctResult = createVariable(varName);
+					}
+					else result.boolFctResult = getTrue();
+					break;
+				case(E_EXPR_LE):
+					if(countValue < 0)
+						result.boolFctResult = negateBool(getTrue());
+					else if(countValue <= result.symbol->bound) { /* If #F <= 3 then F[3].is_in and above are forbidden */
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue, suffix);
+						result.boolFctResult = negateBool(createVariable(varName));
+					}
+					else result.boolFctResult = getTrue();
+					break;
+				case(E_EXPR_EQ):
+					if(countValue < 0 || countValue > result.symbol->bound)
+						result.boolFctResult = negateBool(getTrue());
+					else { /* If #F = 3 then F[2].is_in and below are required, and above are forbidden */
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue-1, suffix);
+						result.boolFctResult = createVariable(varName);
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue, suffix);
+						result.boolFctResult = addConjunction(result.boolFctResult, negateBool(createVariable(varName)), 0, 0);
+					}
+					break;
+				case(E_EXPR_NE):
+					if(countValue < 0 || countValue > result.symbol->bound)
+						result.boolFctResult = getTrue();
+					else { /* #F != 3 iff !(#F = 3) (so smart ...) */
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue-1, suffix);
+						result.boolFctResult = createVariable(varName);
+						snprintf(varName, sizeof(varName), "%s[%d]%s", result.symbol->name, countValue, suffix);
+						result.boolFctResult = addConjunction(result.boolFctResult, negateBool(createVariable(varName)), 0, 0);
+						result.boolFctResult = negateBool(result.boolFctResult);
+					}
+					break;
+			}
+			return result;
+		}
+#ifndef ATTR
+		return result;
+#else
+		case(E_EXPR_PLUS):
+		case(E_EXPR_MINUS):
+		case(E_EXPR_TIMES):
+		case(E_EXPR_DIV):
+		case(E_EXPR_MOD):
+			subfeat1 = expression2Bool(expression->children[0], symTab);
+			subfeat2 = expression2Bool(expression->children[1], symTab);
+			if(subfeat1.isFeatureExpression || subfeat2.isFeatureExpression) {
+				if(!(subfeat1.boolFctResult && subfeat2.boolFctResult)) {
+					warning("Comparison between feature attributes and non-constant expression are evaluated at runtime (line %d)\n.", expression->lineNb);
+					result.isFeatureExpression = true;
+					expression->iVal = 1; // Means it is a dynamic feature
+				}
+				else {
+					result.isFeatureExpression = true;
+					result.boolFctResult = createConstraintVar(subfeat1.boolFctResult, subfeat2.boolFctResult, expression->type);
+				}
+			}
+			return result;
+
+		case(E_EXPR_UMIN):
+			subfeat1 = expression2Bool(expression->children[0], symTab);
+			if(subfeat1.isFeatureExpression) {
+				if(!subfeat1.boolFctResult) {
+					warning("Comparison between feature attributes and non-constant expression are evaluated at runtime (line %d)\n.", expression->lineNb);
+					result.isFeatureExpression = true;
+					expression->iVal = 1; // Means it is a dynamic feature
+				}
+				else {
+					result.isFeatureExpression = true;
+					result.boolFctResult = createConstraint(subfeat1.boolFctResult, 0, expression->type);
+				}
+			}
+			return result;
+#endif
+		case(E_EXPR_COUNT):
+			subfeat1 = expression2Bool(expression->children[0], symTab);
+			if(subfeat1.isFeatureExpression && subfeat1.boolFctResult) {
+				result.isFeatureExpression = true;
+				result.symbol = subfeat1.symbol;
+			}
+			else
+				failure("Only features can be counted (line %d).\n", expression->lineNb);
+		return result;
+
+		case(E_EXPR_AND):
+		case(E_EXPR_OR):
+			subfeat1 = expression2Bool(expression->children[0], symTab);
+			if(!subfeat1.isFeatureExpression) return subfeat1;
+			subfeat2 = expression2Bool(expression->children[1], symTab);
+			if(!subfeat2.isFeatureExpression) {
+				if(subfeat1.boolFctResult) destroyBool(subfeat1.boolFctResult);
+				return subfeat2;
+			} else {
+				result.isFeatureExpression = true;
+				if(optimisedSpinMode) result.boolResult = (expression->type == E_EXPR_AND ? subfeat1.boolResult && subfeat2.boolResult : subfeat1.boolResult || subfeat2.boolResult);
+				else {
+					result.boolFctResult = expression->type == E_EXPR_AND ? addConjunction(subfeat1.boolFctResult, subfeat2.boolFctResult, 0, 0) : addDisjunction(subfeat1.boolFctResult, subfeat2.boolFctResult, 0, 0);
+					if(!result.boolFctResult) failure("The feature expression on line %d is a tautology; please remove or correct it.\n", expression->lineNb);
+				}
+				return result;
+			}
+
+		case(E_EXPR_NEG):
+			subfeat1 = expression2Bool(expression->children[0], symTab);
+			if(!subfeat1.isFeatureExpression) return subfeat1;
+			else if(optimisedSpinMode) {
+				subfeat1.boolResult = !subfeat1.boolResult;
+				return subfeat1;
+			} else {
+				ptBoolFct negation = negateBool(subfeat1.boolFctResult);
+				if(!negation) failure("The feature expression on line %d is a tautology; please remove or correct it.\n", expression->lineNb);
+				destroyBool(subfeat1.boolFctResult);
+				subfeat1.boolFctResult = negation;
+				return subfeat1;
+			}
+
+		case(E_EXPR_VAR):
+			// Should have a E_VARREF
+			if(expression->children[0] == NULL) failure("Bad syntax tree");
+
+			if(expression->children[0]->iVal) // Context-dependent features
+				return result;
+
+			// The E_VARREF should have a E_VARREF_NAME
+			if(expression->children[0]->children[0] == NULL) failure("Bad syntax tree");
+
+			// The E_VARREF should have a child E_VARREF
+			if(expression->children[0]->children[1] == NULL) return result;
+
+			// Check the child E_VARREF
+			if(expression->children[0]->children[1]->children[0] == NULL) failure("Bad syntax tree");
+			//if(expression->children[0]->children[1]->children[1] != NULL) return result;
+
+			// Look up the parent
+			container = lookupInSymTab(symTab, expression->children[0]->children[0]->sVal);
+			if(container == NULL || container->type != T_UTYPE || container->utype == NULL) return result;
+
+			// Look up feature
+			feature = lookupInSymTab(container->utype->child, expression->children[0]->children[1]->children[0]->sVal);
+			result.symbol = feature;
+
+			if(feature == NULL) failure("The field '%s' used at line %d does not belong to the type '%s'.\n",
+												expression->children[0]->children[1]->children[0]->sVal,
+												expression->lineNb,
+												expression->children[0]->children[0]->sVal);
+
+			if(feature->type != T_FEAT && feature->type != T_UFEAT) return result;
+			else if(optimisedSpinMode) result.boolResult = feature->init ? feature->init->iVal : 0;
+			else if(feature->type == T_FEAT || feature->type == T_UFEAT) {
+				result.isFeatureExpression = true;
+				ptSymTabNode a_symbol = NULL;
+				int type;
+				char * path = feature2String(expression->children[0], feature, &a_symbol, &type);
+				if(type == T_BOOL || type == T_FEAT || type == T_UFEAT || type == T_UTYPE)
+					result.boolFctResult = createVariable(path);
+				else if(type == T_INT) {
+#ifdef ATTR
+					result.boolFctResult = createAttribute(path);
+#else
+					failure("[expression2Bool] Attributes are not allowed in this version of ProVeLines (line %d).\n", expression->lineNb);
+#endif
+				}
+				else
+					failure("[expression2Bool] Unknown attribute type (%s) at line %d.\n", getTypeName(type), expression->lineNb);
+				result.symbol = a_symbol;
+				free(path);
+				return result;
+			}
+			else result.boolFctResult = createLiteral(feature->capacity);
+			result.isFeatureExpression = true;
+			return result;
+#ifdef ATTR
+		case(E_EXPR_CONST): // If ATTR is enabled then integer may be part of a feature expression.
+			result.boolFctResult = createConstant(expression->iVal);
+			result.isFeatureExpression = false;
+#endif
+		default:
+			return result;
+
+	}
+	return result;
+}
+
+char * feature2String(ptExpNode expression, ptSymTabNode feature, ptSymTabNode * _symbol, int * _type) {
+	ptSymTabNode a_symbol = feature;
+	ptExpNode exp = expression->children[1];
+	int type = a_symbol->type;
+	int size;
+	char * path;
+	char * attrName;
+
+	size = strlen(a_symbol->name);
+	path = (char *) malloc((size+1)*sizeof(char));
+	strcpy(path,a_symbol->name);
+	char * tmp;
+	while(exp) {	// Expression refers to a specific attribute
+		// Checking if an index is needed
+		if(a_symbol->bound > 1) {
+			if(!exp->children[0]->children[0] && exp->children[1]) // Expression of the form 'f.Feature.attr' -> forbidden!
+				failure("Referring to an attribute of a complex clone-able feature without providing a clone index is forbidden (line %d).\n", expression->lineNb);
+			char index[6];
+			if(!exp->children[0]->children[0]) { // Expression of the form 'f.Feature' -> existential quantifier
+				snprintf(index, 6, "[0]");
+			}
+			else { // Expression of the form f.Feature[x] or f.Feature[x].attr
+				if(exp->children[0]->children[0]->type != E_EXPR_CONST) // Expression type for index
+					failure("Only constants may be used for clone selection (line %d).\n", exp->lineNb);
+				if(exp->children[0]->children[0]->iVal >= a_symbol->bound) // Index value
+					failure("Constant refers to a non-existing clone (line %d).\n", exp->lineNb);
+				snprintf(index, 6, "[%d]", exp->children[0]->children[0]->iVal);
+			}
+			size += strlen(index);
+			tmp = (char *) realloc(path, (size+1) * sizeof(char));
+			path = tmp;
+			strcat(path, index);
+		}
+
+		// Checking whether an attribute is referenced
+		exp = exp->children[1];
+		if(exp) {
+			attrName = exp->children[0]->sVal;
+			a_symbol = lookupInSymTab(a_symbol->utype->child, attrName);
+			if(!a_symbol) failure("[expression2Bool] Unknown attribute name '%s'\n", attrName);
+
+			size += strlen(a_symbol->name)+strlen(".");
+			tmp = (char *) realloc(path, (size+1)*sizeof(char));
+			path = tmp;
+			strcat(path,".");
+			strcat(path,a_symbol->name);
+		}
+		else if(a_symbol->type == T_UFEAT || a_symbol->type == T_UTYPE || a_symbol->type == T_TDEF) {
+			size += 6;
+			tmp = (char *) realloc(path, (size+1)*sizeof(char));
+			path = tmp;
+			strcat(path, ".is_in");
+			type = T_BOOL;
+
+		}
+		type = a_symbol->type;
+	}
+	if(_type)
+		*_type = type;
+	if(_symbol)
+		*_symbol = a_symbol;
+	return path;
+}
+
+/**
+ * The input is an fsm prefix!! This prefix has some loose ends (outgoing transitions) that
+ * have to be
+ */
+ptFsm stmnt2fsm(ptFsm fsm, ptExpNode stmnt, ptSymTabNode symTab) {
+	short int debug = 0;
+
+	tExpression2BoolReturn formula;
+	formula.isFeatureExpression = false;
+	formula.boolFctResult = false;
+
+	// Test whether feature expression.
+	// When in spin mode, then the feature variables will be of type BOOL, not FEATURE.  The function
+	//   will thus always return !.isFeatureExpression.
+	// When in optimised spin mode, the feature variables will be of type FEATURE, and
+	if(stmnt->type == E_STMNT_EXPR) formula = expression2Bool(stmnt->children[0], symTab);
+	if(formula.isFeatureExpression && formula.boolFctResult) {
+		if(debug && !optimisedSpinMode) printf("L%2d: stmnt is feature expression\n", stmnt->lineNb);
+		if(debug &&  optimisedSpinMode) printf("L%2d: stmnt is feature expression, value: %d\n", stmnt->lineNb, formula.boolResult ? 1 : 0);
+		if(fsm->hasLooseFeatures) failure("Found second feature expression in a row at line %02d; put them in a conjunction instead.\n", stmnt->lineNb);
+
+		fsm->hasLooseFeatures = true;
+		if(optimisedSpinMode) fsm->looseFeaturesValue = formula.boolResult;
+		else fsm->looseFeatures = formula.boolFctResult;
+
+		destroyExpNode(stmnt);
+		return fsm;
+
+	} else {
+		if(debug) printf("L%2d: stmnt2fsm (no feature expression)\n", stmnt->lineNb);
+
+		// First unwrap the statement if its in a label statement
+		char* labels[NBLABELS];
+		void* temp = NULL;
+		int nbLabels = 0;
+		int flag = 0;			// Flags are determined by labels
+		while(stmnt->type == E_STMNT_LABEL || nbLabels > NBLABELS) { // child[0] = E_STMNT_*, sVal = the label of child[0]
+			if(stmnt->sVal) {
+				labels[nbLabels] = stmnt->sVal;
+				if(memcmp(labels[nbLabels], "accept", 6) 	== 0) flag = flag | N_ACCEPT;
+				if(memcmp(labels[nbLabels], "end", 3) 		== 0) flag = flag | N_END;
+				if(memcmp(labels[nbLabels], "progress", 8)	== 0) flag = flag | N_PROGRESS;
+			}
+			temp = stmnt->children[0];
+			stmnt->sVal = NULL;
+			stmnt->children[0] = NULL;
+			destroyExpNode(stmnt);
+
+			stmnt = temp;
+			nbLabels++;
+		}
+		if(nbLabels > NBLABELS) failure("There are more than %d labels for the statement on line %d.", NBLABELS, stmnt->lineNb);
+		// The other label cells have to be initialised too
+		int j;
+		for(j = NBLABELS - 1; j >= nbLabels; j--) {
+			labels[j] = NULL;
+		}
+
+		if(debug) printf("L%2d: stmnt2fsm for %s (after %d labels)\n", stmnt->lineNb, getExpTypeName(stmnt->type), nbLabels);
+
+		// Most statements will create a new node to which the loose ends of the global FSM are attached.
+		// When a new node is created, it will be labelled, and loose gotos have to be connected to this.
+		// The other statements will have to deal with the loose ends themselves.
+		ptFsmNode newNode;
+		if(stmnt->type != E_STMNT_BREAK && stmnt->type != E_STMNT_SEQ && stmnt->type != E_STMNT_ATOMIC && stmnt->type != E_STMNT_GOTO) {
+			// Create the node for this statement.
+			newNode = createFsmNode(fsm, flag, stmnt->lineNb, labels);
+			if(debug) printf(" ..created node NL%2d\n", stmnt->lineNb);
+
+			// If the fsm has not yet an init state, the new node will become it.
+			if(!fsm->init) {
+				fsm->init = newNode;
+				if(debug) printf("    +-> init state\n");
+			}
+
+			// Connect the loose ends of the prefix to the new node.
+			ptList looseEnd = fsm->looseEnds;
+			if(debug && !looseEnd) if(debug) printf("    +-> no looseEnds to connect\n");
+			while(looseEnd) {
+				if(debug) printf("    +-> connecting looseEnd TL%2d to the new state\n", ((ptFsmTrans) looseEnd->value)->lineNb);
+				((ptFsmTrans) looseEnd->value)->target = newNode;
+				newNode->trans_in = listAdd(newNode->trans_in, (ptFsmTrans) looseEnd->value);
+				looseEnd = looseEnd->next;
+			}
+			listDestroy(fsm->looseEnds);
+			fsm->looseEnds = NULL;
+
+			// Connect the loose GOTOs of the prefix to the new node
+			ptLList looseGoto, temp;
+			if(fsm->looseGotos) {
+				if(debug) printf(" ..there are loose gotos in the prefix, current labels: %d\n", nbLabels);
+				for(j = 0; j < NBLABELS; j++) {
+					if(labels[j]) {
+						looseGoto = llistFind(fsm->looseGotos, labels[j]);
+						if(!looseGoto && debug) printf("   +-> the label %s was not found.\n", labels[j]);
+						while(looseGoto && strcmp(looseGoto->label, labels[j]) == 0) {
+							temp = looseGoto->next;
+							if(debug) printf("    +-> connecting label %s to the new state\n", looseGoto->label);
+							((ptFsmTrans) looseGoto->value)->target = newNode;
+							newNode->trans_in = listAdd(newNode->trans_in, (ptFsmTrans) looseGoto->value);
+
+							free(looseGoto->label);
+							fsm->looseGotos = llistRemove(fsm->looseGotos, looseGoto->value);
+
+							looseGoto = temp;
+						}
+					}
+				}
+			} else if(debug) printf(" ..there are no loose gotos in the prefix\n");
+		}
+
+		// The above code as well as the code in the GOTO case will be able to deal
+		// with goto/labels that are within a single sequence.  It will not connect
+		// gotos and labels spread over several (as in: IF..FI, DO..OD and {..}).
+		// So all new labels or GOTOs created in subsequences will be put into these
+		// two lists, which are then treated at the end.
+		ptLList newLabels = NULL;
+		ptLList newGotos = NULL;
+
+		// Figure out which transitions will originate in the newNode (based on the current statement).
+		switch(stmnt->type) {
+			case E_STMNT_CHAN_RCV:	// child[0] = E_VARREF, child[1] = E_EXPR_*
+			case E_STMNT_CHAN_SND:	// child[0] = E_VARREF, child[1] = E_EXPR_*
+			case E_STMNT_ASGN:		// child[0] = E_VARREF, child[1] = E_EXPR_*
+			case E_STMNT_INCR:		// child[0] = E_VARREF
+			case E_STMNT_DECR:		// child[0] = E_VARREF
+			case E_STMNT_PRINT:		// child[0] = E_ARGLIST, sVal = the print string
+			case E_STMNT_PRINTM:	// child[0] = E_VARREF
+			case E_STMNT_EXPR:		// child[0] = E_EXPR_*
+			case E_STMNT_ASSERT:	// child[0] = E_EXPR_*
+			case E_STMNT_ELSE:		// empty											// The SPIN parser makes sure that an ELSE is properly placed!
+			case E_STMNT_WAIT:
+				{	// A transition leaves the new node and is labelled with the statement itself.  Becomes a loose end.
+
+					ptFsmTrans t = createFsmTrans(fsm, newNode, stmnt, fsm->hasLooseFeatures, fsm->looseFeatures, fsm->looseFeaturesValue, stmnt->lineNb);
+					fsm->hasLooseFeatures = false;
+					fsm->looseFeatures = NULL;
+					fsm->looseFeaturesValue = false;
+					fsm->looseEnds = listAdd(fsm->looseEnds, t);
+					if(debug) printf(" ..created trans TL%02d as a loose end\n", stmnt->lineNb);
+
+				} break;
+
+			case E_STMNT_WHEN:
+				{	// A transition leaves the new node and is labelled with the statement itself.  Becomes a loose end.
+
+					ptFsmTrans t = createFsmTrans(fsm, newNode, stmnt, fsm->hasLooseFeatures, fsm->looseFeatures, fsm->looseFeaturesValue, stmnt->lineNb);
+					fsm->hasLooseFeatures = false;
+					fsm->looseFeatures = NULL;
+					fsm->looseFeaturesValue = false;
+					fsm->looseEnds = listAdd(fsm->looseEnds, t);
+					if(debug) printf(" ..created trans TL%02d as a loose end\n", stmnt->lineNb);
+					stmnt2fsm(fsm, stmnt->children[1], symTab);
+				} break;
+
+			case E_STMNT_ATOMIC:	// fsm = fsm of this sequence
+			case E_STMNT_SEQ:		// fsm = fsm of this sequence
+				{	// Feature-related checks
+					if(fsm->hasLooseFeatures) failure("The block at line %d is prefixed with features; this is not allowed.\n", stmnt->lineNb);
+					if(stmnt->fsm->hasLooseFeatures) failure("The block at line %d only consists of a feature expression; this is not allowed.\n", stmnt->lineNb);
+
+					// Sanity check; a sequence must at least have a statement and the initial one cannot be labelled
+					if(!stmnt->fsm->init) failure("The block at line %d has no statements.\n", stmnt->lineNb);
+					// if( stmnt->fsm->init->labels[0]) failure("Remove the label '%s' at line %d.  The first statement in block cannot be labelled (label the block instead).\n", stmnt->fsm->init->labels[0], stmnt->fsm->init->lineNb);
+
+					// The labels we calculated before have to be added to the (unlabelled) initial state of the block.
+					for(j = 0; j < NBLABELS; j++) if(labels[j]) fsm->labels = llistAdd(fsm->labels, labels[j], stmnt->fsm->init);
+
+					// In case of an atomic sequence, the inner nodes (excl. the initial) of the sequence have to be flagged as such
+					if(stmnt->type == E_STMNT_ATOMIC) {
+//						if(stmnt->fsm->looseBreaks) failure("Problem at line %d: there can be no break statements in atomic blocks\n", stmnt->lineNb);
+
+						ptList node = stmnt->fsm->nodes;
+						while(node) {
+							if(node->value != stmnt->fsm->init) {
+								((ptFsmNode) node->value)->flags = ((ptFsmNode) node->value)->flags | N_ATOMIC;
+								// if(!((ptFsmNode) node->value)->trans || ((ptFsmNode) node->value)->trans->next) failure("Problem at line %d: atomic blocks cannot have control flow statements.\n", stmnt->lineNb);
+								// if(((ptFsmTrans) ((ptFsmNode) node->value)->trans->value)->features) failure("Problem at line %d: atomic blocks cannot contain feature expressions.\n", stmnt->lineNb);
+							}
+							node = node->next;
+						}
+					}
+
+					// Add the info of the statement FSM to the global one
+					fsm->symTab = addToSymTab(fsm->symTab, stmnt->fsm->symTab);
+					fsm->nodes = listConcat(fsm->nodes, stmnt->fsm->nodes);
+					fsm->transitions = listConcat(fsm->transitions, stmnt->fsm->transitions);
+					fsm->looseBreaks = listConcat(fsm->looseBreaks, stmnt->fsm->looseBreaks);
+					newLabels = llistMerge(newLabels, stmnt->fsm->labels);
+					newGotos  = llistMerge(newGotos,  stmnt->fsm->looseGotos);
+					stmnt->fsm->symTab = NULL;
+					stmnt->fsm->nodes = NULL;
+					stmnt->fsm->transitions = NULL;
+					stmnt->fsm->looseBreaks = NULL;
+					stmnt->fsm->looseGotos = NULL;
+					stmnt->fsm->looseFeatures = NULL;
+					stmnt->fsm->labels = NULL;
+
+					// A block might be the first thing in a sequence
+					if(!fsm->init) fsm->init = stmnt->fsm->init;
+
+					// The loose ends of the global FSM are connected to the init state of the sequence FSM.
+					ptList looseEnd = fsm->looseEnds;
+					while(looseEnd) {
+						if(debug) printf(" ..connecting looseEnd TL%02d from global FSM to NL%02d, init state of sequence\n", ((ptFsmTrans) looseEnd->value)->lineNb, stmnt->fsm->init->lineNb);
+						((ptFsmTrans) looseEnd->value)->target = stmnt->fsm->init;
+						stmnt->fsm->init->trans_in = listAdd(stmnt->fsm->init->trans_in, (ptFsmTrans) looseEnd->value);
+
+						looseEnd = looseEnd->next;
+					}
+					listDestroy(fsm->looseEnds);
+					fsm->looseEnds = NULL;
+
+					// The loose ends of the sequence FSM become the new global loose ends
+					fsm->looseEnds = stmnt->fsm->looseEnds;
+					stmnt->fsm->looseEnds = NULL;
+
+					// Clear the initial node of the sequence FSM (otherwise it will be destroyed)
+					stmnt->fsm->init = NULL;
+
+					destroyExpNode(stmnt);
+
+				} break;
+
+			case E_STMNT_GOTO:		// sVal = the label to go to
+				{	// If there are no loose ends, then the goto node is alone in an option, and we
+					// have to create a node (with a loose end) for it after all.
+					if(!fsm->looseEnds) {
+						if(fsm->init || fsm->nodes || fsm->transitions) failure("Bug: arrived in a goto node at line %d without loose ends but with some nodes or transitions in the prefix.\n", stmnt->lineNb);
+
+						newNode = createFsmNode(fsm, flag, stmnt->lineNb, NULL);
+						fsm->init = newNode;
+
+						ptFsmTrans t = createFsmTrans(fsm, newNode, createExpNode(E_EXPR_CONST, NULL, 1, NULL, NULL, NULL, stmnt->lineNb, NULL, NULL), false, NULL, false, stmnt->lineNb);
+						fsm->looseEnds = listAdd(fsm->looseEnds, t);
+
+						if(debug) printf(" ..goto '%s' at line %02d alone in option; created node NL%02d with loose end TL%02d\n", stmnt->sVal, stmnt->lineNb, newNode->lineNb, t->lineNb);
+					} else if(debug) printf(" ..goto '%s' at line %02d not alone in option\n", stmnt->sVal, stmnt->lineNb);
+
+					// The GOTO statement could be labelled.
+					for(j = 0; j < NBLABELS; j++) if(labels[j]) failure("Break and goto statements cannot be labelled.  The goto statement at line %d, however is labelled.\n", stmnt->lineNb);
+
+					// Connect the GOTO to its target (if its known)
+					ptLList labeledNode = llistFind(fsm->labels, stmnt->sVal);
+					ptList node = fsm->looseEnds;
+					byte keepLabel = 0;
+					while(node) {
+						if(fsm->hasLooseFeatures && ((ptFsmTrans) node->value)->hasFeatures) failure("A goto statement can only be preceded by a feature expression if it is alone in the sequence; the one at line %d is not.\n", stmnt->lineNb);
+						else {
+							((ptFsmTrans) node->value)->hasFeatures = fsm->hasLooseFeatures;
+#ifndef CEGAR
+							((ptFsmTrans) node->value)->features = fsm->looseFeatures;
+#else
+							((ptFsmTrans) node->value)->features = NULL;
+							((ptFsmTrans) node->value)->origFeatures = fsm->looseFeatures;
+#endif
+							((ptFsmTrans) node->value)->featuresValue = fsm->looseFeaturesValue;
+						}
+
+						// When the label already exists, we connect the loose ends to that label.
+						if(labeledNode) {
+							((ptFsmTrans) node->value)->target = (ptFsmNode) labeledNode->value;
+							((ptFsmNode) labeledNode->value)->trans_in = listAdd(((ptFsmNode) labeledNode->value)->trans_in, (ptFsmTrans) node->value);
+
+							if(debug) printf(" ..goto '%s' at line %02d (a loose end) could be connected to NL%02d!\n", stmnt->sVal, stmnt->lineNb, ((ptFsmNode) labeledNode->value)->lineNb);
+
+						// If not, then we add the to the list of loose GOTOs.
+						} else {
+							fsm->looseGotos = llistAdd(fsm->looseGotos, stmnt->sVal, node->value);
+							keepLabel = 1;
+
+							if(debug) printf(" ..goto '%s' at line %02d (a loose end) could not be connected, added to looseGotos\n", stmnt->sVal, stmnt->lineNb);
+						}
+						node = node->next;
+					}
+					listDestroy(fsm->looseEnds);
+					fsm->looseEnds = NULL;
+					fsm->hasLooseFeatures = false;
+					fsm->looseFeatures = NULL;
+					fsm->looseFeaturesValue = false;
+					if(keepLabel) stmnt->sVal = NULL;
+					destroyExpNode(stmnt);
+				} break;
+
+			case E_STMNT_BREAK:		// empty
+				{	// If there are no loose ends, then the break node is alone in an option, and we
+					// have to create a node for it after all.
+					if(!fsm->looseEnds) {
+						// Check whether the global fsm is really empty
+						if(fsm->init || fsm->nodes || fsm->transitions) failure("Bug: arrived in a break node at line %d without loose ends but with some nodes or transitions in the prefix.\n", stmnt->lineNb);
+
+						newNode = createFsmNode(fsm, flag, stmnt->lineNb, NULL);
+						ptFsmTrans t = createFsmTrans(fsm, newNode, createExpNode(E_EXPR_CONST, NULL, 1, NULL, NULL, NULL, stmnt->lineNb, NULL, NULL), false, NULL, false, stmnt->lineNb);
+						fsm->init = newNode;
+						fsm->looseBreaks = listAdd(fsm->looseBreaks, t);
+
+						if(debug) printf(" ..break at line %02d alone in option; created node NL%02d with loose break TL%02d\n", stmnt->lineNb, newNode->lineNb, t->lineNb);
+
+					// Otherwise, the loose ends will have to be redirected so that they end up
+					// pointing to the end state of the outermost DO..OD.  This is done by
+					// removing them from the loose ends list and adding them to the loose breaks list
+					} else {
+						// The BREAK statement could be labelled!  While this is permitted by SPIN,
+						// for the time being we will not support this.
+						for(j = 0; j < NBLABELS; j++) if(labels[j]) failure("Break and goto statements cannot be labelled.  The break statement at line %d, however is labelled.\n", stmnt->lineNb);
+
+						if(debug) printf(" ..break at line %02d not alone in option, just added a loose break\n", stmnt->lineNb);
+
+						if(fsm->hasLooseFeatures) {
+							ptList node = fsm->looseEnds;
+							while(node) {
+								if(fsm->hasLooseFeatures && ((ptFsmTrans) node->value)->features) failure("A break statement can only be preceded by a feature expression if it is alone in the sequence; the one at line %d is not.\n", stmnt->lineNb);
+								else {
+									((ptFsmTrans) node->value)->hasFeatures = fsm->hasLooseFeatures;
+#ifndef CEGAR
+									((ptFsmTrans) node->value)->features = fsm->looseFeatures;
+#else
+									((ptFsmTrans) node->value)->features = NULL;
+									((ptFsmTrans) node->value)->origFeatures = fsm->looseFeatures;
+#endif
+									((ptFsmTrans) node->value)->featuresValue = fsm->looseFeaturesValue;
+								}
+								node = node->next;
+							}
+							fsm->hasLooseFeatures = false;
+							fsm->looseFeatures = NULL;
+							fsm->looseFeaturesValue = false;
+						}
+
+						fsm->looseBreaks = listConcat(fsm->looseBreaks, fsm->looseEnds);
+						fsm->looseEnds = NULL;
+					}
+
+					destroyExpNode(stmnt);
+				} break;
+
+			case E_STMNT_IF:		// child[0] = E_STMNT_OPT (contains an fsm)
+			case E_STMNT_DO:		// child[0] = E_STMNT_OPT (contains an fsm)
+									// Difference between DO and IF:
+									// -> The loose ends of the DO option FSMs will point back to the newNode instead of becoming new loose ends
+									// -> The actual loose ends will be obtained by searching for the break statement inside
+									//    the option FSMs
+
+				{	// When the whole if/do is annotated, we create a separate startNode
+					// and the transition from the newNode leads there, labelled with the
+					// annotation features.  Otherwise, the startNode is the newNode
+					ptFsmNode startNode = newNode;
+					if(fsm->hasLooseFeatures) {
+						// previously: failure("If and Do statements cannot be prefixed by features; the one at line %d is.\n", stmnt->lineNb);
+						startNode = createFsmNode(fsm, 0, stmnt->lineNb, NULL);
+						ptFsmTrans t = createFsmTrans(fsm, newNode, createExpNode(E_EXPR_CONST, NULL, 1, NULL, NULL, NULL, stmnt->lineNb, NULL, NULL), true, fsm->looseFeatures, fsm->looseFeaturesValue, stmnt->lineNb);
+						t->target = startNode;
+						startNode->trans_in = listAdd(startNode->trans_in, t);
+						fsm->hasLooseFeatures = false;
+						fsm->looseFeatures = NULL;
+						fsm->looseFeaturesValue = false;
+
+						if(debug) printf(" ..created NL%02d, the start node of the IF/DO, with a the features of the whole IF/DO\n", startNode->lineNb);
+					}
+
+					// In the case of a DO..OD, we create a second node, the end node.
+					// A "skip" transition leads from there as a new loose end.
+					ptFsmNode endNode;
+					if(stmnt->type == E_STMNT_DO) {
+						endNode = createFsmNode(fsm, 0, stmnt->lineNb, NULL);
+						ptFsmTrans t = createFsmTrans(fsm, endNode, createExpNode(E_EXPR_CONST, NULL, 1, NULL, NULL, NULL, stmnt->lineNb, NULL, NULL), false, NULL, false, stmnt->lineNb);
+						fsm->looseEnds = listAdd(fsm->looseEnds, t);
+
+						if(debug) printf(" ..created NL%02d, the end node of the DO..OD with a loose end TL%02d\n", endNode->lineNb, t->lineNb);
+					}
+
+					short int hasFeatureExp = -1; // -1 == undecided; 0 = no label; 1 = hasLabel
+					ptFsmTrans elseTrans = NULL;
+					ptBoolFct elseBF = NULL;
+					byte elseVal = true;
+					byte elseSet = false;
+
+					// The option block is a list of fsms
+					ptExpNode option = stmnt->children[0];
+					while(option != NULL) { // E_STMNT_OPT: child[0] = E_STMNT_OPT (next option; or NULL), fsm = fsm of this option
+						if(debug) printf(" ..treating option block\n");
+
+						// Sanity checks
+						// There cannot be a feature expression
+						if( option->fsm->hasLooseFeatures) failure("An option in an If or Do statement cannot consist of a feature expression alone; this is the case at line %d.\n", option->lineNb);
+						// The FSM should have an init state, but without labels (the firs statement in an option block should not be labelled)
+						if(!option->fsm) failure("Bug: the option node at line %d contains no FSM.\n", option->lineNb);
+						if(!option->fsm->init) failure("The option node at line %d contains no statements.\n", option->lineNb);
+						// if(option->fsm->init->labels[0]) failure("Remove the label '%s' at line %d.  The first statement in an 'if' or in a 'do' cannot be labelled (label the if instead).\n", option->fsm->init->labels[0], option->fsm->init->lineNb);
+						// There should be exactly one transition from the init state
+						if(!option->fsm->init->trans) failure("Bug: the initial state of the FSM of the option node at line %d has no leaving transition.\n", option->lineNb);
+						// Restriction loosened and handeled by subsequent code: if( option->fsm->init->trans->next) failure("Bug: the initial state of FSM of the option node at line %d (statement line %d) has two leaving transitions.\n", option->lineNb, stmnt->lineNb);
+
+						// Add the symbols of the option to the global SymTab
+						fsm->symTab = addToSymTab(fsm->symTab, option->fsm->symTab);
+						option->fsm->symTab = NULL;
+
+						// Keep the transition leaving the init state and remove the init state
+						ptFsmTrans initTrans = ((ptFsmTrans) option->fsm->init->trans->value);
+						// If there are multiple transitions, initTransList contains them
+						ptList initTransList = (option->fsm->init->trans->next ? option->fsm->init->trans : NULL);
+						if(initTransList) option->fsm->init->trans = NULL; // do not destroy this list, it will be reused
+						option->fsm->nodes = listRemove(option->fsm->nodes, option->fsm->init);
+						if(debug) printf("   +-> deleted node NL%02d\n", option->fsm->init->lineNb);
+						destroyFsmNode(option->fsm->init);
+						option->fsm->init = NULL;
+
+						// Check whether this transition has a feature expression
+						if(hasFeatureExp == -1) hasFeatureExp = initTrans->hasFeatures ? 1 : 0;
+
+						// In case of an else, we perform some basic checks and store the 'else' transition for use later
+						if(initTrans->expression->type == E_STMNT_ELSE) {
+							if(debug) printf("   +-> found else in option block\n");
+							if(initTransList) failure("Bug: found else transition in a list of multiple transitions leaving an IF/DO option block at line %d\n", initTrans->lineNb);
+							if(initTrans->hasFeatures) failure("Problem at line %d: the 'else' option in an IF/DO cannot be labelled with features; it is automatically labelled by the parser.\n", initTrans->lineNb);
+							if(elseTrans != NULL) failure("Problem at line %d: only one 'else' option in an IF/DO option list is possible.\n", initTrans->lineNb);
+							elseTrans = initTrans;
+
+						// If its not an else then we accumulate it's feature expression (if there is one) for use later
+						} else {
+							if(!initTrans->hasFeatures) {
+								if(hasFeatureExp != 0) failure("Problem at line %d: either all or none of the options (except for the 'else') in an IF/DO block must be prefixed by a feature expression; here the feature expression is missing.\n", initTrans->lineNb);
+							} else {
+								if(hasFeatureExp != 1) failure("Problem at line %d: either all or none of the options (except for the 'else') in an IF/DO block must be prefixed by a feature expression; here the feature expression is too much.\n", initTrans->lineNb);
+								if(debug) printf("   +-> accumulating bool function for else transition\n");
+#ifndef CEGAR
+								if(initTrans->features) {
+									elseBF = addConjunction(elseBF, negateBool(initTrans->features), 0, 0);
+#else
+								if(initTrans->origFeatures) {
+									elseBF = addConjunction(elseBF, negateBool(initTrans->origFeatures), 0, 0);
+#endif
+								}
+								elseVal = elseVal && !initTrans->featuresValue;
+								elseSet = true;
+							}
+						}
+
+						// This transition (or these transitions) will be connected to the startNode (the IF or DO node).
+						if(!initTransList) {
+							initTrans->source = startNode;
+							startNode->trans = listAdd(startNode->trans, initTrans);
+						} else {
+							ptList iterator = initTransList;
+							while(iterator) {
+								((ptFsmTrans) iterator->value)->source = startNode;
+								iterator = iterator->next;
+							}
+							startNode->trans = listConcat(startNode->trans, initTransList);
+						}
+
+						// The option FSM nodes/transitions are added to those of the global FSM
+						fsm->nodes = listConcat(fsm->nodes, option->fsm->nodes);
+						fsm->transitions = listConcat(fsm->transitions, option->fsm->transitions);
+						newLabels = llistMerge(newLabels, option->fsm->labels);
+						newGotos = llistMerge(newGotos, option->fsm->looseGotos);
+						option->fsm->nodes = NULL;
+						option->fsm->transitions = NULL;
+						option->fsm->looseGotos = NULL;
+						option->fsm->labels = NULL;
+
+						if(stmnt->type == E_STMNT_IF) {
+							// The loose ends of the option FSM will become loose ends of the global FSM
+							fsm->looseEnds = listConcat(fsm->looseEnds, option->fsm->looseEnds);
+							option->fsm->looseEnds = NULL;
+
+							// Add the loose breaks of the option to the global SymTab
+							fsm->looseBreaks = listConcat(fsm->looseBreaks, option->fsm->looseBreaks);
+							option->fsm->looseBreaks = NULL;
+
+						} else {
+							// For a loop, the loose ends of the option FSM point to the initial state (startNode)
+							ptList looseEnd = option->fsm->looseEnds;
+							while(looseEnd) {
+								((ptFsmTrans) looseEnd->value)->target = startNode;
+								startNode->trans_in = listAdd(startNode->trans_in, (ptFsmTrans) looseEnd->value);
+								looseEnd = looseEnd->next;
+							}
+							listDestroy(option->fsm->looseEnds);
+							option->fsm->looseEnds = NULL;
+
+							// The loose breaks point to the new end state
+							ptList looseBreak = option->fsm->looseBreaks;
+							while(looseBreak) {
+								((ptFsmTrans) looseBreak->value)->target = endNode;
+								endNode->trans_in = listAdd(endNode->trans_in, (ptFsmTrans) looseBreak->value);
+								looseBreak = looseBreak->next;
+							}
+							listDestroy(option->fsm->looseBreaks);
+							option->fsm->looseBreaks = NULL;
+						}
+
+						// The option is no longer needed and can be freed
+						temp = option->children[0];
+						option->children[0] = NULL;
+						destroyExpNode(option);
+						option = temp;
+
+					} // end while (iterating over the option blocks)
+
+					// If all transitions were labelled by features, and there is an else transition;
+					// it will be labelled with the negation of the other feature expressions.
+					// This is only done if the labels are individual, meaning not in the case where the
+					// whole if/do is labelled (in which case all transitions, even the else get this label).
+					if(hasFeatureExp == 1 && elseTrans) {
+						if(!elseSet) failure("Problem at line %d: an else transition cannot be alone in an IF/DO option list.\n", elseTrans->lineNb);
+#ifndef CEGAR
+						elseTrans->features = elseBF;
+#else
+						elseTrans->features = NULL;
+						elseTrans->origFeatures = elseBF;
+#endif
+						elseTrans->featuresValue = elseVal; // !elseVal;
+						elseTrans->hasFeatures = true;
+						elseBF = NULL;
+
+						// Furthermore, the transition cannot be an else anymore, since it might never
+						// be executable, instead we make it into a skip
+						elseTrans->expression->type = E_EXPR_CONST;
+						elseTrans->expression->iVal = 1;
+						if(debug) {
+							printf(" ..setting bool function of else transition: ");
+							if(!optimisedSpinMode) printBool(elseTrans->features);
+							else printf("%s", elseTrans->featuresValue ? "true" : "false");
+							printf("\n");
+						}
+					}
+
+					if(elseBF) {
+						destroyBool(elseBF);
+					}
+
+					stmnt->children[0] = NULL;
+					destroyExpNode(stmnt);
+
+				} break;
+
+			default:
+				failure("The statement at line %d (of type %s) cannot be treated.\n", stmnt->lineNb, getExpTypeName(stmnt->type));
+				break;
+		}
+
+		// There are some new loose GOTOs in separate sequence branches
+		// Look in the FSM labels and in the new labels whether they can
+		// be found
+		if(newGotos) {
+			if(debug) printf(" ..there are new gotos\n");
+			ptLList temp, looseGoto = newGotos;
+			ptLList labeledNode;
+			while(looseGoto) {
+				temp = looseGoto->next;
+
+				labeledNode = llistFind(fsm->labels, looseGoto->label);
+				if(!labeledNode) labeledNode = llistFind(newLabels, looseGoto->label);
+				if(labeledNode) {
+					if(debug) printf("   +-> found label '%s' of goto TL%02d; attached it to NL%02d\n", looseGoto->label, ((ptFsmTrans) looseGoto->value)->lineNb, ((ptFsmNode) labeledNode->value)->lineNb);
+
+					((ptFsmTrans) looseGoto->value)->target = (ptFsmNode) labeledNode->value;
+					((ptFsmNode) labeledNode->value)->trans_in = listAdd(((ptFsmNode) labeledNode->value)->trans_in, (ptFsmTrans) looseGoto->value);
+
+					free(looseGoto->label);
+					newGotos = llistRemove(newGotos, looseGoto->value);
+
+				} else if(debug) printf("   +-> did not find label '%s' of goto TL%02d\n", looseGoto->label, ((ptFsmTrans) looseGoto->value)->lineNb);
+
+				looseGoto = temp;
+			}
+		}
+
+		// There are new labelled nodes in the sequence branches.
+		// Look in the loose GOTOs of the FSM (not in the new GOTOs,
+		// that's been taken care of just before) whether they are
+		// referenced.
+		if(newLabels) {
+			if(debug) printf(" ..there are new labels\n");
+			ptLList temp, looseGoto = fsm->looseGotos;
+			ptLList labeledNode;
+			while(looseGoto) {
+				temp = looseGoto->next;
+
+				labeledNode = llistFind(newLabels, looseGoto->label);
+				if(labeledNode) {
+					if(debug) printf("   +-> found label '%s' of goto TL%02d; attached it to NL%02d\n", looseGoto->label, ((ptFsmTrans) looseGoto->value)->lineNb, ((ptFsmNode) labeledNode->value)->lineNb);
+
+					((ptFsmTrans) looseGoto->value)->target = (ptFsmNode) labeledNode->value;
+					((ptFsmNode) labeledNode->value)->trans_in = listAdd(((ptFsmNode) labeledNode->value)->trans_in, (ptFsmTrans) looseGoto->value);
+
+					free(looseGoto->label);
+					fsm->looseGotos = llistRemove(fsm->looseGotos, looseGoto->value);
+
+				} else if(debug) printf("   +-> did not find label '%s' of goto TL%02d\n", looseGoto->label, ((ptFsmTrans) looseGoto->value)->lineNb);
+
+				looseGoto = temp;
+			}
+		}
+
+		if(debug) {
+			printf(" ..wrapping up:");
+			if(fsm->looseGotos) printf(" prefix had looseGotos, ");
+			else printf(" prefix had NO looseGotos, ");
+			if(newGotos) printf("new gotos were added");
+			else printf("NO new gotos were added");
+			printf("\n");
+		}
+
+		fsm->looseGotos = llistMerge(fsm->looseGotos, newGotos);
+		fsm->labels = llistMerge(fsm->labels, newLabels);
+	}
+	return fsm;
+}
