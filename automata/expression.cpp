@@ -7,7 +7,7 @@
 /**
  * Just creates a node with the given values.
  */
-astNode::astNode(Type type, const std::string& sVal, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, const fsm* fsmChild = nullptr, symTabNode* symTabChild = nullptr) {
+astNode::astNode(Type type, const std::string& sVal, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, fsm* fsmChild, symTabNode* symTabChild) {
 	this->type			= type;
 	this->sVal   		= sVal;
 	this->iVal			= iVal;
@@ -24,17 +24,19 @@ astNode::astNode(Type type, const std::string& sVal, int iVal, astNode* child0, 
  * Destroys an ExpNode and all that's linked to it.
  */
 astNode::~astNode() {
-	if(childFsm) delete(childFsm);
-	if(symTab) delete(symTab);
+	if(childFsm) 
+		delete(childFsm);
+	if(symTab) 
+		delete(symTab);
 	for(int i = 0; i < 3; i++) 
 		if(child[i]) 
 			delete child[i];
 }
 
-void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) {
+void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
 	for(int i = 0; i < 3; i++) 
 		if(child[i] != nullptr) 
-			child[i]->resolveVariables(globalSymTab, mTypes, localSymTab);
+			child[i]->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
 /**
@@ -143,7 +145,6 @@ symTabNode* astNode::symbolLookUpLeft(void) const {
 						|| child[2]->varOccurs(var, globalSymTab, processSymTab, mtypes);
 		}
 		case(astNode::E_EXPR_RUN):
-			/* Ignored */
 			//break;
 
 		/*case(astNode::E_EXPR_VAR):
@@ -162,12 +163,12 @@ symTabNode* astNode::symbolLookUpLeft(void) const {
 	return false;
 }*/
 
-bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
+/*bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
 	assert(globalSymTab);
 	return (child[0] && child[0]->varOccurs(var, globalSymTab, processSymTab, mtypes))
 			|| (child[1] && child[1]->varOccurs(var, globalSymTab, processSymTab, mtypes))
 				|| (child[2] && child[2]->varOccurs(var, globalSymTab, processSymTab, mtypes));
-}
+}*/
 
 /*std::list<std::string> astNode::getVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
 	assert(globalSymTab);
@@ -323,3 +324,154 @@ bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, 
 			break;
 	}
 }*/
+
+symTabNode* astNode::getSymbol(void) const {
+	return symTab;
+}
+
+void astNode::setSymbol(symTabNode *sym) {
+	symTab = sym;
+}
+
+astNode::Type astNode::getType(void) const {
+	return type;
+}
+
+int astNode::getLineNb(void) const {
+	return lineNb;
+}
+
+std::string astNode::getName(void) const {
+	return sVal;
+}
+
+void astNode::setName(const std::string& sVal) {
+	this->sVal = sVal;
+}
+
+void astNode::setGlobal(bool global) {
+	this->global = global;
+}
+
+bool astNode::isGlobal(void) const {
+	return global;
+}
+
+int astNode::getIVal(void) const {
+	return iVal;
+}
+
+void astNode::setIVal(int ival) {
+	this->iVal = ival;
+}
+//const symTabNode* getUType(void) const;
+//virtual bool isTimeout(void) const;
+
+astNode* astNode::getChild0(void) const{
+	return child[0];
+}
+
+astNode* astNode::getChild1(void) const{
+	return child[1];
+}
+
+astNode* astNode::getChild2(void) const{
+	return child[2];
+}
+
+astNode* astNode::detachChild0(void) {
+	astNode* child0 = child[0];
+	child[0] = nullptr;
+	return child0;
+}
+
+astNode* astNode::detachChild1(void) {
+	astNode* child1 = child[1];
+	child[1] = nullptr;
+	return child1;
+}
+
+astNode* astNode::detachChild2(void) {
+	astNode* child2 = child[2];
+	child[2] = nullptr;
+	return child2;
+}
+
+fsm* astNode::getChildFsm(void) const {
+	return childFsm;
+}
+
+
+
+
+
+
+void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+
+	if (subField)
+		symTab = subField->lookupInSymTab(sVal);
+	else if ((symTab = local->lookupInSymTab(sVal)) == nullptr)
+		symTab = global->lookupInSymTab(sVal);
+
+	if (symTab && child[0])
+	{
+		// Resolve array index
+		child[0]->resolveVariables(global, mTypes, local, nullptr);
+	}
+	else
+	{
+		// First check if its a magic variable
+		int mvar = 0;
+		if (mvar == 0 && sVal == MVARID_LAST)
+			mvar = MVAR_LAST;
+		if (mvar == 0 && sVal == MVARID_NRPR)
+			mvar = MVAR_NRPR;
+		if (mvar == 0 && sVal == MVARID_PID)
+			mvar = MVAR_PID;
+		if (mvar == 0 && sVal == MVARID_SCRATCH)
+			mvar = MVAR_SCRATCH;
+
+		if (mvar < 0)
+		{
+			// MVar IDs are negative!
+			iVal = mvar;
+		}
+		else
+		{
+			// Then check if it's an mtype
+			int value = mTypes->getMTypeValue(sVal);
+			assert(!(value == -1 && !iVal));
+			iVal = value;
+		}
+	}
+}
+
+void exprVarRef::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+
+	child[0]->resolveVariables(global, mTypes, local, subField);
+	auto symbol = child[0]->getSymbol();
+
+	if (symbol)
+	{
+		// Resolve subfields, but with the symbol table of the type
+		if (child[1])
+		{
+			assert(symbol->getUType());
+			child[1]->resolveVariables(global, mTypes, local, symbol->getUType()->getChild());
+		}
+	}
+	else
+		assert(!child[1]);
+}
+
+void exprRun::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+
+	if (subField)
+		symTab = subField->lookupInSymTab(sVal);
+	else if ((symTab = local->lookupInSymTab(sVal)) == nullptr)
+		symTab = global->lookupInSymTab(sVal);
+
+	assert(symTab && symTab->getType() == symTabNode::T_PROC);
+
+	child[0]->resolveVariables(global, mTypes, local, subField);
+}

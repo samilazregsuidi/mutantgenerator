@@ -101,9 +101,11 @@ public:
 	void printSymTab(int level, const std::string& title) const;
 	Type getType(void) const;
 	int getBound(void) const;
+	void setLineNb(int line) ;
 	int getLineNb(void) const;
 	std::string getName(void) const;
 	bool isGlobal(void) const;
+	void setGlobal(bool global);
 	unsigned int getMemorySize(void) const;
 	symTabNode* getUType(void) const;
 	symTabNode* getChild(void) const;
@@ -120,7 +122,7 @@ protected:
 	int	lineNb;					// The line at which the symbol is declared
 	std::string name;			// The name of the symbol (variable name, type name, proctype name)
 	bool global;				// 1 iff global variable, 0 otherwise
-	const symTabNode* utype;	// For T_UTYPE, this points to the user type symbol.
+	symTabNode* utype;	// For T_UTYPE, this points to the user type symbol.
 	int bound;					// Normally == 1; If > 1, the symbol denotes an array.
 	int capacity;				// For T_CHAN, this denotes its capacity.  For T_FEAT, this is the feature ID.
 	int memSize;				// The size in memory of the symbol table node (in bits).

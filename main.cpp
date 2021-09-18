@@ -19,16 +19,10 @@ extern int yyparse(symTabNode* symTable, mTypeNode** mtypes);
 extern void init_lex();
 
 // Settings defined in main
-std::string path;
-int sampling = 0;
-int ksteps = 0;
-long int limitExploration;
 
 // Other global variables from main
 symTabNode* globalSymTab = NULL;
 mTypeNode* mtypes = NULL;
-void * _handshake_transit = NULL;
-
 
 /**
  * Simply copies a file byte by byte; could be made more efficient.

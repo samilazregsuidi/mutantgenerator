@@ -31,15 +31,58 @@ fsmNode::fsmNode(int flags, int lineNb) {
 	this->lineNb = lineNb;
 }
 
-void fsmNode::addTransition(const fsmTrans* trans) {
-	assert(std::find(this->trans.begin(), this->trans.end(), trans) != this->trans.end());
+void fsmNode::addTransition(fsmTrans* trans) {
+	assert(std::find(this->trans.begin(), this->trans.end(), trans) == this->trans.end());
 	this->trans.push_back(trans);
+}
+
+void fsmNode::removeTransition(fsmTrans* trans) {
+	assert(std::find(this->trans.begin(), this->trans.end(), trans) != this->trans.end());
+	this->trans.remove(trans);
+}
+
+void fsmNode::detachTransitions(void) {
+	trans.clear();
+}
+
+
+void fsmNode::addInputTransition(fsmTrans* trans_in) {
+	assert(std::find(this->trans_in.begin(), this->trans_in.end(), trans_in) == this->trans_in.end());
+	this->trans_in.push_back(trans_in);
+}
+
+void fsmNode::removeInputTransition(fsmTrans* trans_in) {
+	assert(std::find(this->trans_in.begin(), this->trans_in.end(), trans_in) != this->trans_in.end());
+	this->trans_in.remove(trans_in);
+}
+
+const std::list<fsmTrans *> & fsmNode::getTransitions(void) const {
+	return trans;
+}
+
+const std::list<fsmTrans *> & fsmNode::getInputTransitions(void) const {
+	return trans_in;
+}
+
+void fsmNode::addFlags(unsigned int flags) {
+	this->flags |= flags;
+}
+
+unsigned int fsmNode::getFlags(void) const {
+	return flags;
+}
+
+void fsmNode::setLineNb(int line) {
+	lineNb = line;
+}
+
+int fsmNode::getLineNb(void) const {
+	return lineNb;
 }
 
 void fsmNode::orderAcceptTransitions(void) {
 	
 }
-
 /*
 void fsmNode::printFsmNode(ptList printed, int level) {
 	printed = listAdd(printed, this);
@@ -94,19 +137,61 @@ fsmTrans::fsmTrans(fsmNode* source, astNode* expression, int lineNb){
  * Destroys a transition; but not the attached nodes.
  */
 fsmTrans::~fsmTrans(){
-	if(expression) delete expression;
+	if(expression) 
+		delete expression;
 }
 
 void fsmTrans::setTargetNode(fsmNode* target) {
-	assert(this->target);
+	assert(!this->target);
+	assert(target);
+	
+	if(this->target) {
+		this->target->removeInputTransition(this);
+	}
+
 	this->target = target;
 	this->target->addInputTransition(this);
+}
+
+fsmNode * fsmTrans::getTargetNode(void) const {
+	return target;
+}
+
+void fsmTrans::setSourceNode(fsmNode *source) {
+	assert(!this->source);
+	assert(source);
+	
+	if(this->source) {
+		this->source->removeTransition(this);
+	}
+
+	this->source = source;
+	this->source->addTransition(this);
+}
+
+fsmNode * fsmTrans::getSourceNode(void) const {
+	return source;
+}
+
+astNode * fsmTrans::getExpression(void) const {
+	return this->expression;
+}
+
+void fsmTrans::setExpression(astNode *expression) {
+	this->expression = expression;
+}
+
+void fsmTrans::setLineNb(int line) {
+	lineNb = line;
+}
+
+int fsmTrans::getLineNb(void) const {
+	return lineNb;
 }
 
 void fsmTrans::resolveVariables(symTabNode* global, symTabNode* local, const mTypeNode* mTypes) const{
 	if(expression) expression->resolveVariables(global, mTypes, local);
 }
-
 /*
  * FINITE STATE MACHINES (FSMs)
  * * * * * * * * * * * * * * * * * * * * * * * */
@@ -188,6 +273,25 @@ fsmNode* fsm::copyFsmNode(const fsmNode* node) {
 	return createFsmNode(node->getFlags(), node->getLineNb());
 }
 
+void fsm::setSymTab(symTabNode *sym) {
+	symTab = sym;
+}
+
+symTabNode * fsm::getSymTab(void) const {
+	return symTab;
+}
+
+void fsm::setInitNode(fsmNode* init) {
+	this->init = init;
+}
+
+fsmNode * fsm::getInitNode(void) const {
+	return init;
+}
+
+const std::list<fsmNode *> & fsm::getNodes(void) const {
+	return nodes;
+}
 
 /**
  * Removes transitions for which the featureValue is false.
@@ -400,7 +504,7 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 					fsmNode* init = childFsm->getInitNode();
 					
 					// Sanity check; a sequence must at least have a statement and the initial one cannot be labelled
-					assert(!childFsm->hasLooseFeatures() && childFsm->getInitNode());
+					//assert(!childFsm->hasLooseFeatures() && childFsm->getInitNode());
 					// if( stmnt->childFsm->init->labels[0]) failure("Remove the label '%s' at line %d.  The first statement in block cannot be labelled (label the block instead).\n", stmnt->childFsm->init->labels[0], stmnt->childFsm->init->lineNb);
 
 					// The labels we calculated before have to be added to the (unlabelled) initial state of the block.

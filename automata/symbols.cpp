@@ -10,7 +10,7 @@
 #define LEVEL_STEP 10
 
 
-symTabNode* symTabNode::createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr){
+symTabNode* symTabNode::createSymTabNode(Type itype, int lineNb, const std::string& sVal, expr* init){
 	switch(itype){
 		case T_NA:
 			assert(false);
@@ -110,7 +110,7 @@ symTabNode* symTabNode::createSymTabNode(Type itype, const symTabNode& old){
 symTabNode::symTabNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init, fsm* childFsm, symTabNode* child) {
 	this->type	= type;
 	this->name	= name;
-	this->global = 0;
+	this->global = false;
 	this->lineNb = lineNb;
 	this->bound	= bound;
 	this->capacity=capacity;
@@ -123,6 +123,10 @@ symTabNode::symTabNode(Type type, const std::string& name, int lineNb, int bound
 	this->next	= nullptr;
 	this->utype	= nullptr;
 }
+
+symTabNode::symTabNode(Type type, int lineNb, const std::string& sVal, expr* init) 
+	: symTabNode(type, sVal, lineNb, 0, 0, init)
+{}
 
 /**
  * Creates a node with a user-defined type (based on the type name).
@@ -230,6 +234,75 @@ void symTabNode::setNext(symTabNode* newNext){
 	newNext->next = prevNext;
 }
 
+const symTabNode* symTabNode::cnextSym(void) const {
+	return next;
+}
+
+symTabNode* symTabNode::nextSym(void) const {
+	return next;
+}
+
+symTabNode::Type symTabNode::getType(void) const {
+	return type;
+}
+
+int symTabNode::getBound(void) const {
+	return bound;
+}
+
+void symTabNode::setLineNb(int line) {
+	lineNb = line;
+}
+
+int symTabNode::getLineNb(void) const {
+	return lineNb;
+}
+
+std::string symTabNode::getName(void) const {
+	return name;
+}
+
+bool symTabNode::isGlobal(void) const {
+	return global;
+}
+
+void symTabNode::setGlobal(bool global) {
+	this->global = global;
+}
+
+unsigned int symTabNode::getMemorySize(void) const {
+	return memSize;
+}
+
+symTabNode* symTabNode::getUType(void) const {
+	assert(type == T_UTYPE);
+	return utype;
+}
+
+void symTabNode::setUType(symTabNode* utype) {
+	assert(type == T_UTYPE);
+	this->utype = utype;
+}
+
+symTabNode* symTabNode::getChild(void) const {
+	return child;
+}
+
+expr* symTabNode::getInitExpr(void) const {
+	return init;
+}
+
+int symTabNode::getChanCapacity(void) const {
+	assert(type == T_CHAN);
+	return capacity;
+}
+
+fsm* symTabNode::getFsm(void) const {
+	assert(type == T_PROC || type == T_NEVER);
+	return childFsm;
+}
+
+
 /**
  * Initialises the values of memSize and memOffset of all variables
  * in the symTab and its descendants and starts with the node given
@@ -279,7 +352,7 @@ unsigned int neverSymNode::processVariables(symTabNode* global, const mTypeNode*
 	childFsm->resolveVariables(global, mTypes);
 	if(init && init->getType() == astNode::E_EXPR_COUNT)
 		init->resolveVariables(global, mTypes);
-	childFsm->orderAcceptTransitions();
+	//childFsm->orderAcceptTransitions();
 	memSize = childFsm->processVariables(global, mTypes, 0, 0);
 	return next->processVariables(global, mTypes, offset, isGlobal);
 }
@@ -330,7 +403,7 @@ void symTabNode::printSymTab(int level, const std::string& title) const {
 	}
 	if(type == symTabNode::T_PROC || type == symTabNode::T_NEVER) {
 		assert(childFsm);
-		childFsm->printFsm(level + LEVEL_STEP, name);
+		childFsm->getSymTab()->printSymTab(level + LEVEL_STEP, name);
 		spaces(level);
 		printf("\n");
 	}
@@ -405,10 +478,13 @@ std::string mTypeNode::getMTypeName(int value) const {
 void mTypeNode::printMTypes() {
 	printf("MTypes:");
 	mTypeNode* it = this;
-	while(it != NULL) {
+	while(it != nullptr) {
 		printf(" %s (%d)", it->getName().c_str(), it->value);
 		it = it->next;
 	}
 	printf("\n");
 }
 
+std::string mTypeNode::getName(void) const {
+	return name;
+}

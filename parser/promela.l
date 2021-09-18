@@ -175,12 +175,14 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 					  //strcpy(yylval->sVal, yytext);
 					  yylval->sVal = yytext;
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
-					  symTabNode* node = (*globalSymTab)->lookupInSymTab(yylval->sVal);
-					  if(node && node->getType() == symTabNode::T_TDEF) 
-					  	return UNAME; 
-					  else if(node && node->getType() == symTabNode::T_PROC) 
-					  	return PNAME; 
-					  else 
+					  
+					  if(*globalSymTab != nullptr) {
+					  	  symTabNode* node = (*globalSymTab)->lookupInSymTab(yylval->sVal);
+						  if(node && node->getType() == symTabNode::T_TDEF) 
+						  	return UNAME; 
+						  else if(node && node->getType() == symTabNode::T_PROC) 
+						  	return PNAME; 
+					  } else 
 					  	return NAME; }
 <CODE>{real}		{ yylval->rVal = atof(yytext);
 					  return REAL;  }

@@ -298,7 +298,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 														
 														if(cur->getType() == symTabNode::T_NA) {
 															symTabNode* next = symTabNode::createSymTabNode($2, *cur);
-															next->setNbLine(nbrLines);
+															next->setLineNb(nbrLines);
 															// If type != 0, then the var is a T_CHAN
 														
 															//cur->getType() = $2
@@ -312,7 +312,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 														} else {
 															assert(cur->getType() == symTabNode::T_CHAN);
 															symTabNode* next = new chanSymNode(*cur);
-															next->setNbLine(nbrLines);
+															next->setLineNb(nbrLines);
 															
 															if(res == nullptr) {
 																res = next;
@@ -554,7 +554,7 @@ typ_list: basetype								{	if($1.iType != symTabNode::T_UTYPE) {
 													} else {
 														symTabNode* pType = (*globalSymTab)->lookupInSymTab($1.sVal);
 														$$ = new utypeSymNode(pType, nbrLines);
-														if($$ == nullptr) std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n");
+														if($$ == nullptr) std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
 													}
 												}		
 		| basetype ',' typ_list					{	if($1.iType != symTabNode::T_UTYPE) {
@@ -563,7 +563,7 @@ typ_list: basetype								{	if($1.iType != symTabNode::T_UTYPE) {
 														symTabNode* pType = (*globalSymTab)->lookupInSymTab($1.sVal);
 														symTabNode* temp = new utypeSymNode(pType, nbrLines);
 														if(temp == nullptr) 
-															std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n");
+															std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
 														else 
 															$$ = $3->addToSymTab(temp);
 													}
