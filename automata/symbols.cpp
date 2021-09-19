@@ -13,7 +13,7 @@
 symTabNode* symTabNode::createSymTabNode(Type itype, int lineNb, const std::string& sVal, expr* init){
 	switch(itype){
 		case T_NA:
-			assert(false);
+			return new naSymNode(lineNb, sVal, init);
 		case T_BIT:
 			return new bitSymNode(lineNb, sVal, init);
 		case T_BOOL:
@@ -168,14 +168,26 @@ symTabNode::~symTabNode(){
  * The arguments can be NULL (if both are NULL, the function returns NULL).
  * Returns a pointer to the new symTab.
  */
-symTabNode* symTabNode::addToSymTab(symTabNode* newNode) /*non const*/{
+
+symTabNode* symTabNode::merge(symTabNode* symTab, symTabNode* newNode) {
+	if(!symTab) return newNode;
+	if(!newNode) return symTab;
+
+	symTabNode* newlistTail = newNode->prev;
+	newNode->prev = symTab->prev;
+	newNode->prev->next = newNode;
+	symTab->prev = newlistTail;
+	return symTab;
+}
+
+/*symTabNode* symTabNode::addToSymTab(symTabNode* newNode){
 	assert(newNode);
 	symTabNode* newlistTail = newNode->prev;
 	newNode->prev = prev;
 	newNode->prev->next = newNode;
 	prev = newlistTail;
 	return this;
-}
+}*/
 
 symTabNode* symTabNode::lookupInSymTab(const exprVarRefName* expr) {
 	return lookupInSymTab(expr->getName());

@@ -14,9 +14,16 @@
  * Creates a transition and adds it to the node list of the fsm.
  */
 fsmTrans* fsmNode::createFsmTrans(astNode* expression, int lineNb) {
-	fsmTrans* trans = new fsmTrans(this, expression, lineNb);
-	this->trans.push_back(trans);
-	return trans;
+	fsmTrans* newTrans = new fsmTrans(this, expression, lineNb);
+	this->trans.push_back(newTrans);
+	parent->trans.push_back(newTrans);
+	return newTrans;
+}
+
+fsmTrans* fsmNode::createFsmTrans(astNode* expression, fsmNode* target, int lineNb) {
+	fsmTrans* newTrans = createFsmTrans(expression, lineNb);
+	newTrans->setTargetNode(target);
+	return newTrans;
 }
 
 /**
@@ -26,7 +33,8 @@ fsmTrans* fsmNode::copyFsmTrans(const fsmTrans* trans) {
 	return createFsmTrans(trans->getExpression(), trans->getLineNb());
 }
 
-fsmNode::fsmNode(int flags, int lineNb) {
+fsmNode::fsmNode(int flags, int lineNb, fsm* parent) {
+	this->parent = parent;
 	this->flags = flags;
 	this->lineNb = lineNb;
 }
@@ -208,7 +216,7 @@ fsm::fsm(){
  */
 fsm::~fsm(){
 	for(fsmNode* node : nodes) delete node;
-	for(fsmTrans* trans : transitions) delete trans;
+	for(fsmTrans* trans : trans) delete trans;
 	if(init) delete init;
 	if(symTab) delete symTab;
 }
@@ -218,7 +226,7 @@ fsm::~fsm(){
  */
 void fsm::destroySkeleton() {
 	nodes.clear();
-	transitions.clear();
+	trans.clear();
 	looseEnds.clear();
 	looseBreaks.clear();
 	looseGotos.clear();
@@ -227,7 +235,7 @@ void fsm::destroySkeleton() {
 
 void fsm::merge(fsm* child) {
 	nodes.merge(child->nodes);
-	transitions.merge(child->transitions);
+	trans.merge(child->trans);
 	looseBreaks.merge(child->looseBreaks);
 	looseEnds.merge(child->looseEnds);
 	
@@ -239,7 +247,7 @@ void fsm::merge(fsm* child) {
 	child->destroySkeleton();
 
 	// Add the info of the statement FSM to the global one
-	symTab->addToSymTab(child->symTab);
+	symTab = symTabNode::merge(symTab, child->symTab);
 	child->symTab = nullptr;
 
 	if(!init)
@@ -253,7 +261,7 @@ void fsm::merge(fsm* child) {
  * The node has to be manually attached to a transition.
  */
 fsmNode* fsm::createFsmNode(int flags, int lineNb, const std::list<std::string>& labels) {
-	fsmNode* node = new fsmNode(flags, lineNb);
+	fsmNode* node = new fsmNode(flags, lineNb, this);
 	for(std::string l : labels)
 		this->labeledNodes[l] = node;
 	nodes.push_back(node);
@@ -261,7 +269,7 @@ fsmNode* fsm::createFsmNode(int flags, int lineNb, const std::list<std::string>&
 }
 
 fsmNode* fsm::createFsmNode(int flags, int lineNb) {
-	fsmNode* node = new fsmNode(flags, lineNb);
+	fsmNode* node = new fsmNode(flags, lineNb, this);
 	nodes.push_back(node);
 	return node;
 }
@@ -338,7 +346,7 @@ void fsm::orderAcceptTransitions(void) {
  * resolveVariableNamesInExpression() for more info.
  */
 void fsm::resolveVariables(symTabNode* global, const mTypeNode* mTypes) const {
-	for(auto trans : transitions)
+	for(auto trans : trans)
 		trans->resolveVariables(global, symTab, mTypes);
 }
 
@@ -489,13 +497,13 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 
 				} break;
 
-			case astNode::E_STMNT_WHEN:
+			/*case astNode::E_STMNT_WHEN:
 				{	// A transition leaves the new node and is labelled with the statement itself.  Becomes a loose end.
 					fsmTrans* t = newNode->createFsmTrans(stmnt, stmnt->getLineNb());
 					looseEnds.push_back(t);
 					stmnt2fsm(stmnt->getChild1(), symTab);
 				} break;
-
+*/
 			case astNode::E_STMNT_ATOMIC:	// fsm = fsm of this sequence
 			case astNode::E_STMNT_SEQ:		// fsm = fsm of this sequence
 				{	// Feature-related checks
@@ -538,7 +546,7 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 				{	// If there are no loose ends, then the goto node is alone in an option, and we
 					// have to create a node (with a loose end) for it after all.
 					if(looseEnds.empty()) {
-						assert(!init && !nodes.empty() && !transitions.empty());
+						assert(!init && !nodes.empty() && !trans.empty());
 						init = createFsmNode(flag, stmnt->getLineNb());
 						looseEnds.push_back(init->createFsmTrans(new exprSkip(stmnt->getLineNb()), stmnt->getLineNb()));
 					}
@@ -563,7 +571,7 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 					// have to create a node for it after all.
 					if(looseEnds.empty()) {
 						// Check whether the global fsm is really empty
-						assert(!init && !nodes.empty() && !transitions.empty());
+						assert(!init && !nodes.empty() && !trans.empty());
 						init = createFsmNode(flag, stmnt->getLineNb());
 						looseBreaks.push_back(init->createFsmTrans(new exprSkip(stmnt->getLineNb()), stmnt->getLineNb()));
 					// Otherwise, the loose ends will have to be redirected so that they end up

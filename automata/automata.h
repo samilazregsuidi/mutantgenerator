@@ -11,11 +11,12 @@ class mTypeNode;
 class symTabNode;
 class astNode;
 
+class fsm;
 class fsmTrans;
 
 class fsmNode
 {
-
+	friend fsm;
 public:
 	const static unsigned int N_ACCEPT = 1;
 	const static unsigned int N_PROGRESS = 2;
@@ -24,10 +25,12 @@ public:
 	// The inner nodes of an atomic block have this flag set; the semantics of execution is thus:
 	// if a transition was chosen that leads to an N_ATOMIC node, then the outgoing transition of
 	// that node must be fired, and so on.  An atomic node can only have one outgoing transition.
-
-	fsmNode(int flags, int lineNb);
+private:
+	fsmNode(int flags, int lineNb, fsm* parent);
+public:
 
 	fsmTrans *createFsmTrans(astNode *expression, int lineNb);
+	fsmTrans* createFsmTrans(astNode* expression, fsmNode* target, int lineNb);
 	fsmTrans *copyFsmTrans(const fsmTrans *trans);
 	void addTransition(fsmTrans *trans);
 	void removeTransition(fsmTrans *trans);
@@ -46,6 +49,7 @@ public:
 	void orderAcceptTransitions(void);
 
 private:
+	fsm* parent;
 	int flags;
 	int lineNb;
 	std::list<fsmTrans *> trans;
@@ -86,7 +90,7 @@ private:
 
 class fsm
 {
-
+	friend fsmNode;
 public:
 	fsm();
 	~fsm();
@@ -114,7 +118,7 @@ private:
 	fsmNode *init;											 // The initial node
 	std::list<fsmNode *> nodes;								 // List of ptFsmNode	- This list contains all nodes of the FSM in an arbitrary order.
 	std::map<std::string, fsmNode *> labeledNodes;			 // List of ptFsmNode	- This list is indexed by label and contains for each label the labelled node.
-	std::list<fsmTrans *> transitions;						 // List of ptFsmTrans	- This list contains all transitions of the FSM in an arbitrary order.
+	std::list<fsmTrans *> trans;						 // List of ptFsmTrans	- This list contains all transitions of the FSM in an arbitrary order.
 	std::list<fsmTrans *> looseEnds;						 // List of ptFsmTrans	- For model construction: contains those transitions that do not have an end state.
 	std::map<std::string, std::list<fsmTrans *>> looseGotos; // List of ptFsmTrans	- For model construction: contains those transitions (indexed by label name) that have yet to be connected to a state with this label.
 	std::list<fsmTrans *> looseBreaks;						 // List of ptFsmTrans	- For model construction: contains those transitions that were generated because of a break statement and are waiting to be matched to a DO.

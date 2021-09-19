@@ -1495,9 +1495,8 @@ YY_RULE_SETUP
 case 100:
 YY_RULE_SETUP
 #line 174 "promela.l"
-{ //yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
-					  //strcpy(yylval->sVal, yytext);
-					  yylval->sVal = yytext;
+{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
+					  strcpy(yylval->sVal, yytext);
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
 					  
 					  if(*globalSymTab != nullptr) {
@@ -1511,97 +1510,97 @@ YY_RULE_SETUP
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 187 "promela.l"
+#line 186 "promela.l"
 { yylval->rVal = atof(yytext);
 					  return REAL;  }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 189 "promela.l"
+#line 188 "promela.l"
 { yylval->iVal = atoi(yytext);
 					  return CONST; }
 	YY_BREAK
 case 103:
 /* rule 103 can match eol */
 YY_RULE_SETUP
-#line 192 "promela.l"
+#line 191 "promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 193 "promela.l"
+#line 192 "promela.l"
 { }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 195 "promela.l"
+#line 194 "promela.l"
 { BEGIN COMMENTBLOCK; 													/* printf("BEGIN COMMENTBLOCK AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 196 "promela.l"
+#line 195 "promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 107:
 /* rule 107 can match eol */
 YY_RULE_SETUP
-#line 197 "promela.l"
+#line 196 "promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 198 "promela.l"
+#line 197 "promela.l"
 { }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 200 "promela.l"
+#line 199 "promela.l"
 { BEGIN COMMENTLINE; 													/* printf("BEGIN COMMENTLINE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 110:
 /* rule 110 can match eol */
 YY_RULE_SETUP
-#line 201 "promela.l"
+#line 200 "promela.l"
 { nbrLines++; BEGIN CODE; 												/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 202 "promela.l"
+#line 201 "promela.l"
 { }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 204 "promela.l"
+#line 203 "promela.l"
 { BEGIN CPPBLOCK; }
 	YY_BREAK
 case 113:
 /* rule 113 can match eol */
 YY_RULE_SETUP
-#line 205 "promela.l"
+#line 204 "promela.l"
 { BEGIN CODE; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 206 "promela.l"
+#line 205 "promela.l"
 { nbrLines = atoi(yytext); }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 207 "promela.l"
+#line 206 "promela.l"
 { }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 209 "promela.l"
+#line 208 "promela.l"
 { fprintf(stderr, "Invalid char '%s' at line %d\n", yytext, nbrLines);
 					  exit(1); }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 212 "promela.l"
+#line 211 "promela.l"
 ECHO;
 	YY_BREAK
-#line 1605 "lex.yy.c"
+#line 1604 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CODE):
 case YY_STATE_EOF(COMMENTBLOCK):
@@ -2611,7 +2610,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 212 "promela.l"
+#line 211 "promela.l"
 
 
 void init_lex(){

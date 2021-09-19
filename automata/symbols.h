@@ -77,8 +77,10 @@ public:
 	static symTabNode* createSymTabNode(Type itype, const symTabNode& old);
 	static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr);
 
-	symTabNode* addToSymTab(symTabNode* newNode);
-	void remove(void);
+	static symTabNode* merge(symTabNode* first, symTabNode* second);
+
+	//symTabNode* addToSymTab(symTabNode* newNode);
+	//void remove(void);
 
 	symTabNode* lookupInSymTab(const exprVarRefName* expr);
 	symTabNode* lookupInSymTab(const exprVarRef* expr);
@@ -132,6 +134,23 @@ protected:
 	symTabNode* child;			// For T_TDEF, this denotes the fields of the user type;							// For T_CHAN, it denotes the fields of the messages;
 	symTabNode* next;			// Points to next node; the last node in a list has this pointer set to NULL.
 	symTabNode* prev;			// Points to previous node; the first node in a list has this pointer pointing to the last node!
+};
+
+class naSymNode : public symTabNode{
+public:
+	naSymNode(int lineNb, const std::string& sVal, expr* init)
+		: symTabNode(symTabNode::T_NA, lineNb, sVal, init)
+	{}
+
+	std::string getTypeName(void) const {
+		assert(false);
+		return "NA";
+	}
+
+	int getTypeSize(void) const {
+		assert(false);
+		return 0;
+	}
 };
 
 //T_BIT

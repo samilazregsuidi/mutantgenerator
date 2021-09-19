@@ -21,8 +21,8 @@ extern void init_lex();
 // Settings defined in main
 
 // Other global variables from main
-symTabNode* globalSymTab = NULL;
-mTypeNode* mtypes = NULL;
+symTabNode* globalSymTab = nullptr;
+mTypeNode* mtypes = nullptr;
 
 /**
  * Simply copies a file byte by byte; could be made more efficient.
@@ -67,9 +67,11 @@ int main(int argc, char *argv[]) {
 	if(yyin == NULL) { std::cout << "Could not open temporary working file ("<<argv[argc - 1]<<").\n"; exit(1); }
 	init_lex();
 
-	if(yyparse(&globalSymTab, &mtypes) != 0) { std::cout << "Syntax error; aborting..\n"; exit(1); }
+	if(yyparse(&globalSymTab, &mtypes) != 0) { 
+		std::cout << "Syntax error; aborting..\n"; exit(1); 
+	}
 
-	globalSymTab->processVariables(globalSymTab, mtypes, SYS_VARS_SIZE, 1);
+	//globalSymTab->processVariables(globalSymTab, mtypes, SYS_VARS_SIZE, 1);
 
 	if(yyin != NULL) fclose(yyin);
 	

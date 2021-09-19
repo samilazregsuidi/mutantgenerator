@@ -107,7 +107,7 @@ public:
 		E_RARG_CONST, // iVal = the constant
 	};
 
-	astNode(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr);
+	astNode(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr);
 	virtual ~astNode();
 
 	/**
@@ -167,7 +167,6 @@ public:
 
 protected:
 	Type type;
-	std::string sVal;
 	int iVal;
 	int lineNb; // The line at which the symbol is declared
 	double prob;
@@ -183,14 +182,14 @@ class stmnt : public astNode
 {
 
 protected:
-	stmnt(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: astNode(type, sVal, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	stmnt(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
+		: astNode(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
 	{
 	}
 
 public:
 	stmnt(stmnt *node, int lineNb)
-		: astNode(astNode::E_STMNT, std::string(), 0, node, nullptr, nullptr, lineNb)
+		: astNode(astNode::E_STMNT, 0, node, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -216,7 +215,7 @@ class decl : public stmnt
 {
 public:
 	decl(symTabNode *symTabChild, int lineNb)
-		: stmnt(astNode::E_DECL, std::string(), 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
+		: stmnt(astNode::E_DECL, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
 	{
 	}
 
@@ -234,8 +233,8 @@ public:
 class expr : public astNode
 {
 protected:
-	expr(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: astNode(type, sVal, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	expr(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
+		: astNode(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
 	{
 	}
 };
@@ -249,18 +248,18 @@ protected:
 class exprVarRefName : public expr
 {
 public:
-	exprVarRefName(const std::string &sVal, int lineNb)
-		: expr(astNode::E_VARREF_NAME, sVal, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+	exprVarRefName(int lineNb)
+		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
-	exprVarRefName(const std::string &sVal, expr *child0, int lineNb)
-		: expr(astNode::E_VARREF_NAME, sVal, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+	exprVarRefName(expr *child0, int lineNb)
+		: expr(astNode::E_VARREF_NAME, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
-	exprVarRefName(const std::string &sVal, symTabNode *symTabChild, int lineNb)
-		: expr(astNode::E_VARREF_NAME, sVal, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
+	exprVarRefName(symTabNode *symTabChild, int lineNb)
+		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
 	{
 	}
 
@@ -278,7 +277,7 @@ public:
 
 	operator std::string() const
 	{
-		return sVal + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
+		return symTab + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -292,12 +291,12 @@ class exprVarRef : public expr
 {
 public:
 	exprVarRef(exprVarRefName *child0, exprVarRef *child1, int lineNb)
-		: expr(astNode::E_VARREF, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
 	exprVarRef(exprVarRefName *child0, int lineNb)
-		: expr(astNode::E_VARREF, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -349,7 +348,7 @@ class exprVar : public expr
 {
 public:
 	exprVar(exprVarRef *child0, int lineNb)
-		: expr(astNode::E_EXPR_VAR, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_VAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -392,8 +391,8 @@ public:
 class exprBinary : public expr
 {
 protected:
-	exprBinary(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, sVal, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprBinary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
+		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
 	{
 	}
 
@@ -409,8 +408,8 @@ protected:
 class exprUnary : public expr
 {
 protected:
-	exprUnary(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, sVal, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprUnary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
+		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
 	{
 	}
 
@@ -426,7 +425,7 @@ class exprPar : public exprUnary
 {
 public:
 	exprPar(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_PAR, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_PAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -446,7 +445,7 @@ class exprPlus : public exprBinary
 {
 public:
 	exprPlus(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_PLUS, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_PLUS, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -466,7 +465,7 @@ class exprMinus : public exprBinary
 {
 public:
 	exprMinus(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_MINUS, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_MINUS, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -486,7 +485,7 @@ class exprTimes : public exprBinary
 {
 public:
 	exprTimes(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_TIMES, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_TIMES, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -506,7 +505,7 @@ class exprDiv : public exprBinary
 {
 public:
 	exprDiv(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_DIV, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_DIV, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -526,7 +525,7 @@ class exprMod : public exprBinary
 {
 public:
 	exprMod(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_MOD, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_MOD, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -546,7 +545,7 @@ class exprGT : public exprBinary
 {
 public:
 	exprGT(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_GT, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_GT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -566,7 +565,7 @@ class exprLT : public exprBinary
 {
 public:
 	exprLT(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LT, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -586,7 +585,7 @@ class exprGE : public exprBinary
 {
 public:
 	exprGE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_GE, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_GE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -606,7 +605,7 @@ class exprLE : public exprBinary
 {
 public:
 	exprLE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LE, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -626,7 +625,7 @@ class exprEQ : public exprBinary
 {
 public:
 	exprEQ(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_EQ, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_EQ, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -646,7 +645,7 @@ class exprNE : public exprBinary
 {
 public:
 	exprNE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_NE, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_NE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -666,7 +665,7 @@ class exprAnd : public exprBinary
 {
 public:
 	exprAnd(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_AND, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_AND, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -686,7 +685,7 @@ class exprOr : public exprBinary
 {
 public:
 	exprOr(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_OR, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_OR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -706,7 +705,7 @@ class exprCount : public exprUnary
 {
 public:
 	exprCount(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_COUNT, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_COUNT, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -726,7 +725,7 @@ class exprUMin : public exprUnary
 {
 public:
 	exprUMin(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_UMIN, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_UMIN, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -746,7 +745,7 @@ class exprNeg : public exprUnary
 {
 public:
 	exprNeg(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEG, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NEG, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -766,7 +765,7 @@ class exprBitwAnd : public exprBinary
 {
 public:
 	exprBitwAnd(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWAND, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWAND, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -786,7 +785,7 @@ class exprBitwOr : public exprBinary
 {
 public:
 	exprBitwOr(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWOR, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWOR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -806,7 +805,7 @@ class exprBitwXor : public exprBinary
 {
 public:
 	exprBitwXor(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWXOR, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWXOR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -826,7 +825,7 @@ class exprBitwNeg : public exprUnary
 {
 public:
 	exprBitwNeg(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_BITWNEG, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_BITWNEG, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -846,7 +845,7 @@ class exprLShift : public exprBinary
 {
 public:
 	exprLShift(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LSHIFT, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LSHIFT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -866,7 +865,7 @@ class exprRShift : public exprBinary
 {
 public:
 	exprRShift(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_RSHIFT, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_RSHIFT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -886,7 +885,7 @@ class exprCond : public expr
 {
 public:
 	exprCond(expr *child0, expr *child1, expr *child2, int lineNb)
-		: expr(astNode::E_EXPR_COND, std::string(), 0, child0, child1, child2, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_COND, 0, child0, child1, child2, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -904,8 +903,8 @@ public:
 class exprRArg : public expr
 {
 protected:
-	exprRArg(Type type, const std::string &sVal, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, sVal, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprRArg(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
+		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
 	{
 	}
 };
@@ -915,7 +914,7 @@ class exprRArgVar : public exprRArg
 {
 public:
 	exprRArgVar(exprVarRef *child0, int lineNb)
-		: exprRArg(astNode::E_RARG_VAR, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_VAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -945,7 +944,7 @@ class exprRArgEval : public exprRArg
 {
 public:
 	exprRArgEval(expr *child0, int lineNb)
-		: exprRArg(astNode::E_RARG_EVAL, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_EVAL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -965,7 +964,7 @@ class exprRArgConst : public exprRArg
 {
 public:
 	exprRArgConst(int iVal, int lineNb)
-		: exprRArg(astNode::E_RARG_EVAL, std::string(), iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_EVAL, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -986,12 +985,12 @@ class exprArgList : public expr
 {
 public:
 	exprArgList(exprRArg *child0, exprArgList *child1, int lineNb)
-		: expr(astNode::E_ARGLIST, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_ARGLIST, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
 	exprArgList(exprRArg *child0, int lineNb)
-		: expr(astNode::E_ARGLIST, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_ARGLIST, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1010,13 +1009,13 @@ public:
 class exprRun : public expr
 {
 public:
-	exprRun(exprArgList *child0, exprVarRef *child1, const std::string &sVal, int lineNb)
-		: expr(astNode::E_EXPR_RUN, sVal, 0, child0, child1, nullptr, lineNb)
+	exprRun(exprArgList *child0, exprVarRef *child1, int lineNb)
+		: expr(astNode::E_EXPR_RUN, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
-	exprRun(exprArgList *child0, const std::string &sVal, int lineNb)
-		: expr(astNode::E_EXPR_RUN, sVal, 0, child0, nullptr, nullptr, lineNb)
+	exprRun(exprArgList *child0, int lineNb)
+		: expr(astNode::E_EXPR_RUN, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1038,7 +1037,7 @@ class exprLen : public exprUnary
 {
 public:
 	exprLen(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_LEN, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_LEN, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1058,7 +1057,7 @@ class exprConst : public expr
 {
 public:
 	exprConst(int iVal, int lineNb)
-		: expr(astNode::E_EXPR_CONST, std::string(), iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_CONST, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1078,7 +1077,7 @@ class exprTimeout : public expr
 {
 public:
 	exprTimeout(int lineNb)
-		: expr(astNode::E_EXPR_TIMEOUT, std::string(), 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_TIMEOUT, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1098,7 +1097,7 @@ class exprFull : public exprUnary
 {
 public:
 	exprFull(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_FULL, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_FULL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1118,7 +1117,7 @@ class exprNFull : public exprUnary
 {
 public:
 	exprNFull(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NFULL, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NFULL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1138,7 +1137,7 @@ class exprEmpty : public exprUnary
 {
 public:
 	exprEmpty(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_EMPTY, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_EMPTY, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1158,7 +1157,7 @@ class exprNEmpty : public exprUnary
 {
 public:
 	exprNEmpty(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEMPTY, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NEMPTY, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1178,7 +1177,7 @@ class exprSkip : public expr
 {
 public:
 	exprSkip(int lineNb)
-		: expr(astNode::E_EXPR_SKIP, std::string(), 1, nullptr, nullptr, nullptr, lineNb)
+		: expr(astNode::E_EXPR_SKIP, 1, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1198,7 +1197,7 @@ class exprTrue : public expr
 {
 public:
 	exprTrue(int lineNb)
-		: expr(astNode::E_EXPR_TRUE, std::string(), 1, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_TRUE, 1, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1218,7 +1217,7 @@ class exprFalse : public expr
 {
 public:
 	exprFalse(int lineNb)
-		: expr(astNode::E_EXPR_FALSE, std::string(), 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_FALSE, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1238,7 +1237,7 @@ class stmntChanRecv : public stmnt
 {
 public:
 	stmntChanRecv(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, std::string(), 0, child0, child1, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_RCV, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -1263,7 +1262,7 @@ class stmntChanSnd : public stmnt
 {
 public:
 	stmntChanSnd(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_SND, std::string(), 0, child0, child1, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_SND, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -1294,12 +1293,12 @@ class stmntOpt : public stmnt
 {
 public:
 	stmntOpt(fsm *fsmChild, stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, std::string(), 0, child0, nullptr, nullptr, lineNb, fsmChild, nullptr)
+		: stmnt(astNode::E_STMNT_OPT, 0, child0, nullptr, nullptr, lineNb, fsmChild, nullptr)
 	{
 	}
 
 	stmntOpt(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, std::string(), 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+		: stmnt(astNode::E_STMNT_OPT, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
 	{
 	}
 
@@ -1319,7 +1318,7 @@ class stmntIf : public stmnt
 {
 public:
 	stmntIf(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_IF, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_IF, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1339,7 +1338,7 @@ class stmntDo : public stmnt
 {
 public:
 	stmntDo(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_DO, std::string(), 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_DO, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1359,7 +1358,7 @@ class stmntBreak : public stmnt
 {
 public:
 	stmntBreak(int lineNb)
-		: stmnt(astNode::E_STMNT_BREAK, std::string(), 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_BREAK, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1378,7 +1377,7 @@ public:
 class stmntGoto : public stmnt
 {
 public:
-	stmntGoto(const std::string &sVal, int lineNb)
+	stmntGoto(int lineNb)
 		: stmnt(astNode::E_STMNT_GOTO, sVal, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
@@ -1398,8 +1397,8 @@ public:
 class stmntLabel : public stmnt
 {
 public:
-	stmntLabel(const std::string &sVal, stmnt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_LABEL, sVal, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+	stmntLabel(stmnt *child0, int lineNb)
+		: stmnt(astNode::E_STMNT_LABEL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1419,7 +1418,7 @@ class stmntSeq : public stmnt
 {
 public:
 	stmntSeq(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_SEQ, std::string(), 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+		: stmnt(astNode::E_STMNT_SEQ, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
 	{
 	}
 
@@ -1439,7 +1438,7 @@ class stmntAtomic : public stmnt
 {
 public:
 	stmntAtomic(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_ATOMIC, std::string(), 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+		: stmnt(astNode::E_STMNT_ATOMIC, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
 	{
 	}
 
@@ -1459,7 +1458,7 @@ class stmntAsgn : public stmnt
 {
 public:
 	stmntAsgn(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_ASGN, std::string(), 0, child0, child1, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_ASGN, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -1479,7 +1478,7 @@ class stmntIncr : public stmnt
 {
 public:
 	stmntIncr(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_INCR, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_INCR, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1499,7 +1498,7 @@ class stmntDecr : public stmnt
 {
 public:
 	stmntDecr(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_DECR, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_DECR, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1539,12 +1538,12 @@ class stmntPrintm : public stmnt
 {
 public:
 	stmntPrintm(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINTM, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_PRINTM, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
 	stmntPrintm(int iVal, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINTM, std::string(), iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_PRINTM, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
@@ -1564,7 +1563,7 @@ class stmntAssert : public stmnt
 {
 public:
 	stmntAssert(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_ASSERT, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_ASSERT, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1584,7 +1583,7 @@ class stmntExpr : public stmnt
 {
 public:
 	stmntExpr(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_RCV, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1604,7 +1603,7 @@ class stmntElse : public stmnt
 {
 public:
 	stmntElse(int lineNb)
-		: stmnt(astNode::E_STMNT_ELSE, std::string(), 0, nullptr, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_ELSE, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1624,7 +1623,7 @@ class stmntWait : public stmnt
 {
 public:
 	stmntWait(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_WAIT, std::string(), 0, child0, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_WAIT, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1644,12 +1643,12 @@ class stmntWhen : public stmnt
 {
 public:
 	stmntWhen(expr *child0, stmnt *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_WHEN, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
 	{
 	}
 
 	stmntWhen(expr *child0, stmnt *child1, symTabNode *childSymNode, int lineNb)
-		: stmnt(astNode::E_STMNT_WHEN, std::string(), 0, child0, child1, nullptr, lineNb, nullptr, childSymNode)
+		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb, nullptr, childSymNode)
 	{
 	}
 

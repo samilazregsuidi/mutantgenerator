@@ -2,7 +2,7 @@ clear
 
 rm mutantgenerator
 
-cd ./parser/
+cd ./parser
 
 flex promela.l && yacc -y -d promela.y
 

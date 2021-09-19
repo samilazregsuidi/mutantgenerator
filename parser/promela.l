@@ -171,9 +171,8 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 
 <CODE>{symbol}	 	{ return yytext[0]; } 
 
-<CODE>{id}       	{ //yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
-					  //strcpy(yylval->sVal, yytext);
-					  yylval->sVal = yytext;
+<CODE>{id}       	{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
+					  strcpy(yylval->sVal, yytext);
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
 					  
 					  if(*globalSymTab != nullptr) {

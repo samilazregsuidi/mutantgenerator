@@ -132,7 +132,7 @@ start_parsing	: program;
 varref_	: cmpnd_								{ $$ = $1; }
 		;
 
-pfld_	: NAME									{ 	symTabNode* symbol = (*globalSymTab)->lookupInSymTab($1);
+pfld_	: NAME									{ 	symTabNode* symbol = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1) : nullptr;
 													if(symbol) 
 														$$ = new exprVarRefName($1, symbol, nbrLines);
 													else $$ = new exprConst((*mtypes)->getMTypeValue($1), nbrLines);		
@@ -163,8 +163,8 @@ units	: unit									/* dealt with locally */
 unit	: proc		/* proctype { }       */	/* dealt with locally */ 
 		| init		/* init { }           */	/* dealt with locally */
 		| events	/* event assertions   */  	{ std::cout << "The 'events' construct is currently not supported."; }
-		| one_decl	/* variables, chans   */	{ if($1 != nullptr) (*globalSymTab)->addToSymTab($1); }
-		| utype		/* user defined types */	{ (*globalSymTab)->addToSymTab($1); }
+		| one_decl	/* variables, chans   */	{ *globalSymTab = symTabNode::merge(*globalSymTab, $1); }
+		| utype		/* user defined types */	{ *globalSymTab = symTabNode::merge(*globalSymTab, $1); }
 		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
 		| ns		/* named sequence     */  	{ std::cout << "The 'named sequence' construct is currently not supported."; }
 		| SEMI		/* optional separator */	/* ignored */			
@@ -176,9 +176,10 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  '(' decl ')'							
 		  Opt_priority							/* Ignore */
 		  Opt_enabler							/* Ignore */
-		  body									{	$9->setSymTab($5->addToSymTab($9->getSymTab()));
-			  										(*globalSymTab)->addToSymTab(new procSymNode($3, $1, $9, nbrLines));
-												}
+		  body									{	$9->setSymTab(symTabNode::merge($5, $9->getSymTab()));
+		  											symTabNode* proc = new procSymNode($3, $1, $9, nbrLines);
+		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
+		  										}
 		;
 
 proctype: PROCTYPE								/* Ignore */
@@ -188,7 +189,7 @@ proctype: PROCTYPE								/* Ignore */
 inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 		| ACTIVE								{ $$ = new exprConst(1, nbrLines); }
 		| ACTIVE '[' CONST ']'					{ $$ = new exprConst($3, nbrLines); }
-		| ACTIVE '[' NAME ']'					{	symTabNode* var = (*globalSymTab)->lookupInSymTab($3);
+		| ACTIVE '[' NAME ']'					{	symTabNode* var = *globalSymTab? (*globalSymTab)->lookupInSymTab($3) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<$3<<" does not exist.";
 													else if(var->getType() != symTabNode::T_INT && var->getType() != symTabNode::T_BYTE && var->getType() != symTabNode::T_SHORT) std::cout << "The variable "<<$3<<" is not of type int, short or bit.";
 													else if(var->getInitExpr() == nullptr || var->getInitExpr()->getType() != astNode::E_EXPR_CONST) std::cout << "The variable "<<$3<<" does not have a constant value.";
@@ -199,10 +200,11 @@ inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 												}
 		;
 
-init	: INIT Opt_priority body				{	if((*globalSymTab)->lookupInSymTab("init") != nullptr) 
+init	: INIT Opt_priority body				{	if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
 	std::cout << "This is the second init process; only one is allowed.";
 													else {
-														(*globalSymTab)->addToSymTab(new procSymNode("init", $3, nbrLines));
+														symTabNode* chan = new procSymNode("init", $3, nbrLines);
+														*globalSymTab = symTabNode::merge(*globalSymTab, chan);
 													}
 
 												}				
@@ -254,7 +256,7 @@ sequence: step									{ 	$$ = new fsm();
 												}
 		| sequence MS step						{	if($3->getType() == astNode::E_DECL) {
 														$$ = $1;
-														$$->getSymTab()->addToSymTab($3->getSymbol());
+														$$->setSymTab(symTabNode::merge($$->getSymTab(), $3->getSymbol()));
 														$3->setSymbol(nullptr);
 														delete $3;
 													} else if($3->getType() == astNode::E_STMNT) {
@@ -328,7 +330,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 													delete $3;
 													$$ = res;
 												}
-	 	| vis UNAME var_list 					{	symTabNode* type = (*globalSymTab)->lookupInSymTab($2);
+	 	| vis UNAME var_list 					{	symTabNode* type = *globalSymTab? (*globalSymTab)->lookupInSymTab($2) : nullptr;
 	 												if(type == nullptr)
 	 													std::cout << "The type "<<$2<<" was not declared in a typedef.";
 													else {
@@ -349,7 +351,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 		;
 
 decl_lst: one_decl								{ $$ = $1; }
-		| one_decl SEMI decl_lst				{ $$ = $1->addToSymTab($3); }
+		| one_decl SEMI decl_lst				{ $$ = symTabNode::merge($1, $3); }
 		;
 
 												// Used for the parameters of a proctype
@@ -362,7 +364,7 @@ vref_lst: varref								/* Unreachable */
 		;
 
 var_list: ivar									{ $$ = $1; }
-		| ivar ',' var_list						{ $$ = $1->addToSymTab($3); }
+		| ivar ',' var_list						{ $$ = symTabNode::merge($1, $3); }
 		;
 
 ivar    : vardcl								{ $$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal); }
@@ -552,20 +554,20 @@ basetype: TYPE									{ $$.sVal = nullptr; $$.iType = $1; }
 typ_list: basetype								{	if($1.iType != symTabNode::T_UTYPE) {
 														$$ = symTabNode::createSymTabNode($1.iType, nbrLines);
 													} else {
-														symTabNode* pType = (*globalSymTab)->lookupInSymTab($1.sVal);
+														symTabNode* pType = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1.sVal) : nullptr;
 														$$ = new utypeSymNode(pType, nbrLines);
 														if($$ == nullptr) std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
 													}
 												}		
 		| basetype ',' typ_list					{	if($1.iType != symTabNode::T_UTYPE) {
-														$$ = $3->addToSymTab(symTabNode::createSymTabNode($1.iType, nbrLines));
+														$$ = symTabNode::merge($$, symTabNode::createSymTabNode($1.iType, nbrLines));
 													} else {
-														symTabNode* pType = (*globalSymTab)->lookupInSymTab($1.sVal);
+														symTabNode* pType = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1.sVal) : nullptr;
 														symTabNode* temp = new utypeSymNode(pType, nbrLines);
 														if(temp == nullptr) 
 															std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
 														else 
-															$$ = $3->addToSymTab(temp);
+															$$ = symTabNode::merge($3, temp);
 													}
 												}
 		;
