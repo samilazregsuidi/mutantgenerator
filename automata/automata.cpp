@@ -91,6 +91,14 @@ int fsmNode::getLineNb(void) const {
 void fsmNode::orderAcceptTransitions(void) {
 	
 }
+
+fsmNode::operator std::string(void) const {
+	std::string res = "";
+	for(auto t : trans)
+		res += std::string(*t);
+	return res;
+}
+
 /*
 void fsmNode::printFsmNode(ptList printed, int level) {
 	printed = listAdd(printed, this);
@@ -200,6 +208,11 @@ int fsmTrans::getLineNb(void) const {
 void fsmTrans::resolveVariables(symTabNode* global, symTabNode* local, const mTypeNode* mTypes) const{
 	if(expression) expression->resolveVariables(global, mTypes, local);
 }
+
+fsmTrans::operator std::string(void) const {
+	return expression? std::string(*expression) : "";
+}
+
 /*
  * FINITE STATE MACHINES (FSMs)
  * * * * * * * * * * * * * * * * * * * * * * * */
@@ -409,6 +422,12 @@ void fsm::printFsm(int level, const std::string& title)  {
 	return;
 }*/
 
+fsm::operator std::string(void) const {
+	std::string res = symTab? std::string(*symTab) : "";
+	res += "\n";
+	return res + std::string(*init);
+}
+
 /**
  * The input is an fsm prefix!! This prefix has some loose ends (outgoing transitions) that
  * have to be
@@ -432,10 +451,11 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 		unsigned int flag = 0;		// Flags are determined by labels
 		// child[0] = expNode::E_STMNT_*, sVal = the label of child[0]
 		while(stmnt->getType() == astNode::E_STMNT_LABEL) { 
-			if(stmnt->getName() == "accept") 	flag |= fsmNode::N_ACCEPT;
-			if(stmnt->getName() == "end") 		flag |= fsmNode::N_END;
-			if(stmnt->getName() == "progress") 	flag |= fsmNode::N_PROGRESS;
-			labels.push_back(stmnt->getName());
+			std::string label = static_cast<stmntGoto*>(stmnt)->getLabel();
+			if(label == "accept") 		flag |= fsmNode::N_ACCEPT;
+			if(label == "end") 			flag |= fsmNode::N_END;
+			if(label == "progress") 	flag |= fsmNode::N_PROGRESS;
+			labels.push_back(label);
 			astNode* temp = stmnt->detachChild0();
 			delete stmnt;
 			stmnt = temp;
@@ -554,12 +574,12 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 					// The GOTO statement could not be labelled.
 					assert(labels.empty());
 					// Connect the GOTO to its target (if its known)
-					fsmNode* labeledNode = this->labeledNodes[stmnt->getName()];
+					fsmNode* labeledNode = this->labeledNodes[static_cast<stmntGoto*>(stmnt)->getLabel()];
 					for(auto looseEnd : looseEnds) {
 						// When the label already exists, we connect the loose ends to that label.
 						if(labeledNode) looseEnd->setTargetNode(labeledNode);
 						// If not, then we add the to the list of loose GOTOs.
-						else looseGotos[stmnt->getName()].push_back(looseEnd);
+						else looseGotos[static_cast<stmntGoto*>(stmnt)->getLabel()].push_back(looseEnd);
 					}
 
 					looseEnds.clear();

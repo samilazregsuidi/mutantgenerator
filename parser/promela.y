@@ -176,8 +176,10 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  '(' decl ')'							
 		  Opt_priority							/* Ignore */
 		  Opt_enabler							/* Ignore */
-		  body									{	$9->setSymTab(symTabNode::merge($5, $9->getSymTab()));
-		  											symTabNode* proc = new procSymNode($3, $1, $9, nbrLines);
+		  body									{	
+		  											symTabNode* args = symTabNode::deepcopy($5);
+		  											$9->setSymTab(symTabNode::merge($5, $9->getSymTab()));
+		  											symTabNode* proc = new procSymNode($3, $1, args, $9, nbrLines);
 		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
 		  										}
 		;
@@ -494,9 +496,9 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 												} 
 		| SND expr %prec NEG					{ $$ = new exprNeg	($2, nbrLines); }
 		| '(' expr SEMI expr ':' expr ')'		{ $$ = new exprCond	($2, $4, $6, nbrLines); }
-		| RUN aname '(' args ')' Opt_priority	{ $$ = new exprRun	($4, $2, nbrLines); }
+		| RUN aname '(' args ')' Opt_priority	{ $$ = new exprRun	($2, $4, nbrLines); }
 		| RUN aname '[' varref ']' '(' args ')' Opt_priority
-						     					{ $$ = new exprRun	($7, $4, $2, nbrLines); }
+						     					{ $$ = new exprRun	($2, $7, $4, nbrLines); }
 		| LEN '(' varref ')'					{ $$ = new exprLen	($3, nbrLines); }
 		| ENABLED '(' expr ')'					{ std::cout << "The enabled keyword is not supported."; }
 		| varref RCV '[' rargs ']'				{ std::cout << "Construct not supported."; /* Unclear */ }

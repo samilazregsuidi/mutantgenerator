@@ -180,6 +180,10 @@ symTabNode* symTabNode::merge(symTabNode* symTab, symTabNode* newNode) {
 	return symTab;
 }
 
+symTabNode* symTabNode::deepcopy(symTabNode* symTab) {
+	
+}
+
 /*symTabNode* symTabNode::addToSymTab(symTabNode* newNode){
 	assert(newNode);
 	symTabNode* newlistTail = newNode->prev;
@@ -314,7 +318,41 @@ fsm* symTabNode::getFsm(void) const {
 	return childFsm;
 }
 
+symTabNode::operator std::string(void) const {
+	return getTypeName() + " " + getName();
+}
 
+tdefSymNode::operator std::string(void) const {
+	std::string res = getTypeName() + " " + name + "{\n";
+	const auto* children = child;
+	while(children) {
+		res += "\t" + std::string(*children) + (children->cnextSym()? ";" : "") +"\n";
+		children = children->cnextSym();
+	}
+	res += "};";
+	return res;
+}
+
+procSymNode::operator std::string(void) const {
+	assert(init);
+	std::string res = "";
+	if(init->getIVal() >= 1) {
+		res += "active";
+	}
+	if(init->getIVal() > 1) {
+		res += " [" + std::to_string(init->getIVal()) + "]";
+	}
+	res+= " proctype " + name + "(";
+	const auto* arg = args;
+	while(arg) {
+		res+= std::string(*arg) + (arg->cnextSym()? ", " : "){\n\t");
+		arg = arg->cnextSym();
+	}
+	res += std::string(*childFsm) + "}";
+
+	return res;
+}
+	
 /**
  * Initialises the values of memSize and memOffset of all variables
  * in the symTab and its descendants and starts with the node given
@@ -334,46 +372,46 @@ unsigned int symTabNode::processVariables(symTabNode* globalSymTab, const mTypeN
 	memSize = this->getTypeSize();
 	memOffset = iOffset;
 	unsigned int iMemSpace = memSize * bound;
-	return next->processVariables(globalSymTab, mTypes, iOffset + iMemSpace, bGlobal);
+	return !next ?  iOffset + iMemSpace : next->processVariables(globalSymTab, mTypes, iOffset + iMemSpace, bGlobal);
 }
 
-unsigned int chanSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) {
+unsigned int chanSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int iOffset, bool isGlobal) {
 	assert(init);
-	unsigned int memSpace = 0;
-	this->memOffset = offset;
+	unsigned int iMemSpace = 0;
+	this->memOffset = iOffset;
 	this->memSize = child->processVariables(global, mTypes, 0, 0);
-	if((memSpace = memSize * capacity * bound + bound));
-	else memSpace = memSize * bound + bound;
-	return next->processVariables(global, mTypes, offset + memSpace, isGlobal);
+	if((iMemSpace = memSize * capacity * bound + bound));
+	else iMemSpace = memSize * bound + bound;
+	return !next ?  iOffset + iMemSpace : next->processVariables(global, mTypes, iOffset + iMemSpace, isGlobal);
 }
 
-unsigned int tdefSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) {
+unsigned int tdefSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int iOffset, bool isGlobal) {
 	memSize = child->processVariables(global, mTypes, 0, false);
-	return next->processVariables(global, mTypes, offset, isGlobal);
+	return !next ?  iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
 }
 
-unsigned int procSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) {
+unsigned int procSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int iOffset, bool isGlobal) {
 	childFsm->resolveVariables(global, mTypes);
 	if(init && init->getType() == astNode::E_EXPR_COUNT)
 		init->resolveVariables(global, mTypes);
 	memSize = childFsm->processVariables(global, mTypes, 0, 0);
-	return next->processVariables(global, mTypes, offset, isGlobal);
+	return !next ?  iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
 }
 
-unsigned int neverSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) {
+unsigned int neverSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int iOffset, bool isGlobal) {
 	childFsm->resolveVariables(global, mTypes);
 	if(init && init->getType() == astNode::E_EXPR_COUNT)
 		init->resolveVariables(global, mTypes);
 	//childFsm->orderAcceptTransitions();
 	memSize = childFsm->processVariables(global, mTypes, 0, 0);
-	return next->processVariables(global, mTypes, offset, isGlobal);
+	return !next ?  iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
 }
 
-unsigned int utypeSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) {
+unsigned int utypeSymNode::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int iOffset, bool isGlobal) {
 	memSize = utype->getMemorySize();
-	memOffset = offset;
+	memOffset = iOffset;
 	unsigned int iMemSpace = memSize * bound;
-	return next->processVariables(global, mTypes, offset + iMemSpace, isGlobal); 
+	return !next ?  iOffset + iMemSpace : next->processVariables(global, mTypes, iOffset + iMemSpace, isGlobal); 
 }
 
 /**
@@ -422,6 +460,135 @@ void symTabNode::printSymTab(int level, const std::string& title) const {
 	if(next) next->printSymTab(level, nullptr);
 }
 
+void naSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitNA(this);
+}
+
+void bitSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitBit(this);
+}
+
+void boolSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitBool(this);
+}
+
+void byteSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitByte(this);
+}
+
+void pidSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitPid(this);
+}
+
+void shortSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitShort(this);
+}
+
+void intSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitInt(this);
+}
+
+void unsgnSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitUnsgn(this);
+}
+
+void mTypeSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitNA(this);
+}
+
+void chanSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitChan(this);
+}
+
+void cidSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitCid(this);
+}
+
+void tdefSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitTdef(this);
+}
+
+void procSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitProc(this);
+}
+
+void utypeSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitUtype(this);
+}
+
+void neverSymNode::acceptVisitor(symTabVisitor* visitor) const {
+	visitor->visitNever(this);
+}
+
+symTabNode* symTabCopyVisitor::deepCopy(const symTabNode* toCopy){
+	symTabNode* res = nullptr;
+	toCopy->accept(this);
+	res = tmp;
+	while(tmp) {
+		symTabNode::merge(res, tmp);
+		tmp = tmp -> nextSym(); 
+	}
+}
+	
+void symTabCopyVisitor::visitNA(const naSymNode* sym){
+	tmp = new naSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitBit(const bitSymNode* sym){
+	tmp = new bitSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitBool(const boolSymNode* sym){
+	tmp = new boolSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitByte(const byteSymNode* sym){
+	tmp = new byteSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitPid(const pidSymNode* sym){
+	tmp = new pidSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitShort(const shortSymNode* sym){
+	tmp = new shortSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitInt(const intSymNode* sym){
+	tmp = new intSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitUngn(const unsgnSymNode* sym){
+	tmp = new unsgnSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitMtype(const mTypeSymNode* sym){
+	tmp = new mTypeSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitChan(const chanSymNode* sym){
+	tmp = new chanSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitCid(const cidSymNode* sym){
+	tmp = new cidSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitTdef(const tdefSymNode* sym){
+	tmp = new tdefSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitProc(const procSymNode* sym){
+	tmp = new procSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitUtype(const utypeSymNode* sym){
+	tmp = new utypeSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitNever(const neverSymNode* sym){
+	tmp = new neverSymNode(*sym);
+}
 
 /*
  * MTYPES

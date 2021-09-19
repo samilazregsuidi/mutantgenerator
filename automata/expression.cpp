@@ -7,9 +7,8 @@
 /**
  * Just creates a node with the given values.
  */
-astNode::astNode(Type type, const std::string& sVal, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, fsm* fsmChild, symTabNode* symTabChild) {
+astNode::astNode(Type type, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, fsm* fsmChild, symTabNode* symTabChild) {
 	this->type			= type;
-	this->sVal   		= sVal;
 	this->iVal			= iVal;
 	this->childFsm		= fsmChild;
 	this->symTab		= symTabChild;
@@ -17,7 +16,6 @@ astNode::astNode(Type type, const std::string& sVal, int iVal, astNode* child0, 
 	this->child[0]= child0;
 	this->child[1]= child1;
 	this->child[2]= child2;
-	this->prob = 1;
 }
 
 /**
@@ -341,13 +339,13 @@ int astNode::getLineNb(void) const {
 	return lineNb;
 }
 
-std::string astNode::getName(void) const {
+/*std::string astNode::getName(void) const {
 	return sVal;
 }
 
 void astNode::setName(const std::string& sVal) {
 	this->sVal = sVal;
-}
+}*/
 
 void astNode::setGlobal(bool global) {
 	this->global = global;
@@ -401,34 +399,34 @@ fsm* astNode::getChildFsm(void) const {
 	return childFsm;
 }
 
+std::string exprVarRefName::getName(void) const {
+	return symTab->getName();
+}
 
-
-
-
+exprVarRefName::operator std::string() const {
+	return symTab->getName() + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
+}
 
 void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
-		symTab = subField->lookupInSymTab(sVal);
-	else if ((symTab = local->lookupInSymTab(sVal)) == nullptr)
-		symTab = global->lookupInSymTab(sVal);
+		symTab = subField->lookupInSymTab(symName);
+	else if ((symTab = local->lookupInSymTab(symName)) == nullptr)
+		symTab = global->lookupInSymTab(symName);
 
-	if (symTab && child[0])
-	{
-		// Resolve array index
-		child[0]->resolveVariables(global, mTypes, local, nullptr);
-	}
-	else
-	{
+	if (symTab) {
+		if(child[0]) 
+			child[0]->resolveVariables(global, mTypes, local, nullptr);
+	} else {
 		// First check if its a magic variable
 		int mvar = 0;
-		if (mvar == 0 && sVal == MVARID_LAST)
+		if (mvar == 0 && symName == MVARID_LAST)
 			mvar = MVAR_LAST;
-		if (mvar == 0 && sVal == MVARID_NRPR)
+		if (mvar == 0 && symName == MVARID_NRPR)
 			mvar = MVAR_NRPR;
-		if (mvar == 0 && sVal == MVARID_PID)
+		if (mvar == 0 && symName == MVARID_PID)
 			mvar = MVAR_PID;
-		if (mvar == 0 && sVal == MVARID_SCRATCH)
+		if (mvar == 0 && symName == MVARID_SCRATCH)
 			mvar = MVAR_SCRATCH;
 
 		if (mvar < 0)
@@ -439,7 +437,7 @@ void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mType
 		else
 		{
 			// Then check if it's an mtype
-			int value = mTypes->getMTypeValue(sVal);
+			int value = mTypes? mTypes->getMTypeValue(symName) : -1;
 			assert(!(value == -1 && !iVal));
 			iVal = value;
 		}
@@ -467,9 +465,9 @@ void exprVarRef::resolveVariables(symTabNode *global, const mTypeNode *mTypes, s
 void exprRun::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
-		symTab = subField->lookupInSymTab(sVal);
-	else if ((symTab = local->lookupInSymTab(sVal)) == nullptr)
-		symTab = global->lookupInSymTab(sVal);
+		symTab = subField->lookupInSymTab(procName);
+	else if ((symTab = local->lookupInSymTab(procName)) == nullptr)
+		symTab = global->lookupInSymTab(procName);
 
 	assert(symTab && symTab->getType() == symTabNode::T_PROC);
 

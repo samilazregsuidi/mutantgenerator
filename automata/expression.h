@@ -135,8 +135,8 @@ public:
 
 	Type getType(void) const;
 	int getLineNb(void) const;
-	std::string getName(void) const;
-	void setName(const std::string& sVal);
+	//std::string getName(void) const;
+	//void setName(const std::string& sVal);
 	bool isGlobal(void) const;
 	void setGlobal(bool global);
 	int getIVal(void) const;
@@ -248,42 +248,44 @@ protected:
 class exprVarRefName : public expr
 {
 public:
-	exprVarRefName(int lineNb)
+	exprVarRefName(const std::string& symName, int lineNb)
 		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
+		this->symName = symName;
 	}
 
-	exprVarRefName(expr *child0, int lineNb)
+	exprVarRefName(const std::string& symName, expr *child0, int lineNb)
 		: expr(astNode::E_VARREF_NAME, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
+		this->symName = symName;
 	}
 
-	exprVarRefName(symTabNode *symTabChild, int lineNb)
+	exprVarRefName(const std::string& symName, symTabNode *symTabChild, int lineNb)
 		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
 	{
+		this->symName = symName;
 	}
 
 	void resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
-	symTabNode *symbolLookUpRight(void) const
-	{
+	symTabNode *symbolLookUpRight(void) const {
 		return symTab;
 	}
 
-	symTabNode *symbolLookUpLeft(void) const
-	{
+	symTabNode *symbolLookUpLeft(void) const {
 		return symTab;
 	}
 
-	operator std::string() const
-	{
-		return symTab + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
-	}
+	std::string getName(void) const;
+
+	operator std::string() const;
 
 	std::string getTypeDescr(void)
 	{
 		return "Variable or field name (E_VARREF_NAME)";
 	}
+private:
+	std::string symName;
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
@@ -1009,14 +1011,16 @@ public:
 class exprRun : public expr
 {
 public:
-	exprRun(exprArgList *child0, exprVarRef *child1, int lineNb)
+	exprRun(const std::string& procName, exprArgList *child0, exprVarRef *child1, int lineNb)
 		: expr(astNode::E_EXPR_RUN, 0, child0, child1, nullptr, lineNb)
 	{
+		this->procName = procName;
 	}
 
-	exprRun(exprArgList *child0, int lineNb)
+	exprRun(const std::string& procName, exprArgList *child0, int lineNb)
 		: expr(astNode::E_EXPR_RUN, 0, child0, nullptr, nullptr, lineNb)
 	{
+		this->procName = procName;
 	}
 
 	void resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField = nullptr);
@@ -1030,6 +1034,8 @@ public:
 	{
 		return "Run (E_EXPR_RUN)";
 	}
+private:
+	std::string procName;
 };
 
 //E_EXPR_LEN,			// child[0] = E_VARREF
@@ -1377,40 +1383,56 @@ public:
 class stmntGoto : public stmnt
 {
 public:
-	stmntGoto(int lineNb)
-		: stmnt(astNode::E_STMNT_GOTO, sVal, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+	stmntGoto(const std::string& label, int lineNb)
+		: stmnt(astNode::E_STMNT_GOTO, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
+		this->label = label;
 	}
 
 	operator std::string() const
 	{
-		return "goto " + sVal + ";\n";
+		return "goto " + label + ";\n";
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Goto (E_STMNT_GOTO)";
 	}
+	
+	std::string getLabel(void) const {
+		return label;
+	}
+
+private:
+	std::string label;
 };
 
 //E_STMNT_LABEL,		// child[0] = E_STMNT_*, sVal = the label of child[0]
 class stmntLabel : public stmnt
 {
 public:
-	stmntLabel(stmnt *child0, int lineNb)
+	stmntLabel(const std::string& label, stmnt *child0, int lineNb)
 		: stmnt(astNode::E_STMNT_LABEL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
+		this->label = label;
 	}
 
 	operator std::string() const
 	{
-		return sVal + ": \n" + std::string(*child[0]);
+		return label + ": \n" + std::string(*child[0]);
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Label (E_STMNT_LABEL)";
 	}
+
+	std::string getLabel(void) const {
+		return label;
+	}
+
+private:
+	std::string label;
 };
 
 //E_STMNT_SEQ,		// fsm = fsm of this sequence
@@ -1518,19 +1540,22 @@ class stmntPrint : public stmnt
 {
 public:
 	stmntPrint(const std::string &toPrint, exprArgList *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINT, toPrint, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_PRINT, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
 	{
+		this->toPrint = toPrint;
 	}
 
 	operator std::string() const
 	{
-		return "printf(" + sVal + std::string(*child[0]) + ");\n";
+		return "printf(" + toPrint + std::string(*child[0]) + ");\n";
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Print (E_STMNT_PRINT)";
 	}
+private:
+	std::string toPrint;
 };
 
 //E_STMNT_PRINTM,		// child[0] = E_VARREF, or iVal = constant
@@ -1549,7 +1574,7 @@ public:
 
 	operator std::string() const
 	{
-		return "printm(" + sVal + (child[0] ? std::string(*child[0]) : std::to_string(iVal)) + ");\n";
+		return "printm("+(child[0] ? std::string(*child[0]) : std::to_string(iVal)) + ");\n";
 	}
 
 	std::string getTypeDescr(void)

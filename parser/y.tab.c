@@ -2798,13 +2798,13 @@ yyreduce:
 
   case 136:
 #line 497 "promela.y"
-                                                        { (yyval.pExprVal) = new exprRun	((yyvsp[-2].pExprArgListVal), (yyvsp[-4].sVal), nbrLines); }
+                                                        { (yyval.pExprVal) = new exprRun	((yyvsp[-4].sVal), (yyvsp[-2].pExprArgListVal), nbrLines); }
 #line 2803 "y.tab.c"
     break;
 
   case 137:
 #line 499 "promela.y"
-                                                                                        { (yyval.pExprVal) = new exprRun	((yyvsp[-2].pExprArgListVal), (yyvsp[-5].pExprVarRefVal), (yyvsp[-7].sVal), nbrLines); }
+                                                                                        { (yyval.pExprVal) = new exprRun	((yyvsp[-7].sVal), (yyvsp[-2].pExprArgListVal), (yyvsp[-5].pExprVarRefVal), nbrLines); }
 #line 2809 "y.tab.c"
     break;
 

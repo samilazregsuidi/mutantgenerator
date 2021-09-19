@@ -17,6 +17,8 @@ class fsm;
 class fsmNode;
 class fsmTrans;
 
+class symTabVisitor;
+
 class mTypeNode {
 public:
 	mTypeNode(const std::string& name);
@@ -35,7 +37,6 @@ private:
 };
 
 class symTabNode {
-	
 public:
 
 	// Primitive types:
@@ -49,10 +50,10 @@ public:
 		T_INT,
 		T_UNSGN, 	// not supported yet
 		T_MTYPE,
-		T_CLOCK ,	// dense time clock
+		//T_CLOCK ,	// dense time clock
 
-		T_FEAT,
-		T_UFEAT,
+		//T_FEAT,
+		//T_UFEAT,
 
 		// "Special" types:
 		T_CHAN,		// Channel: capacity used; children denote message fields
@@ -71,6 +72,8 @@ public:
 
 	virtual ~symTabNode();
 
+	virtual accept(symTabVisitor* visitor) const = 0;
+
 	virtual std::string getTypeName(void) const = 0;
 	virtual int getTypeSize(void) const = 0;
 
@@ -78,6 +81,8 @@ public:
 	static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr);
 
 	static symTabNode* merge(symTabNode* first, symTabNode* second);
+
+	static symTabNode* deepcopy(symTabNode* symTab);
 
 	//symTabNode* addToSymTab(symTabNode* newNode);
 	//void remove(void);
@@ -118,6 +123,8 @@ public:
 
 	void setUType(symTabNode* utype);
 
+	virtual operator std::string(void) const;
+
 protected:
 
 	Type type;					// The type of the symbol, one of the above
@@ -151,6 +158,8 @@ public:
 		assert(false);
 		return 0;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_BIT
@@ -171,6 +180,8 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_BOOL
@@ -191,6 +202,8 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_BYTE
@@ -211,6 +224,8 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_PIDSymNode
@@ -233,6 +248,8 @@ public:
 	int getTypeSize(void) const {
 		return 2;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_INT
@@ -253,6 +270,8 @@ public:
 	int getTypeSize(void) const {
 		return 4;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_UTYPE
@@ -282,6 +301,8 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_UNSGN
@@ -302,6 +323,8 @@ public:
 	int getTypeSize(void) const {
 		return 2;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_MTYPE
@@ -322,6 +345,8 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_CLOCK
@@ -380,6 +405,8 @@ public:
 	}
 
 	unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal);
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_CID
@@ -400,6 +427,8 @@ public:
 	int getTypeSize(void) const {
 		return 0;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_CID
@@ -420,6 +449,8 @@ public:
 	int getTypeSize(void) const {
 		return 0;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_TDEF
@@ -446,6 +477,10 @@ public:
 	}
 
 	unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal);
+
+	operator std::string(void) const ;
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
 //T_PROC
@@ -459,13 +494,17 @@ public:
 		: symTabNode(symTabNode::T_PROC, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
 	{}
 	
-	procSymNode(const std::string& name, expr* child0, fsm* childFsm, int lineNb)
+	procSymNode(const std::string& name, expr* child0, symTabNode* args, fsm* childFsm, int lineNb)
 		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, child0, childFsm, nullptr)
-	{}
+	{
+		this->args = args;
+	}
 
-	procSymNode(const std::string& name, fsm* childFsm, int lineNb)
+	procSymNode(const std::string& name, symTabNode* args, fsm* childFsm, int lineNb)
 		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, nullptr, childFsm, nullptr)
-	{}
+	{
+		this->args = args;
+	}
 
 	std::string getTypeName(void) const {
 		return "proctype";
@@ -476,6 +515,10 @@ public:
 	}
 
 	unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal);
+
+	operator std::string(void) const;
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
 
 protected:
 	procSymNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init, fsm* fsmVal, symTabNode* child)
@@ -489,6 +532,8 @@ protected:
 	procSymNode(Type type, const symTabNode& ref)
 		: symTabNode(type, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
 	{}
+private:
+	symTabNode* args;
 };
 
 //T_NEVER
@@ -515,6 +560,49 @@ public:
 	int getTypeSize(void) const {
 		return 1;
 	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
+};
+
+class symTabVisitor {
+public:
+	virtual void visitNA(const naSymNode* sym) = 0;
+	virtual void visitBit(const bitSymNode* sym) = 0 ;
+	virtual void visitBool(const boolSymNode* sym) = 0;
+	virtual void visitByte(const byteSymNode* sym) = 0;
+	virtual void visitPid(const pidSymNode* sym) = 0;
+	virtual void visitShort(const shortSymNode* sym) = 0;
+	virtual void visitInt(const intSymNode* sym) = 0;
+	virtual void visitUnsgn(const unsgnSymNode* sym) = 0;
+	virtual void visitMtype(const mTypeSymNode* sym) = 0;
+	virtual void visitChan(const chanSymNode* sym) = 0;
+	virtual void visitCid(const cidSymNode* sym) = 0;
+	virtual void visitTdef(const tdefSymNode* sym) = 0;
+	virtual void visitProc(const procSymNode* sym) = 0;
+	virtual void visitUtype(const utypeSymNode* sym) = 0;
+	virtual void visitNever(const neverSymNode* sym) = 0;
+};
+
+class symTabCopyVisitor : public symTabVisitor {
+	symTabNode* deepCopy(const symTabNode* toCopy);
+
+	void visitNA(const naSymNode* sym);
+	void visitBit(const bitSymNode* sym);
+	void visitBool(const boolSymNode* sym);
+	void visitByte(const byteSymNode* sym);
+	void visitPid(const pidSymNode* sym);
+	void visitShort(const shortSymNode* sym);
+	void visitInt(const intSymNode* sym);
+	void visitUnsgn(const unsgnSymNode* sym);
+	void visitMtype(const mTypeSymNode* sym);
+	void visitChan(const chanSymNode* sym);
+	void visitCid(const cidSymNode* sym);
+	void visitTdef(const tdefSymNode* sym);
+	void visitProc(const procSymNode* sym);
+	void visitUtype(const utypeSymNode* sym);
+	void visitNever(const neverSymNode* sym);
+private:
+	symTabNode* tmp;
 };
 
 class dataTuple {
