@@ -7,15 +7,21 @@
 /**
  * Just creates a node with the given values.
  */
-astNode::astNode(Type type, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, fsm* fsmChild, symTabNode* symTabChild) {
+astNode::astNode(Type type, int iVal, astNode* child0, astNode* child1, astNode* child2, int lineNb, stmnt* block, symTabNode* symTabChild) {
 	this->type			= type;
 	this->iVal			= iVal;
-	this->childFsm		= fsmChild;
+	this->childFsm		= block;
 	this->symTab		= symTabChild;
 	this->lineNb 		= lineNb;
 	this->child[0]= child0;
 	this->child[1]= child1;
 	this->child[2]= child2;
+}
+
+decl::decl(symTabNode *symTabChild, int lineNb)
+	: stmnt(astNode::E_DECL, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
+{
+	declSym = symTabNode::createSymTabNode(symTabChild->getType(), *symTabChild);
 }
 
 /**
@@ -29,12 +35,6 @@ astNode::~astNode() {
 	for(int i = 0; i < 3; i++) 
 		if(child[i]) 
 			delete child[i];
-}
-
-void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
-	for(int i = 0; i < 3; i++) 
-		if(child[i] != nullptr) 
-			child[i]->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
 /**
@@ -329,6 +329,9 @@ symTabNode* astNode::getSymbol(void) const {
 
 void astNode::setSymbol(symTabNode *sym) {
 	symTab = sym;
+	for(int i = 0; i < 3; ++i)
+		if(child[i])
+			child[i]->setSymbol(sym);
 }
 
 astNode::Type astNode::getType(void) const {
@@ -395,9 +398,9 @@ astNode* astNode::detachChild2(void) {
 	return child2;
 }
 
-fsm* astNode::getChildFsm(void) const {
+/*fsm* astNode::getChildFsm(void) const {
 	return childFsm;
-}
+}*/
 
 stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	if (!stmnts)
@@ -412,6 +415,11 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	return stmnts;
 }
 
+unsigned int stmnt::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const {
+	offset += symTab ? symTab->processVariables(global, mTypes, offset, isGlobal) : 0;
+	return offset + (next? next->processVariables(global, mTypes, offset, isGlobal) : 0);
+}
+
 std::string exprVarRefName::getName(void) const {
 	return symTab->getName();
 }
@@ -420,16 +428,41 @@ exprVarRefName::operator std::string() const {
 	return symTab->getName() + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
 }
 
+decl::operator std::string() const {
+	return std::string(*declSym) + (declSym->getInitExpr()? " = " + std::string(*(declSym->getInitExpr())) : "") + ";\n" + (next? std::string(*next) : "");
+}
+
+void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+	for(int i = 0; i < 3; i++) 
+		if(child[i] != nullptr) 
+			child[i]->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+}
+
+void stmnt::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+	astNode::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	if(next)
+		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+}
+
+void decl::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+	if(declSym->getInitExpr())
+		declSym->getInitExpr()->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	stmnt::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+}
+
+
 void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
 		symTab = subField->lookupInSymTab(symName);
-	else if ((symTab = local->lookupInSymTab(symName)) == nullptr)
+	else if (local)
+		symTab = local->lookupInSymTab(symName);
+	else
 		symTab = global->lookupInSymTab(symName);
 
 	if (symTab) {
 		if(child[0]) 
-			child[0]->resolveVariables(global, mTypes, local, nullptr);
+			child[0]->resolveVariables(global, mTypes, local, subField);
 	} else {
 		// First check if its a magic variable
 		int mvar = 0;
@@ -479,7 +512,9 @@ void exprRun::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symT
 
 	if (subField)
 		symTab = subField->lookupInSymTab(procName);
-	else if ((symTab = local->lookupInSymTab(procName)) == nullptr)
+	else if (local)
+		symTab = local->lookupInSymTab(procName);
+	else
 		symTab = global->lookupInSymTab(procName);
 
 	assert(symTab && symTab->getType() == symTabNode::T_PROC);

@@ -528,7 +528,8 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 			case astNode::E_STMNT_SEQ:		// fsm = fsm of this sequence
 				{	// Feature-related checks
 
-					fsm* childFsm = stmnt->getChildFsm();
+					fsm* childFsm = nullptr;
+					//stmnt->getChildFsm();
 					fsmNode* init = childFsm->getInitNode();
 					
 					// Sanity check; a sequence must at least have a statement and the initial one cannot be labelled
@@ -646,7 +647,7 @@ fsm* fsm::stmnt2fsm(astNode* stmnt, symTabNode* symTab) {
 					}
 #endif*/
 					fsm* childFsm = nullptr;
-					while(option && (childFsm = option->getChildFsm())) { // expNode::E_STMNT_OPT: child[0] = expNode::E_STMNT_OPT (next option; or nullptr), fsm = fsm of this option
+					while(option && (childFsm = nullptr /*option->getChildFsm()*/)) { // expNode::E_STMNT_OPT: child[0] = expNode::E_STMNT_OPT (next option; or nullptr), fsm = fsm of this option
 						// Sanity checks
 						// There cannot be a feature expression
 						// The FSM should have an init state, but without labels (the firs statement in an option block should not be labelled)

@@ -10,6 +10,8 @@ class fsm;
 class fsmNode;
 class fsmTrans;
 
+class stmnt;
+
 // These constants are used to identify magic (predefined) variables inside an E_VARREF_NAME (to avoid strcmp).
 #define MVAR_SCRATCH -1
 #define MVARID_SCRATCH "_" // A write-only variable that can be used to destroy a field read from a channel
@@ -107,12 +109,12 @@ public:
 		E_RARG_CONST, // iVal = the constant
 	};
 
-	astNode(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr);
+	astNode(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr);
 	virtual ~astNode();
 
 	/**
 	 * Goes through the expression and all its children and looks up all references to
-	 * MTypes, variables or proctypes (expressions of type E_VARREF_NAME or E_EXPR_RUN)
+	 * MTypes, variables or proctypes (expressions of type STMNT* BLOCK or E_EXPR_RUN)
 	 * and stores a pointer to the actual symTab record of the variable in the symTab
 	 * field of the expression; or the MType value (>=0) in the iVal field; or the magic
 	 * variable identifier (MVAR_* < 0) in the iVal field.
@@ -127,7 +129,7 @@ public:
 	 * before.
 	 */
 	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeNode *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr);
-	virtual unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const;
+	
 	
 	symTabNode *getSymbol(void) const;
 	void setSymbol(symTabNode *sym);
@@ -153,7 +155,7 @@ public:
 	astNode* detachChild1(void);
 	astNode* detachChild2(void);
 
-	fsm* getChildFsm(void) const;
+	//fsm* getChildFsm(void) const;
 
 	//virtual ADD expNode2Bool(const symTabNode* symTab) const;
 	void setIVal(int ival);
@@ -175,7 +177,7 @@ protected:
 	bool global;
 
 	astNode *child[3];
-	fsm *childFsm;
+	stmnt *childFsm;
 	symTabNode *symTab;
 };
 
@@ -184,18 +186,26 @@ class stmnt : public astNode
 {
 
 protected:
-	stmnt(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: astNode(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	stmnt(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr)
+		: astNode(type, iVal, child0, child1, child2, lineNb, block, symTabChild)
 	{
+		this->next = nullptr;
+		this->prev = this;
 	}
 
 public:
 	stmnt(stmnt *node, int lineNb)
 		: astNode(astNode::E_STMNT, 0, node, nullptr, nullptr, lineNb)
 	{
+		this->next = nullptr;
+		this->prev = this;
 	}
 
 	static stmnt* merge(stmnt* list, stmnt* node);
+
+	unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const;
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
 	{
@@ -205,14 +215,14 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]);
+		return std::string(*child[0]) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Statement wrapper (E_STMNT)";
 	}
-private:
+protected:
 	stmnt* next;
 	stmnt* prev;
 };
@@ -222,27 +232,26 @@ private:
 class decl : public stmnt
 {
 public:
-	decl(symTabNode *symTabChild, int lineNb)
-		: stmnt(astNode::E_DECL, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
-	{
-	}
+	decl(symTabNode *symTabChild, int lineNb);
 
-	operator std::string() const
-	{
-		return "TODO";
-	}
+	void resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
+
+	operator std::string() const;
 
 	std::string getTypeDescr(void)
 	{
 		return "Declaration wrapper (E_DECL)";
 	}
+
+private:
+	symTabNode* declSym;
 };
 
 class expr : public astNode
 {
 protected:
-	expr(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: astNode(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	expr(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr)
+		: astNode(type, iVal, child0, child1, child2, lineNb, block, symTabChild)
 	{
 	}
 };
@@ -257,13 +266,13 @@ class exprVarRefName : public expr
 {
 public:
 	exprVarRefName(const std::string& symName, int lineNb)
-		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 		this->symName = symName;
 	}
 
 	exprVarRefName(const std::string& symName, expr *child0, int lineNb)
-		: expr(astNode::E_VARREF_NAME, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF_NAME, 0, child0, nullptr, nullptr, lineNb)
 	{
 		this->symName = symName;
 	}
@@ -301,12 +310,12 @@ class exprVarRef : public expr
 {
 public:
 	exprVarRef(exprVarRefName *child0, exprVarRef *child1, int lineNb)
-		: expr(astNode::E_VARREF, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
 	exprVarRef(exprVarRefName *child0, int lineNb)
-		: expr(astNode::E_VARREF, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_VARREF, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -358,7 +367,7 @@ class exprVar : public expr
 {
 public:
 	exprVar(exprVarRef *child0, int lineNb)
-		: expr(astNode::E_EXPR_VAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_VAR, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -401,8 +410,8 @@ public:
 class exprBinary : public expr
 {
 protected:
-	exprBinary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprBinary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb)
+		: expr(type, iVal, child0, child1, child2, lineNb)
 	{
 	}
 
@@ -418,8 +427,8 @@ protected:
 class exprUnary : public expr
 {
 protected:
-	exprUnary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprUnary(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb)
+		: expr(type, iVal, child0, child1, child2, lineNb)
 	{
 	}
 
@@ -435,7 +444,7 @@ class exprPar : public exprUnary
 {
 public:
 	exprPar(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_PAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_PAR, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -455,7 +464,7 @@ class exprPlus : public exprBinary
 {
 public:
 	exprPlus(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_PLUS, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_PLUS, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -475,7 +484,7 @@ class exprMinus : public exprBinary
 {
 public:
 	exprMinus(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_MINUS, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_MINUS, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -495,7 +504,7 @@ class exprTimes : public exprBinary
 {
 public:
 	exprTimes(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_TIMES, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_TIMES, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -515,7 +524,7 @@ class exprDiv : public exprBinary
 {
 public:
 	exprDiv(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_DIV, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_DIV, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -535,7 +544,7 @@ class exprMod : public exprBinary
 {
 public:
 	exprMod(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_MOD, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_MOD, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -555,7 +564,7 @@ class exprGT : public exprBinary
 {
 public:
 	exprGT(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_GT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_GT, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -575,7 +584,7 @@ class exprLT : public exprBinary
 {
 public:
 	exprLT(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LT, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -595,7 +604,7 @@ class exprGE : public exprBinary
 {
 public:
 	exprGE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_GE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_GE, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -615,7 +624,7 @@ class exprLE : public exprBinary
 {
 public:
 	exprLE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LE, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -635,7 +644,7 @@ class exprEQ : public exprBinary
 {
 public:
 	exprEQ(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_EQ, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_EQ, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -655,7 +664,7 @@ class exprNE : public exprBinary
 {
 public:
 	exprNE(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_NE, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_NE, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -675,7 +684,7 @@ class exprAnd : public exprBinary
 {
 public:
 	exprAnd(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_AND, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_AND, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -695,7 +704,7 @@ class exprOr : public exprBinary
 {
 public:
 	exprOr(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_OR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_OR, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -715,7 +724,7 @@ class exprCount : public exprUnary
 {
 public:
 	exprCount(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_COUNT, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_COUNT, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -735,7 +744,7 @@ class exprUMin : public exprUnary
 {
 public:
 	exprUMin(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_UMIN, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_UMIN, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -755,7 +764,7 @@ class exprNeg : public exprUnary
 {
 public:
 	exprNeg(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEG, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NEG, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -775,7 +784,7 @@ class exprBitwAnd : public exprBinary
 {
 public:
 	exprBitwAnd(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWAND, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWAND, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -795,7 +804,7 @@ class exprBitwOr : public exprBinary
 {
 public:
 	exprBitwOr(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWOR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWOR, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -815,7 +824,7 @@ class exprBitwXor : public exprBinary
 {
 public:
 	exprBitwXor(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_BITWXOR, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_BITWXOR, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -835,7 +844,7 @@ class exprBitwNeg : public exprUnary
 {
 public:
 	exprBitwNeg(expr *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_BITWNEG, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_BITWNEG, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -855,7 +864,7 @@ class exprLShift : public exprBinary
 {
 public:
 	exprLShift(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_LSHIFT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_LSHIFT, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -875,7 +884,7 @@ class exprRShift : public exprBinary
 {
 public:
 	exprRShift(expr *child0, expr *child1, int lineNb)
-		: exprBinary(astNode::E_EXPR_RSHIFT, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: exprBinary(astNode::E_EXPR_RSHIFT, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -913,8 +922,8 @@ public:
 class exprRArg : public expr
 {
 protected:
-	exprRArg(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, fsm *fsmChild = nullptr, symTabNode *symTabChild = nullptr)
-		: expr(type, iVal, child0, child1, child2, lineNb, fsmChild, symTabChild)
+	exprRArg(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb)
+		: expr(type, iVal, child0, child1, child2, lineNb)
 	{
 	}
 };
@@ -924,7 +933,7 @@ class exprRArgVar : public exprRArg
 {
 public:
 	exprRArgVar(exprVarRef *child0, int lineNb)
-		: exprRArg(astNode::E_RARG_VAR, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_VAR, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -954,7 +963,7 @@ class exprRArgEval : public exprRArg
 {
 public:
 	exprRArgEval(expr *child0, int lineNb)
-		: exprRArg(astNode::E_RARG_EVAL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_EVAL, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -974,7 +983,7 @@ class exprRArgConst : public exprRArg
 {
 public:
 	exprRArgConst(int iVal, int lineNb)
-		: exprRArg(astNode::E_RARG_EVAL, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprRArg(astNode::E_RARG_EVAL, iVal, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -995,12 +1004,12 @@ class exprArgList : public expr
 {
 public:
 	exprArgList(exprRArg *child0, exprArgList *child1, int lineNb)
-		: expr(astNode::E_ARGLIST, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_ARGLIST, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
 	exprArgList(exprRArg *child0, int lineNb)
-		: expr(astNode::E_ARGLIST, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_ARGLIST, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1051,7 +1060,7 @@ class exprLen : public exprUnary
 {
 public:
 	exprLen(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_LEN, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_LEN, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1071,7 +1080,7 @@ class exprConst : public expr
 {
 public:
 	exprConst(int iVal, int lineNb)
-		: expr(astNode::E_EXPR_CONST, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_CONST, iVal, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1091,7 +1100,7 @@ class exprTimeout : public expr
 {
 public:
 	exprTimeout(int lineNb)
-		: expr(astNode::E_EXPR_TIMEOUT, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_TIMEOUT, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1111,7 +1120,7 @@ class exprFull : public exprUnary
 {
 public:
 	exprFull(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_FULL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_FULL, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1131,7 +1140,7 @@ class exprNFull : public exprUnary
 {
 public:
 	exprNFull(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NFULL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NFULL, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1151,7 +1160,7 @@ class exprEmpty : public exprUnary
 {
 public:
 	exprEmpty(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_EMPTY, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_EMPTY, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1171,7 +1180,7 @@ class exprNEmpty : public exprUnary
 {
 public:
 	exprNEmpty(exprVarRef *child0, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEMPTY, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: exprUnary(astNode::E_EXPR_NEMPTY, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1211,7 +1220,7 @@ class exprTrue : public expr
 {
 public:
 	exprTrue(int lineNb)
-		: expr(astNode::E_EXPR_TRUE, 1, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_TRUE, 1, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1231,7 +1240,7 @@ class exprFalse : public expr
 {
 public:
 	exprFalse(int lineNb)
-		: expr(astNode::E_EXPR_FALSE, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: expr(astNode::E_EXPR_FALSE, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
@@ -1262,7 +1271,7 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " ? " + std::string(*child[1]);
+		return std::string(*child[0]) + " ? " + std::string(*child[1]) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1293,7 +1302,7 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " ! " + std::string(*child[1]);
+		return std::string(*child[0]) + " ! " + std::string(*child[1]) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1306,19 +1315,19 @@ public:
 class stmntOpt : public stmnt
 {
 public:
-	stmntOpt(fsm *fsmChild, stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, 0, child0, nullptr, nullptr, lineNb, fsmChild, nullptr)
+	stmntOpt(stmnt* block, stmntOpt *child0, int lineNb)
+		: stmnt(astNode::E_STMNT_OPT, 0, child0, nullptr, nullptr, lineNb, block)
 	{
 	}
 
-	stmntOpt(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+	stmntOpt(stmnt* block, int lineNb)
+		: stmnt(astNode::E_STMNT_OPT, 0, nullptr, nullptr, nullptr, lineNb, block)
 	{
 	}
 
 	operator std::string() const
 	{
-		return *child[0];
+		return std::string(*child[0]) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1332,13 +1341,13 @@ class stmntIf : public stmnt
 {
 public:
 	stmntIf(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_IF, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_IF, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "if\n" + std::string(*child[0]) + "\nfi;\n";
+		return "if\n" + std::string(*child[0]) + "\nfi;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1352,13 +1361,13 @@ class stmntDo : public stmnt
 {
 public:
 	stmntDo(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_DO, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_DO, 0, child0, nullptr, nullptr, lineNb)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "do\n" + std::string(*child[0]) + "\nod;\n";
+		return "do\n" + std::string(*child[0]) + "\nod;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1372,13 +1381,13 @@ class stmntBreak : public stmnt
 {
 public:
 	stmntBreak(int lineNb)
-		: stmnt(astNode::E_STMNT_BREAK, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_BREAK, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "break;\n";
+		return "break;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1392,14 +1401,14 @@ class stmntGoto : public stmnt
 {
 public:
 	stmntGoto(const std::string& label, int lineNb)
-		: stmnt(astNode::E_STMNT_GOTO, 0, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_GOTO, 0, nullptr, nullptr, nullptr, lineNb)
 	{
 		this->label = label;
 	}
 
 	operator std::string() const
 	{
-		return "goto " + label + ";\n";
+		return "goto " + label + ";\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1420,14 +1429,14 @@ class stmntLabel : public stmnt
 {
 public:
 	stmntLabel(const std::string& label, stmnt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_LABEL, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_LABEL, 0, child0, nullptr, nullptr, lineNb)
 	{
 		this->label = label;
 	}
 
 	operator std::string() const
 	{
-		return label + ": \n" + std::string(*child[0]);
+		return label + ": \n" + std::string(*child[0]) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1447,14 +1456,14 @@ private:
 class stmntSeq : public stmnt
 {
 public:
-	stmntSeq(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_SEQ, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+	stmntSeq(stmnt* block, int lineNb)
+		: stmnt(astNode::E_STMNT_SEQ, 0, nullptr, nullptr, nullptr, lineNb, block)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "null";
+		return "null" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1467,14 +1476,17 @@ public:
 class stmntAtomic : public stmnt
 {
 public:
-	stmntAtomic(fsm *fsmChild, int lineNb)
-		: stmnt(astNode::E_STMNT_ATOMIC, 0, nullptr, nullptr, nullptr, lineNb, fsmChild, nullptr)
+	stmntAtomic(stmnt *block, int lineNb)
+		: stmnt(astNode::E_STMNT_ATOMIC, 0, nullptr, nullptr, nullptr, lineNb, block)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "null";
+		std::string res = "atomic {\n";
+		res += std::string(*childFsm);
+		res += "\n};";
+		return next? res + std::string(*next) : res; 
 	}
 
 	std::string getTypeDescr(void)
@@ -1494,7 +1506,7 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " = " + std::string(*child[1]) + ";\n";
+		return std::string(*child[0]) + " = " + std::string(*child[1]) + ";\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1514,7 +1526,7 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + "++;\n";
+		return std::string(*child[0]) + "++;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1534,7 +1546,7 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + "--;\n";
+		return std::string(*child[0]) + "--;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1548,14 +1560,14 @@ class stmntPrint : public stmnt
 {
 public:
 	stmntPrint(const std::string &toPrint, exprArgList *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINT, 0, child0, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_PRINT, 0, child0, nullptr, nullptr, lineNb)
 	{
 		this->toPrint = toPrint;
 	}
 
 	operator std::string() const
 	{
-		return "printf(" + toPrint + std::string(*child[0]) + ");\n";
+		return "printf(" + toPrint + (child[0]? std::string(*child[0]) : "") + ");\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1576,13 +1588,13 @@ public:
 	}
 
 	stmntPrintm(int iVal, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINTM, iVal, nullptr, nullptr, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_PRINTM, iVal, nullptr, nullptr, nullptr, lineNb)
 	{
 	}
 
 	operator std::string() const
 	{
-		return "printm("+(child[0] ? std::string(*child[0]) : std::to_string(iVal)) + ");\n";
+		return "printm("+(child[0] ? std::string(*child[0]) : std::to_string(iVal)) + ");\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1602,7 +1614,7 @@ public:
 
 	operator std::string() const
 	{
-		return "assert(" + std::string(*child[0]) + ");\n";
+		return "assert(" + std::string(*child[0]) + ");\n" + (next? std::string(*next) : "") ;
 	}
 
 	std::string getTypeDescr(void)
@@ -1642,7 +1654,7 @@ public:
 
 	operator std::string() const
 	{
-		return "else -> ";
+		return "else -> " + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1662,7 +1674,7 @@ public:
 
 	operator std::string() const
 	{
-		return "while ( " + std::string(*child[0]) + " ) wait;\n";
+		return "while ( " + std::string(*child[0]) + " ) wait;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -1676,7 +1688,7 @@ class stmntWhen : public stmnt
 {
 public:
 	stmntWhen(expr *child0, stmnt *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb, nullptr, nullptr)
+		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb)
 	{
 	}
 
@@ -1687,7 +1699,7 @@ public:
 
 	operator std::string() const
 	{
-		return "when ( " + std::string(*child[0]) + " ) do " + std::string(*child[1]) + "\n";
+		return "when ( " + std::string(*child[0]) + " ) do " + std::string(*child[1]) + "\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)

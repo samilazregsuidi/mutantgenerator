@@ -367,12 +367,11 @@ union YYSTYPE
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
-	class fsm*				pFsmVal;
 	class symTabNode*		pSymTabNodeVal;
 	
 	enum symTabNode::Type   iType;
 
-#line 376 "y.tab.c"
+#line 375 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -755,26 +754,26 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   130,   130,   156,   159,   160,   163,   164,   165,   166,
-     167,   168,   169,   170,   174,   187,   188,   191,   192,   193,
-     194,   205,   215,   218,   221,   222,   225,   228,   229,   232,
-     233,   234,   235,   238,   239,   242,   245,   248,   259,   272,
-     273,   274,   275,   276,   277,   285,   286,   287,   288,   291,
-     292,   298,   336,   350,   356,   357,   361,   362,   365,   366,
-     369,   370,   373,   374,   382,   385,   388,   389,   390,   393,
-     396,   397,   400,   401,   404,   405,   408,   409,   412,   413,
-     414,   415,   416,   417,   418,   421,   422,   423,   424,   425,
-     426,   427,   428,   429,   430,   431,   432,   433,   434,   435,
-     436,   437,   438,   441,   442,   445,   458,   459,   462,   463,
-     466,   467,   470,   471,   472,   473,   474,   475,   476,   477,
-     478,   479,   480,   481,   482,   483,   484,   485,   486,   487,
-     488,   489,   490,   491,   498,   499,   500,   501,   503,   504,
-     505,   506,   507,   508,   509,   510,   511,   512,   513,   514,
-     515,   516,   517,   518,   521,   522,   525,   526,   529,   530,
-     535,   536,   537,   538,   539,   540,   541,   542,   543,   546,
-     547,   548,   549,   552,   553,   557,   565,   579,   580,   584,
-     585,   589,   590,   593,   594,   597,   598,   599,   600,   604,
-     605,   606,   607,   610,   611,   612
+       0,   129,   129,   158,   161,   162,   165,   166,   167,   168,
+     169,   170,   171,   172,   176,   189,   190,   193,   194,   195,
+     196,   207,   217,   220,   223,   224,   227,   230,   231,   234,
+     235,   236,   237,   240,   241,   244,   247,   250,   262,   267,
+     268,   269,   270,   271,   272,   280,   281,   282,   283,   286,
+     287,   293,   331,   345,   351,   352,   356,   357,   360,   361,
+     364,   365,   368,   369,   377,   380,   383,   384,   385,   388,
+     391,   392,   395,   396,   399,   400,   403,   404,   407,   408,
+     409,   410,   411,   412,   413,   417,   418,   419,   420,   421,
+     422,   423,   424,   425,   426,   427,   428,   429,   430,   431,
+     432,   433,   434,   437,   438,   441,   454,   455,   458,   459,
+     462,   463,   466,   467,   468,   469,   470,   471,   472,   473,
+     474,   475,   476,   477,   478,   479,   480,   481,   482,   483,
+     484,   485,   486,   487,   494,   495,   496,   497,   499,   500,
+     501,   502,   503,   504,   505,   506,   507,   508,   509,   510,
+     511,   512,   513,   514,   517,   518,   521,   522,   525,   526,
+     531,   532,   533,   534,   535,   536,   537,   538,   539,   542,
+     543,   544,   545,   548,   549,   553,   561,   575,   576,   580,
+     581,   585,   586,   589,   590,   593,   594,   595,   596,   600,
+     601,   602,   603,   606,   607,   608
 };
 #endif
 
@@ -2045,72 +2044,72 @@ yyreduce:
   switch (yyn)
     {
   case 8:
-#line 165 "promela.y"
+#line 167 "promela.y"
                                                                 { std::cout << "The 'events' construct is currently not supported."; }
-#line 2051 "y.tab.c"
+#line 2050 "y.tab.c"
     break;
 
   case 9:
-#line 166 "promela.y"
+#line 168 "promela.y"
                                                                 { *globalSymTab = symTabNode::merge(*globalSymTab, (yyvsp[0].pSymTabNodeVal)); }
-#line 2057 "y.tab.c"
+#line 2056 "y.tab.c"
     break;
 
   case 10:
-#line 167 "promela.y"
+#line 169 "promela.y"
                                                                 { *globalSymTab = symTabNode::merge(*globalSymTab, (yyvsp[0].pSymTabNodeVal)); }
-#line 2063 "y.tab.c"
+#line 2062 "y.tab.c"
     break;
 
   case 11:
-#line 168 "promela.y"
+#line 170 "promela.y"
                                                                 { std::cout << "Embedded C code is not supported."; }
-#line 2069 "y.tab.c"
+#line 2068 "y.tab.c"
     break;
 
   case 12:
-#line 169 "promela.y"
+#line 171 "promela.y"
                                                                 { std::cout << "The 'named sequence' construct is currently not supported."; }
-#line 2075 "y.tab.c"
+#line 2074 "y.tab.c"
     break;
 
   case 14:
-#line 179 "promela.y"
+#line 181 "promela.y"
                                                                                         {	
 		  											symTabNode* args = symTabNode::deepcopy((yyvsp[-4].pSymTabNodeVal));
-		  											(yyvsp[0].pFsmVal)->setSymTab(symTabNode::merge((yyvsp[-4].pSymTabNodeVal), (yyvsp[0].pFsmVal)->getSymTab()));
-		  											symTabNode* proc = new procSymNode((yyvsp[-6].sVal), (yyvsp[-8].pExprVal), args, (yyvsp[0].pFsmVal), nbrLines);
+		  											(yyvsp[0].pStmntVal)->setSymbol(symTabNode::merge((yyvsp[-4].pSymTabNodeVal), (yyvsp[0].pStmntVal)->getSymbol()));
+		  											symTabNode* proc = new procSymNode((yyvsp[-6].sVal), (yyvsp[-8].pExprVal), args, (yyvsp[0].pStmntVal), nbrLines);
 		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
 		  										}
-#line 2086 "y.tab.c"
+#line 2085 "y.tab.c"
     break;
 
   case 16:
-#line 188 "promela.y"
+#line 190 "promela.y"
                                                                                 { std::cout << "Deterministic proctypes are not supported (only useful for simulation)."; }
-#line 2092 "y.tab.c"
+#line 2091 "y.tab.c"
     break;
 
   case 17:
-#line 191 "promela.y"
+#line 193 "promela.y"
                                                                         { (yyval.pExprVal) = new exprConst(0, nbrLines); }
-#line 2098 "y.tab.c"
+#line 2097 "y.tab.c"
     break;
 
   case 18:
-#line 192 "promela.y"
+#line 194 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprConst(1, nbrLines); }
-#line 2104 "y.tab.c"
+#line 2103 "y.tab.c"
     break;
 
   case 19:
-#line 193 "promela.y"
+#line 195 "promela.y"
                                                                         { (yyval.pExprVal) = new exprConst((yyvsp[-1].iVal), nbrLines); }
-#line 2110 "y.tab.c"
+#line 2109 "y.tab.c"
     break;
 
   case 20:
-#line 194 "promela.y"
+#line 196 "promela.y"
                                                                         {	symTabNode* var = *globalSymTab? (*globalSymTab)->lookupInSymTab((yyvsp[-1].sVal)) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<(yyvsp[-1].sVal)<<" does not exist.";
 													else if(var->getType() != symTabNode::T_INT && var->getType() != symTabNode::T_BYTE && var->getType() != symTabNode::T_SHORT) std::cout << "The variable "<<(yyvsp[-1].sVal)<<" is not of type int, short or bit.";
@@ -2120,128 +2119,121 @@ yyreduce:
 													}
 													//delete $3;											
 												}
-#line 2124 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
   case 21:
-#line 205 "promela.y"
+#line 207 "promela.y"
                                                                 {	if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
 	std::cout << "This is the second init process; only one is allowed.";
 													else {
-														symTabNode* chan = new procSymNode("init", (yyvsp[0].pFsmVal), nbrLines);
+														symTabNode* chan = new procSymNode("init", (yyvsp[0].pStmntVal), nbrLines);
 														*globalSymTab = symTabNode::merge(*globalSymTab, chan);
 													}
 
 												}
-#line 2137 "y.tab.c"
+#line 2136 "y.tab.c"
     break;
 
   case 22:
-#line 215 "promela.y"
+#line 217 "promela.y"
                                                                         { std::cout << "Event sequences (traces) are not supported."; }
-#line 2143 "y.tab.c"
+#line 2142 "y.tab.c"
     break;
 
   case 23:
-#line 218 "promela.y"
+#line 220 "promela.y"
                                                         {	(yyval.pSymTabNodeVal) = new tdefSymNode((yyvsp[-3].sVal), (yyvsp[-1].pSymTabNodeVal), nbrLines);  }
-#line 2149 "y.tab.c"
+#line 2148 "y.tab.c"
     break;
 
   case 36:
-#line 245 "promela.y"
-                                                                { (yyval.pFsmVal) = (yyvsp[-2].pFsmVal); }
-#line 2155 "y.tab.c"
+#line 247 "promela.y"
+                                                                { (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); }
+#line 2154 "y.tab.c"
     break;
 
   case 37:
-#line 248 "promela.y"
-                                                                                { 	(yyval.pFsmVal) = new fsm();
-													if((yyvsp[0].pStmntVal)->getType() == astNode::E_DECL) {
-														(yyval.pFsmVal)->setSymTab((yyvsp[0].pStmntVal)->getSymbol());
-														(yyvsp[0].pStmntVal)->setSymbol(nullptr);
-														delete (yyvsp[0].pStmntVal);
-													} else if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT) {
-														(yyval.pFsmVal)->stmnt2fsm((yyvsp[0].pStmntVal)->getChild0(), *globalSymTab);
-														(yyvsp[0].pStmntVal)->detachChild0();
-														delete (yyvsp[0].pStmntVal);
-													}
+#line 250 "promela.y"
+                                                                                { 	(yyval.pStmntVal) = (yyvsp[0].pStmntVal);
+													/*$$ = new fsm();
+													if($1->getType() == astNode::E_DECL) {
+														$$->setSymTab($1->getSymbol());
+														$1->setSymbol(nullptr);
+														delete $1;
+													} else if($1->getType() == astNode::E_STMNT) {
+														$$->stmnt2fsm($1->getChild0(), *globalSymTab);
+														$1->detachChild0();
+														delete $1;
+													}*/
 												}
 #line 2171 "y.tab.c"
     break;
 
   case 38:
-#line 259 "promela.y"
-                                                                                {	if((yyvsp[0].pStmntVal)->getType() == astNode::E_DECL) {
-														(yyval.pFsmVal) = (yyvsp[-2].pFsmVal);
-														(yyval.pFsmVal)->setSymTab(symTabNode::merge((yyval.pFsmVal)->getSymTab(), (yyvsp[0].pStmntVal)->getSymbol()));
-														(yyvsp[0].pStmntVal)->setSymbol(nullptr);
-														delete (yyvsp[0].pStmntVal);
-													} else if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT) {
-														(yyval.pFsmVal) = (yyvsp[-2].pFsmVal)->stmnt2fsm((yyvsp[0].pStmntVal)->getChild0(), *globalSymTab);
-														(yyvsp[0].pStmntVal)->detachChild0();
-														delete (yyvsp[0].pStmntVal);
-													}
+#line 262 "promela.y"
+                                                                                {	(yyval.pStmntVal) = stmnt::merge((yyval.pStmntVal), (yyvsp[0].pStmntVal));
+													(yyvsp[0].pStmntVal)->setSymbol(symTabNode::merge((yyval.pStmntVal)->getSymbol(), (yyvsp[0].pStmntVal)->getSymbol()));
 												}
-#line 2187 "y.tab.c"
+#line 2179 "y.tab.c"
     break;
 
   case 39:
-#line 272 "promela.y"
+#line 267 "promela.y"
                                                                                 { (yyval.pStmntVal) = new decl((yyvsp[0].pSymTabNodeVal), nbrLines); }
-#line 2193 "y.tab.c"
+#line 2185 "y.tab.c"
     break;
 
   case 40:
-#line 273 "promela.y"
+#line 268 "promela.y"
                                                                                 { std::cout << "Channel assertions are currently not supported."; }
-#line 2199 "y.tab.c"
+#line 2191 "y.tab.c"
     break;
 
   case 41:
-#line 274 "promela.y"
+#line 269 "promela.y"
                                                                                 { std::cout << "Declarations with labels are not suported."; }
-#line 2205 "y.tab.c"
+#line 2197 "y.tab.c"
     break;
 
   case 42:
-#line 275 "promela.y"
+#line 270 "promela.y"
                                                                                 { std::cout << "Channel assertions are currently not supported."; }
-#line 2211 "y.tab.c"
+#line 2203 "y.tab.c"
     break;
 
   case 43:
-#line 276 "promela.y"
+#line 271 "promela.y"
                                                                                         { (yyval.pStmntVal) = new stmnt((yyvsp[0].pStmntVal), nbrLines); }
-#line 2217 "y.tab.c"
+#line 2209 "y.tab.c"
     break;
 
   case 44:
-#line 277 "promela.y"
+#line 272 "promela.y"
                                                                         { std::cout << "Unless statements are currently not supported."; }
-#line 2223 "y.tab.c"
+#line 2215 "y.tab.c"
     break;
 
   case 46:
-#line 286 "promela.y"
+#line 281 "promela.y"
                                                                                         { std::cout << "The 'hidden' keyword is not supported."; }
-#line 2229 "y.tab.c"
+#line 2221 "y.tab.c"
     break;
 
   case 47:
-#line 287 "promela.y"
+#line 282 "promela.y"
                                                                                         { std::cout << "The 'show' keyword is not supported."; }
-#line 2235 "y.tab.c"
+#line 2227 "y.tab.c"
     break;
 
   case 48:
-#line 288 "promela.y"
+#line 283 "promela.y"
                                                                                         { std::cout << "The 'local' keyword is not supported."; }
-#line 2241 "y.tab.c"
+#line 2233 "y.tab.c"
     break;
 
   case 51:
-#line 298 "promela.y"
+#line 293 "promela.y"
                                                                         {	symTabNode* cur = (yyvsp[0].pSymTabNodeVal);
 													symTabNode* res = nullptr;
 													while(cur != nullptr) {
@@ -2280,11 +2272,11 @@ yyreduce:
 													delete (yyvsp[0].pSymTabNodeVal);
 													(yyval.pSymTabNodeVal) = res;
 												}
-#line 2284 "y.tab.c"
+#line 2276 "y.tab.c"
     break;
 
   case 52:
-#line 336 "promela.y"
+#line 331 "promela.y"
                                                                         {	symTabNode* type = *globalSymTab? (*globalSymTab)->lookupInSymTab((yyvsp[-1].sVal)) : nullptr;
 	 												if(type == nullptr)
 	 													std::cout << "The type "<<(yyvsp[-1].sVal)<<" was not declared in a typedef.";
@@ -2299,484 +2291,485 @@ yyreduce:
 													}
 	 												//delete $2;
 												}
-#line 2303 "y.tab.c"
+#line 2295 "y.tab.c"
     break;
 
   case 53:
-#line 350 "promela.y"
+#line 345 "promela.y"
                                                                 {	if((yyvsp[-4].iType) != symTabNode::T_MTYPE) std::cout <<  "This syntax only works for MTYPEs.";
 													(yyval.pSymTabNodeVal) = nullptr;
 													/* The mtype values are added in the nlst rule. */ 
 												}
-#line 2312 "y.tab.c"
+#line 2304 "y.tab.c"
     break;
 
   case 54:
-#line 356 "promela.y"
+#line 351 "promela.y"
                                                                                 { (yyval.pSymTabNodeVal) = (yyvsp[0].pSymTabNodeVal); }
-#line 2318 "y.tab.c"
+#line 2310 "y.tab.c"
     break;
 
   case 55:
-#line 357 "promela.y"
+#line 352 "promela.y"
                                                                         { (yyval.pSymTabNodeVal) = symTabNode::merge((yyvsp[-2].pSymTabNodeVal), (yyvsp[0].pSymTabNodeVal)); }
-#line 2324 "y.tab.c"
+#line 2316 "y.tab.c"
     break;
 
   case 56:
-#line 361 "promela.y"
+#line 356 "promela.y"
                                                                         { (yyval.pSymTabNodeVal) = nullptr; }
-#line 2330 "y.tab.c"
+#line 2322 "y.tab.c"
     break;
 
   case 57:
-#line 362 "promela.y"
+#line 357 "promela.y"
                                                                                         { (yyval.pSymTabNodeVal) = (yyvsp[0].pSymTabNodeVal); }
-#line 2336 "y.tab.c"
+#line 2328 "y.tab.c"
     break;
 
   case 60:
-#line 369 "promela.y"
+#line 364 "promela.y"
                                                                                 { (yyval.pSymTabNodeVal) = (yyvsp[0].pSymTabNodeVal); }
-#line 2342 "y.tab.c"
+#line 2334 "y.tab.c"
     break;
 
   case 61:
-#line 370 "promela.y"
+#line 365 "promela.y"
                                                                                 { (yyval.pSymTabNodeVal) = symTabNode::merge((yyvsp[-2].pSymTabNodeVal), (yyvsp[0].pSymTabNodeVal)); }
-#line 2348 "y.tab.c"
+#line 2340 "y.tab.c"
     break;
 
   case 62:
-#line 373 "promela.y"
-                                                                                { (yyval.pSymTabNodeVal) = symTabNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines, (yyvsp[0].pDataVal).sVal); }
-#line 2354 "y.tab.c"
+#line 368 "promela.y"
+                                                                                { (yyval.pSymTabNodeVal) = symTabNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); }
+#line 2346 "y.tab.c"
     break;
 
   case 63:
-#line 374 "promela.y"
+#line 369 "promela.y"
                                                                                 { 	int mtype;
-													if((yyvsp[0].pExprVal)->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes)->getMTypeValue(static_cast<exprVar*>((yyvsp[0].pExprVal))->getExprVarRefName()->getName())) != -1) {
+													if((yyvsp[0].pExprVal)->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes? (*mtypes)->getMTypeValue(static_cast<exprVar*>((yyvsp[0].pExprVal))->getExprVarRefName()->getName()) : -1)) != -1) {
 														exprConst* newExpr = new exprConst(mtype, (yyvsp[0].pExprVal)->getLineNb());
 														delete (yyvsp[0].pExprVal);
 														(yyvsp[0].pExprVal) = newExpr;
 													}
-													(yyval.pSymTabNodeVal) = symTabNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[0].pExprVal));
+													(yyval.pSymTabNodeVal) = symTabNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal));
 												}
-#line 2367 "y.tab.c"
+#line 2359 "y.tab.c"
     break;
 
   case 64:
-#line 382 "promela.y"
+#line 377 "promela.y"
                                                                         { (yyval.pSymTabNodeVal) = new chanSymNode((yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, (yyvsp[0].pDataVal).symTabNodeVal, nbrLines); }
-#line 2373 "y.tab.c"
+#line 2365 "y.tab.c"
     break;
 
   case 65:
-#line 385 "promela.y"
+#line 380 "promela.y"
                                                         { (yyval.pDataVal).iVal = (yyvsp[-5].iVal); (yyval.pDataVal).symTabNodeVal = (yyvsp[-1].pSymTabNodeVal); }
-#line 2379 "y.tab.c"
+#line 2371 "y.tab.c"
     break;
 
   case 66:
-#line 388 "promela.y"
+#line 383 "promela.y"
                                                                                 { (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iVal = 1; }
-#line 2385 "y.tab.c"
+#line 2377 "y.tab.c"
     break;
 
   case 67:
-#line 389 "promela.y"
+#line 384 "promela.y"
                                                                                 { std::cout << "The 'unsigned' data type is not supported."; }
-#line 2391 "y.tab.c"
+#line 2383 "y.tab.c"
     break;
 
   case 68:
-#line 390 "promela.y"
+#line 385 "promela.y"
                                                                         { (yyval.pDataVal).sVal = (yyvsp[-3].sVal); (yyval.pDataVal).iVal = (yyvsp[-1].iVal); }
-#line 2397 "y.tab.c"
+#line 2389 "y.tab.c"
     break;
 
   case 69:
-#line 393 "promela.y"
+#line 388 "promela.y"
                                                                                 { (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal); }
-#line 2403 "y.tab.c"
+#line 2395 "y.tab.c"
     break;
 
   case 70:
-#line 396 "promela.y"
+#line 391 "promela.y"
                                                                                 { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); }
-#line 2409 "y.tab.c"
+#line 2401 "y.tab.c"
     break;
 
   case 71:
-#line 397 "promela.y"
+#line 392 "promela.y"
                                                                                 { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); }
-#line 2415 "y.tab.c"
+#line 2407 "y.tab.c"
     break;
 
   case 72:
-#line 400 "promela.y"
+#line 395 "promela.y"
                                                                                 { (yyval.pExprVarRefVal) = new exprVarRef((yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 2421 "y.tab.c"
+#line 2413 "y.tab.c"
     break;
 
   case 73:
-#line 401 "promela.y"
+#line 396 "promela.y"
                                                                         { (yyval.pExprVarRefVal) = new exprVarRef((yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 2427 "y.tab.c"
+#line 2419 "y.tab.c"
     break;
 
   case 74:
-#line 404 "promela.y"
+#line 399 "promela.y"
                                                                         { (yyval.pExprVarRefVal) = nullptr; }
-#line 2433 "y.tab.c"
+#line 2425 "y.tab.c"
     break;
 
   case 75:
-#line 405 "promela.y"
+#line 400 "promela.y"
                                                                         { (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal);   }
-#line 2439 "y.tab.c"
+#line 2431 "y.tab.c"
     break;
 
   case 76:
-#line 408 "promela.y"
+#line 403 "promela.y"
                                                                                 { (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2445 "y.tab.c"
+#line 2437 "y.tab.c"
     break;
 
   case 77:
-#line 409 "promela.y"
+#line 404 "promela.y"
                                                                                         { (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2451 "y.tab.c"
+#line 2443 "y.tab.c"
     break;
 
   case 78:
-#line 412 "promela.y"
+#line 407 "promela.y"
                                                                         { (yyval.pStmntVal) = new stmntChanRecv((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 2457 "y.tab.c"
+#line 2449 "y.tab.c"
     break;
 
   case 79:
-#line 413 "promela.y"
+#line 408 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntChanSnd((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 2463 "y.tab.c"
+#line 2455 "y.tab.c"
     break;
 
   case 80:
-#line 414 "promela.y"
+#line 409 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIf((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2469 "y.tab.c"
+#line 2461 "y.tab.c"
     break;
 
   case 81:
-#line 415 "promela.y"
+#line 410 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDo((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2475 "y.tab.c"
+#line 2467 "y.tab.c"
     break;
 
   case 82:
-#line 416 "promela.y"
+#line 411 "promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntBreak(nbrLines); }
-#line 2481 "y.tab.c"
+#line 2473 "y.tab.c"
     break;
 
   case 83:
-#line 417 "promela.y"
+#line 412 "promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); }
-#line 2487 "y.tab.c"
+#line 2479 "y.tab.c"
     break;
 
   case 84:
-#line 418 "promela.y"
-                                                                                { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && (yyvsp[0].pStmntVal)->getChild0() && (yyvsp[0].pStmntVal)->getChild0()->getType() == astNode::E_STMNT_LABEL) std::cout << "Only two labels per state are supported."; 
+#line 413 "promela.y"
+                                                                                { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && (yyvsp[0].pStmntVal)->getChild0() && (yyvsp[0].pStmntVal)->getChild0()->getType() == astNode::E_STMNT_LABEL) 
+													std::cout << "Only two labels per state are supported."; 
 												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); }
-#line 2494 "y.tab.c"
+#line 2487 "y.tab.c"
     break;
 
   case 85:
-#line 421 "promela.y"
+#line 417 "promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAsgn((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2500 "y.tab.c"
+#line 2493 "y.tab.c"
     break;
 
   case 86:
-#line 422 "promela.y"
+#line 418 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIncr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2506 "y.tab.c"
+#line 2499 "y.tab.c"
     break;
 
   case 87:
-#line 423 "promela.y"
+#line 419 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDecr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2512 "y.tab.c"
+#line 2505 "y.tab.c"
     break;
 
   case 88:
-#line 424 "promela.y"
+#line 420 "promela.y"
                                                                 { (yyval.pStmntVal) = new stmntPrint((yyvsp[-2].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 2518 "y.tab.c"
+#line 2511 "y.tab.c"
     break;
 
   case 89:
-#line 425 "promela.y"
+#line 421 "promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2524 "y.tab.c"
+#line 2517 "y.tab.c"
     break;
 
   case 90:
-#line 426 "promela.y"
+#line 422 "promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].iVal), nbrLines); }
-#line 2530 "y.tab.c"
+#line 2523 "y.tab.c"
     break;
 
   case 91:
-#line 427 "promela.y"
+#line 423 "promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntAssert((yyvsp[0].pExprVal), nbrLines); }
-#line 2536 "y.tab.c"
+#line 2529 "y.tab.c"
     break;
 
   case 92:
-#line 428 "promela.y"
+#line 424 "promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 2542 "y.tab.c"
+#line 2535 "y.tab.c"
     break;
 
   case 93:
-#line 429 "promela.y"
+#line 425 "promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2548 "y.tab.c"
+#line 2541 "y.tab.c"
     break;
 
   case 94:
-#line 430 "promela.y"
+#line 426 "promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2554 "y.tab.c"
+#line 2547 "y.tab.c"
     break;
 
   case 95:
-#line 431 "promela.y"
+#line 427 "promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2560 "y.tab.c"
+#line 2553 "y.tab.c"
     break;
 
   case 96:
-#line 432 "promela.y"
+#line 428 "promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2566 "y.tab.c"
+#line 2559 "y.tab.c"
     break;
 
   case 97:
-#line 433 "promela.y"
+#line 429 "promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntExpr((yyvsp[0].pExprVal), nbrLines); }
-#line 2572 "y.tab.c"
+#line 2565 "y.tab.c"
     break;
 
   case 98:
-#line 434 "promela.y"
+#line 430 "promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntElse(nbrLines); }
-#line 2578 "y.tab.c"
+#line 2571 "y.tab.c"
     break;
 
   case 99:
-#line 435 "promela.y"
-                                                                { (yyval.pStmntVal) = new stmntAtomic((yyvsp[-2].pFsmVal), nbrLines); }
-#line 2584 "y.tab.c"
+#line 431 "promela.y"
+                                                                { (yyval.pStmntVal) = new stmntAtomic((yyvsp[-2].pStmntVal), nbrLines); }
+#line 2577 "y.tab.c"
     break;
 
   case 100:
-#line 436 "promela.y"
+#line 432 "promela.y"
                                                                 { std::cout << "Deterministic steps are not yet supported."; }
-#line 2590 "y.tab.c"
+#line 2583 "y.tab.c"
     break;
 
   case 101:
-#line 437 "promela.y"
-                                                                        { (yyval.pStmntVal) = new stmntSeq((yyvsp[-2].pFsmVal), nbrLines); }
-#line 2596 "y.tab.c"
+#line 433 "promela.y"
+                                                                        { (yyval.pStmntVal) = new stmntSeq((yyvsp[-2].pStmntVal), nbrLines); }
+#line 2589 "y.tab.c"
     break;
 
   case 102:
-#line 438 "promela.y"
+#line 434 "promela.y"
                                                                         { std::cout << "Inline calls are not yet supported."; }
-#line 2602 "y.tab.c"
+#line 2595 "y.tab.c"
     break;
 
   case 103:
-#line 441 "promela.y"
-                                                                                { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[0].pFsmVal), nbrLines); }
-#line 2608 "y.tab.c"
+#line 437 "promela.y"
+                                                                                { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[0].pStmntVal), nbrLines); }
+#line 2601 "y.tab.c"
     break;
 
   case 104:
-#line 442 "promela.y"
-                                                                                { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[-1].pFsmVal), (yyvsp[0].pStmntOptVal), nbrLines); }
-#line 2614 "y.tab.c"
+#line 438 "promela.y"
+                                                                                { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntOptVal), nbrLines); }
+#line 2607 "y.tab.c"
     break;
 
   case 105:
-#line 445 "promela.y"
-                                                                        { (yyval.pFsmVal) = (yyvsp[-1].pFsmVal); }
-#line 2620 "y.tab.c"
+#line 441 "promela.y"
+                                                                        { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); }
+#line 2613 "y.tab.c"
     break;
 
   case 107:
-#line 459 "promela.y"
+#line 455 "promela.y"
                                         { /* redundant semi at end of sequence */ }
-#line 2626 "y.tab.c"
+#line 2619 "y.tab.c"
     break;
 
   case 108:
-#line 462 "promela.y"
+#line 458 "promela.y"
                                         { /* at least one semi-colon */ }
-#line 2632 "y.tab.c"
+#line 2625 "y.tab.c"
     break;
 
   case 109:
-#line 463 "promela.y"
+#line 459 "promela.y"
                                         { /* but more are okay too   */ }
-#line 2638 "y.tab.c"
+#line 2631 "y.tab.c"
     break;
 
   case 110:
-#line 466 "promela.y"
+#line 462 "promela.y"
                                                                                 { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 2644 "y.tab.c"
+#line 2637 "y.tab.c"
     break;
 
   case 111:
-#line 467 "promela.y"
+#line 463 "promela.y"
                                                                                         { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 2650 "y.tab.c"
+#line 2643 "y.tab.c"
     break;
 
   case 112:
-#line 470 "promela.y"
+#line 466 "promela.y"
                                                                         { (yyval.pExprVal) = new exprPar		((yyvsp[-1].pExprVal), nbrLines); }
-#line 2656 "y.tab.c"
+#line 2649 "y.tab.c"
     break;
 
   case 113:
-#line 471 "promela.y"
+#line 467 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprPlus		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2662 "y.tab.c"
+#line 2655 "y.tab.c"
     break;
 
   case 114:
-#line 472 "promela.y"
+#line 468 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprMinus	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2668 "y.tab.c"
+#line 2661 "y.tab.c"
     break;
 
   case 115:
-#line 473 "promela.y"
+#line 469 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprTimes	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2674 "y.tab.c"
+#line 2667 "y.tab.c"
     break;
 
   case 116:
-#line 474 "promela.y"
+#line 470 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprDiv		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2680 "y.tab.c"
+#line 2673 "y.tab.c"
     break;
 
   case 117:
-#line 475 "promela.y"
+#line 471 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprMod		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2686 "y.tab.c"
+#line 2679 "y.tab.c"
     break;
 
   case 118:
-#line 476 "promela.y"
+#line 472 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2692 "y.tab.c"
+#line 2685 "y.tab.c"
     break;
 
   case 119:
-#line 477 "promela.y"
+#line 473 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwXor	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2698 "y.tab.c"
+#line 2691 "y.tab.c"
     break;
 
   case 120:
-#line 478 "promela.y"
+#line 474 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2704 "y.tab.c"
+#line 2697 "y.tab.c"
     break;
 
   case 121:
-#line 479 "promela.y"
+#line 475 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprGT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2710 "y.tab.c"
+#line 2703 "y.tab.c"
     break;
 
   case 122:
-#line 480 "promela.y"
+#line 476 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprLT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2716 "y.tab.c"
+#line 2709 "y.tab.c"
     break;
 
   case 123:
-#line 481 "promela.y"
+#line 477 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprGE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2722 "y.tab.c"
+#line 2715 "y.tab.c"
     break;
 
   case 124:
-#line 482 "promela.y"
+#line 478 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprLE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2728 "y.tab.c"
+#line 2721 "y.tab.c"
     break;
 
   case 125:
-#line 483 "promela.y"
+#line 479 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprEQ		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2734 "y.tab.c"
+#line 2727 "y.tab.c"
     break;
 
   case 126:
-#line 484 "promela.y"
+#line 480 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprNE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2740 "y.tab.c"
+#line 2733 "y.tab.c"
     break;
 
   case 127:
-#line 485 "promela.y"
+#line 481 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2746 "y.tab.c"
+#line 2739 "y.tab.c"
     break;
 
   case 128:
-#line 486 "promela.y"
+#line 482 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2752 "y.tab.c"
+#line 2745 "y.tab.c"
     break;
 
   case 129:
-#line 487 "promela.y"
+#line 483 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprLShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2758 "y.tab.c"
+#line 2751 "y.tab.c"
     break;
 
   case 130:
-#line 488 "promela.y"
+#line 484 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprRShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2764 "y.tab.c"
+#line 2757 "y.tab.c"
     break;
 
   case 131:
-#line 489 "promela.y"
+#line 485 "promela.y"
                                                                         { (yyval.pExprVal) = new exprCount	((yyvsp[-1].pExprVal), nbrLines); }
-#line 2770 "y.tab.c"
+#line 2763 "y.tab.c"
     break;
 
   case 132:
-#line 490 "promela.y"
+#line 486 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprBitwNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 2776 "y.tab.c"
+#line 2769 "y.tab.c"
     break;
 
   case 133:
-#line 491 "promela.y"
+#line 487 "promela.y"
                                                                         { 	if((yyvsp[0].pExprVal)->getType() != astNode::E_EXPR_CONST) 
 														(yyval.pExprVal) = new exprUMin((yyvsp[0].pExprVal), nbrLines);
 													else {
@@ -2784,245 +2777,245 @@ yyreduce:
 														(yyval.pExprVal) = (yyvsp[0].pExprVal);
 													}
 												}
-#line 2788 "y.tab.c"
+#line 2781 "y.tab.c"
     break;
 
   case 134:
-#line 498 "promela.y"
+#line 494 "promela.y"
                                                                         { (yyval.pExprVal) = new exprNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 2794 "y.tab.c"
+#line 2787 "y.tab.c"
     break;
 
   case 135:
-#line 499 "promela.y"
+#line 495 "promela.y"
                                                                 { (yyval.pExprVal) = new exprCond	((yyvsp[-5].pExprVal), (yyvsp[-3].pExprVal), (yyvsp[-1].pExprVal), nbrLines); }
-#line 2800 "y.tab.c"
+#line 2793 "y.tab.c"
     break;
 
   case 136:
-#line 500 "promela.y"
+#line 496 "promela.y"
                                                         { (yyval.pExprVal) = new exprRun	((yyvsp[-4].sVal), (yyvsp[-2].pExprArgListVal), nbrLines); }
-#line 2806 "y.tab.c"
+#line 2799 "y.tab.c"
     break;
 
   case 137:
-#line 502 "promela.y"
+#line 498 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprRun	((yyvsp[-7].sVal), (yyvsp[-2].pExprArgListVal), (yyvsp[-5].pExprVarRefVal), nbrLines); }
-#line 2812 "y.tab.c"
+#line 2805 "y.tab.c"
     break;
 
   case 138:
-#line 503 "promela.y"
+#line 499 "promela.y"
                                                                         { (yyval.pExprVal) = new exprLen	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2818 "y.tab.c"
+#line 2811 "y.tab.c"
     break;
 
   case 139:
-#line 504 "promela.y"
+#line 500 "promela.y"
                                                                         { std::cout << "The enabled keyword is not supported."; }
-#line 2824 "y.tab.c"
+#line 2817 "y.tab.c"
     break;
 
   case 140:
-#line 505 "promela.y"
+#line 501 "promela.y"
                                                                         { std::cout << "Construct not supported."; /* Unclear */ }
-#line 2830 "y.tab.c"
+#line 2823 "y.tab.c"
     break;
 
   case 141:
-#line 506 "promela.y"
+#line 502 "promela.y"
                                                                 { std::cout << "Sorted send and random receive are not supported."; }
-#line 2836 "y.tab.c"
+#line 2829 "y.tab.c"
     break;
 
   case 142:
-#line 507 "promela.y"
+#line 503 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprVar	((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 2842 "y.tab.c"
+#line 2835 "y.tab.c"
     break;
 
   case 143:
-#line 508 "promela.y"
+#line 504 "promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 2848 "y.tab.c"
+#line 2841 "y.tab.c"
     break;
 
   case 144:
-#line 509 "promela.y"
+#line 505 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines); }
-#line 2854 "y.tab.c"
+#line 2847 "y.tab.c"
     break;
 
   case 145:
-#line 510 "promela.y"
+#line 506 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprTrue	(nbrLines); }
-#line 2860 "y.tab.c"
+#line 2853 "y.tab.c"
     break;
 
   case 146:
-#line 511 "promela.y"
+#line 507 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprFalse(nbrLines); }
-#line 2866 "y.tab.c"
+#line 2859 "y.tab.c"
     break;
 
   case 147:
-#line 512 "promela.y"
+#line 508 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprTimeout(nbrLines); }
-#line 2872 "y.tab.c"
+#line 2865 "y.tab.c"
     break;
 
   case 148:
-#line 513 "promela.y"
+#line 509 "promela.y"
                                                                                 { std::cout << "The 'np_' variable is not supported."; }
-#line 2878 "y.tab.c"
+#line 2871 "y.tab.c"
     break;
 
   case 149:
-#line 514 "promela.y"
+#line 510 "promela.y"
                                                                         { std::cout << "The 'pc_value()' construct is not supported."; }
-#line 2884 "y.tab.c"
+#line 2877 "y.tab.c"
     break;
 
   case 150:
-#line 515 "promela.y"
+#line 511 "promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 2890 "y.tab.c"
+#line 2883 "y.tab.c"
     break;
 
   case 151:
-#line 516 "promela.y"
+#line 512 "promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 2896 "y.tab.c"
+#line 2889 "y.tab.c"
     break;
 
   case 152:
-#line 517 "promela.y"
+#line 513 "promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 2902 "y.tab.c"
+#line 2895 "y.tab.c"
     break;
 
   case 153:
-#line 518 "promela.y"
+#line 514 "promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 2908 "y.tab.c"
+#line 2901 "y.tab.c"
     break;
 
   case 155:
-#line 522 "promela.y"
+#line 518 "promela.y"
                                                                                 { std::cout << "The 'priority' construct is related to simulation and not supported."; }
-#line 2914 "y.tab.c"
+#line 2907 "y.tab.c"
     break;
 
   case 156:
-#line 525 "promela.y"
+#line 521 "promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 2920 "y.tab.c"
+#line 2913 "y.tab.c"
     break;
 
   case 157:
-#line 526 "promela.y"
+#line 522 "promela.y"
                                                                                         { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 2926 "y.tab.c"
+#line 2919 "y.tab.c"
     break;
 
   case 159:
-#line 530 "promela.y"
+#line 526 "promela.y"
                                                                 { std::cout << "The 'provided' construct is currently not supported."; }
-#line 2932 "y.tab.c"
+#line 2925 "y.tab.c"
     break;
 
   case 160:
-#line 535 "promela.y"
+#line 531 "promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 2938 "y.tab.c"
+#line 2931 "y.tab.c"
     break;
 
   case 161:
-#line 536 "promela.y"
+#line 532 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprPar	((yyvsp[-1].pExprVal), nbrLines); }
-#line 2944 "y.tab.c"
+#line 2937 "y.tab.c"
     break;
 
   case 162:
-#line 537 "promela.y"
+#line 533 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2950 "y.tab.c"
+#line 2943 "y.tab.c"
     break;
 
   case 163:
-#line 538 "promela.y"
+#line 534 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2956 "y.tab.c"
+#line 2949 "y.tab.c"
     break;
 
   case 164:
-#line 539 "promela.y"
+#line 535 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2962 "y.tab.c"
+#line 2955 "y.tab.c"
     break;
 
   case 165:
-#line 540 "promela.y"
+#line 536 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2968 "y.tab.c"
+#line 2961 "y.tab.c"
     break;
 
   case 166:
-#line 541 "promela.y"
+#line 537 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2974 "y.tab.c"
+#line 2967 "y.tab.c"
     break;
 
   case 167:
-#line 542 "promela.y"
+#line 538 "promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2980 "y.tab.c"
+#line 2973 "y.tab.c"
     break;
 
   case 168:
-#line 543 "promela.y"
+#line 539 "promela.y"
                                                                                         { (yyval.pExprVal) = new exprSkip	(nbrLines); }
-#line 2986 "y.tab.c"
+#line 2979 "y.tab.c"
     break;
 
   case 169:
-#line 546 "promela.y"
+#line 542 "promela.y"
                                                                 { (yyval.pExprVal) = new exprFull	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2992 "y.tab.c"
+#line 2985 "y.tab.c"
     break;
 
   case 170:
-#line 547 "promela.y"
+#line 543 "promela.y"
                                                                         { (yyval.pExprVal) = new exprNFull((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2998 "y.tab.c"
+#line 2991 "y.tab.c"
     break;
 
   case 171:
-#line 548 "promela.y"
+#line 544 "promela.y"
                                                                         { (yyval.pExprVal) = new exprEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3004 "y.tab.c"
+#line 2997 "y.tab.c"
     break;
 
   case 172:
-#line 549 "promela.y"
+#line 545 "promela.y"
                                                                         { (yyval.pExprVal) = new exprNEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3010 "y.tab.c"
+#line 3003 "y.tab.c"
     break;
 
   case 173:
-#line 552 "promela.y"
+#line 548 "promela.y"
                                                                                 { (yyval.pDataVal).sVal = nullptr; (yyval.pDataVal).iType = (yyvsp[0].iType); }
-#line 3016 "y.tab.c"
+#line 3009 "y.tab.c"
     break;
 
   case 174:
-#line 553 "promela.y"
+#line 549 "promela.y"
                                                                                         { (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iType = symTabNode::T_UTYPE; }
-#line 3022 "y.tab.c"
+#line 3015 "y.tab.c"
     break;
 
   case 175:
-#line 557 "promela.y"
+#line 553 "promela.y"
                                                                                 {	if((yyvsp[0].pDataVal).iType != symTabNode::T_UTYPE) {
 														(yyval.pSymTabNodeVal) = symTabNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines);
 													} else {
@@ -3031,11 +3024,11 @@ yyreduce:
 														if((yyval.pSymTabNodeVal) == nullptr) std::cout << "The type "<<(yyvsp[0].pDataVal).sVal<<" was not declared in a typedef.\n";
 													}
 												}
-#line 3035 "y.tab.c"
+#line 3028 "y.tab.c"
     break;
 
   case 176:
-#line 565 "promela.y"
+#line 561 "promela.y"
                                                                         {	if((yyvsp[-2].pDataVal).iType != symTabNode::T_UTYPE) {
 														(yyval.pSymTabNodeVal) = symTabNode::merge((yyval.pSymTabNodeVal), symTabNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines));
 													} else {
@@ -3047,113 +3040,113 @@ yyreduce:
 															(yyval.pSymTabNodeVal) = symTabNode::merge((yyvsp[0].pSymTabNodeVal), temp);
 													}
 												}
-#line 3051 "y.tab.c"
+#line 3044 "y.tab.c"
     break;
 
   case 178:
-#line 580 "promela.y"
+#line 576 "promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3057 "y.tab.c"
+#line 3050 "y.tab.c"
     break;
 
   case 179:
-#line 584 "promela.y"
+#line 580 "promela.y"
                                                                         { (yyval.pExprArgListVal) = nullptr; }
-#line 3063 "y.tab.c"
+#line 3056 "y.tab.c"
     break;
 
   case 180:
-#line 585 "promela.y"
+#line 581 "promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3069 "y.tab.c"
+#line 3062 "y.tab.c"
     break;
 
   case 181:
-#line 589 "promela.y"
+#line 585 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3075 "y.tab.c"
+#line 3068 "y.tab.c"
     break;
 
   case 182:
-#line 590 "promela.y"
+#line 586 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[-3].pExprVal)), static_cast<exprArgList*>((yyvsp[-1].pExprArgListVal)), nbrLines); }
-#line 3081 "y.tab.c"
+#line 3074 "y.tab.c"
     break;
 
   case 183:
-#line 593 "promela.y"
+#line 589 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[0].pExprVal)), nbrLines); }
-#line 3087 "y.tab.c"
+#line 3080 "y.tab.c"
     break;
 
   case 184:
-#line 594 "promela.y"
+#line 590 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[-2].pExprVal)), static_cast<exprArgList*>((yyvsp[0].pExprArgListVal)), nbrLines); }
-#line 3093 "y.tab.c"
+#line 3086 "y.tab.c"
     break;
 
   case 185:
-#line 597 "promela.y"
+#line 593 "promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3099 "y.tab.c"
+#line 3092 "y.tab.c"
     break;
 
   case 186:
-#line 598 "promela.y"
+#line 594 "promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
-#line 3105 "y.tab.c"
+#line 3098 "y.tab.c"
     break;
 
   case 187:
-#line 599 "promela.y"
+#line 595 "promela.y"
                                                                                         { (yyval.pExprRArgVal) = new exprRArgConst((yyvsp[0].iVal), nbrLines); }
-#line 3111 "y.tab.c"
+#line 3104 "y.tab.c"
     break;
 
   case 188:
-#line 600 "promela.y"
+#line 596 "promela.y"
                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(-(yyvsp[0].iVal), nbrLines); }
-#line 3117 "y.tab.c"
+#line 3110 "y.tab.c"
     break;
 
   case 189:
-#line 604 "promela.y"
+#line 600 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList((yyvsp[0].pExprRArgVal), nbrLines); }
-#line 3123 "y.tab.c"
+#line 3116 "y.tab.c"
     break;
 
   case 190:
-#line 605 "promela.y"
+#line 601 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 3129 "y.tab.c"
+#line 3122 "y.tab.c"
     break;
 
   case 191:
-#line 606 "promela.y"
+#line 602 "promela.y"
                                                                         { (yyval.pExprArgListVal) = new exprArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 3135 "y.tab.c"
+#line 3128 "y.tab.c"
     break;
 
   case 192:
-#line 607 "promela.y"
+#line 603 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[-1].pExprArgListVal); }
-#line 3141 "y.tab.c"
+#line 3134 "y.tab.c"
     break;
 
   case 193:
-#line 610 "promela.y"
+#line 606 "promela.y"
                                                                                 { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); }
-#line 3147 "y.tab.c"
+#line 3140 "y.tab.c"
     break;
 
   case 194:
-#line 611 "promela.y"
+#line 607 "promela.y"
                                                                                         { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); }
-#line 3153 "y.tab.c"
+#line 3146 "y.tab.c"
     break;
 
 
-#line 3157 "y.tab.c"
+#line 3150 "y.tab.c"
 
       default: break;
     }
@@ -3385,5 +3378,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 614 "promela.y"
+#line 610 "promela.y"
 

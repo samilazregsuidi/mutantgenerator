@@ -9,38 +9,38 @@
 
 #define LEVEL_STEP 10
 
-symTabNode *symTabNode::createSymTabNode(Type itype, int lineNb, const std::string &sVal, expr *init)
+symTabNode *symTabNode::createSymTabNode(Type itype, int lineNb, const std::string &sVal, int bound, expr *init)
 {
 	switch (itype)
 	{
 	case T_NA:
-		return new naSymNode(lineNb, sVal, init);
+		return new naSymNode(lineNb, sVal, bound, init);
 	case T_BIT:
-		return new bitSymNode(lineNb, sVal, init);
+		return new bitSymNode(lineNb, sVal, bound, init);
 	case T_BOOL:
-		return new boolSymNode(lineNb, sVal, init);
+		return new boolSymNode(lineNb, sVal, bound, init);
 	case T_BYTE:
-		return new byteSymNode(lineNb, sVal, init);
+		return new byteSymNode(lineNb, sVal, bound, init);
 	case T_PID:
 		assert(false);
 	case T_SHORT:
-		return new shortSymNode(lineNb, sVal, init);
+		return new shortSymNode(lineNb, sVal, bound, init);
 	case T_INT:
-		return new intSymNode(lineNb, sVal, init);
+		return new intSymNode(lineNb, sVal, bound, init);
 	case T_UNSGN: // not supported yet
 		assert(false);
 	case T_MTYPE:
-		return new mTypeSymNode(lineNb, sVal, init);
-	/*case T_CLOCK:	// dense time clock
-			assert(false);
-		case T_FEAT:
-			assert(false);
-		case T_UFEAT:
-			assert(false);*/
+		return new mTypeSymNode(lineNb, sVal, bound, init);
+	case T_CLOCK:	// dense time clock
+		assert(false);
+	/*case T_FEAT:
+		assert(false);
+	case T_UFEAT:
+		assert(false);*/
 
 	// "Special" types:
 	case T_CHAN: // Channel: capacity used; children denote message fields
-		return new chanSymNode(lineNb, sVal, init);
+		assert(false);
 	case T_CID: // Channel reference; capacity and children are not used.
 		assert(false);
 	case T_TDEF: // Type definition: children denote fields of type
@@ -48,7 +48,7 @@ symTabNode *symTabNode::createSymTabNode(Type itype, int lineNb, const std::stri
 	case T_PROC: // ProcType: fsm field used; bound denotes the number of initially active processes
 		assert(false);
 	case T_UTYPE: // Type of variable is a user type (basically, a T_TDEF record is being used as the type): utype points to the type record
-		return new utypeSymNode(lineNb, sVal, init);
+		assert(false);
 	case T_NEVER: // Never claim
 		assert(false);
 	}
@@ -128,8 +128,8 @@ symTabNode::symTabNode(Type type, const std::string &name, int lineNb, int bound
 	this->utype = nullptr;
 }
 
-symTabNode::symTabNode(Type type, int lineNb, const std::string &sVal, expr *init)
-	: symTabNode(type, sVal, lineNb, 0, 0, init)
+symTabNode::symTabNode(Type type, int lineNb, const std::string &sVal, int bound, expr *init)
+	: symTabNode(type, sVal, lineNb, bound, 0, init)
 {
 }
 
@@ -359,7 +359,7 @@ int symTabNode::getChanCapacity(void) const
 	return capacity;
 }
 
-stmnt *symTabNode::getFsm(void) const
+stmnt *symTabNode::getStmnt(void) const
 {
 	assert(type == T_PROC || type == T_NEVER);
 	return childFsm;
@@ -368,11 +368,6 @@ stmnt *symTabNode::getFsm(void) const
 symTabNode::operator std::string(void) const
 {
 	std::string res = getTypeName() + " " + getName();
-	auto cur = next;
-	while(cur){
-		res += std::string(*cur);
-		cur = cur -> next;
-	}
 	return res;
 }
 
@@ -408,7 +403,7 @@ procSymNode::operator std::string(void) const
 		res += std::string(*arg) + (arg->cnextSym() ? ", " : "");
 		arg = arg->cnextSym();
 	}
-	res += "){\n\t" + std::string(*childFsm) + "}";
+	res += "){\n" + std::string(*childFsm) + "}\n";
 
 	return res;
 }
@@ -457,7 +452,7 @@ unsigned int tdefSymNode::processVariables(symTabNode *global, const mTypeNode *
 
 unsigned int procSymNode::processVariables(symTabNode *global, const mTypeNode *mTypes, unsigned int iOffset, bool isGlobal)
 {
-	childFsm->resolveVariables(global, mTypes);
+	childFsm->resolveVariables(global, mTypes, childFsm->getSymbol());
 	if (init && init->getType() == astNode::E_EXPR_COUNT)
 		init->resolveVariables(global, mTypes);
 	memSize = childFsm->processVariables(global, mTypes, 0, 0);
@@ -527,7 +522,7 @@ void symTabNode::printSymTab(int level, const std::string &title) const
 	if (type == symTabNode::T_PROC || type == symTabNode::T_NEVER)
 	{
 		assert(childFsm);
-		childFsm->getSymTab()->printSymTab(level + LEVEL_STEP, name);
+		childFsm->getSymbol()->printSymTab(level + LEVEL_STEP, name);
 		spaces(level);
 		printf("\n");
 	}

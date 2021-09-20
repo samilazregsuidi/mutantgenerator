@@ -8,6 +8,7 @@
 #include <string>
 
 class astNode;
+class stmnt;
 class expr;
 class exprVar;
 class exprVarRef;
@@ -66,7 +67,7 @@ public:
 
 protected:
 	symTabNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init = nullptr, stmnt* fsmVal = nullptr, symTabNode* child = nullptr);
-	symTabNode(Type type, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr);
+	symTabNode(Type type, int lineNb, const std::string& sVal = std::string(), int bound = 1, expr* init = nullptr);
 
 public:
 
@@ -78,7 +79,7 @@ public:
 	virtual int getTypeSize(void) const = 0;
 
 	static symTabNode* createSymTabNode(Type itype, const symTabNode& old);
-	static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr);
+	static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string(), int bound = 1, expr* init = nullptr);
 
 	static symTabNode* merge(symTabNode* first, symTabNode* second);
 
@@ -123,7 +124,7 @@ public:
 	expr* getInitExpr(void) const;
 	//int getFeatureId(void) const;
 	int getChanCapacity(void) const;
-	stmnt* getFsm(void) const;
+	stmnt* getStmnt(void) const;
 
 	void setUType(symTabNode* utype);
 
@@ -149,8 +150,8 @@ protected:
 
 class naSymNode : public symTabNode{
 public:
-	naSymNode(int lineNb, const std::string& sVal, expr* init)
-		: symTabNode(symTabNode::T_NA, lineNb, sVal, init)
+	naSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_NA, lineNb, sVal, bound, init)
 	{}
 
 	std::string getTypeName(void) const {
@@ -169,8 +170,8 @@ public:
 //T_BIT
 class bitSymNode : public symTabNode{
 public:
-	bitSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_BIT, lineNb, sVal, init)
+	bitSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_BIT, lineNb, sVal, bound, init)
 	{}
 
 	bitSymNode(const symTabNode& ref)
@@ -191,8 +192,8 @@ public:
 //T_BOOL
 class boolSymNode : public symTabNode{
 public:
-	boolSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_BOOL, lineNb, sVal, init)
+	boolSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_BOOL, lineNb, sVal, bound, init)
 	{}
 
 	boolSymNode(const symTabNode& ref)
@@ -213,8 +214,8 @@ public:
 //T_BYTE
 class byteSymNode : public symTabNode{
 public:
-	byteSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_BYTE, lineNb, sVal, init)
+	byteSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_BYTE, lineNb, sVal, bound, init)
 	{}
 
 	byteSymNode(const symTabNode& ref)
@@ -237,8 +238,8 @@ public:
 //T_SHORT
 class shortSymNode : public symTabNode{
 public:
-	shortSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_SHORT, lineNb, sVal, init)
+	shortSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_SHORT, lineNb, sVal, bound, init)
 	{}
 	
 	shortSymNode(const symTabNode& ref)
@@ -259,8 +260,8 @@ public:
 //T_INT
 class intSymNode : public symTabNode{
 public:
-	intSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_INT, lineNb, sVal, init)
+	intSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_INT, lineNb, sVal, bound, init)
 	{}
 	
 	intSymNode(const symTabNode& ref)
@@ -281,12 +282,12 @@ public:
 //T_UTYPE
 class utypeSymNode : public symTabNode{
 public:
-	utypeSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_UTYPE, lineNb, sVal, init)
+	utypeSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_UTYPE, lineNb, sVal, bound, init)
 	{}
 
 	utypeSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_UTYPE, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_UTYPE, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 	
 	utypeSymNode(symTabNode* utype, int lineNb)
@@ -312,8 +313,8 @@ public:
 //T_UNSGN
 class unsgnSymNode : public symTabNode{
 public:
-	unsgnSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_UNSGN, lineNb, sVal, init)
+	unsgnSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_UNSGN, lineNb, sVal, bound, init)
 	{}
 	
 	unsgnSymNode(const symTabNode& ref)
@@ -334,8 +335,8 @@ public:
 //T_MTYPE
 class mTypeSymNode : public symTabNode{
 public:
-	mTypeSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_MTYPE, lineNb, sVal, init)
+	mTypeSymNode(int lineNb, const std::string& sVal, int bound, expr* init = nullptr)
+		: symTabNode(symTabNode::T_MTYPE, lineNb, sVal, bound, init)
 	{}
 	
 	mTypeSymNode(const symTabNode& ref)
@@ -380,12 +381,12 @@ public:
 //T_CHAN
 class chanSymNode : public symTabNode{
 public:
-	chanSymNode(int lineNb, const std::string& sVal = std::string(), expr* init = nullptr)
-		: symTabNode(symTabNode::T_CHAN, lineNb, sVal, init)
+	chanSymNode(int lineNb, const std::string& sVal, expr* init = nullptr)
+		: symTabNode(symTabNode::T_CHAN, lineNb, sVal, 0, init)
 	{}
 	
 	chanSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_CHAN, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_CHAN, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 
 	chanSymNode(const std::string& name, expr* init, stmnt* fsmVal, int lineNb)
@@ -416,12 +417,12 @@ public:
 //T_CID
 class cidSymNode : public symTabNode{
 public:
-	cidSymNode(int lineNb, const std::string& sVal = std::string())
+	cidSymNode(int lineNb, const std::string& sVal)
 		: symTabNode(symTabNode::T_CID, lineNb, sVal)
 	{}
 
 	cidSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_CID, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_CID, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 	
 	std::string getTypeName(void) const {
@@ -438,12 +439,12 @@ public:
 //T_CID
 class pidSymNode : public symTabNode{
 public:
-	pidSymNode(int lineNb, const std::string& sVal = std::string())
+	pidSymNode(int lineNb, const std::string& sVal)
 		: symTabNode(symTabNode::T_PID, lineNb, sVal)
 	{}
 
 	pidSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_PID, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_PID, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 	
 	std::string getTypeName(void) const {
@@ -460,12 +461,12 @@ public:
 //T_TDEF
 class tdefSymNode : public symTabNode{
 public:
-	tdefSymNode(int lineNb, const std::string& sVal = std::string())
+	tdefSymNode(int lineNb, const std::string& sVal)
 		: symTabNode(symTabNode::T_TDEF, lineNb, sVal)
 	{}
 
 	tdefSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_TDEF, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_TDEF, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 	
 	tdefSymNode(const std::string& name,  symTabNode* child, int lineNb)
@@ -490,12 +491,12 @@ public:
 //T_PROC
 class procSymNode : public symTabNode{
 public:
-	procSymNode(int lineNb, const std::string& sVal = std::string())
+	procSymNode(int lineNb, const std::string& sVal)
 		: symTabNode(symTabNode::T_PROC, lineNb, sVal)
 	{}
 
 	procSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_PROC, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(symTabNode::T_PROC, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 	
 	procSymNode(const std::string& name, expr* child0, symTabNode* args, stmnt* childFsm, int lineNb)
@@ -527,12 +528,12 @@ protected:
 		: symTabNode(type, name, lineNb, bound, capacity, init, fsmVal, child)
 	{}
 
-	procSymNode(Type type, int lineNb, const std::string& sVal = std::string())
+	procSymNode(Type type, int lineNb, const std::string& sVal)
 		: symTabNode(type, lineNb, sVal)
 	{}
 
 	procSymNode(Type type, const symTabNode& ref)
-		: symTabNode(type, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
+		: symTabNode(type, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
 	{}
 private:
 	symTabNode* args;
@@ -541,7 +542,7 @@ private:
 //T_NEVER
 class neverSymNode : public procSymNode{
 public:
-	neverSymNode(int lineNb, const std::string& sVal = std::string())
+	neverSymNode(int lineNb, const std::string& sVal)
 		: procSymNode(symTabNode::T_NEVER, lineNb, sVal)
 	{}
 

@@ -255,12 +255,11 @@ union YYSTYPE
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
-	class fsm*				pFsmVal;
 	class symTabNode*		pSymTabNodeVal;
 	
 	enum symTabNode::Type   iType;
 
-#line 264 "y.tab.h"
+#line 263 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

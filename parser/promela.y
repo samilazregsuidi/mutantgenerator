@@ -85,7 +85,7 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 %type  <pExprRArgVal> rarg
 %type  <pDataVal> vardcl basetype ch_init
 %type  <pSymTabNodeVal> decl one_decl decl_lst ivar var_list typ_list utype
-%type  <pStmnt> body sequence option
+%type  <pStmntVal> body sequence option
 
 %token	TRUE FALSE SKIP ASSERT PRINT PRINTM
 %token	C_CODE C_DECL C_EXPR C_STATE C_TRACK
@@ -134,7 +134,10 @@ varref_	: cmpnd_								{ $$ = $1; }
 pfld_	: NAME									{ 	symTabNode* symbol = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1) : nullptr;
 													if(symbol) 
 														$$ = new exprVarRefName($1, symbol, nbrLines);
-													else $$ = new exprConst((*mtypes)->getMTypeValue($1), nbrLines);		
+													else {
+														assert(mtypes);
+														$$ = new exprConst((*mtypes)->getMTypeValue($1), nbrLines);
+													}		
 												}
 		;
 
@@ -177,7 +180,7 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  Opt_enabler							/* Ignore */
 		  body									{	
 		  											symTabNode* args = symTabNode::deepcopy($5);
-		  											$9->setSymTab(symTabNode::merge($5, $9->getSymTab()));
+		  											$9->setSymbol(symTabNode::merge($5, $9->getSymbol()));
 		  											symTabNode* proc = new procSymNode($3, $1, args, $9, nbrLines);
 		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
 		  										}
@@ -257,16 +260,7 @@ sequence: step									{ 	$$ = $1;
 													}*/
 												}
 		| sequence MS step						{	$$ = stmnt::merge($$, $3);
-													/*if($3->getType() == astNode::E_DECL) {
-														$$ = $1;
-														$$->setSymTab(symTabNode::merge($$->getSymTab(), $3->getSymbol()));
-														$3->setSymbol(nullptr);
-														delete $3;
-													} else if($3->getType() == astNode::E_STMNT) {
-														$$ = $1->stmnt2fsm($3->getChild0(), *globalSymTab);
-														$3->detachChild0();
-														delete $3;
-													}*/
+													$3->setSymbol(symTabNode::merge($$->getSymbol(), $3->getSymbol()));
 												}
 		;
 		
@@ -371,14 +365,14 @@ var_list: ivar									{ $$ = $1; }
 		| ivar ',' var_list						{ $$ = symTabNode::merge($1, $3); }
 		;
 
-ivar    : vardcl								{ $$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal); }
+ivar    : vardcl								{ $$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal, $1.iVal); }
 		| vardcl ASGN expr						{ 	int mtype;
-													if($3->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes)->getMTypeValue(static_cast<exprVar*>($3)->getExprVarRefName()->getName())) != -1) {
+													if($3->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes? (*mtypes)->getMTypeValue(static_cast<exprVar*>($3)->getExprVarRefName()->getName()) : -1)) != -1) {
 														exprConst* newExpr = new exprConst(mtype, $3->getLineNb());
 														delete $3;
 														$3 = newExpr;
 													}
-													$$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal, $3);
+													$$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal, $1.iVal, $3);
 												}
 		| vardcl ASGN ch_init					{ $$ = new chanSymNode($1.sVal, $1.iVal, $3.iVal, $3.symTabNodeVal, nbrLines); }
 		;
@@ -416,7 +410,8 @@ Special : varref RCV rargs						{ $$ = new stmntChanRecv($1, $3, nbrLines); }
 		| DO options OD							{ $$ = new stmntDo($2, $1); }
 		| BREAK									{ $$ = new stmntBreak(nbrLines); }
 		| GOTO NAME								{ $$ = new stmntGoto($2, nbrLines); }
-		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && $3->getChild0() && $3->getChild0()->getType() == astNode::E_STMNT_LABEL) std::cout << "Only two labels per state are supported."; 
+		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && $3->getChild0() && $3->getChild0()->getType() == astNode::E_STMNT_LABEL) 
+													std::cout << "Only two labels per state are supported."; 
 												  $$ = new stmntLabel($1, $3, nbrLines); }
 
 Stmnt	: varref ASGN full_expr					{ $$ = new stmntAsgn($1, $3, nbrLines); }
