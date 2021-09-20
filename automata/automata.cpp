@@ -206,7 +206,8 @@ int fsmTrans::getLineNb(void) const {
 }
 
 void fsmTrans::resolveVariables(symTabNode* global, symTabNode* local, const mTypeNode* mTypes) const{
-	if(expression) expression->resolveVariables(global, mTypes, local);
+	if(expression) 
+		expression->resolveVariables(global, mTypes, local);
 }
 
 fsmTrans::operator std::string(void) const {
@@ -423,9 +424,8 @@ void fsm::printFsm(int level, const std::string& title)  {
 }*/
 
 fsm::operator std::string(void) const {
-	std::string res = symTab? std::string(*symTab) : "";
-	res += "\n";
-	return res + std::string(*init);
+	//std::string res = symTab? std::string(*symTab) : "";
+	return std::string(*init);
 }
 
 /**

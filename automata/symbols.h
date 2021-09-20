@@ -50,7 +50,7 @@ public:
 		T_INT,
 		T_UNSGN, 	// not supported yet
 		T_MTYPE,
-		//T_CLOCK ,	// dense time clock
+		T_CLOCK ,	// dense time clock
 
 		//T_FEAT,
 		//T_UFEAT,
@@ -65,14 +65,14 @@ public:
 	};
 
 protected:
-	symTabNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init = nullptr, fsm* fsmVal = nullptr, symTabNode* child = nullptr);
+	symTabNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init = nullptr, stmnt* fsmVal = nullptr, symTabNode* child = nullptr);
 	symTabNode(Type type, int lineNb, const std::string& sVal = std::string(), expr* init = nullptr);
 
 public:
 
 	virtual ~symTabNode();
 
-	virtual accept(symTabVisitor* visitor) const = 0;
+	virtual void acceptVisitor(symTabVisitor* visitor) const = 0;
 
 	virtual std::string getTypeName(void) const = 0;
 	virtual int getTypeSize(void) const = 0;
@@ -101,7 +101,11 @@ public:
 	const symTabNode* cnextSym(void) const;
 	symTabNode* nextSym(void) const;
 
-	bool isFeature(void) const;
+	void detachPrev(void);
+	void detachNext(void);
+	void detachChildAndInitSymNodes(void);
+
+	//bool isFeature(void) const;
 
     virtual unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal);
 
@@ -119,7 +123,7 @@ public:
 	expr* getInitExpr(void) const;
 	//int getFeatureId(void) const;
 	int getChanCapacity(void) const;
-	fsm* getFsm(void) const;
+	stmnt* getFsm(void) const;
 
 	void setUType(symTabNode* utype);
 
@@ -137,7 +141,7 @@ protected:
 	int memSize;				// The size in memory of the symbol table node (in bits).
 	unsigned int memOffset;		// The position of the variable in the memory block of a state (in bits).
 	expr* init;					// For variables, this denotes the initial value.
-	fsm* childFsm;				// For T_PROC, this denotes the fsm corresponding to the proctype
+	stmnt* childFsm;				// For T_PROC, this denotes the fsm corresponding to the proctype
 	symTabNode* child;			// For T_TDEF, this denotes the fields of the user type;							// For T_CHAN, it denotes the fields of the messages;
 	symTabNode* next;			// Points to next node; the last node in a list has this pointer set to NULL.
 	symTabNode* prev;			// Points to previous node; the first node in a list has this pointer pointing to the last node!
@@ -384,11 +388,11 @@ public:
 		: symTabNode(symTabNode::T_CHAN, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
 	{}
 
-	chanSymNode(const std::string& name, expr* init, fsm* fsmVal, int lineNb)
+	chanSymNode(const std::string& name, expr* init, stmnt* fsmVal, int lineNb)
 		: symTabNode(symTabNode::T_CHAN, name, lineNb, 0, 0, init, fsmVal)
 	{}
 
-	chanSymNode(const std::string& name, fsm* fsmVal, int lineNb)
+	chanSymNode(const std::string& name, stmnt* fsmVal, int lineNb)
 		: symTabNode(symTabNode::T_CHAN, name, lineNb, 1, 0, nullptr, fsmVal)
 	{}
 
@@ -494,17 +498,15 @@ public:
 		: symTabNode(symTabNode::T_PROC, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getFsm(), ref.getChild())
 	{}
 	
-	procSymNode(const std::string& name, expr* child0, symTabNode* args, fsm* childFsm, int lineNb)
+	procSymNode(const std::string& name, expr* child0, symTabNode* args, stmnt* childFsm, int lineNb)
 		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, child0, childFsm, nullptr)
 	{
 		this->args = args;
 	}
 
-	procSymNode(const std::string& name, symTabNode* args, fsm* childFsm, int lineNb)
+	procSymNode(const std::string& name, stmnt* childFsm, int lineNb)
 		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, nullptr, childFsm, nullptr)
-	{
-		this->args = args;
-	}
+	{}
 
 	std::string getTypeName(void) const {
 		return "proctype";
@@ -521,7 +523,7 @@ public:
 	void acceptVisitor(symTabVisitor* visitor) const ;
 
 protected:
-	procSymNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init, fsm* fsmVal, symTabNode* child)
+	procSymNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init, stmnt* fsmVal, symTabNode* child)
 		: symTabNode(type, name, lineNb, bound, capacity, init, fsmVal, child)
 	{}
 
@@ -547,7 +549,7 @@ public:
 		: procSymNode(symTabNode::T_NEVER, ref)
 	{}
 	
-	neverSymNode(fsm* fsmVal, int lineNb)
+	neverSymNode(stmnt* fsmVal, int lineNb)
 		: procSymNode(symTabNode::T_NEVER, "__never", lineNb, 1, 0, nullptr, fsmVal, nullptr)
 	{}
 
@@ -584,6 +586,7 @@ public:
 };
 
 class symTabCopyVisitor : public symTabVisitor {
+public:
 	symTabNode* deepCopy(const symTabNode* toCopy);
 
 	void visitNA(const naSymNode* sym);

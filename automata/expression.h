@@ -127,6 +127,8 @@ public:
 	 * before.
 	 */
 	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeNode *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr);
+	virtual unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const;
+	
 	symTabNode *getSymbol(void) const;
 	void setSymbol(symTabNode *sym);
 
@@ -193,6 +195,8 @@ public:
 	{
 	}
 
+	static stmnt* merge(stmnt* list, stmnt* node);
+
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
 	{
 		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
@@ -208,7 +212,11 @@ public:
 	{
 		return "Statement wrapper (E_STMNT)";
 	}
+private:
+	stmnt* next;
+	stmnt* prev;
 };
+
 
 //E_DECL,				// symTab = declaration.
 class decl : public stmnt

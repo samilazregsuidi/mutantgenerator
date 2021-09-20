@@ -63,7 +63,6 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
-	class fsm*				pFsmVal;
 	class symTabNode*		pSymTabNodeVal;
 	
 	enum symTabNode::Type   iType;
@@ -86,7 +85,7 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 %type  <pExprRArgVal> rarg
 %type  <pDataVal> vardcl basetype ch_init
 %type  <pSymTabNodeVal> decl one_decl decl_lst ivar var_list typ_list utype
-%type  <pFsmVal> body sequence option
+%type  <pStmnt> body sequence option
 
 %token	TRUE FALSE SKIP ASSERT PRINT PRINTM
 %token	C_CODE C_DECL C_EXPR C_STATE C_TRACK
@@ -245,7 +244,8 @@ cexpr	: C_EXPR								/* Unreachable */
 body	: '{' sequence OS '}'					{ $$ = $2; }
 		;
 
-sequence: step									{ 	$$ = new fsm();
+sequence: step									{ 	$$ = $1;
+													/*$$ = new fsm();
 													if($1->getType() == astNode::E_DECL) {
 														$$->setSymTab($1->getSymbol());
 														$1->setSymbol(nullptr);
@@ -254,9 +254,10 @@ sequence: step									{ 	$$ = new fsm();
 														$$->stmnt2fsm($1->getChild0(), *globalSymTab);
 														$1->detachChild0();
 														delete $1;
-													}
+													}*/
 												}
-		| sequence MS step						{	if($3->getType() == astNode::E_DECL) {
+		| sequence MS step						{	$$ = stmnt::merge($$, $3);
+													/*if($3->getType() == astNode::E_DECL) {
 														$$ = $1;
 														$$->setSymTab(symTabNode::merge($$->getSymTab(), $3->getSymbol()));
 														$3->setSymbol(nullptr);
@@ -265,7 +266,7 @@ sequence: step									{ 	$$ = new fsm();
 														$$ = $1->stmnt2fsm($3->getChild0(), *globalSymTab);
 														$3->detachChild0();
 														delete $3;
-													}
+													}*/
 												}
 		;
 		
@@ -327,6 +328,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 															}
 														}
 														
+														cur->detachChildAndInitSymNodes();
 														cur = cur->nextSym();
 													}
 													delete $3;

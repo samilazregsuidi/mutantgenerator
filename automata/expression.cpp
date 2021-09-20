@@ -399,6 +399,19 @@ fsm* astNode::getChildFsm(void) const {
 	return childFsm;
 }
 
+stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
+	if (!stmnts)
+		return newStmnt;
+	if (!newStmnt)
+		return stmnts;
+
+	stmnt* newlistTail = newStmnt->prev;
+	newStmnt->prev = stmnts->prev;
+	newStmnt->prev->next = newStmnt;
+	stmnts->prev = newlistTail;
+	return stmnts;
+}
+
 std::string exprVarRefName::getName(void) const {
 	return symTab->getName();
 }
