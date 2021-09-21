@@ -660,9 +660,7 @@ char *yytext;
 #include <stdlib.h>
 #include <string.h>
 
-#include "error.h"
 #include "symbols.h"
-#include "automata.h"
 #include "expression.h"
 
 #include "y.tab.h"
@@ -673,9 +671,9 @@ int nbrLines = 0;
 char strBuffer[1024];
 int strBufferLen = 0;
 
-#line 677 "lex.yy.c"
+#line 675 "lex.yy.c"
 
-#line 679 "lex.yy.c"
+#line 677 "lex.yy.c"
 
 #define INITIAL 0
 #define CODE 1
@@ -907,11 +905,11 @@ YY_DECL
 		}
 
 	{
-#line 34 "promela.l"
+#line 32 "promela.l"
 
 
 
-#line 915 "lex.yy.c"
+#line 913 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -970,441 +968,441 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 37 "promela.l"
+#line 35 "promela.l"
 { return SEP; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 38 "promela.l"
+#line 36 "promela.l"
 { return SEMI; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 39 "promela.l"
+#line 37 "promela.l"
 { return SEMI; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 40 "promela.l"
+#line 38 "promela.l"
 { return DECR; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "promela.l"
+#line 39 "promela.l"
 { return INCR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 42 "promela.l"
+#line 40 "promela.l"
 { return LSHIFT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 43 "promela.l"
+#line 41 "promela.l"
 { return LE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 44 "promela.l"
+#line 42 "promela.l"
 { return LT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 45 "promela.l"
+#line 43 "promela.l"
 { return RSHIFT; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 46 "promela.l"
+#line 44 "promela.l"
 { return GE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 47 "promela.l"
+#line 45 "promela.l"
 { return IMPLIES; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 48 "promela.l"
+#line 46 "promela.l"
 { return GT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 49 "promela.l"
+#line 47 "promela.l"
 { return EQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 50 "promela.l"
+#line 48 "promela.l"
 { return ASGN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 51 "promela.l"
+#line 49 "promela.l"
 { return NE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 52 "promela.l"
+#line 50 "promela.l"
 { return O_SND; /* Sorted send, p.48 */ }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 53 "promela.l"
+#line 51 "promela.l"
 { return SND; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 54 "promela.l"
+#line 52 "promela.l"
 { return R_RCV; /* Random receive, p.48 */ }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 55 "promela.l"
+#line 53 "promela.l"
 { return RCV; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 56 "promela.l"
+#line 54 "promela.l"
 { return AND; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 57 "promela.l"
+#line 55 "promela.l"
 { return OR; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 58 "promela.l"
+#line 56 "promela.l"
 { return SPEC; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 59 "promela.l"
+#line 57 "promela.l"
 { return EVENTUALLY;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 60 "promela.l"
+#line 58 "promela.l"
 { return ALWAYS;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 61 "promela.l"
+#line 59 "promela.l"
 { return GLOBALLY;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 62 "promela.l"
+#line 60 "promela.l"
 { return FINALLY;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 63 "promela.l"
+#line 61 "promela.l"
 { return COUNT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 64 "promela.l"
+#line 62 "promela.l"
 { return CONTEXT; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 66 "promela.l"
+#line 64 "promela.l"
 { return ACTIVE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 67 "promela.l"
+#line 65 "promela.l"
 { return ASSERT; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 68 "promela.l"
+#line 66 "promela.l"
 { return ATOMIC; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 69 "promela.l"
+#line 67 "promela.l"
 { return BREAK; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 70 "promela.l"
+#line 68 "promela.l"
 { return C_CODE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 71 "promela.l"
+#line 69 "promela.l"
 { return C_DECL; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 72 "promela.l"
+#line 70 "promela.l"
 { return C_EXPR; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 73 "promela.l"
+#line 71 "promela.l"
 { return C_STATE; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 74 "promela.l"
+#line 72 "promela.l"
 { return C_TRACK; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 75 "promela.l"
+#line 73 "promela.l"
 { return D_PROCTYPE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 76 "promela.l"
+#line 74 "promela.l"
 { yylval->iVal = nbrLines; 
 					  return DO; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 78 "promela.l"
+#line 76 "promela.l"
 { return ELSE; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 79 "promela.l"
+#line 77 "promela.l"
 { return EMPTY; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 80 "promela.l"
+#line 78 "promela.l"
 { return ENABLED; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 81 "promela.l"
+#line 79 "promela.l"
 { return EVAL; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 82 "promela.l"
+#line 80 "promela.l"
 { return FI; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 83 "promela.l"
+#line 81 "promela.l"
 { return FI; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 84 "promela.l"
+#line 82 "promela.l"
 { return FULL; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 85 "promela.l"
+#line 83 "promela.l"
 { return GOTO; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 86 "promela.l"
+#line 84 "promela.l"
 { return HIDDEN; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 87 "promela.l"
+#line 85 "promela.l"
 { yylval->iVal = nbrLines; 
 					  return IF; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 89 "promela.l"
+#line 87 "promela.l"
 { yylval->iVal = nbrLines; 
 					  return IF; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 91 "promela.l"
+#line 89 "promela.l"
 { return INIT; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 92 "promela.l"
+#line 90 "promela.l"
 { return LEN; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 93 "promela.l"
+#line 91 "promela.l"
 { return ISLOCAL; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 94 "promela.l"
+#line 92 "promela.l"
 { return NEMPTY; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 95 "promela.l"
+#line 93 "promela.l"
 { return CLAIM; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 96 "promela.l"
+#line 94 "promela.l"
 { return NFULL; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 97 "promela.l"
+#line 95 "promela.l"
 { return TRACE; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 98 "promela.l"
+#line 96 "promela.l"
 { return NONPROGRESS; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 99 "promela.l"
+#line 97 "promela.l"
 { return OD; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 100 "promela.l"
+#line 98 "promela.l"
 { return OF; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 101 "promela.l"
+#line 99 "promela.l"
 { return PC_VAL; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 102 "promela.l"
+#line 100 "promela.l"
 { return PRINT; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 103 "promela.l"
+#line 101 "promela.l"
 { return PRINTM; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 104 "promela.l"
+#line 102 "promela.l"
 { return PRIORITY; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 105 "promela.l"
+#line 103 "promela.l"
 { return PROCTYPE; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 106 "promela.l"
+#line 104 "promela.l"
 { return PROVIDED; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 107 "promela.l"
+#line 105 "promela.l"
 { return RUN; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 108 "promela.l"
+#line 106 "promela.l"
 { return D_STEP; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 109 "promela.l"
+#line 107 "promela.l"
 { return TIMEOUT; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 110 "promela.l"
+#line 108 "promela.l"
 { return TRACE; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 111 "promela.l"
+#line 109 "promela.l"
 { return SHOW; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 112 "promela.l"
+#line 110 "promela.l"
 { return TYPEDEF; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 113 "promela.l"
+#line 111 "promela.l"
 { return UNLESS; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 114 "promela.l"
+#line 112 "promela.l"
 { return XU; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 115 "promela.l"
+#line 113 "promela.l"
 { return XU; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 116 "promela.l"
+#line 114 "promela.l"
 { return WHEN; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 117 "promela.l"
+#line 115 "promela.l"
 { return WHILE; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 118 "promela.l"
+#line 116 "promela.l"
 { return WAIT; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 119 "promela.l"
+#line 117 "promela.l"
 { return RESET; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 121 "promela.l"
+#line 119 "promela.l"
 { yylval->iType = symTabNode::T_BIT;
 					  return TYPE; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 123 "promela.l"
+#line 121 "promela.l"
 { yylval->iType = symTabNode::T_BOOL;
 					  return TYPE; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 125 "promela.l"
+#line 123 "promela.l"
 { yylval->iType = symTabNode::T_BYTE;
 					  return TYPE; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 127 "promela.l"
+#line 125 "promela.l"
 { yylval->iType = symTabNode::T_PID;
 					  return TYPE; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 129 "promela.l"
+#line 127 "promela.l"
 { yylval->iType = symTabNode::T_SHORT;
 					  return TYPE; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 131 "promela.l"
+#line 129 "promela.l"
 { yylval->iType = symTabNode::T_INT;
 					  return TYPE; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 133 "promela.l"
+#line 131 "promela.l"
 { fprintf(stderr, "The 'unsigned' type is not supported.\n");
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
@@ -1412,54 +1410,54 @@ YY_RULE_SETUP
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 137 "promela.l"
+#line 135 "promela.l"
 { yylval->iType = symTabNode::T_CID;
 					  return TYPE; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 139 "promela.l"
+#line 137 "promela.l"
 { yylval->iType = symTabNode::T_MTYPE;
 					  return TYPE; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 141 "promela.l"
+#line 139 "promela.l"
 { yylval->iType = symTabNode::T_CLOCK;
 					  return TYPE; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 144 "promela.l"
+#line 142 "promela.l"
 { fprintf(stderr, "Inline declarations are not supported.\n");
 					  exit(1); /* return INLINE; */ }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 147 "promela.l"
+#line 145 "promela.l"
 { yylval->iVal = 0; 
 					  return FALSE; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 150 "promela.l"
+#line 148 "promela.l"
 { yylval->iVal = 1; 
 					  return TRUE; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 153 "promela.l"
+#line 151 "promela.l"
 { return SKIP; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 155 "promela.l"
+#line 153 "promela.l"
 { BEGIN STRINGBLOCK; 													/* printf("BEGIN STRINGBLOCK AT L %d\n", nbrLines); */
 					  strBufferLen = 0; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 157 "promela.l"
+#line 155 "promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */
 					  strBuffer[strBufferLen] = '\0';
 					  //yylval->sVal = (char*) calloc(strBufferLen + 1, sizeof(char));
@@ -1470,31 +1468,31 @@ YY_RULE_SETUP
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 164 "promela.l"
+#line 162 "promela.l"
 { strBuffer[strBufferLen] = '"';
 					  strBufferLen++; }
 	YY_BREAK
 case 97:
 /* rule 97 can match eol */
 YY_RULE_SETUP
-#line 166 "promela.l"
+#line 164 "promela.l"
 { strBuffer[strBufferLen] = '\n';
 					  strBufferLen++; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 168 "promela.l"
+#line 166 "promela.l"
 { strBuffer[strBufferLen] = yytext[0];
 					  strBufferLen++; }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 172 "promela.l"
+#line 170 "promela.l"
 { return yytext[0]; } 
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 174 "promela.l"
+#line 172 "promela.l"
 { yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
@@ -1510,97 +1508,97 @@ YY_RULE_SETUP
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 186 "promela.l"
+#line 184 "promela.l"
 { yylval->rVal = atof(yytext);
 					  return REAL;  }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 188 "promela.l"
+#line 186 "promela.l"
 { yylval->iVal = atoi(yytext);
 					  return CONST; }
 	YY_BREAK
 case 103:
 /* rule 103 can match eol */
 YY_RULE_SETUP
-#line 191 "promela.l"
+#line 189 "promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 192 "promela.l"
+#line 190 "promela.l"
 { }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 194 "promela.l"
+#line 192 "promela.l"
 { BEGIN COMMENTBLOCK; 													/* printf("BEGIN COMMENTBLOCK AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 195 "promela.l"
+#line 193 "promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 107:
 /* rule 107 can match eol */
 YY_RULE_SETUP
-#line 196 "promela.l"
+#line 194 "promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 197 "promela.l"
+#line 195 "promela.l"
 { }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 199 "promela.l"
+#line 197 "promela.l"
 { BEGIN COMMENTLINE; 													/* printf("BEGIN COMMENTLINE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 110:
 /* rule 110 can match eol */
 YY_RULE_SETUP
-#line 200 "promela.l"
+#line 198 "promela.l"
 { nbrLines++; BEGIN CODE; 												/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 201 "promela.l"
+#line 199 "promela.l"
 { }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 203 "promela.l"
+#line 201 "promela.l"
 { BEGIN CPPBLOCK; }
 	YY_BREAK
 case 113:
 /* rule 113 can match eol */
 YY_RULE_SETUP
-#line 204 "promela.l"
+#line 202 "promela.l"
 { BEGIN CODE; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 205 "promela.l"
+#line 203 "promela.l"
 { nbrLines = atoi(yytext); }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 206 "promela.l"
+#line 204 "promela.l"
 { }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 208 "promela.l"
+#line 206 "promela.l"
 { fprintf(stderr, "Invalid char '%s' at line %d\n", yytext, nbrLines);
 					  exit(1); }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 211 "promela.l"
+#line 209 "promela.l"
 ECHO;
 	YY_BREAK
-#line 1604 "lex.yy.c"
+#line 1602 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CODE):
 case YY_STATE_EOF(COMMENTBLOCK):
@@ -2610,7 +2608,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 211 "promela.l"
+#line 209 "promela.l"
 
 
 void init_lex(){

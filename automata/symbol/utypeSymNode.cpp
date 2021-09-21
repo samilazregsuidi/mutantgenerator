@@ -3,7 +3,14 @@
 #include "tdefSymNode.h"
 
 template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_UTYPE>(const varSymNode &old) {
-	return new utypeSymNode(old);
+	return new utypeSymNode(static_cast<const utypeSymNode&>(old));
+}
+
+utypeSymNode::utypeSymNode(tdefSymNode* utype, int lineNb)
+	: varSymNode(symTabNode::T_UTYPE, lineNb, std::string())
+{
+	assert(type != nullptr && type->getType() == symTabNode::T_TDEF);
+	this->type = type;
 }
 
 void utypeSymNode::acceptVisitor(symTabVisitor *visitor) const{

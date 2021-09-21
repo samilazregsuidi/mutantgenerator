@@ -1,18 +1,11 @@
 #include "varSymNode.h"
 
+class tdefSymNode;
+
 //T_UTYPE
 class utypeSymNode : public varSymNode{
 public:
-	utypeSymNode(const varSymNode& ref)
-		: varSymNode(symTabNode::T_UTYPE, ref.getLineNb(), ref.getName(), ref.getBound(), ref.getInitExpr())
-	{}
-	
-	utypeSymNode(tdefSymNode* utype, int lineNb)
-		: varSymNode(symTabNode::T_UTYPE, lineNb, std::string())
-	{
-		assert(type != nullptr && type->getType() == symTabNode::T_TDEF);
-		this->type = type;
-	}
+	utypeSymNode(tdefSymNode* utype, int lineNb);
 
 	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
 

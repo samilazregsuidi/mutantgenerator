@@ -1,21 +1,68 @@
 #include "symTabNode.h"
 
-//T_PROC
-class procSymNode : public symTabNode{
-public:
-	procSymNode(int lineNb, const std::string& sVal)
-		: symTabNode(symTabNode::T_PROC, lineNb, sVal)
-	{}
-	
-	procSymNode(const std::string& name, expr* child0, symTabNode* args, stmnt* childFsm, int lineNb)
-		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, child0, childFsm, nullptr)
+class seqSymNode : public symTabNode{
+protected:
+	seqSymNode(Type type, const std::string& sVal, int lineNb, stmnt* block)
+		: symTabNode(type, sVal, lineNb)
 	{
-		this->args = args;
+		this->block = block;
 	}
 
-	procSymNode(const std::string& name, stmnt* childFsm, int lineNb)
-		: symTabNode(symTabNode::T_PROC, name, lineNb, 0, 0, nullptr, childFsm, nullptr)
+	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal);
+
+	operator std::string(void) const;
+
+protected:
+	stmnt* block;
+};
+
+class initSymNode : public seqSymNode {
+public:
+	initSymNode(int lineNb, stmnt* block)
+		: seqSymNode(symTabNode::T_INIT, "init", lineNb, block)
 	{}
+
+	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
+
+	std::string getTypeName(void) const {
+		return "never";
+	}
+
+	int getTypeSize(void) const {
+		return 1;
+	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
+};
+
+class neverSymNode : public seqSymNode {
+public:
+	neverSymNode(int lineNb, stmnt* block)
+		: seqSymNode(symTabNode::T_INIT, "__never", lineNb, block)
+	{}
+
+	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
+
+	std::string getTypeName(void) const {
+		return "init";
+	}
+
+	int getTypeSize(void) const {
+		return 1;
+	}
+
+	void acceptVisitor(symTabVisitor* visitor) const ;
+};
+
+//T_PROC
+class procSymNode : public seqSymNode {
+public:
+	procSymNode(const std::string& name, expr* child0, symTabNode* args, stmnt* block, int lineNb)
+		: seqSymNode(symTabNode::T_PROC, name, lineNb, block)
+	{
+		this->args = args;
+		this->active = child0;
+	}
 
 	std::string getTypeName(void) const {
 		return "proctype";
@@ -31,20 +78,7 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const ;
 
-protected:
-	procSymNode(Type type, const std::string& name, int lineNb, int bound, int capacity, expr* init, stmnt* fsmVal, symTabNode* child)
-		: symTabNode(type, name, lineNb, bound, capacity, init, fsmVal, child)
-	{}
-
-	procSymNode(Type type, int lineNb, const std::string& sVal)
-		: symTabNode(type, lineNb, sVal)
-	{}
-
-	procSymNode(Type type, const symTabNode& ref)
-		: symTabNode(type, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
-	{}
 private:
 	symTabNode* args;
-	stmnt* block;
 	expr* active;
 };

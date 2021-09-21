@@ -14,7 +14,6 @@
 #include "tdefSymNode.h"
 #include "chanSymNode.h"
 #include "procSymNode.h"
-#include "neverSymNode.h"
 
 symTabNode *symTabCopyVisitor::deepCopy(const symTabNode *toCopy) {
 	if (!toCopy)
@@ -78,10 +77,6 @@ void symTabCopyVisitor::visitChan(const chanSymNode *sym){
 }
 
 void symTabCopyVisitor::visitCid(const cidSymNode *sym){
-	tmp = new cidSymNode(*sym);
-}
-
-void symTabCopyVisitor::visitCid(const cidSymNode *sym){
 	tmp = new pidSymNode(*sym);
 }
 
@@ -99,4 +94,8 @@ void symTabCopyVisitor::visitUtype(const utypeSymNode *sym){
 
 void symTabCopyVisitor::visitNever(const neverSymNode *sym){
 	tmp = new neverSymNode(*sym);
+}
+
+void symTabCopyVisitor::visitInit(const initSymNode *sym){
+	tmp = new initSymNode(*sym);
 }

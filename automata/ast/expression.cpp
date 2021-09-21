@@ -3,8 +3,10 @@
 
 #include "expression.h"
 #include "symTabNode.h"
+#include "varSymNode.h"
+#include "utypeSymNode.h"
+#include "tdefSymNode.h"
 #include "mTypeList.h"
-#include "automata.h"
 /**
  * Just creates a node with the given values.
  */
@@ -19,10 +21,10 @@ astNode::astNode(Type type, int iVal, astNode* child0, astNode* child1, astNode*
 	this->child[2]= child2;
 }
 
-decl::decl(symTabNode *symTabChild, int lineNb)
+decl::decl(varSymNode *symTabChild, int lineNb)
 	: stmnt(astNode::E_DECL, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
 {
-	declSym = symTabNode::createSymTabNode(symTabChild->getType(), *symTabChild);
+	declSym = symTabChild;
 }
 
 /**
@@ -496,13 +498,12 @@ void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes, s
 	child[0]->resolveVariables(global, mTypes, local, subField);
 	auto symbol = child[0]->getSymbol();
 
-	if (symbol)
-	{
+	if (symbol) {
 		// Resolve subfields, but with the symbol table of the type
-		if (child[1])
-		{
-			assert(symbol->getUType());
-			child[1]->resolveVariables(global, mTypes, local, symbol->getUType()->getChild());
+		if (child[1]) {
+			auto uSymbol = static_cast<utypeSymNode*>(symbol);
+			assert(uSymbol->getUType());
+			child[1]->resolveVariables(global, mTypes, local, uSymbol->getUType()->getChild());
 		}
 	}
 	else

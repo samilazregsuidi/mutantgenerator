@@ -15,9 +15,7 @@
 #include <string>
 #include <iostream>
 
-#include "error.h"
 #include "symbols.h"
-#include "automata.h"
 #include "expression.h"
 
 #include "y.tab.h"
@@ -29,7 +27,7 @@ int yylex(YYSTYPE * yylval_param, symTabNode** globalSymTab);
 
 extern int nbrLines;
 
-int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
+int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 	fprintf(stderr, "Syntax error on line %d: '%s'.\n", nbrLines, msg);
 	exit(1);
 }
@@ -48,7 +46,7 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 %pure_parser
 %lex-param		{symTabNode** globalSymTab}
 %parse-param 	{symTabNode** globalSymTab}
-%parse-param 	{mTypeNode** mtypes}
+%parse-param 	{mTypeList** mtypes}
 
 %union { 
 	int       				iVal;
@@ -63,7 +61,8 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
-	class symTabNode*		pSymTabNodeVal;
+	class varSymNode*		pVarSymVal;
+	class tdefSymNode*		pTdefSymVal;
 	
 	enum symTabNode::Type   iType;
 }
@@ -84,7 +83,8 @@ int yyerror (symTabNode** globalSymTab, mTypeNode** mtypes, char* msg){
 %type  <pExprArgListVal> arg args rargs margs prargs
 %type  <pExprRArgVal> rarg
 %type  <pDataVal> vardcl basetype ch_init
-%type  <pSymTabNodeVal> decl one_decl decl_lst ivar var_list typ_list utype
+%type  <pVarSymVal> decl one_decl decl_lst ivar var_list typ_list 
+%type  <pTdefSymVal> utype
 %type  <pStmntVal> body sequence option
 
 %token	TRUE FALSE SKIP ASSERT PRINT PRINTM
@@ -193,22 +193,22 @@ proctype: PROCTYPE								/* Ignore */
 inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 		| ACTIVE								{ $$ = new exprConst(1, nbrLines); }
 		| ACTIVE '[' CONST ']'					{ $$ = new exprConst($3, nbrLines); }
-		| ACTIVE '[' NAME ']'					{	symTabNode* var = *globalSymTab? (*globalSymTab)->lookupInSymTab($3) : nullptr;
+		| ACTIVE '[' NAME ']'					{	varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookupInSymTab($3)) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<$3<<" does not exist.";
 													else if(var->getType() != symTabNode::T_INT && var->getType() != symTabNode::T_BYTE && var->getType() != symTabNode::T_SHORT) std::cout << "The variable "<<$3<<" is not of type int, short or bit.";
 													else if(var->getInitExpr() == nullptr || var->getInitExpr()->getType() != astNode::E_EXPR_CONST) std::cout << "The variable "<<$3<<" does not have a constant value.";
 													else {
 														$$ = new exprConst(var->getInitExpr()->getIVal(), nbrLines);
 													}
-													//delete $3;											
+													delete $3;											
 												}
 		;
 
 init	: INIT Opt_priority body				{	if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
 	std::cout << "This is the second init process; only one is allowed.";
 													else {
-														symTabNode* chan = new procSymNode("init", $3, nbrLines);
-														*globalSymTab = symTabNode::merge(*globalSymTab, chan);
+														symTabNode* init = new procSymNode("init", $3, nbrLines);
+														*globalSymTab = symTabNode::merge(*globalSymTab, init);
 													}
 
 												}				
@@ -310,7 +310,7 @@ one_decl: vis TYPE var_list						{	symTabNode* cur = $3;
 															}
 														} else {
 															assert(cur->getType() == symTabNode::T_CHAN);
-															symTabNode* next = new chanSymNode(*cur);
+															symTabNode* next = new chanSymNode(static_cast<chanSymNode*>(*cur));
 															next->setLineNb(nbrLines);
 															
 															if(res == nullptr) {
@@ -365,7 +365,7 @@ var_list: ivar									{ $$ = $1; }
 		| ivar ',' var_list						{ $$ = symTabNode::merge($1, $3); }
 		;
 
-ivar    : vardcl								{ $$ = symTabNode::createSymTabNode($1.iType, nbrLines, $1.sVal, $1.iVal); }
+ivar    : vardcl								{ $$ = symTabNode::createSymTabNode(varSymNode($1.iType, nbrLines, $1.sVal, $1.iVal)); }
 		| vardcl ASGN expr						{ 	int mtype;
 													if($3->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes? (*mtypes)->getMTypeValue(static_cast<exprVar*>($3)->getExprVarRefName()->getName()) : -1)) != -1) {
 														exprConst* newExpr = new exprConst(mtype, $3->getLineNb());

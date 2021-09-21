@@ -3,7 +3,6 @@ class naSymNode;
 class bitSymNode;
 class boolSymNode;
 class byteSymNode;
-class pidSymNode;
 class shortSymNode;
 class intSymNode;
 class unsgnSymNode;
@@ -15,6 +14,7 @@ class tdefSymNode;
 class procSymNode;
 class utypeSymNode;
 class neverSymNode;
+class initSymNode;
 
 class symTabVisitor {
 public:
@@ -22,7 +22,6 @@ public:
 	virtual void visitBit(const bitSymNode* sym) = 0 ;
 	virtual void visitBool(const boolSymNode* sym) = 0;
 	virtual void visitByte(const byteSymNode* sym) = 0;
-	virtual void visitPid(const pidSymNode* sym) = 0;
 	virtual void visitShort(const shortSymNode* sym) = 0;
 	virtual void visitInt(const intSymNode* sym) = 0;
 	virtual void visitUnsgn(const unsgnSymNode* sym) = 0;
@@ -34,4 +33,5 @@ public:
 	virtual void visitProc(const procSymNode* sym) = 0;
 	virtual void visitUtype(const utypeSymNode* sym) = 0;
 	virtual void visitNever(const neverSymNode* sym) = 0;
+	virtual void visitInit(const initSymNode* sym) = 0;
 };

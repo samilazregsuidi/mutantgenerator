@@ -8,7 +8,7 @@ public:
 	{}
 
 	cidSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_CID, ref.getName(), ref.getLineNb(), ref.getBound(), ref.getChanCapacity(), ref.getInitExpr(), ref.getStmnt(), ref.getChild())
+		: symTabNode(symTabNode::T_CID, ref.getName(), ref.getLineNb())
 	{}
 	
 	std::string getTypeName(void) const {

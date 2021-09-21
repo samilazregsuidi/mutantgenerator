@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "symbols.h"
-#include "automata.h"
 #include "y.tab.h"
 #include "lexer.h"
 
@@ -15,14 +14,14 @@
 
 
 extern FILE* yyin;
-extern int yyparse(symTabNode* symTable, mTypeNode** mtypes);
+extern int yyparse(symTabNode* symTable, mTypeList** mtypes);
 extern void init_lex();
 
 // Settings defined in main
 
 // Other global variables from main
 symTabNode* globalSymTab = nullptr;
-mTypeNode* mtypes = nullptr;
+mTypeList* mtypes = nullptr;
 
 /**
  * Simply copies a file byte by byte; could be made more efficient.

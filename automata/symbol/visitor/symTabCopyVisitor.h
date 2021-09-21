@@ -8,7 +8,6 @@ public:
 	void visitBit(const bitSymNode* sym);
 	void visitBool(const boolSymNode* sym);
 	void visitByte(const byteSymNode* sym);
-	void visitPid(const pidSymNode* sym);
 	void visitShort(const shortSymNode* sym);
 	void visitInt(const intSymNode* sym);
 	void visitUnsgn(const unsgnSymNode* sym);
@@ -20,6 +19,8 @@ public:
 	void visitProc(const procSymNode* sym);
 	void visitUtype(const utypeSymNode* sym);
 	void visitNever(const neverSymNode* sym);
+	void visitInit(const initSymNode* sym);
+	
 private:
 	symTabNode* tmp;
 };

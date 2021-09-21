@@ -1,27 +1,13 @@
-#include "symTabNode.h"
+#include "varSymNode.h"
 
 //T_CHAN
-class chanSymNode : public symTabNode{
+class chanSymNode : public varSymNode{
 public:
-	chanSymNode(int lineNb, const std::string& sVal, expr* init = nullptr)
-		: symTabNode(symTabNode::T_CHAN, lineNb, sVal, 0, init)
-	{}
-	
-	chanSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_CHAN, ref.getName(), ref.getLineNb())
-	{}
-
-	chanSymNode(const std::string& name, expr* init, stmnt* fsmVal, int lineNb)
-		: symTabNode(symTabNode::T_CHAN, name, lineNb, 0, 0, init, fsmVal)
-	{}
-
-	chanSymNode(const std::string& name, stmnt* fsmVal, int lineNb)
-		: symTabNode(symTabNode::T_CHAN, name, lineNb, 1, 0, nullptr, fsmVal)
-	{}
-
-	chanSymNode(const std::string& name, int bound, int capacity, symTabNode* childSymTab, int lineNb)
-		: symTabNode(symTabNode::T_CHAN, name, lineNb, bound, capacity, nullptr, nullptr, childSymTab)
-	{}
+	chanSymNode(int lineNb, const std::string& sVal, int bound, int capacity, varSymNode* child)
+		: varSymNode(symTabNode::T_CHAN, lineNb, sVal, bound)
+	{
+		this->child = child;
+	}
 
 	std::string getTypeName(void) const {
 		return "chan";
@@ -36,5 +22,6 @@ public:
 	void acceptVisitor(symTabVisitor* visitor) const ;
 
 private:
+	varSymNode* child;
 	int capacity;
 };

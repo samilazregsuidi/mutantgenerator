@@ -5,6 +5,7 @@
 
 class mTypeList;
 class symTabNode;
+class varSymNode;
 
 class fsm;
 class fsmNode;
@@ -232,7 +233,7 @@ protected:
 class decl : public stmnt
 {
 public:
-	decl(symTabNode *symTabChild, int lineNb);
+	decl(varSymNode *symTabChild, int lineNb);
 
 	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
@@ -244,7 +245,7 @@ public:
 	}
 
 private:
-	symTabNode* declSym;
+	varSymNode* declSym;
 };
 
 class expr : public astNode

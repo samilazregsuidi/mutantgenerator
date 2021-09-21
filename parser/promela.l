@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "error.h"
 #include "symbols.h"
-#include "automata.h"
 #include "expression.h"
 
 #include "y.tab.h"

@@ -1,3 +1,6 @@
+#ifndef VAR_SYM_NODE_H
+#define VAR_SYM_NODE_H
+
 #include "symTabNode.h"
 
 class expr;
@@ -25,3 +28,5 @@ protected:
 	expr* init;
 	int bound;
 };
+
+#endif

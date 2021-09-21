@@ -5,7 +5,6 @@
 
 #include "symTabNode.h"
 #include "expression.h"
-#include "automata.h"
 
 #include "naSymNode.h"
 #include "bitSymNode.h"
@@ -21,7 +20,6 @@
 #include "tdefSymNode.h"
 #include "chanSymNode.h"
 #include "procSymNode.h"
-#include "neverSymNode.h"
 
 #include "symTabCopyVisitor.h"
 
@@ -138,21 +136,29 @@ const symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr) const
 	return lookupInSymTab(expr->getName());
 }
 
-symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr)
-{
+symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
 	symTabNode *sym = lookupInSymTab(expr->getExprVarRefName());
 	assert(sym);
-	if (expr->hasSubField() && (sym = sym->getUType()) && (sym = sym->getUType()->getChild()))
-		return sym->lookupInSymTab(expr->getSubField());
+	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
+	if(expr->hasSubField()) {
+		utypeSymNode* utype = static_cast<utypeSymNode*>(sym);
+		tdefSymNode* tdef = utype? utype->getUType() : nullptr;
+		varSymNode* child = tdef ? tdef->getChild() : nullptr;
+		return child->lookupInSymTab(expr->getSubField());
+	}
 	return nullptr;
 }
 
-const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const
-{
+const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
 	const symTabNode *sym = lookupInSymTab(expr->getExprVarRefName());
 	assert(sym);
-	if (expr->hasSubField() && (sym = sym->getUType()) && (sym = sym->getUType()->getChild()))
-		return sym->lookupInSymTab(expr->getSubField());
+	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
+	if(expr->hasSubField()) {
+		const utypeSymNode* utype = static_cast<const utypeSymNode*>(sym);
+		const tdefSymNode* tdef = utype? utype->getUType() : nullptr;
+		const varSymNode* child = tdef ? tdef->getChild() : nullptr;
+		return child->lookupInSymTab(expr->getSubField());
+	}
 	return nullptr;
 }
 
@@ -191,10 +197,10 @@ void symTabNode::detachNext(void) {
 	next = nullptr;
 }
 
-void symTabNode::detachChildAndInitSymNodes(void){
+/*void symTabNode::detachChildAndInitSymNodes(void){
 	child = nullptr;
 	init = nullptr;
-}
+}*/
 
 void symTabNode::setNext(symTabNode *newNext)
 {
@@ -218,10 +224,10 @@ symTabNode::Type symTabNode::getType(void) const
 	return type;
 }
 
-int symTabNode::getBound(void) const
+/*int symTabNode::getBound(void) const
 {
 	return bound;
-}
+}*/
 
 void symTabNode::setLineNb(int line)
 {
@@ -253,7 +259,7 @@ unsigned int symTabNode::getMemorySize(void) const
 	return memSize;
 }
 
-symTabNode *symTabNode::getUType(void) const
+/*symTabNode *symTabNode::getUType(void) const
 {
 	assert(type == T_UTYPE);
 	return utype;
@@ -285,26 +291,13 @@ stmnt *symTabNode::getStmnt(void) const
 {
 	assert(type == T_PROC || type == T_NEVER);
 	return childFsm;
-}
+}*/
 
 symTabNode::operator std::string(void) const
 {
 	std::string res = getTypeName() + " " + getName();
 	return res;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Helper function, prints "count" spaces and at each levelStep a >.
@@ -325,7 +318,7 @@ void spaces(int count)
  *  - level denotes the number of spaces to be used to indent the output.
  *  - title is the title of the symTab.
  */
-void symTabNode::printSymTab(int level, const std::string &title) const
+/*void symTabNode::printSymTab(int level, const std::string &title) const
 {
 
 	spaces(level);
@@ -357,7 +350,7 @@ void symTabNode::printSymTab(int level, const std::string &title) const
 	}
 	if (next)
 		next->printSymTab(level, nullptr);
-}
+}*/
 
 
 
