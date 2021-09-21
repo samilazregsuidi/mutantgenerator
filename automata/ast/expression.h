@@ -3,7 +3,7 @@
 
 #include <list>
 
-class mTypeNode;
+class mTypeList;
 class symTabNode;
 
 class fsm;
@@ -128,7 +128,7 @@ public:
 	 * Subsequent lookups, such as the array index, will use the other two symTabs just as
 	 * before.
 	 */
-	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeNode *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr);
+	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr);
 	
 	
 	symTabNode *getSymbol(void) const;
@@ -160,10 +160,10 @@ public:
 	//virtual ADD expNode2Bool(const symTabNode* symTab) const;
 	void setIVal(int ival);
 
-	//std::string var2String(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const;
-	//virtual bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const;
-	//virtual std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const;
-	//virtual std::list<std::string> getReadVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes, std::list<const astNode*>& expressions, std::list<const symTabNode*>& symbols) const;
+	//std::string var2String(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
+	//virtual bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
+	//virtual std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
+	//virtual std::list<std::string> getReadVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes, std::list<const astNode*>& expressions, std::list<const symTabNode*>& symbols) const;
 
 	virtual std::string getTypeDescr(void) = 0;
 
@@ -203,11 +203,11 @@ public:
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
-	unsigned int processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const;
+	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
 		;
@@ -234,7 +234,7 @@ class decl : public stmnt
 public:
 	decl(symTabNode *symTabChild, int lineNb);
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
 	operator std::string() const;
 
@@ -283,7 +283,7 @@ public:
 		this->symName = symName;
 	}
 
-	void resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField = nullptr);
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
 	symTabNode *symbolLookUpRight(void) const {
 		return symTab;
@@ -319,7 +319,7 @@ public:
 	{
 	}
 
-	void resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField = nullptr);
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
 	symTabNode *symbolLookUpRight() const
 	{
@@ -381,7 +381,7 @@ public:
 		return getExprVarRef()->getExprVarRefName();
 	}
 
-	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->var2String(globalSymTab, processSymTab, mtypes) == var;
 	}*/
@@ -415,7 +415,7 @@ protected:
 	{
 	}
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		auto left = child[0]->getVars(globalSymTab, processSymTab, mtypes);
 		auto right = child[1]->getVars(globalSymTab, processSymTab, mtypes);
@@ -432,7 +432,7 @@ protected:
 	{
 	}
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
 		;
@@ -1040,7 +1040,7 @@ public:
 		this->procName = procName;
 	}
 
-	void resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField = nullptr);
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
 	operator std::string() const
 	{
@@ -1264,7 +1264,7 @@ public:
 	{
 	}
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[1]->getVars(globalSymTab, processSymTab, mtypes);
 	}*/
@@ -1289,12 +1289,12 @@ public:
 	{
 	}
 
-	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->varOccurs(var, globalSymTab, processSymTab, mtypes) || child[1]->varOccurs(var, globalSymTab, processSymTab, mtypes);
 	}
 
-	std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeNode *mtypes) const
+	std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[1]->getVars(globalSymTab, processSymTab, mtypes);
 		;

@@ -2,7 +2,8 @@
 #include <string>
 
 #include "expression.h"
-#include "symbols.h"
+#include "symTabNode.h"
+#include "mTypeList.h"
 #include "automata.h"
 /**
  * Just creates a node with the given values.
@@ -87,7 +88,7 @@ symTabNode* astNode::symbolLookUpLeft(void) const {
 }*/
 
 
-/*bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
+/*bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes) const {
 	assert(globalSymTab);
 	std::string path;
 	//printf("Exp Type = %s\n", getExpTypeName(getType()));
@@ -161,14 +162,14 @@ symTabNode* astNode::symbolLookUpLeft(void) const {
 	return false;
 }*/
 
-/*bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
+/*bool astNode::varOccurs(const std::string& var, const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes) const {
 	assert(globalSymTab);
 	return (child[0] && child[0]->varOccurs(var, globalSymTab, processSymTab, mtypes))
 			|| (child[1] && child[1]->varOccurs(var, globalSymTab, processSymTab, mtypes))
 				|| (child[2] && child[2]->varOccurs(var, globalSymTab, processSymTab, mtypes));
 }*/
 
-/*std::list<std::string> astNode::getVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes) const {
+/*std::list<std::string> astNode::getVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes) const {
 	assert(globalSymTab);
 	std::string path = NULL;
 	switch(getType()) {
@@ -245,7 +246,7 @@ symTabNode* astNode::symbolLookUpLeft(void) const {
 	}
 }*/
 
-/*std::list<std::string>  astNode::getReadVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeNode* mtypes, std::list<const astNode*>& expressions, std::list<const symTabNode*>& symbols) const {
+/*std::list<std::string>  astNode::getReadVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes, std::list<const astNode*>& expressions, std::list<const symTabNode*>& symbols) const {
 	assert(globalSymTab);
 	std::string path;
 	switch(getType()) {
@@ -415,7 +416,7 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	return stmnts;
 }
 
-unsigned int stmnt::processVariables(symTabNode* global, const mTypeNode* mTypes, unsigned int offset, bool isGlobal) const {
+unsigned int stmnt::processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const {
 	offset += symTab ? symTab->processVariables(global, mTypes, offset, isGlobal) : 0;
 	return offset + (next? next->processVariables(global, mTypes, offset, isGlobal) : 0);
 }
@@ -432,26 +433,26 @@ decl::operator std::string() const {
 	return std::string(*declSym) + (declSym->getInitExpr()? " = " + std::string(*(declSym->getInitExpr())) : "") + ";\n" + (next? std::string(*next) : "");
 }
 
-void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+void astNode::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
 	for(int i = 0; i < 3; i++) 
 		if(child[i] != nullptr) 
 			child[i]->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
-void stmnt::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+void stmnt::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
 	astNode::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	if(next)
 		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
-void decl::resolveVariables(symTabNode* globalSymTab, const mTypeNode* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+void decl::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
 	if(declSym->getInitExpr())
 		declSym->getInitExpr()->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	stmnt::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
 
-void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
 		symTab = subField->lookupInSymTab(symName);
@@ -490,7 +491,7 @@ void exprVarRefName::resolveVariables(symTabNode *global, const mTypeNode *mType
 	}
 }
 
-void exprVarRef::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
 
 	child[0]->resolveVariables(global, mTypes, local, subField);
 	auto symbol = child[0]->getSymbol();
@@ -508,7 +509,7 @@ void exprVarRef::resolveVariables(symTabNode *global, const mTypeNode *mTypes, s
 		assert(!child[1]);
 }
 
-void exprRun::resolveVariables(symTabNode *global, const mTypeNode *mTypes, symTabNode *local, symTabNode *subField) {
+void exprRun::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
 		symTab = subField->lookupInSymTab(procName);
