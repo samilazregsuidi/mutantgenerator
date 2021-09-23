@@ -88,7 +88,13 @@ symTabNode::symTabNode(Type type, int lineNb, const std::string &sVal)
  */
 symTabNode::~symTabNode()
 {
-	delete next;
+	if(next)
+		delete next;
+}
+
+void symTabNode::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) {
+	if(next)
+		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
 /**
@@ -176,12 +182,12 @@ const symTabNode *symTabNode::lookupInSymTab(const exprVar *expr) const
  */
 symTabNode *symTabNode::lookupInSymTab(const std::string &name)
 {
-	return name == getName() ? this : next->lookupInSymTab(name);
+	return name == getName() ? this : (next? next->lookupInSymTab(name) : nullptr);
 }
 
 const symTabNode *symTabNode::lookupInSymTab(const std::string &name) const
 {
-	return name == getName() ? this : next->lookupInSymTab(name);
+	return name == getName() ? this : (next? next->lookupInSymTab(name) : nullptr);
 }
 
 /*bool symTabNode::isFeature(void) const {

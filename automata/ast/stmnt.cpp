@@ -8,11 +8,16 @@
 #include "tdefSymNode.h"
 #include "mTypeList.h"
 
-
 decl::decl(varSymNode *declSymTab, int lineNb)
 	: stmnt(astNode::E_DECL, lineNb)
 {
-	declSymTab = declSymTab;
+	this->declSymTab = declSymTab;
+}
+
+decl::~decl() {
+	delete declSymTab;
+	if(next)
+		delete next;
 }
 
 stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
@@ -33,7 +38,7 @@ unsigned int stmnt::processVariables(symTabNode* global, const mTypeList* mTypes
 	return offset + (next? next->processVariables(global, mTypes, offset, isGlobal) : 0);
 }
 
-void decl::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+void decl::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) {
 	if(declSymTab->getInitExpr())
 		declSymTab->getInitExpr()->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);

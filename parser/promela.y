@@ -200,7 +200,7 @@ inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 													else if(var->getType() != symTabNode::T_INT && var->getType() != symTabNode::T_BYTE && var->getType() != symTabNode::T_SHORT) std::cout << "The variable "<<$3<<" is not of type int, short or bit.";
 													else if(var->getInitExpr() == nullptr || var->getInitExpr()->getType() != astNode::E_EXPR_CONST) std::cout << "The variable "<<$3<<" does not have a constant value.";
 													else {
-														$$ = new exprConst(var->getInitExpr()->getIVal(), nbrLines);
+														$$ = new exprConst(static_cast<exprConst*>(var->getInitExpr())->getCstValue(), nbrLines);
 													}
 													free($3);											
 												}
@@ -262,7 +262,7 @@ sequence: step									{ 	$$ = $1;
 													}*/
 												}
 		| sequence MS step						{	$$ = stmnt::merge($$, $3);
-													$3->setLocalSymTab(symTabNode::merge($$->getLocalSymTab(), $3->getLocalSymTab()));
+													$3->setLocalSymTab(varSymNode::merge($$->getLocalSymTab(), $3->getLocalSymTab()));
 												}
 		;
 		
@@ -394,8 +394,8 @@ pfld	: NAME									{ $$ = new exprVarRefName($1, nbrLines); free($1); }
 		| NAME '[' expr ']'						{ $$ = new exprVarRefName($1, $3, nbrLines); free($1); }
 		;
 
-cmpnd	: pfld sfld								{ $$ = new exprVarRef($1, $2, nbrLines); }
-		| CONTEXT '.' pfld sfld					{ $$ = new exprVarRef($3, $4, nbrLines); }
+cmpnd	: pfld sfld								{ $$ = new exprVarRef(nbrLines, $1, $2); }
+		| CONTEXT '.' pfld sfld					{ $$ = new exprVarRef(nbrLines, $3, $4); }
 		;
 
 sfld	: /* empty */							{ $$ = nullptr; }
@@ -489,8 +489,9 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 		| '-' expr %prec UMIN					{ 	if($2->getType() != astNode::E_EXPR_CONST) 
 														$$ = new exprUMin($2, nbrLines);
 													else {
-														$2->setIVal(-$2->getIVal());
-														$$ = $2;
+														exprConst* tmp = static_cast<exprConst*>($2);
+														tmp->setCstValue(- tmp->getCstValue());
+														$$ = tmp;
 													}
 												} 
 		| SND expr %prec NEG					{ $$ = new exprNeg	($2, nbrLines); }

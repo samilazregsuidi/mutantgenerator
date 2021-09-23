@@ -13,7 +13,12 @@ protected:
 		this->right = right;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~exprBinary() override {
+		delete right;
+		delete left;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		left->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		right->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}

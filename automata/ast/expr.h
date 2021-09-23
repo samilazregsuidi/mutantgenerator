@@ -13,8 +13,11 @@ protected:
 	{}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		globalSymTab = globalSymTab;
+		mTypes = mTypes;
+		localSymTab = localSymTab;
+		subFieldSymTab = subFieldSymTab;
 	}
 };
 
@@ -30,7 +33,7 @@ public:
 		this->elsE = elsE;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		cond->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		then->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		elsE->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
@@ -70,7 +73,7 @@ public:
 
 	symTabNode *symbolLookUpLeft(void) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override;
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override;
 
 	operator std::string() const override;
 
@@ -93,7 +96,7 @@ public:
 		this->toEval = toEval;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		toEval->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
@@ -154,7 +157,7 @@ public:
 		this->list = nullptr;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		node->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		list->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -184,7 +187,7 @@ public:
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr) override;
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
 
 	operator std::string() const override;
 
@@ -208,27 +211,19 @@ public:
 		: expr(astNode::E_EXPR_CONST, lineNb)
 	{
 		this->constant = constant;
-		this->expression = expression;
 	}
-
-	exprConst(expr* expression, int lineNb)
-		: expr(astNode::E_EXPR_CONST, lineNb)
-	{
-		this->constant = constant;
-		this->expression = expression;
-	}
-
+	
 	int getCstValue(void) const {
 		return constant;
 	}
-
-	expr* getExpr(void) const {
-		return expression;
+	
+	void setCstValue(int constant) {
+		this->constant = constant;
 	}
 
 	operator std::string() const override
 	{
-		return expression? std::string(*expression) : std::to_string(constant);
+		return std::to_string(constant);
 	}
 
 	std::string getTypeDescr(void) override
@@ -238,7 +233,6 @@ public:
 
 private:
 	int constant;
-	expr* expression;
 };
 
 //E_EXPR_TIMEOUT,	// iVal = 0

@@ -18,12 +18,16 @@ protected:
 	}
 
 public:
+	~stmnt() override {
+		if(next)
+			delete next;
+	}
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
 	virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -58,12 +62,18 @@ public:
 		this->prev = this;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) override {
+	~stmntWrapper() override {
+		delete child;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) override {
 		child->resolveVariables(globalSymTab, mTypes,localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
-	stmnt* getChild(void) const {
+	stmnt* getStmnt(void) const {
 		return child;
 	}
  
@@ -94,7 +104,9 @@ class decl : public stmnt
 public:
 	decl(varSymNode *declSymTab, int lineNb);
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) override ;
+	~decl() override ;
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) override ;
 
 	operator std::string() const;
 
@@ -117,8 +129,15 @@ public:
 		this->chan = chan;
 		this->argList = argList;
 	}
+	
+	~stmntChanRecv() override {
+		delete chan;
+		delete argList;
+		if(next)
+			delete next;
+	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
@@ -155,7 +174,14 @@ public:
 		this->argList = argList;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntChanSnd() override {
+		delete chan;
+		delete argList;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
@@ -194,7 +220,15 @@ public:
 		this->nextOpt = nullptr;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntOpt() override {
+		delete block;
+		if(nextOpt)
+			delete nextOpt;
+		if (next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		nextOpt->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
@@ -225,7 +259,14 @@ public:
 		this->opts = opts;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntIf() override {
+		if(opts)
+			delete opts;
+		if (next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -254,7 +295,14 @@ public:
 		this->opts = opts;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntDo() override {
+		if(opts)
+			delete opts;
+		if (next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -332,6 +380,12 @@ public:
 		this->labelled = labelled;
 	}
 
+	~stmntLabel() override {
+		delete labelled;
+		if (next)
+			delete next;
+	}
+
 	operator std::string() const
 	{
 		return label + ": \n" + std::string(*labelled) + (next? std::string(*next) : "");
@@ -361,6 +415,12 @@ public:
 		this->block = block;
 	}
 
+	~stmntSeq() override {
+		delete block;
+		if(next)
+			delete next;
+	}
+
 protected:
 	stmntSeq(Type type, stmnt* block, int lineNb)
 		: stmnt(type, lineNb)
@@ -369,7 +429,7 @@ protected:
 	}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -419,7 +479,14 @@ public:
 		this->assign = assign;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntAsgn() override {
+		delete varRef;
+		delete assign;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		assign->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
@@ -450,7 +517,13 @@ public:
 		this->varRef = varRef;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntIncr() override {
+		delete varRef;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -479,7 +552,13 @@ public:
 		this->varRef = varRef;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntDecr() override {
+		delete varRef;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -509,7 +588,13 @@ public:
 		this->argList = argList;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntPrint() override {
+		delete argList;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -545,7 +630,13 @@ public:
 		this->constant = constant;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntPrintm() override {
+		delete varRef;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -575,7 +666,13 @@ public:
 		this->toAssert = toAssert;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntAssert() override {
+		delete toAssert;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		toAssert->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -604,7 +701,13 @@ public:
 		this->child = child;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntExpr() override {
+		delete child;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		child->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -653,7 +756,13 @@ public:
 		this->timer = timer;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntWait() override {
+		delete timer;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		timer->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
@@ -684,7 +793,14 @@ public:
 		this->clocks = clocks;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~stmntWhen() override {
+		delete guard;
+		delete todo;
+		if(next)
+			delete next;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		guard->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		todo->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);

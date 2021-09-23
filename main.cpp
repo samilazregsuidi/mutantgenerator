@@ -70,7 +70,11 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	globalSymTab->processVariables(globalSymTab, mtypes, SYS_VARS_SIZE, 1);
+	globalSymTab->resolveVariables(globalSymTab, mtypes, nullptr, nullptr);
+
+	
+
+	//globalSymTab->processVariables(globalSymTab, mtypes, SYS_VARS_SIZE, 1);
 
 	std::cout<< std::string(*globalSymTab);
 

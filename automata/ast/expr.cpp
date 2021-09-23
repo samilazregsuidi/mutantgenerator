@@ -22,7 +22,7 @@ symTabNode *exprRArgVar::symbolLookUpLeft(void) const {
 	return varRef->symbolLookUpLeft();
 }
 
-void exprRArgVar::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
+void exprRArgVar::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) {
 	varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
@@ -54,14 +54,10 @@ exprRun::operator std::string() const
 	return "run " + procName + (card ? " [" + std::string(*card) + "]" : "") + "( " + std::string(*argList) + " ) ";
 }
 
-void exprRun::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
+void exprRun::resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField) {
 
-	if (subField)
+	if (global)
 		procSym = static_cast<procSymNode*>(subField->lookupInSymTab(procName));
-	else if (local)
-		procSym = static_cast<procSymNode*>(local->lookupInSymTab(procName));
-	else
-		procSym = static_cast<procSymNode*>(global->lookupInSymTab(procName));
 
 	assert(procSym && procSym->getType() == symTabNode::T_PROC);
 

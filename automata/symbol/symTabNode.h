@@ -18,6 +18,7 @@ class fsm;
 class fsmNode;
 class fsmTrans;
 
+class varSymNode;
 class symTabVisitor;
 
 class mTypeList;
@@ -94,6 +95,8 @@ public:
 	//void detachAll(void);
 
 	//bool isFeature(void) const;
+
+	virtual void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
     virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) = 0;
 

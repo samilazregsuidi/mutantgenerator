@@ -13,7 +13,11 @@ protected:
 		this->expression = expression;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	~exprUnary() override {
+		delete expression;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
 		expression->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 

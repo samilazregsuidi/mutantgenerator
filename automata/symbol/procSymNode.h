@@ -10,6 +10,8 @@ protected:
 
 	~seqSymNode(void) override ;
 
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
+
 	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) override ;
 
 	operator std::string(void) const override ;
@@ -66,6 +68,7 @@ public:
 
 	~procSymNode() override ;
 
+
 	std::string getTypeName(void) const override {
 		return "proctype";
 	}
@@ -74,6 +77,8 @@ public:
 		return 1;
 	}
 
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
+	
 	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	operator std::string(void) const override;

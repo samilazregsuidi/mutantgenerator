@@ -12,31 +12,15 @@
 class exprVarRefName : public expr
 {
 public:
-	exprVarRefName(const std::string& symName, int lineNb)
-		: expr(astNode::E_VARREF_NAME, lineNb)
-	{
-		this->symName = symName;
-		this->sym = nullptr;
-		this->index = nullptr;
-	}
+	exprVarRefName(const std::string& symName, int lineNb);
 
-	exprVarRefName(const std::string& symName, expr *index, int lineNb)
-		: expr(astNode::E_VARREF_NAME, lineNb)
-	{
-		this->symName = symName;
-		this->sym = nullptr;
-		this->index = index;
-	}
+	exprVarRefName(const std::string& symName, expr *index, int lineNb);
 
-	exprVarRefName(const std::string& symName, symTabNode *sym, int lineNb)
-		: expr(astNode::E_VARREF_NAME, lineNb)
-	{
-		this->symName = symName;
-		this->index = nullptr;
-		this->sym = sym;
-	}
+	exprVarRefName(const std::string& symName, symTabNode *sym, int lineNb);
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
+	~exprVarRefName() override;
+
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr);
 
 	symTabNode *symbolLookUpRight(void) const {
 		return sym;
@@ -68,30 +52,20 @@ private:
 class exprVarRef : public expr
 {
 public:
-	exprVarRef(exprVarRefName *symRef, exprVarRef *subfieldsVar, int lineNb)
-		: expr(astNode::E_VARREF, lineNb)
-	{
-		this->varRef = symRef;
-		this->subfieldsVar = subfieldsVar;
-	}
+	exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar);
 
-	exprVarRef(exprVarRefName *symRef, int lineNb)
-		: expr(astNode::E_VARREF, lineNb)
-	{
-		this->varRef = symRef;
-		this->subfieldsVar = nullptr;
-	}
+	~exprVarRef() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
 
 	symTabNode *symbolLookUpRight() const
 	{
-		return subfieldsVar ? subfieldsVar->symbolLookUpRight() : varRef->symbolLookUpRight();
+		return subfieldsVar ? subfieldsVar->symbolLookUpRight() : varRefName->symbolLookUpRight();
 	}
 
 	symTabNode *symbolLookUpLeft(void) const
 	{
-		return varRef->symbolLookUpLeft();
+		return varRefName->symbolLookUpLeft();
 	}
 
 	bool hasSubField(void) const
@@ -106,12 +80,12 @@ public:
 
 	const exprVarRefName *getField() const
 	{
-		return varRef;
+		return varRefName;
 	}
 
 	operator std::string() const
 	{
-		return std::string(*varRef) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
+		return std::string(*varRefName) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -120,7 +94,7 @@ public:
 	}
 
 private:
-	exprVarRefName *varRef;
+	exprVarRefName *varRefName;
 	exprVarRef *subfieldsVar;
 };
 
@@ -128,11 +102,11 @@ private:
 class exprVar : public expr
 {
 public:
-	exprVar(exprVarRef *varRef, int lineNb)
-		: expr(astNode::E_EXPR_VAR, lineNb)
-	{
-		this->varRef = varRef;
-	}
+	exprVar(exprVarRef *varRef, int lineNb);
+
+	~exprVar() override;
+
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
 
 	const exprVarRef *getVarRef(void) const
 	{

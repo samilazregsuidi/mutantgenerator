@@ -113,7 +113,7 @@ public:
 
 	//astNode(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr);
 	astNode(Type type, int lineNb);
-	virtual ~astNode();
+	virtual ~astNode() {}
 
 	/**
 	 * Goes through the expression and all its children and looks up all references to
@@ -132,7 +132,7 @@ public:
 	 * before.
 	 */
 	
-	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr) = 0;
+	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, varSymNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr) = 0;
 	
 	Type getType(void) const;
 

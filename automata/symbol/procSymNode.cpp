@@ -24,15 +24,26 @@ void procSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitProc(this);
 }
 
+void seqSymNode::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab)  {
+	block->resolveVariables(globalSymTab, mTypes, block->getLocalSymTab(), subFieldSymTab);
+	if(next)
+		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+}
+
 unsigned int seqSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
-	block->resolveVariables(global, mTypes, block->getLocalSymTab());
 	memSize = block->processVariables(global, mTypes, 0, 0);
 	return !next ? iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
+}
+
+void procSymNode::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) {
+	block->resolveVariables(globalSymTab, mTypes, block->getLocalSymTab(), subFieldSymTab);
+	active->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	if(next)
+		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 	
 
 unsigned int procSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
-	block->resolveVariables(global, mTypes, block->getLocalSymTab());
 	if (active && active->getType() == astNode::E_EXPR_COUNT)
 		active->resolveVariables(global, mTypes);
 	memSize = block->processVariables(global, mTypes, 0, 0);
@@ -49,7 +60,7 @@ procSymNode::operator std::string(void) const {
 	if (active->getCstValue() >= 1){
 		res += "active";
 	}
-	if (active->getCstValue() > 1 || active->getExpr()) {
+	if (active->getCstValue() > 1) {
 		res += " [" + std::string(*active) + "]";
 	}
 
