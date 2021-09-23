@@ -52,14 +52,16 @@ public:
 	void acceptVisitor(symTabVisitor* visitor) const ;
 };
 
+class exprConst;
+
 //T_PROC
 class procSymNode : public seqSymNode {
 public:
-	procSymNode(const std::string& name, expr* child0, symTabNode* args, stmnt* block, int lineNb)
+	procSymNode(const std::string& name, exprConst* active, symTabNode* args, stmnt* block, int lineNb)
 		: seqSymNode(symTabNode::T_PROC, name, lineNb, block)
 	{
 		this->args = args;
-		this->active = child0;
+		this->active = active;
 	}
 
 	~procSymNode() override ;
@@ -80,5 +82,5 @@ public:
 
 private:
 	symTabNode* args;
-	expr* active;
+	exprConst* active;
 };

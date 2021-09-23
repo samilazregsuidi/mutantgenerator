@@ -9,7 +9,7 @@ class stmnt : public astNode
 {
 
 protected:
-	stmnt(Type type, int lineNb, symTabNode *local = nullptr)
+	stmnt(Type type, int lineNb, varSymNode *local = nullptr)
 		: astNode(type, lineNb)
 	{
 		this->local = local;
@@ -21,21 +21,26 @@ public:
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
+	virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	}
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
 		;
 	}*/
-	void setLocalSymTab(symTabNode* local) {
+	void setLocalSymTab(varSymNode* local) {
 		this->local = local;
 	}
 
-	symTabNode* getLocalSymTab(void) const {
+	varSymNode* getLocalSymTab(void) const {
 		return local;
 	}
 
 protected:
-	symTabNode* local;
+	varSymNode* local;
 	stmnt* next;
 	stmnt* prev;
 };
@@ -52,10 +57,16 @@ public:
 		this->next = nullptr;
 		this->prev = this;
 	}
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) override {
+		child->resolveVariables(globalSymTab, mTypes,localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	}
 
+	stmnt* getChild(void) const {
+		return child;
+	}
+ 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
 	{
 		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
@@ -83,7 +94,7 @@ class decl : public stmnt
 public:
 	decl(varSymNode *declSymTab, int lineNb);
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) override ;
 
 	operator std::string() const;
 
@@ -105,6 +116,12 @@ public:
 	{
 		this->chan = chan;
 		this->argList = argList;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -138,16 +155,11 @@ public:
 		this->argList = argList;
 	}
 
-	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[0]->varOccurs(var, globalSymTab, processSymTab, mtypes) || child[1]->varOccurs(var, globalSymTab, processSymTab, mtypes);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
-
-	std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[1]->getVars(globalSymTab, processSymTab, mtypes);
-		;
-	}*/
 
 	operator std::string() const
 	{
@@ -171,11 +183,21 @@ public:
 	stmntOpt(stmnt* block, stmntOpt *nextOpt, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
+		this->block = block;
+		this->nextOpt = nextOpt;
 	}
 
 	stmntOpt(stmnt* block, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
+		this->block = block;
+		this->nextOpt = nullptr;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		nextOpt->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
@@ -197,40 +219,58 @@ private:
 class stmntIf : public stmnt
 {
 public:
-	stmntIf(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_IF, 0, child0, nullptr, nullptr, lineNb)
+	stmntIf(stmntOpt *opts, int lineNb)
+		: stmnt(astNode::E_STMNT_IF, lineNb)
 	{
+		this->opts = opts;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "if\n" + std::string(*child[0]) + "\nfi;\n" + (next? std::string(*next) : "");
+		return "if\n" + std::string(*opts) + "\nfi;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "If (E_STMNT_IF)";
 	}
+
+private:
+	stmntOpt* opts;
 };
 
 //E_STMNT_DO,			// child[0] = E_STMNT_OPT (contains an fsm)
 class stmntDo : public stmnt
 {
 public:
-	stmntDo(stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_DO, 0, child0, nullptr, nullptr, lineNb)
+	stmntDo(stmntOpt *opts, int lineNb)
+		: stmnt(astNode::E_STMNT_DO, lineNb)
 	{
+		this->opts = opts;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "do\n" + std::string(*child[0]) + "\nod;\n" + (next? std::string(*next) : "");
+		return "do\n" + std::string(*opts) + "\nod;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Do (E_STMNT_DO)";
 	}
+
+private:
+	stmntOpt* opts;
 };
 
 //E_STMNT_BREAK,		// empty
@@ -238,7 +278,7 @@ class stmntBreak : public stmnt
 {
 public:
 	stmntBreak(int lineNb)
-		: stmnt(astNode::E_STMNT_BREAK, 0, nullptr, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_BREAK, lineNb)
 	{
 	}
 
@@ -258,7 +298,7 @@ class stmntGoto : public stmnt
 {
 public:
 	stmntGoto(const std::string& label, int lineNb)
-		: stmnt(astNode::E_STMNT_GOTO, 0, nullptr, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_GOTO, lineNb)
 	{
 		this->label = label;
 	}
@@ -285,15 +325,16 @@ private:
 class stmntLabel : public stmnt
 {
 public:
-	stmntLabel(const std::string& label, stmnt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_LABEL, 0, child0, nullptr, nullptr, lineNb)
+	stmntLabel(const std::string& label, stmnt *labelled, int lineNb)
+		: stmnt(astNode::E_STMNT_LABEL, lineNb)
 	{
 		this->label = label;
+		this->labelled = labelled;
 	}
 
 	operator std::string() const
 	{
-		return label + ": \n" + std::string(*child[0]) + (next? std::string(*next) : "");
+		return label + ": \n" + std::string(*labelled) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -307,6 +348,7 @@ public:
 
 private:
 	std::string label;
+	stmnt* labelled;
 };
 
 //E_STMNT_SEQ,		// fsm = fsm of this sequence
@@ -314,35 +356,49 @@ class stmntSeq : public stmnt
 {
 public:
 	stmntSeq(stmnt* block, int lineNb)
-		: stmnt(astNode::E_STMNT_SEQ, 0, nullptr, nullptr, nullptr, lineNb, block)
+		: stmnt(astNode::E_STMNT_SEQ, lineNb)
 	{
+		this->block = block;
+	}
+
+protected:
+	stmntSeq(Type type, stmnt* block, int lineNb)
+		: stmnt(type, lineNb)
+	{
+		this->block = block;
+	}
+
+public:
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "null" + (next? std::string(*next) : "");
+		return "{\n" + std::string(*block) + "};\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Seq (E_STMNT_SEQ)";
 	}
+
+protected:
+	stmnt* block;
 };
 
 //E_STMNT_ATOMIC,		// fsm = fsm of the atomic sequence
-class stmntAtomic : public stmnt
+class stmntAtomic : public stmntSeq
 {
 public:
 	stmntAtomic(stmnt *block, int lineNb)
-		: stmnt(astNode::E_STMNT_ATOMIC, 0, nullptr, nullptr, nullptr, lineNb, block)
-	{
-	}
+		: stmntSeq(astNode::E_STMNT_ATOMIC, block, lineNb)
+	{}
 
 	operator std::string() const
 	{
-		std::string res = "atomic {\n";
-		res += std::string(*childFsm);
-		res += "\n};";
+		std::string res = "atomic " + stmntSeq::operator std::string();
 		return next? res + std::string(*next) : res; 
 	}
 
@@ -356,75 +412,111 @@ public:
 class stmntAsgn : public stmnt
 {
 public:
-	stmntAsgn(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_ASGN, 0, child0, child1, nullptr, lineNb)
+	stmntAsgn(exprVarRef *varRef, expr *assign, int lineNb)
+		: stmnt(astNode::E_STMNT_ASGN, lineNb)
 	{
+		this->varRef = varRef;
+		this->assign = assign;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		assign->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " = " + std::string(*child[1]) + ";\n" + (next? std::string(*next) : "");
+		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Assignment (E_STMNT_ASGN)";
 	}
+
+private:
+	exprVarRef* varRef;
+	expr* assign;
 };
 
 //E_STMNT_INCR,		// child[0] = E_VARREF
 class stmntIncr : public stmnt
 {
 public:
-	stmntIncr(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_INCR, 0, child0, nullptr, nullptr, lineNb)
+	stmntIncr(exprVarRef *varRef, int lineNb)
+		: stmnt(astNode::E_STMNT_INCR, lineNb)
 	{
+		this->varRef = varRef;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + "++;\n" + (next? std::string(*next) : "");
+		return std::string(*varRef) + "++;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Increment (E_STMNT_INCR)";
 	}
+
+private:
+	exprVarRef* varRef;
 };
 
 //E_STMNT_DECR,		// child[0] = E_VARREF
 class stmntDecr : public stmnt
 {
 public:
-	stmntDecr(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_DECR, 0, child0, nullptr, nullptr, lineNb)
+	stmntDecr(exprVarRef *varRef, int lineNb)
+		: stmnt(astNode::E_STMNT_DECR, lineNb)
 	{
+		this->varRef = varRef;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + "--;\n" + (next? std::string(*next) : "");
+		return std::string(*varRef) + "--;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Decrement (E_STMNT_DECR)";
 	}
+
+private:
+	exprVarRef* varRef;
 };
 
 //E_STMNT_PRINT,		// child[0] = E_ARGLIST, sVal = the print string
 class stmntPrint : public stmnt
 {
 public:
-	stmntPrint(const std::string &toPrint, exprArgList *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINT, 0, child0, nullptr, nullptr, lineNb)
+	stmntPrint(const std::string &toPrint, exprArgList *argList, int lineNb)
+		: stmnt(astNode::E_STMNT_PRINT, lineNb)
 	{
 		this->toPrint = toPrint;
+		this->argList = argList;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "printf(" + toPrint + (child[0]? std::string(*child[0]) : "") + ");\n" + (next? std::string(*next) : "");
+		return "printf(" + toPrint + (argList? std::string(*argList) : "") + ");\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
@@ -433,71 +525,102 @@ public:
 	}
 private:
 	std::string toPrint;
+	exprArgList* argList;
 };
 
 //E_STMNT_PRINTM,		// child[0] = E_VARREF, or iVal = constant
 class stmntPrintm : public stmnt
 {
 public:
-	stmntPrintm(exprVarRef *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINTM, 0, child0, nullptr, nullptr, lineNb)
+	stmntPrintm(exprVarRef *varRef, int lineNb)
+		: stmnt(astNode::E_STMNT_PRINTM, lineNb)
 	{
+		this->varRef = varRef;
 	}
 
-	stmntPrintm(int iVal, int lineNb)
-		: stmnt(astNode::E_STMNT_PRINTM, iVal, nullptr, nullptr, nullptr, lineNb)
+	stmntPrintm(int constant, int lineNb)
+		: stmnt(astNode::E_STMNT_PRINTM,  lineNb)
 	{
+		this->varRef = nullptr;
+		this->constant = constant;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "printm("+(child[0] ? std::string(*child[0]) : std::to_string(iVal)) + ");\n" + (next? std::string(*next) : "");
+		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "PrintM (E_STMNT_PRINTM)";
 	}
+
+private:
+	exprVarRef* varRef;
+	int constant;
 };
 
 //E_STMNT_ASSERT,		// child[0] = E_EXPR_*
 class stmntAssert : public stmnt
 {
 public:
-	stmntAssert(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_ASSERT, 0, child0, nullptr, nullptr, lineNb)
+	stmntAssert(expr *toAssert, int lineNb)
+		: stmnt(astNode::E_STMNT_ASSERT, lineNb)
 	{
+		this->toAssert = toAssert;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		toAssert->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "assert(" + std::string(*child[0]) + ");\n" + (next? std::string(*next) : "") ;
+		return "assert(" + std::string(*toAssert) + ");\n" + (next? std::string(*next) : "") ;
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Assertion (E_STMNT_ASSERT)";
 	}
+
+private:
+	expr* toAssert;
 };
 
 //E_STMNT_EXPR,		// child[0] = E_EXPR_*
 class stmntExpr : public stmnt
 {
 public:
-	stmntExpr(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, 0, child0, nullptr, nullptr, lineNb)
+	stmntExpr(expr *child, int lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_RCV, lineNb)
 	{
+		this->child = child;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		child->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return *child[0];
+		return *child;
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Expression wrapper (E_STMNT_EXPR)";
 	}
+
+private:
+	expr* child;
 };
 
 //E_STMNT_ELSE,		// empty
@@ -505,7 +628,7 @@ class stmntElse : public stmnt
 {
 public:
 	stmntElse(int lineNb)
-		: stmnt(astNode::E_STMNT_ELSE, 0, nullptr, nullptr, nullptr, lineNb)
+		: stmnt(astNode::E_STMNT_ELSE, lineNb)
 	{
 	}
 
@@ -524,45 +647,63 @@ public:
 class stmntWait : public stmnt
 {
 public:
-	stmntWait(expr *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_WAIT, 0, child0, nullptr, nullptr, lineNb)
+	stmntWait(expr *timer, int lineNb)
+		: stmnt(astNode::E_STMNT_WAIT, lineNb)
 	{
+		this->timer = timer;
+	}
+
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		timer->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "while ( " + std::string(*child[0]) + " ) wait;\n" + (next? std::string(*next) : "");
+		return "while ( " + std::string(*timer) + " ) wait;\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Time invariant (E_STMNT_WAIT)";
 	}
+
+private:
+	expr* timer;
 };
 
 //E_STMNT_WHEN,		// child[0] = E_EXPR_*, child[1] = E_STMNT_* symTab = clock symbols
 class stmntWhen : public stmnt
 {
 public:
-	stmntWhen(expr *child0, stmnt *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb)
+	stmntWhen(expr *guard, stmnt *todo, int lineNb, symTabNode *clocks = nullptr)
+		: stmnt(astNode::E_STMNT_WHEN, lineNb)
 	{
+		this->guard = guard;
+		this->todo = todo;
+		this->clocks = clocks;
 	}
 
-	stmntWhen(expr *child0, stmnt *child1, symTabNode *childSymNode, int lineNb)
-		: stmnt(astNode::E_STMNT_WHEN, 0, child0, child1, nullptr, lineNb, nullptr, childSymNode)
-	{
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		guard->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		todo->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 	}
 
 	operator std::string() const
 	{
-		return "when ( " + std::string(*child[0]) + " ) do " + std::string(*child[1]) + "\n" + (next? std::string(*next) : "");
+		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Time guard (E_STMNT_WHEN)";
 	}
+
+private:
+	expr* guard;
+	stmnt* todo;
+	symTabNode* clocks;
 };
 
 #endif

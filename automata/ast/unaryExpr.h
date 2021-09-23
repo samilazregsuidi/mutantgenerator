@@ -2,6 +2,7 @@
 #define UNARY_EXPR_H
 
 #include "expr.h"
+#include "varExpr.h"
 
 class exprUnary : public expr
 {
@@ -12,11 +13,10 @@ protected:
 		this->expression = expression;
 	}
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
-		;
-	}*/
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		expression->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	}
+
 protected:
 	expr* expression;
 };

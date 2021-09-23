@@ -13,13 +13,11 @@ protected:
 		this->right = right;
 	}
 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		auto left = child[0]->getVars(globalSymTab, processSymTab, mtypes);
-		auto right = child[1]->getVars(globalSymTab, processSymTab, mtypes);
-		left.splice(left.begin(), right);
-		return left;
-	}*/
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+		left->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+		right->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	}
+
 
 protected:
 	expr* left;

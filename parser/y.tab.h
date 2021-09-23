@@ -251,6 +251,7 @@ union YYSTYPE
 	class stmnt*			pStmntVal;
 	class stmntOpt*			pStmntOptVal;
 	class expr*				pExprVal;
+	class exprConst*		pConstExprVal;
 	class exprVarRef*		pExprVarRefVal;
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
@@ -260,7 +261,7 @@ union YYSTYPE
 	
 	enum symTabNode::Type   iType;
 
-#line 264 "y.tab.h"
+#line 265 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

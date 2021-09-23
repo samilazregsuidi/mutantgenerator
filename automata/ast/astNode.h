@@ -131,42 +131,12 @@ public:
 	 * Subsequent lookups, such as the array index, will use the other two symTabs just as
 	 * before.
 	 */
-	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr);
 	
+	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, symTabNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr) = 0;
 	
-	//symTabNode *getSymbol(void) const;
-	//void setSymbol(symTabNode *sym);
-
-	//virtual symTabNode *symbolLookUpRight(void) const;
-	//virtual symTabNode *symbolLookUpLeft(void) const;
-
 	Type getType(void) const;
+
 	int getLineNb(void) const;
-	//std::string getName(void) const;
-	//void setName(const std::string& sVal);
-	//bool isGlobal(void) const;
-	//void setGlobal(bool global);
-	//int getIVal(void) const;
-	//const symTabNode* getUType(void) const;
-	//virtual bool isTimeout(void) const;
-
-	/*astNode* getChild0(void) const;
-	astNode* getChild1(void) const;
-	astNode* getChild2(void) const;
-
-	astNode* detachChild0(void);
-	astNode* detachChild1(void);
-	astNode* detachChild2(void);*/
-
-	//fsm* getChildFsm(void) const;
-
-	//virtual ADD expNode2Bool(const symTabNode* symTab) const;
-	//void setIVal(int ival);
-
-	//std::string var2String(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
-	//virtual bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
-	//virtual std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const;
-	//virtual std::list<std::string> getReadVars(const symTabNode* globalSymTab, const symTabNode* processSymTab, const mTypeList* mtypes, std::list<const astNode*>& expressions, std::list<const symTabNode*>& symbols) const;
 
 	virtual std::string getTypeDescr(void) = 0;
 
@@ -174,14 +144,7 @@ public:
 
 protected:
 	Type type;
-	//int iVal;
-	int lineNb; // The line at which the symbol is declared
-	//double prob;
-	//bool global;
-
-	//astNode *child[3];
-	//stmnt *childFsm;
-	//symTabNode *symTab;
+	int lineNb;
 };
 
 #endif

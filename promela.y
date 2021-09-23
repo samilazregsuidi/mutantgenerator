@@ -57,6 +57,7 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 	class stmnt*			pStmntVal;
 	class stmntOpt*			pStmntOptVal;
 	class expr*				pExprVal;
+	class exprConst*		pConstExprVal;
 	class exprVarRef*		pExprVarRefVal;
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
@@ -77,7 +78,8 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 %type  <rVal> real_expr
 %type  <pStmntVal> step stmnt timed_stmnt Special Stmnt  
 %type  <pStmntOptVal> options
-%type  <pExprVal> Expr expr full_expr Probe inst
+%type  <pExprVal> Expr expr full_expr Probe
+%type  <pConstExprVal> inst
 %type  <pExprVarRefVal> varref varref_ cmpnd cmpnd_ sfld sfld_ 
 %type  <pExprVarRefNameVal> pfld pfld_
 %type  <pExprArgListVal> arg args rargs margs prargs
@@ -180,7 +182,7 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  Opt_enabler							/* Ignore */
 		  body									{	
 		  											symTabNode* args = symTabNode::deepcopy($5);
-		  											$9->setSymbol(symTabNode::merge($5, $9->getSymbol()));
+		  											$9->setLocalSymTab(varSymNode::merge($5, $9->getLocalSymTab()));
 		  											symTabNode* proc = new procSymNode($3, $1, args, $9, nbrLines);
 		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
 		  										}
@@ -250,7 +252,7 @@ body	: '{' sequence OS '}'					{ $$ = $2; }
 sequence: step									{ 	$$ = $1;
 													/*$$ = new fsm();
 													if($1->getType() == astNode::E_DECL) {
-														$$->setSymTab($1->getSymbol());
+														$$->setSymTab($1->getLocalSymTab());
 														$1->setSymbol(nullptr);
 														delete $1;
 													} else if($1->getType() == astNode::E_STMNT) {
@@ -260,7 +262,7 @@ sequence: step									{ 	$$ = $1;
 													}*/
 												}
 		| sequence MS step						{	$$ = stmnt::merge($$, $3);
-													$3->setSymbol(symTabNode::merge($$->getSymbol(), $3->getSymbol()));
+													$3->setLocalSymTab(symTabNode::merge($$->getLocalSymTab(), $3->getLocalSymTab()));
 												}
 		;
 		
@@ -268,7 +270,7 @@ step    : one_decl								{ $$ = new decl($1, nbrLines); }
 		| XU vref_lst							{ std::cout << "Channel assertions are currently not supported."; }
 		| NAME ':' one_decl						{ std::cout << "Declarations with labels are not suported."; }
 		| NAME ':' XU							{ std::cout << "Channel assertions are currently not supported."; }
-		| stmnt									{ $$ = new stmnt($1, nbrLines); }
+		| stmnt									{ $$ = new stmntWrapper($1, nbrLines); }
 		| stmnt UNLESS stmnt					{ std::cout << "Unless statements are currently not supported."; }
 		;
 
@@ -367,7 +369,7 @@ var_list: ivar									{ $$ = $1; }
 
 ivar    : vardcl								{ $$ = varSymNode::createSymTabNode($1.iType, nbrLines, $1.sVal, $1.iVal); }
 		| vardcl ASGN expr						{ 	int mtype;
-													if($3->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes? (*mtypes)->getMTypeValue(static_cast<exprVar*>($3)->getExprVarRefName()->getName()) : -1)) != -1) {
+													if($3->getType() == astNode::E_EXPR_VAR && (mtype = (*mtypes? (*mtypes)->getMTypeValue(static_cast<exprVar*>($3)->getVarRefName()->getName()) : -1)) != -1) {
 														exprConst* newExpr = new exprConst(mtype, $3->getLineNb());
 														delete $3;
 														$3 = newExpr;
@@ -410,7 +412,7 @@ Special : varref RCV rargs						{ $$ = new stmntChanRecv($1, $3, nbrLines); }
 		| DO options OD							{ $$ = new stmntDo($2, $1); }
 		| BREAK									{ $$ = new stmntBreak(nbrLines); }
 		| GOTO NAME								{ $$ = new stmntGoto($2, nbrLines); free($2); }
-		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && $3->getChild0() && $3->getChild0()->getType() == astNode::E_STMNT_LABEL) 
+		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && static_cast<stmntWrapper*>($3)->getStmnt()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
 												  $$ = new stmntLabel($1, $3, nbrLines); free($1); }
 

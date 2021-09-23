@@ -136,7 +136,7 @@ const symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr) const
 }
 
 symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
-	symTabNode *sym = lookupInSymTab(expr->getExprVarRefName());
+	symTabNode *sym = lookupInSymTab(expr->getField());
 	assert(sym);
 	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
 	if(expr->hasSubField()) {
@@ -149,7 +149,7 @@ symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
 }
 
 const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
-	const symTabNode *sym = lookupInSymTab(expr->getExprVarRefName());
+	const symTabNode *sym = lookupInSymTab(expr->getField());
 	assert(sym);
 	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
 	if(expr->hasSubField()) {
@@ -163,12 +163,12 @@ const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
 
 symTabNode *symTabNode::lookupInSymTab(const exprVar *expr)
 {
-	return lookupInSymTab(expr->getExprVarRef());
+	return lookupInSymTab(expr->getVarRef());
 }
 
 const symTabNode *symTabNode::lookupInSymTab(const exprVar *expr) const
 {
-	return lookupInSymTab(expr->getExprVarRef());
+	return lookupInSymTab(expr->getVarRef());
 }
 
 /**

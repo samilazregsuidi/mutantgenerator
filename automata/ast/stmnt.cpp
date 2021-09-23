@@ -9,10 +9,10 @@
 #include "mTypeList.h"
 
 
-decl::decl(varSymNode *symTabChild, int lineNb)
-	: stmnt(astNode::E_DECL, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
+decl::decl(varSymNode *declSymTab, int lineNb)
+	: stmnt(astNode::E_DECL, lineNb)
 {
-	declSym = symTabChild;
+	declSymTab = declSymTab;
 }
 
 stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
@@ -29,22 +29,16 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 }
 
 unsigned int stmnt::processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const {
-	offset += symTab ? symTab->processVariables(global, mTypes, offset, isGlobal) : 0;
+	offset += local ? local->processVariables(global, mTypes, offset, isGlobal) : 0;
 	return offset + (next? next->processVariables(global, mTypes, offset, isGlobal) : 0);
 }
 
-void stmnt::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
-	astNode::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-	if(next)
-		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-}
-
 void decl::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab, symTabNode* subFieldSymTab) {
-	if(declSym->getInitExpr())
-		declSym->getInitExpr()->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-	stmnt::resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	if(declSymTab->getInitExpr())
+		declSymTab->getInitExpr()->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
 }
 
 decl::operator std::string() const {
-	return std::string(*declSym) + (declSym->getInitExpr()? " = " + std::string(*(declSym->getInitExpr())) : "") + ";\n" + (next? std::string(*next) : "");
+	return std::string(*declSymTab) + (declSymTab->getInitExpr()? " = " + std::string(*(declSymTab->getInitExpr())) : "") + ";\n" + (next? std::string(*next) : "");
 }

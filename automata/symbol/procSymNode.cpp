@@ -25,14 +25,14 @@ void procSymNode::acceptVisitor(symTabVisitor *visitor) const{
 }
 
 unsigned int seqSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
-	block->resolveVariables(global, mTypes, block->getSymbol());
+	block->resolveVariables(global, mTypes, block->getLocalSymTab());
 	memSize = block->processVariables(global, mTypes, 0, 0);
 	return !next ? iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
 }
 	
 
 unsigned int procSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
-	block->resolveVariables(global, mTypes, block->getSymbol());
+	block->resolveVariables(global, mTypes, block->getLocalSymTab());
 	if (active && active->getType() == astNode::E_EXPR_COUNT)
 		active->resolveVariables(global, mTypes);
 	memSize = block->processVariables(global, mTypes, 0, 0);
@@ -46,12 +46,13 @@ seqSymNode::operator std::string(void) const {
 procSymNode::operator std::string(void) const {
 	assert(active);
 	std::string res = "";
-	if (active->getIVal() >= 1){
+	if (active->getCstValue() >= 1){
 		res += "active";
 	}
-	if (active->getIVal() > 1) {
-		res += " [" + std::to_string(active->getIVal()) + "]";
+	if (active->getCstValue() > 1 || active->getExpr()) {
+		res += " [" + std::string(*active) + "]";
 	}
+
 	res += " proctype " + name + "(";
 	const auto *arg = args;
 	while (arg) {
