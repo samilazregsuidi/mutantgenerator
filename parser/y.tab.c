@@ -758,7 +758,7 @@ static const yytype_int16 yyrline[] =
      196,   207,   217,   220,   223,   224,   227,   230,   231,   234,
      235,   236,   237,   240,   241,   244,   247,   250,   262,   267,
      268,   269,   270,   271,   272,   280,   281,   282,   283,   286,
-     287,   293,   331,   345,   351,   352,   356,   357,   360,   361,
+     287,   293,   330,   344,   351,   352,   356,   357,   360,   361,
      364,   365,   368,   369,   377,   380,   383,   384,   385,   388,
      391,   392,   395,   396,   399,   400,   403,   404,   407,   408,
      409,   410,   411,   412,   413,   417,   418,   419,   420,   421,
@@ -770,9 +770,9 @@ static const yytype_int16 yyrline[] =
      501,   502,   503,   504,   505,   506,   507,   508,   509,   510,
      511,   512,   513,   514,   517,   518,   521,   522,   525,   526,
      531,   532,   533,   534,   535,   536,   537,   538,   539,   542,
-     543,   544,   545,   548,   549,   553,   561,   575,   576,   580,
-     581,   585,   586,   589,   590,   593,   594,   595,   596,   600,
-     601,   602,   603,   606,   607,   608
+     543,   544,   545,   548,   549,   553,   562,   576,   577,   581,
+     582,   586,   587,   590,   591,   594,   595,   596,   597,   601,
+     602,   603,   604,   607,   608,   609
 };
 #endif
 
@@ -2116,7 +2116,7 @@ yyreduce:
 													else {
 														(yyval.pExprVal) = new exprConst(var->getInitExpr()->getIVal(), nbrLines);
 													}
-													delete (yyvsp[-1].sVal);											
+													free((yyvsp[-1].sVal));											
 												}
 #line 2122 "y.tab.c"
     break;
@@ -2126,7 +2126,7 @@ yyreduce:
                                                                 {	if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
 	std::cout << "This is the second init process; only one is allowed.";
 													else {
-														symTabNode* init = new procSymNode("init", (yyvsp[0].pStmntVal), nbrLines);
+														symTabNode* init = new initSymNode(nbrLines, (yyvsp[0].pStmntVal));
 														*globalSymTab = symTabNode::merge(*globalSymTab, init);
 													}
 
@@ -2142,7 +2142,7 @@ yyreduce:
 
   case 23:
 #line 220 "promela.y"
-                                                        {	(yyval.pTdefSymVal) = new tdefSymNode((yyvsp[-3].sVal), (yyvsp[-1].pVarSymVal), nbrLines);  }
+                                                        {	(yyval.pTdefSymVal) = new tdefSymNode((yyvsp[-3].sVal), (yyvsp[-1].pVarSymVal), nbrLines);  free((yyvsp[-3].sVal)); }
 #line 2147 "y.tab.c"
     break;
 
@@ -2233,13 +2233,13 @@ yyreduce:
 
   case 51:
 #line 293 "promela.y"
-                                                                        {	symTabNode* cur = (yyvsp[0].pVarSymVal);
-													symTabNode* res = nullptr;
+                                                                        {	varSymNode* cur = (yyvsp[0].pVarSymVal);
+													varSymNode* res = nullptr;
 													while(cur != nullptr) {
-														symTabNode* tmp = nullptr;
+														varSymNode* tmp = nullptr;
 														
-														if(cur->getType() == symTabNode::T_NA) {
-															symTabNode* next = symTabNode::createSymTabNode((yyvsp[-1].iType), *cur);
+														if(cur->getType() == symTabNode::T_NA) { 
+															varSymNode* next = varSymNode::createSymTabNode((yyvsp[-1].iType), cur->getLineNb(), cur->getName(), cur->getBound(), cur->getInitExpr());
 															next->setLineNb(nbrLines);
 															// If type != 0, then the var is a T_CHAN
 														
@@ -2248,54 +2248,54 @@ yyreduce:
 																res = next;
 																tmp = next;
 															} else {
-																tmp->setNext(next);
-																tmp = tmp->nextSym();
+																tmp->makeNext(next);
+																tmp = static_cast<varSymNode*>(tmp->nextSym());
 															}
 														} else {
 															assert(cur->getType() == symTabNode::T_CHAN);
-															symTabNode* next = new chanSymNode(static_cast<chanSymNode*>(*cur));
-															next->setLineNb(nbrLines);
+															varSymNode* next = new chanSymNode(*static_cast<chanSymNode*>(cur));
 															
 															if(res == nullptr) {
 																res = next;
 																tmp = next;
 															} else {
-																tmp->setNext(next);
-																tmp = tmp->nextSym();
+																tmp->makeNext(next);
+																tmp = static_cast<varSymNode*>(tmp->nextSym());
 															}
 														}
 														
-														cur->detachChildAndInitSymNodes();
-														cur = cur->nextSym();
+														//cur->detachChildAndInitSymNodes();
+														cur = static_cast<varSymNode*>(cur->nextSym());
 													}
-													delete (yyvsp[0].pVarSymVal);
+													//delete $3;
 													(yyval.pVarSymVal) = res;
 												}
-#line 2275 "y.tab.c"
+#line 2274 "y.tab.c"
     break;
 
   case 52:
-#line 331 "promela.y"
-                                                                        {	symTabNode* type = *globalSymTab? (*globalSymTab)->lookupInSymTab((yyvsp[-1].sVal)) : nullptr;
+#line 330 "promela.y"
+                                                                        {	tdefSymNode* type = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookupInSymTab((yyvsp[-1].sVal))) : nullptr;
 	 												if(type == nullptr)
 	 													std::cout << "The type "<<(yyvsp[-1].sVal)<<" was not declared in a typedef.";
 													else {
-														symTabNode* cur = (yyvsp[0].pVarSymVal);
+														utypeSymNode* cur = static_cast<utypeSymNode*>((yyvsp[0].pVarSymVal));
 														while(cur != nullptr) {
 															//cur->getType() = T_UTYPE;
 															cur->setUType(type);
-															cur = cur->nextSym();
+															cur = static_cast<utypeSymNode*>(cur->nextSym());
 														}
 														(yyval.pVarSymVal) = (yyvsp[0].pVarSymVal);
 													}
-	 												//delete $2;
+	 												free((yyvsp[-1].sVal));
 												}
-#line 2294 "y.tab.c"
+#line 2293 "y.tab.c"
     break;
 
   case 53:
-#line 345 "promela.y"
-                                                                {	if((yyvsp[-4].iType) != symTabNode::T_MTYPE) std::cout <<  "This syntax only works for MTYPEs.";
+#line 344 "promela.y"
+                                                                {	if((yyvsp[-4].iType) != symTabNode::T_MTYPE) 
+														std::cout <<  "This syntax only works for MTYPEs.";
 													(yyval.pVarSymVal) = nullptr;
 													/* The mtype values are added in the nlst rule. */ 
 												}
@@ -2310,7 +2310,7 @@ yyreduce:
 
   case 55:
 #line 352 "promela.y"
-                                                                        { (yyval.pVarSymVal) = symTabNode::merge((yyvsp[-2].pVarSymVal), (yyvsp[0].pVarSymVal)); }
+                                                                        { (yyval.pVarSymVal) = varSymNode::merge((yyvsp[-2].pVarSymVal), (yyvsp[0].pVarSymVal)); }
 #line 2315 "y.tab.c"
     break;
 
@@ -2334,13 +2334,13 @@ yyreduce:
 
   case 61:
 #line 365 "promela.y"
-                                                                                { (yyval.pVarSymVal) = symTabNode::merge((yyvsp[-2].pVarSymVal), (yyvsp[0].pVarSymVal)); }
+                                                                                { (yyval.pVarSymVal) = varSymNode::merge((yyvsp[-2].pVarSymVal), (yyvsp[0].pVarSymVal)); }
 #line 2339 "y.tab.c"
     break;
 
   case 62:
 #line 368 "promela.y"
-                                                                                { (yyval.pVarSymVal) = symTabNode::createSymTabNode(varSymNode((yyvsp[0].pDataVal).iType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal)); }
+                                                                                { (yyval.pVarSymVal) = varSymNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); }
 #line 2345 "y.tab.c"
     break;
 
@@ -2352,14 +2352,14 @@ yyreduce:
 														delete (yyvsp[0].pExprVal);
 														(yyvsp[0].pExprVal) = newExpr;
 													}
-													(yyval.pVarSymVal) = symTabNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal));
+													(yyval.pVarSymVal) = varSymNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal));
 												}
 #line 2358 "y.tab.c"
     break;
 
   case 64:
 #line 377 "promela.y"
-                                                                        { (yyval.pVarSymVal) = new chanSymNode((yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, (yyvsp[0].pDataVal).symTabNodeVal, nbrLines); }
+                                                                        { (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, (yyvsp[0].pDataVal).symTabNodeVal); }
 #line 2364 "y.tab.c"
     break;
 
@@ -2395,13 +2395,13 @@ yyreduce:
 
   case 70:
 #line 391 "promela.y"
-                                                                                { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); }
+                                                                                { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
 #line 2400 "y.tab.c"
     break;
 
   case 71:
 #line 392 "promela.y"
-                                                                                { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); }
+                                                                                { (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); free((yyvsp[-3].sVal)); }
 #line 2406 "y.tab.c"
     break;
 
@@ -2473,7 +2473,7 @@ yyreduce:
 
   case 83:
 #line 412 "promela.y"
-                                                                                        { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); }
+                                                                                        { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
 #line 2478 "y.tab.c"
     break;
 
@@ -2481,7 +2481,7 @@ yyreduce:
 #line 413 "promela.y"
                                                                                 { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && (yyvsp[0].pStmntVal)->getChild0() && (yyvsp[0].pStmntVal)->getChild0()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
-												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); }
+												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); free((yyvsp[-2].sVal)); }
 #line 2486 "y.tab.c"
     break;
 
@@ -3016,136 +3016,137 @@ yyreduce:
   case 175:
 #line 553 "promela.y"
                                                                                 {	if((yyvsp[0].pDataVal).iType != symTabNode::T_UTYPE) {
-														(yyval.pVarSymVal) = symTabNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines);
+														(yyval.pVarSymVal) = varSymNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines);
 													} else {
-														symTabNode* pType = *globalSymTab ? (*globalSymTab)->lookupInSymTab((yyvsp[0].pDataVal).sVal) : nullptr;
+														tdefSymNode* pType = *globalSymTab ? static_cast<tdefSymNode*>((*globalSymTab)->lookupInSymTab((yyvsp[0].pDataVal).sVal)) : nullptr;
 														(yyval.pVarSymVal) = new utypeSymNode(pType, nbrLines);
-														if((yyval.pVarSymVal) == nullptr) std::cout << "The type "<<(yyvsp[0].pDataVal).sVal<<" was not declared in a typedef.\n";
+														if((yyval.pVarSymVal) == nullptr) 
+															std::cout << "The type "<<(yyvsp[0].pDataVal).sVal<<" was not declared in a typedef.\n";
 													}
 												}
-#line 3027 "y.tab.c"
+#line 3028 "y.tab.c"
     break;
 
   case 176:
-#line 561 "promela.y"
+#line 562 "promela.y"
                                                                         {	if((yyvsp[-2].pDataVal).iType != symTabNode::T_UTYPE) {
-														(yyval.pVarSymVal) = symTabNode::merge((yyval.pVarSymVal), symTabNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines));
+														(yyval.pVarSymVal) = varSymNode::merge((yyval.pVarSymVal), varSymNode::createSymTabNode((yyvsp[-2].pDataVal).iType, nbrLines));
 													} else {
-														symTabNode* pType = *globalSymTab ? (*globalSymTab)->lookupInSymTab((yyvsp[-2].pDataVal).sVal) : nullptr;
-														symTabNode* temp = new utypeSymNode(pType, nbrLines);
+														tdefSymNode* pType = *globalSymTab ? static_cast<tdefSymNode*>((*globalSymTab)->lookupInSymTab((yyvsp[-2].pDataVal).sVal)) : nullptr;
+														utypeSymNode* temp = new utypeSymNode(pType, nbrLines);
 														if(temp == nullptr) 
 															std::cout << "The type "<<(yyvsp[-2].pDataVal).sVal<<" was not declared in a typedef.\n";
 														else 
-															(yyval.pVarSymVal) = symTabNode::merge((yyvsp[0].pVarSymVal), temp);
+															(yyval.pVarSymVal) = varSymNode::merge((yyvsp[0].pVarSymVal), temp);
 													}
 												}
-#line 3043 "y.tab.c"
+#line 3044 "y.tab.c"
     break;
 
   case 178:
-#line 576 "promela.y"
+#line 577 "promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3049 "y.tab.c"
+#line 3050 "y.tab.c"
     break;
 
   case 179:
-#line 580 "promela.y"
+#line 581 "promela.y"
                                                                         { (yyval.pExprArgListVal) = nullptr; }
-#line 3055 "y.tab.c"
+#line 3056 "y.tab.c"
     break;
 
   case 180:
-#line 581 "promela.y"
+#line 582 "promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3061 "y.tab.c"
+#line 3062 "y.tab.c"
     break;
 
   case 181:
-#line 585 "promela.y"
+#line 586 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3067 "y.tab.c"
+#line 3068 "y.tab.c"
     break;
 
   case 182:
-#line 586 "promela.y"
+#line 587 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[-3].pExprVal)), static_cast<exprArgList*>((yyvsp[-1].pExprArgListVal)), nbrLines); }
-#line 3073 "y.tab.c"
+#line 3074 "y.tab.c"
     break;
 
   case 183:
-#line 589 "promela.y"
+#line 590 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[0].pExprVal)), nbrLines); }
-#line 3079 "y.tab.c"
+#line 3080 "y.tab.c"
     break;
 
   case 184:
-#line 590 "promela.y"
+#line 591 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(static_cast<exprRArg*>((yyvsp[-2].pExprVal)), static_cast<exprArgList*>((yyvsp[0].pExprArgListVal)), nbrLines); }
-#line 3085 "y.tab.c"
+#line 3086 "y.tab.c"
     break;
 
   case 185:
-#line 593 "promela.y"
+#line 594 "promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3091 "y.tab.c"
+#line 3092 "y.tab.c"
     break;
 
   case 186:
-#line 594 "promela.y"
+#line 595 "promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
-#line 3097 "y.tab.c"
+#line 3098 "y.tab.c"
     break;
 
   case 187:
-#line 595 "promela.y"
+#line 596 "promela.y"
                                                                                         { (yyval.pExprRArgVal) = new exprRArgConst((yyvsp[0].iVal), nbrLines); }
-#line 3103 "y.tab.c"
+#line 3104 "y.tab.c"
     break;
 
   case 188:
-#line 596 "promela.y"
+#line 597 "promela.y"
                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(-(yyvsp[0].iVal), nbrLines); }
-#line 3109 "y.tab.c"
+#line 3110 "y.tab.c"
     break;
 
   case 189:
-#line 600 "promela.y"
+#line 601 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList((yyvsp[0].pExprRArgVal), nbrLines); }
-#line 3115 "y.tab.c"
+#line 3116 "y.tab.c"
     break;
 
   case 190:
-#line 601 "promela.y"
+#line 602 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 3121 "y.tab.c"
+#line 3122 "y.tab.c"
     break;
 
   case 191:
-#line 602 "promela.y"
+#line 603 "promela.y"
                                                                         { (yyval.pExprArgListVal) = new exprArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 3127 "y.tab.c"
+#line 3128 "y.tab.c"
     break;
 
   case 192:
-#line 603 "promela.y"
+#line 604 "promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[-1].pExprArgListVal); }
-#line 3133 "y.tab.c"
+#line 3134 "y.tab.c"
     break;
 
   case 193:
-#line 606 "promela.y"
-                                                                                { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); }
-#line 3139 "y.tab.c"
+#line 607 "promela.y"
+                                                                                { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); free((yyvsp[0].sVal)); }
+#line 3140 "y.tab.c"
     break;
 
   case 194:
-#line 607 "promela.y"
-                                                                                        { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); }
-#line 3145 "y.tab.c"
+#line 608 "promela.y"
+                                                                                        { *mtypes = (*mtypes)->addMType((yyvsp[0].sVal)); free((yyvsp[0].sVal)); }
+#line 3146 "y.tab.c"
     break;
 
 
-#line 3149 "y.tab.c"
+#line 3150 "y.tab.c"
 
       default: break;
     }
@@ -3377,5 +3378,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 610 "promela.y"
+#line 611 "promela.y"
 

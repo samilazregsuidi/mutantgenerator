@@ -1,4 +1,7 @@
 #include "mTypeList.h"
+
+#include <cassert>
+
 /*
  * MTYPES
  * * * * * * * * * * * * * * * * * * * * * * * */

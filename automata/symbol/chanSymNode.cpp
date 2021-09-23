@@ -1,6 +1,10 @@
 #include "chanSymNode.h"
 #include "symTabVisitor.h"
 
+chanSymNode::~chanSymNode(void){
+	delete child;
+}
+
 void chanSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitChan(this);
 }

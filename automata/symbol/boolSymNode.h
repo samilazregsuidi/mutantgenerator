@@ -3,17 +3,17 @@
 //T_BOOL
 class boolSymNode : public varSymNode{
 public:
-	boolSymNode(const varSymNode& ref)
-		: varSymNode(symTabNode::T_BOOL, ref.getLineNb(), ref.getName(), ref.getBound(), ref.getInitExpr())
+	boolSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr)
+		: varSymNode(symTabNode::T_BOOL, lineNb, name, bound, init)
 	{}
 
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "bool";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 1;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 };

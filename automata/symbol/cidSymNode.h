@@ -1,23 +1,19 @@
-#include "symTabNode.h"
+#include "varSymNode.h"
 
 //T_CID
-class cidSymNode : public symTabNode{
+class cidSymNode : public varSymNode{
 public:
-	cidSymNode(int lineNb, const std::string& sVal)
-		: symTabNode(symTabNode::T_CID, lineNb, sVal)
-	{}
-
-	cidSymNode(const symTabNode& ref)
-		: symTabNode(symTabNode::T_CID, ref.getName(), ref.getLineNb())
+	cidSymNode(int lineNb, const std::string& name, int bound = 1, expr* init = nullptr)
+		: varSymNode(symTabNode::T_CID, lineNb, name, bound, init)
 	{}
 	
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "cid";
 	}
 
-	int getTypeSize(void) const {
-		return 0;
+	int getTypeSize(void) const override {
+		return 4;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 };

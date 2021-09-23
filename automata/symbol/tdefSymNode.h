@@ -9,11 +9,13 @@ public:
 		this->child = child;
 	}
 
-	std::string getTypeName(void) const {
+	~tdefSymNode(void) override ;
+
+	std::string getTypeName(void) const override {
 		return "typedef";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 1;
 	}
 
@@ -21,11 +23,11 @@ public:
 		return child;
 	}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
+	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
-	operator std::string(void) const ;
+	operator std::string(void) const override ;
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 
 private:
 	varSymNode* child;

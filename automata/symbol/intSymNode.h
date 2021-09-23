@@ -3,17 +3,17 @@
 //T_INT
 class intSymNode : public varSymNode{
 public:
-	intSymNode(const varSymNode& ref)
-		: varSymNode(symTabNode::T_INT, ref.getLineNb(), ref.getName(), ref.getBound(), ref.getInitExpr())
+	intSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr)
+		: varSymNode(symTabNode::T_INT, lineNb, name, bound, init)
 	{}
 
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "int";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 4;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 };

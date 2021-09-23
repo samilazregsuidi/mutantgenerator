@@ -3,17 +3,17 @@
 //T_SHORT
 class shortSymNode : public varSymNode{
 public:
-	shortSymNode(const varSymNode& ref)
-		: varSymNode(symTabNode::T_SHORT, ref.getLineNb(), ref.getName(), ref.getBound(), ref.getInitExpr())
+	shortSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr)
+		: varSymNode(symTabNode::T_SHORT, lineNb, name, bound, init)
 	{}
 
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "short";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 2;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 };

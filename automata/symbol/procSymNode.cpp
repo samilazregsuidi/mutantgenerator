@@ -2,6 +2,15 @@
 #include "symTabVisitor.h"
 #include "expression.h"
 
+seqSymNode::~seqSymNode(void) {
+	delete block;
+}
+
+procSymNode::~procSymNode(void) {
+	if(args) 
+		delete args;
+	delete active;
+}
 
 void neverSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitNever(this);

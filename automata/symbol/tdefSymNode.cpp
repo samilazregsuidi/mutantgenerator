@@ -1,5 +1,10 @@
 #include "tdefSymNode.h"
+#include "varSymNode.h"
 #include "symTabVisitor.h"
+
+tdefSymNode::~tdefSymNode(void) {
+	delete child;
+}
 
 void tdefSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitTdef(this);
@@ -12,7 +17,7 @@ unsigned int tdefSymNode::processVariables(symTabNode *global, const mTypeList *
 
 tdefSymNode::operator std::string(void) const {
 	std::string res = getTypeName() + " " + name + "{\n";
-	const auto *children = child;
+	const symTabNode* children = child;
 	while (children)
 	{
 		res += "\t" + std::string(*children) + (children->cnextSym() ? ";" : "") + "\n";

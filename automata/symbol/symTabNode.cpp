@@ -97,8 +97,7 @@ symTabNode::~symTabNode()
  * Returns a pointer to the new symTab.
  */
 
-symTabNode *symTabNode::merge(symTabNode *symTab, symTabNode *newNode)
-{
+symTabNode *symTabNode::merge(symTabNode *symTab, symTabNode *newNode) {
 	if (!symTab)
 		return newNode;
 	if (!newNode)
@@ -202,11 +201,14 @@ void symTabNode::detachNext(void) {
 	init = nullptr;
 }*/
 
-void symTabNode::setNext(symTabNode *newNext)
-{
+void symTabNode::makeNext(symTabNode *newNext) {
 	this->next = newNext;
 	newNext->prev = this;
 	newNext->detachNext();
+}
+
+void symTabNode::setNext(symTabNode* next) {
+	this->next = next;
 }
 
 const symTabNode *symTabNode::cnextSym(void) const

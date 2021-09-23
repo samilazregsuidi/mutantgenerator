@@ -27,9 +27,18 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	./automata/symbol/chanSymNode.cpp \
 	./automata/symbol/procSymNode.cpp \
 	./automata/symbol/tdefSymNode.cpp \
+	./automata/symbol/varSymNode.cpp \
+	./automata/symbol/naSymNode.cpp \
+	./automata/symbol/pidSymNode.cpp \
+	./automata/symbol/mTypeList.cpp \
 	./automata/symbol/visitor/symTabCopyVisitor.cpp \
 	\
-	./automata/ast/expression.cpp \
+	./automata/ast/astNode.cpp \
+	./automata/ast/stmnt.cpp \
+	./automata/ast/expr.cpp \
+	./automata/ast/unaryExpr.cpp \
+	./automata/ast/binaryExpr.cpp \
+	./automata/ast/varExpr.cpp \
 	\
 	-I./automata/symbol -I./automata/symbol/visitor -I./automata/ast -I./parser \
 	\

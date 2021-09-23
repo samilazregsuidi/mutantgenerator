@@ -2,15 +2,17 @@
 
 class seqSymNode : public symTabNode{
 protected:
-	seqSymNode(Type type, const std::string& sVal, int lineNb, stmnt* block)
-		: symTabNode(type, sVal, lineNb)
+	seqSymNode(Type type, const std::string& name, int lineNb, stmnt* block)
+		: symTabNode(type, name, lineNb)
 	{
 		this->block = block;
 	}
 
-	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal);
+	~seqSymNode(void) override ;
 
-	operator std::string(void) const;
+	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) override ;
+
+	operator std::string(void) const override ;
 
 protected:
 	stmnt* block;
@@ -22,13 +24,11 @@ public:
 		: seqSymNode(symTabNode::T_INIT, "init", lineNb, block)
 	{}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
-
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "never";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 1;
 	}
 
@@ -41,13 +41,11 @@ public:
 		: seqSymNode(symTabNode::T_INIT, "__never", lineNb, block)
 	{}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
-
-	std::string getTypeName(void) const {
+	std::string getTypeName(void) const override {
 		return "init";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 1;
 	}
 
@@ -64,19 +62,21 @@ public:
 		this->active = child0;
 	}
 
-	std::string getTypeName(void) const {
+	~procSymNode() override ;
+
+	std::string getTypeName(void) const override {
 		return "proctype";
 	}
 
-	int getTypeSize(void) const {
+	int getTypeSize(void) const override {
 		return 1;
 	}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
+	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
-	operator std::string(void) const;
+	operator std::string(void) const override;
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) const override;
 
 private:
 	symTabNode* args;

@@ -64,8 +64,8 @@ public:
 	virtual std::string getTypeName(void) const = 0;
 	virtual int getTypeSize(void) const = 0;
 
-	static symTabNode* createSymTabNode(Type itype, const symTabNode& old);
-	static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string());
+	//static symTabNode* createSymTabNode(Type itype, const symTabNode& old);
+	//static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string());
 
 	static symTabNode* merge(symTabNode* first, symTabNode* second);
 
@@ -84,17 +84,18 @@ public:
 	const symTabNode* lookupInSymTab(const exprVar* expr) const;
 	const symTabNode* lookupInSymTab(const std::string& name) const;
 
+	void makeNext(symTabNode* nextSym);
 	void setNext(symTabNode* nextSym);
 	const symTabNode* cnextSym(void) const;
 	symTabNode* nextSym(void) const;
 
 	void detachPrev(void);
 	void detachNext(void);
-	void detachChildAndInitSymNodes(void);
+	//void detachAll(void);
 
 	//bool isFeature(void) const;
 
-    virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal);
+    virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) = 0;
 
 	void printSymTab(int level, const std::string& title) const;
 	Type getType(void) const;
@@ -134,12 +135,14 @@ protected:
 	symTabNode* prev;			// Points to previous node; the first node in a list has this pointer pointing to the last node!
 };
 
+class varSymNode;
+
 class dataTuple {
 public:
 	const char* sVal;
 	int iVal;
 	symTabNode::Type iType;
-	symTabNode* symTabNodeVal;
+	varSymNode* symTabNodeVal;
 	fsm* fsmVal;
 };
 

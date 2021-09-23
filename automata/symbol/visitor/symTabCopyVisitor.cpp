@@ -77,7 +77,7 @@ void symTabCopyVisitor::visitChan(const chanSymNode *sym){
 }
 
 void symTabCopyVisitor::visitCid(const cidSymNode *sym){
-	tmp = new pidSymNode(*sym);
+	tmp = new cidSymNode(*sym);
 }
 
 void symTabCopyVisitor::visitTdef(const tdefSymNode *sym){
