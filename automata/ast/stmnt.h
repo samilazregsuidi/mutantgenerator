@@ -9,23 +9,49 @@ class stmnt : public astNode
 {
 
 protected:
-	stmnt(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr)
-		: astNode(type, iVal, child0, child1, child2, lineNb, block, symTabChild)
+	stmnt(Type type, int lineNb, symTabNode *local = nullptr)
+		: astNode(type, lineNb)
 	{
+		this->local = local;
 		this->next = nullptr;
 		this->prev = this;
 	}
 
 public:
-	stmnt(stmnt *node, int lineNb)
-		: astNode(astNode::E_STMNT, 0, node, nullptr, nullptr, lineNb)
-	{
-		this->next = nullptr;
-		this->prev = this;
-	}
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
+	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
+	{
+		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
+		;
+	}*/
+	void setLocalSymTab(symTabNode* local) {
+		this->local = local;
+	}
+
+	symTabNode* getLocalSymTab(void) const {
+		return local;
+	}
+
+protected:
+	symTabNode* local;
+	stmnt* next;
+	stmnt* prev;
+};
+
+//E_STMNT, 			// child[0] = E_STMNT_*
+class stmntWrapper : public stmnt
+{
+public:
+	stmntWrapper(stmnt *child, int lineNb)
+		: stmnt(astNode::E_STMNT, lineNb)
+	{
+		this->local = nullptr;
+		this->child = child;
+		this->next = nullptr;
+		this->prev = this;
+	}
 	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
 	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
@@ -38,16 +64,16 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + (next? std::string(*next) : "");
+		return std::string(*child) + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Statement wrapper (E_STMNT)";
 	}
+
 protected:
-	stmnt* next;
-	stmnt* prev;
+	stmnt* child;
 };
 
 
@@ -55,7 +81,7 @@ protected:
 class decl : public stmnt
 {
 public:
-	decl(varSymNode *symTabChild, int lineNb);
+	decl(varSymNode *declSymTab, int lineNb);
 
 	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, symTabNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
@@ -67,16 +93,18 @@ public:
 	}
 
 private:
-	varSymNode* declSym;
+	varSymNode* declSymTab;
 };
 
 //E_STMNT_CHAN_RCV,	// child[0] = E_VARREF, child[1] = E_EXPR_*
 class stmntChanRecv : public stmnt
 {
 public:
-	stmntChanRecv(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, 0, child0, child1, nullptr, lineNb)
+	stmntChanRecv(exprVarRef *chan, exprArgList *argList, int lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_RCV, lineNb)
 	{
+		this->chan = chan;
+		this->argList = argList;
 	}
 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -86,22 +114,28 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " ? " + std::string(*child[1]) + (next? std::string(*next) : "");
+		return std::string(*chan) + " ? " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Channel receive (E_STMNT_CHAN_RCV)";
 	}
+
+private:
+	exprVarRef* chan;
+	exprArgList* argList;
 };
 
 //E_STMNT_CHAN_SND,	// child[0] = E_VARREF, child[1] = E_EXPR_*
 class stmntChanSnd : public stmnt
 {
 public:
-	stmntChanSnd(exprVarRef *child0, expr *child1, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_SND, 0, child0, child1, nullptr, lineNb)
+	stmntChanSnd(exprVarRef *chan, exprArgList *argList, int lineNb)
+		: stmnt(astNode::E_STMNT_CHAN_SND, lineNb)
 	{
+		this->chan = chan;
+		this->argList = argList;
 	}
 
 	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -117,38 +151,46 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + " ! " + std::string(*child[1]) + (next? std::string(*next) : "");
+		return std::string(*chan) + " ! " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Channel send (E_STMNT_CHAN_SND)";
 	}
+
+private:
+	exprVarRef* chan;
+	exprArgList* argList;
 };
 
 //E_STMNT_OPT,		// child[0] = E_STMNT_OPT (next option; or NULL), fsm = fsm of this option
 class stmntOpt : public stmnt
 {
 public:
-	stmntOpt(stmnt* block, stmntOpt *child0, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, 0, child0, nullptr, nullptr, lineNb, block)
+	stmntOpt(stmnt* block, stmntOpt *nextOpt, int lineNb)
+		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
 	}
 
 	stmntOpt(stmnt* block, int lineNb)
-		: stmnt(astNode::E_STMNT_OPT, 0, nullptr, nullptr, nullptr, lineNb, block)
+		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
 	}
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + (next? std::string(*next) : "");
+		return "::" + std::string(*block) + (nextOpt? std::string(*nextOpt) : "") + (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Opt (E_STMNT_OPT)";
 	}
+
+private:
+	stmnt* block;
+	stmntOpt* nextOpt;
 };
 
 //E_STMNT_IF,			// child[0] = E_STMNT_OPT (contains an fsm)

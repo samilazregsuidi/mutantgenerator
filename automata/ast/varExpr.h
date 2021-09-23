@@ -13,31 +13,41 @@ class exprVarRefName : public expr
 {
 public:
 	exprVarRefName(const std::string& symName, int lineNb)
-		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb)
+		: expr(astNode::E_VARREF_NAME, lineNb)
 	{
 		this->symName = symName;
+		this->sym = nullptr;
+		this->index = nullptr;
 	}
 
-	exprVarRefName(const std::string& symName, expr *child0, int lineNb)
-		: expr(astNode::E_VARREF_NAME, 0, child0, nullptr, nullptr, lineNb)
+	exprVarRefName(const std::string& symName, expr *index, int lineNb)
+		: expr(astNode::E_VARREF_NAME, lineNb)
 	{
 		this->symName = symName;
+		this->sym = nullptr;
+		this->index = index;
 	}
 
-	exprVarRefName(const std::string& symName, symTabNode *symTabChild, int lineNb)
-		: expr(astNode::E_VARREF_NAME, 0, nullptr, nullptr, nullptr, lineNb, nullptr, symTabChild)
+	exprVarRefName(const std::string& symName, symTabNode *sym, int lineNb)
+		: expr(astNode::E_VARREF_NAME, lineNb)
 	{
 		this->symName = symName;
+		this->index = nullptr;
+		this->sym = sym;
 	}
 
 	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
 	symTabNode *symbolLookUpRight(void) const {
-		return symTab;
+		return sym;
 	}
 
 	symTabNode *symbolLookUpLeft(void) const {
-		return symTab;
+		return sym;
+	}
+
+	symTabNode* getSymbol(void) const {
+		return sym;
 	}
 
 	std::string getName(void) const;
@@ -50,82 +60,88 @@ public:
 	}
 private:
 	std::string symName;
+	expr* index;
+	symTabNode* sym; 
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
 class exprVarRef : public expr
 {
 public:
-	exprVarRef(exprVarRefName *child0, exprVarRef *child1, int lineNb)
-		: expr(astNode::E_VARREF, 0, child0, child1, nullptr, lineNb)
+	exprVarRef(exprVarRefName *symRef, exprVarRef *subfieldsVar, int lineNb)
+		: expr(astNode::E_VARREF, lineNb)
 	{
+		this->varRef = symRef;
+		this->subfieldsVar = subfieldsVar;
 	}
 
-	exprVarRef(exprVarRefName *child0, int lineNb)
-		: expr(astNode::E_VARREF, 0, child0, nullptr, nullptr, lineNb)
+	exprVarRef(exprVarRefName *symRef, int lineNb)
+		: expr(astNode::E_VARREF, lineNb)
 	{
+		this->varRef = symRef;
+		this->subfieldsVar = nullptr;
 	}
 
 	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField = nullptr);
 
 	symTabNode *symbolLookUpRight() const
 	{
-		return child[1] ? child[1]->symbolLookUpRight() : child[0]->symbolLookUpRight();
+		return subfieldsVar ? subfieldsVar->symbolLookUpRight() : varRef->symbolLookUpRight();
 	}
 
 	symTabNode *symbolLookUpLeft(void) const
 	{
-		return child[0]->symbolLookUpLeft();
-	}
-
-	const exprVarRefName *getExprVarRefName() const
-	{
-		return static_cast<exprVarRefName *>(child[0]);
+		return varRef->symbolLookUpLeft();
 	}
 
 	bool hasSubField(void) const
 	{
-		return child[1] != nullptr;
+		return subfieldsVar != nullptr;
 	}
 
 	const exprVarRef *getSubField(void) const
 	{
-		return static_cast<exprVarRef *>(child[1]);
+		return subfieldsVar;
 	}
 
-	const exprVarRef *getField() const
+	const exprVarRefName *getField() const
 	{
-		return static_cast<exprVarRef *>(child[1]);
+		return varRef;
 	}
 
 	operator std::string() const
 	{
-		return std::string(*child[0]) + (child[1] ? "." + std::string(*child[1]) : "");
+		return std::string(*varRef) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Variable reference (E_VARREF)";
 	}
+
+private:
+	exprVarRefName *varRef;
+	exprVarRef *subfieldsVar;
 };
 
 //E_EXPR_VAR,			// child[0] = E_VARREF
 class exprVar : public expr
 {
 public:
-	exprVar(exprVarRef *child0, int lineNb)
-		: expr(astNode::E_EXPR_VAR, 0, child0, nullptr, nullptr, lineNb)
+	exprVar(exprVarRef *varRef, int lineNb)
+		: expr(astNode::E_EXPR_VAR, lineNb)
 	{
+		this->varRef = varRef;
 	}
 
-	const exprVarRef *getExprVarRef(void) const
+	const exprVarRef *getVarRef(void) const
 	{
-		return static_cast<exprVarRef *>(child[0]);
+		return varRef;
 	}
 
-	const exprVarRefName *getExprVarRefName(void) const
+	const exprVarRefName *getVarRefName(void) const
 	{
-		return getExprVarRef()->getExprVarRefName();
+		return getVarRef()->getField();
 	}
 
 	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -135,23 +151,26 @@ public:
 
 	symTabNode *symbolLookUpRight(void) const
 	{
-		return child[0]->symbolLookUpRight();
+		return varRef->symbolLookUpRight();
 	}
 
 	symTabNode *symbolLookUpLeft(void) const
 	{
-		return child[0]->symbolLookUpLeft();
+		return varRef->symbolLookUpLeft();
 	}
 
 	operator std::string() const
 	{
-		return *child[0];
+		return *varRef;
 	}
 
 	std::string getTypeDescr(void)
 	{
 		return "Variable reference wrapper (E_EXPR_VAR)";
 	}
+
+private:
+	exprVarRef* varRef;
 };
 
 #endif

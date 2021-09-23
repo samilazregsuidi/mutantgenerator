@@ -9,25 +9,25 @@
 #include "mTypeList.h"
 
 std::string exprVarRefName::getName(void) const {
-	return symTab->getName();
+	return sym->getName();
 }
 
 exprVarRefName::operator std::string() const {
-	return symTab->getName() + (child[0] ? "[" + std::string(*child[0]) + "]" : "");
+	return sym->getName() + (index ? "[" + std::string(*index) + "]" : "");
 }
 
 void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
 
 	if (subField)
-		symTab = subField->lookupInSymTab(symName);
+		sym = subField->lookupInSymTab(symName);
 	else if (local)
-		symTab = local->lookupInSymTab(symName);
+		sym = local->lookupInSymTab(symName);
 	else
-		symTab = global->lookupInSymTab(symName);
+		sym = global->lookupInSymTab(symName);
 
-	if (symTab) {
-		if(child[0]) 
-			child[0]->resolveVariables(global, mTypes, local, subField);
+	if (sym) {
+		if(index) 
+			index->resolveVariables(global, mTypes, local, subField);
 	} else {
 		// First check if its a magic variable
 		int mvar = 0;
@@ -43,31 +43,33 @@ void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mType
 		if (mvar < 0)
 		{
 			// MVar IDs are negative!
-			iVal = mvar;
+			//iVal = mvar;
+			assert(false);
 		}
 		else
 		{
 			// Then check if it's an mtype
-			int value = mTypes? mTypes->getMTypeValue(symName) : -1;
-			assert(!(value == -1 && !iVal));
-			iVal = value;
+			//int value = mTypes? mTypes->getMTypeValue(symName) : -1;
+			//assert(!(value == -1 && !iVal));
+			//iVal = value;
+			assert(false);
 		}
 	}
 }
 
 void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *local, symTabNode *subField) {
 
-	child[0]->resolveVariables(global, mTypes, local, subField);
-	auto symbol = child[0]->getSymbol();
+	varRef->resolveVariables(global, mTypes, local, subField);
+	auto symbol = varRef->getSymbol();
 
 	if (symbol) {
 		// Resolve subfields, but with the symbol table of the type
-		if (child[1]) {
+		if (subfieldsVar) {
 			auto uSymbol = static_cast<utypeSymNode*>(symbol);
 			assert(uSymbol->getUType());
-			child[1]->resolveVariables(global, mTypes, local, uSymbol->getUType()->getChild());
+			subfieldsVar->resolveVariables(global, mTypes, local, uSymbol->getUType()->getChild());
 		}
 	}
 	else
-		assert(!child[1]);
+		assert(!subfieldsVar);
 }
