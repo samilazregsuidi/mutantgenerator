@@ -20,7 +20,9 @@ public:
 
 	~exprVarRefName() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr);
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode* subField);
 
 	symTabNode *symbolLookUpRight(void) const {
 		return sym;
@@ -38,7 +40,7 @@ public:
 
 	operator std::string() const;
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const 
 	{
 		return "Variable or field name (E_VARREF_NAME)";
 	}
@@ -56,7 +58,9 @@ public:
 
 	~exprVarRef() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode* subField);
 
 	symTabNode *symbolLookUpRight() const
 	{
@@ -88,7 +92,7 @@ public:
 		return std::string(*varRefName) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Variable reference (E_VARREF)";
 	}
@@ -106,7 +110,7 @@ public:
 
 	~exprVar() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
 
 	const exprVarRef *getVarRef(void) const
 	{
@@ -138,7 +142,7 @@ public:
 		return *varRef;
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Variable reference wrapper (E_EXPR_VAR)";
 	}

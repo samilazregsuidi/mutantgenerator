@@ -1,3 +1,6 @@
+#ifndef UNSGN_SYM_NODE_H
+#define UNSGN_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_UNSGN
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override ;
 };
+
+#endif

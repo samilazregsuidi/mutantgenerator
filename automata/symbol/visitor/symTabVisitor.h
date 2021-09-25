@@ -1,3 +1,6 @@
+#ifndef SYM_VISITOR_H
+#define SYM_VISITOR_H
+
 class symTabNode;
 class naSymNode;
 class bitSymNode;
@@ -35,3 +38,5 @@ public:
 	virtual void visitNever(const neverSymNode* sym) = 0;
 	virtual void visitInit(const initSymNode* sym) = 0;
 };
+
+#endif

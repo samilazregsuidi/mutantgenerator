@@ -1,3 +1,6 @@
+#ifndef MTYPE_SYM_NODE_H
+#define MTYPE_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_MTYPE
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

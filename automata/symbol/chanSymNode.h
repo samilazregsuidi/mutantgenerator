@@ -1,3 +1,6 @@
+#ifndef CHAN_SYM_NODE_H
+#define CHAN_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_CHAN
@@ -28,3 +31,5 @@ private:
 	varSymNode* child;
 	int capacity;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef BYTE_SYM_NODE_H
+#define BYTE_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_BYTE
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

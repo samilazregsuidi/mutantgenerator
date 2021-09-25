@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include <assert.h>
 
@@ -92,11 +93,6 @@ symTabNode::~symTabNode()
 		delete next;
 }
 
-void symTabNode::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) {
-	if(next)
-		next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-}
-
 /**
  * Concatenates two symTabs (the second symTab is usually a single node).
  * The arguments can be NULL (if both are NULL, the function returns NULL).
@@ -114,6 +110,14 @@ symTabNode *symTabNode::merge(symTabNode *symTab, symTabNode *newNode) {
 	newNode->prev->next = newNode;
 	symTab->prev = newlistTail;
 	return symTab;
+}
+
+void symTabNode::print(symTabNode* table) {
+	const symTabNode* it = table;
+	while(it){
+		std::cout << "\t[\t" << it->getName() << "\t;\t" << it->getTypeName() << "\t]\n";
+		it = it->cnextSym();
+	}
 }
 
 symTabNode *symTabNode::deepcopy(symTabNode *symTab)
@@ -215,6 +219,10 @@ void symTabNode::makeNext(symTabNode *newNext) {
 
 void symTabNode::setNext(symTabNode* next) {
 	this->next = next;
+}
+
+void symTabNode::setPrev(symTabNode* prevSym) {
+	prev = prevSym;
 }
 
 const symTabNode *symTabNode::cnextSym(void) const

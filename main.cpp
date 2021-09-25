@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "symbols.h"
+#include "expression.h"
 #include "y.tab.h"
 #include "lexer.h"
 
@@ -22,6 +23,7 @@ extern void init_lex();
 // Other global variables from main
 symTabNode* globalSymTab = nullptr;
 mTypeList* mtypes = nullptr;
+stmnt* program = nullptr;
 
 /**
  * Simply copies a file byte by byte; could be made more efficient.
@@ -66,17 +68,12 @@ int main(int argc, char *argv[]) {
 	if(yyin == NULL) { std::cout << "Could not open temporary working file ("<<argv[argc - 1]<<").\n"; exit(1); }
 	init_lex();
 
-	if(yyparse(&globalSymTab, &mtypes) != 0) { 
+	if(yyparse(&globalSymTab, &mtypes, &program) != 0) { 
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	globalSymTab->resolveVariables(globalSymTab, mtypes, nullptr, nullptr);
-
-	
-
-	//globalSymTab->processVariables(globalSymTab, mtypes, SYS_VARS_SIZE, 1);
-
-	std::cout<< std::string(*globalSymTab);
+	program->resolveVariables(globalSymTab, mtypes);
+	std::cout << std::string(*program);
 
 	if(yyin != NULL) fclose(yyin);
 	

@@ -1,3 +1,6 @@
+#ifndef PID_SYM_NODE_H
+#define PID_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_PID
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

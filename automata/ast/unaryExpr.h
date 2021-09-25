@@ -17,8 +17,8 @@ protected:
 		delete expression;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		expression->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		expression->resolveVariables(globalSymTab, mTypes);
 	}
 
 protected:
@@ -39,7 +39,7 @@ public:
 		return "( " + std::string(*expression) + " )";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Parentheses (E_EXPR_PAR)";
 	}
@@ -59,7 +59,7 @@ public:
 		return "count( " + std::string(*expression) + " ) ";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Clones count (E_EXPR_COUNT)";
 	}
@@ -79,7 +79,7 @@ public:
 		return "-" + std::string(*expression);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Unary minus (E_EXPR_UMIN)";
 	}
@@ -99,7 +99,7 @@ public:
 		return "!" + std::string(*expression);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Negation (E_EXPR_NEG)";
 	}
@@ -119,7 +119,7 @@ public:
 		return " ~ " + std::string(*expression);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Bitwise neg (E_EXPR_BITWNEG)";
 	}
@@ -139,7 +139,7 @@ public:
 		return "len( " + std::string(*expression) + " )";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Length (E_EXPR_LEN)";
 	}
@@ -159,7 +159,7 @@ public:
 		return "full( " + std::string(*expression) + ")";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Full probe (E_EXPR_FULL)";
 	}
@@ -179,7 +179,7 @@ public:
 		return "nfull( " + std::string(*expression) + ")";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Not full probe (E_EXPR_NFULL)";
 	}
@@ -199,7 +199,7 @@ public:
 		return "empty( " + std::string(*expression) + ")";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Empty probe (E_EXPR_EMPTY)";
 	}
@@ -219,7 +219,7 @@ public:
 		return "nempty( " + std::string(*expression) + ")";
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Not empty probe (E_EXPR_NEMPTY)";
 	}

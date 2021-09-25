@@ -1,3 +1,6 @@
+#ifndef UTYPE_SYM_NODE_H
+#define UTYPE_SYM_NODE_H
+
 #include "varSymNode.h"
 
 class tdefSymNode;
@@ -34,3 +37,5 @@ public:
 private:
 	tdefSymNode* utype;
 };
+
+#endif

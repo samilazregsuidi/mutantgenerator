@@ -1,3 +1,6 @@
+#ifndef SHORT_SYM_NODE_H
+#define SHORT_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_SHORT
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

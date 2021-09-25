@@ -1,3 +1,6 @@
+#ifndef NA_SYM_NODE_H
+#define NA_SYM_NODE_H
+
 #include "varSymNode.h"
 
 class naSymNode : public varSymNode{
@@ -18,3 +21,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

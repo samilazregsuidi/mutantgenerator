@@ -1,7 +1,10 @@
+#ifndef BIT_SYM_NODE_H
+#define BIT_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_BIT
-class bitSymNode : public varSymNode{
+class bitSymNode : public varSymNode {
 public:
 	bitSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr)
 		: varSymNode(symTabNode::T_BIT, lineNb, name, bound, init)
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

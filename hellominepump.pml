@@ -1,5 +1,5 @@
 bool pumpOn = false; 
-//bool methane = false; 
+bool methane = false; 
 
 
 active proctype controller() {
@@ -15,7 +15,7 @@ active proctype controller() {
 	od;
 }
 
-/*active proctype methanealarm() {
+active proctype methanealarm() {
 
 	do	
 	
@@ -24,4 +24,4 @@ active proctype controller() {
 	::	methane = true;
 		
 	od;
-}*/
+}

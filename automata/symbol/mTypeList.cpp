@@ -14,15 +14,20 @@ mTypeList::mTypeList(const std::string &name)
 	this->prev = this;
 }
 
-mTypeList *mTypeList::addMType(const std::string &name)
+mTypeList *mTypeList::addMType(mTypeList* list, const std::string &name)
 {
 
 	mTypeList *newNode = new mTypeList(name);
-	newNode->value = this->prev->value + 1;
-	newNode->prev = this->prev;
-	this->prev->next = newNode;
-	this->prev = newNode;
-	return newNode;
+	
+	if(!list) {
+		newNode->value = 0;
+		return newNode;
+	}
+	newNode->value = list->prev->value + 1;
+	newNode->prev = list->prev;
+	list->prev->next = newNode;
+	list->prev = newNode;
+	return list;
 }
 
 /**

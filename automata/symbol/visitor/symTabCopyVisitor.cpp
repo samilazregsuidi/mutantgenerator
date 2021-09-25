@@ -24,12 +24,15 @@ symTabNode *symTabCopyVisitor::deepCopy(const symTabNode *toCopy) {
 
 	cur->acceptVisitor(this);
 	res = tmp;
-	res->detachPrev();
+	res->setPrev(res);
 	
 	cur = cur->cnextSym();
 	while(cur) {
 		cur->acceptVisitor(this);
+		
+		tmp->setPrev(tmp);
 		res->setNext(tmp);
+		
 		cur = cur->cnextSym();
 	}
 

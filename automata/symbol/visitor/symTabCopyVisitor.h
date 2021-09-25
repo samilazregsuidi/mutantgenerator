@@ -1,3 +1,6 @@
+#ifndef SYM_COPY_VISITOR_H
+#define SYM_COPY_VISITOR_H
+
 #include "symTabVisitor.h"
 
 class symTabCopyVisitor : public symTabVisitor {
@@ -24,3 +27,5 @@ public:
 private:
 	symTabNode* tmp;
 };
+
+#endif

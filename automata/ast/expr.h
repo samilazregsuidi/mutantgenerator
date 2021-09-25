@@ -13,11 +13,9 @@ protected:
 	{}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
 		globalSymTab = globalSymTab;
 		mTypes = mTypes;
-		localSymTab = localSymTab;
-		subFieldSymTab = subFieldSymTab;
 	}
 };
 
@@ -33,10 +31,10 @@ public:
 		this->elsE = elsE;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		cond->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		then->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		elsE->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		cond->resolveVariables(globalSymTab, mTypes);
+		then->resolveVariables(globalSymTab, mTypes);
+		elsE->resolveVariables(globalSymTab, mTypes);
 	}
 
 	operator std::string() const override
@@ -44,7 +42,7 @@ public:
 		return "( " + std::string(*cond) + " ? " + std::string(*then) + " : " + std::string(*elsE) + " )";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Conditional expression (E_EXPR_COND)";
 	}
@@ -73,11 +71,11 @@ public:
 
 	symTabNode *symbolLookUpLeft(void) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override;
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override;
 
 	operator std::string() const override;
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Receive argument variable (E_RARG_VAR)";
 	}
@@ -96,8 +94,8 @@ public:
 		this->toEval = toEval;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		toEval->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		toEval->resolveVariables(globalSymTab, mTypes);
 	}
 
 	operator std::string() const override
@@ -105,7 +103,7 @@ public:
 		return "eval( " + std::string(*toEval) + ")";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Receive argument eval (E_RARG_EVAL)";
 	}
@@ -129,7 +127,7 @@ public:
 		return std::to_string(constant);
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Receive argument constant (E_RARG_CONST)";
 	}
@@ -157,9 +155,9 @@ public:
 		this->list = nullptr;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		node->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		list->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		node->resolveVariables(globalSymTab, mTypes);
+		list->resolveVariables(globalSymTab, mTypes);
 	}
 
 	operator std::string() const override
@@ -167,7 +165,7 @@ public:
 		return std::string(*node) + (list ? "," + std::string(*list) : "");
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Argument list (E_ARGLIST)";
 	}
@@ -187,11 +185,11 @@ public:
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, varSymNode *local, symTabNode *subField = nullptr) override;
+	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
 
 	operator std::string() const override;
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Run (E_EXPR_RUN)";
 	}
@@ -226,7 +224,7 @@ public:
 		return std::to_string(constant);
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Constant (E_EXPR_CONST)";
 	}
@@ -249,7 +247,7 @@ public:
 		return "timeout";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Timeout (E_EXPR_TIMEOUT)";
 	}
@@ -269,7 +267,7 @@ public:
 		return "skip";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "Skip (E_EXPR_SKIP)";
 	}
@@ -289,7 +287,7 @@ public:
 		return "true";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "True (E_EXPR_TRUE)";
 	}
@@ -309,7 +307,7 @@ public:
 		return "false";
 	}
 
-	std::string getTypeDescr(void) override
+	std::string getTypeDescr(void) const override
 	{
 		return "False (E_EXPR_FALSE)";
 	}

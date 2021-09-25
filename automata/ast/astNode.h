@@ -4,9 +4,7 @@
 #include <list>
 #include <string>
 
-class mTypeList;
-class symTabNode;
-class varSymNode;
+#include "symbols.h"
 
 class fsm;
 class fsmNode;
@@ -34,8 +32,12 @@ public:
 	* SYNTAX TREE FOR STATEMENTS
 	* * * * * * * * * * * * * * * * * * * * * * * */
 
-		E_DECL,	 // symTab = declaration.
+		E_VAR_DECL,	 // symTab = declaration.
+		E_TDEF_DECL,
+		E_PROC_DECL,
+		E_INIT_DECL,
 		E_STMNT, // child[0] = E_STMNT_*
+
 
 		E_STMNT_CHAN_RCV, // child[0] = E_VARREF, child[1] = E_EXPR_*
 		E_STMNT_CHAN_SND, // child[0] = E_VARREF, child[1] = E_EXPR_*
@@ -132,13 +134,17 @@ public:
 	 * before.
 	 */
 	
-	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes, varSymNode *localSymTab = nullptr, symTabNode *subFieldSymTab = nullptr) = 0;
+	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes) = 0;
 	
 	Type getType(void) const;
 
 	int getLineNb(void) const;
 
-	virtual std::string getTypeDescr(void) = 0;
+	void setLineNb(int lineNb) {
+		this->lineNb = lineNb;
+	}
+
+	virtual std::string getTypeDescr(void) const = 0;
 
 	virtual operator std::string() const = 0;
 

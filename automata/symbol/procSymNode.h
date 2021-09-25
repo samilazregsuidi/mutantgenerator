@@ -1,3 +1,6 @@
+#ifndef PROC_SYM_NODE_H
+#define PROC_SYM_NODE_H
+
 #include "symTabNode.h"
 
 class seqSymNode : public symTabNode{
@@ -8,9 +11,14 @@ protected:
 		this->block = block;
 	}
 
+public:
 	~seqSymNode(void) override ;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
+	//void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
+
+	stmnt* getBlock(void) const {
+		return block;
+	}
 
 	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) override ;
 
@@ -59,7 +67,7 @@ class exprConst;
 //T_PROC
 class procSymNode : public seqSymNode {
 public:
-	procSymNode(const std::string& name, exprConst* active, symTabNode* args, stmnt* block, int lineNb)
+	procSymNode(const std::string& name, exprConst* active, varSymNode* args, stmnt* block, int lineNb)
 		: seqSymNode(symTabNode::T_PROC, name, lineNb, block)
 	{
 		this->args = args;
@@ -67,7 +75,6 @@ public:
 	}
 
 	~procSymNode() override ;
-
 
 	std::string getTypeName(void) const override {
 		return "proctype";
@@ -77,8 +84,15 @@ public:
 		return 1;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
-	
+	//void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override ;
+	exprConst* getActiveExpr(void) const {
+		return active;
+	}
+
+	varSymNode* getArgs(void) const {
+		return args;
+	}
+
 	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	operator std::string(void) const override;
@@ -86,6 +100,8 @@ public:
 	void acceptVisitor(symTabVisitor* visitor) const override;
 
 private:
-	symTabNode* args;
+	varSymNode* args;
 	exprConst* active;
 };
+
+#endif

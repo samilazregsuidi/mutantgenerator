@@ -1,6 +1,8 @@
 #ifndef STMNT_H
 #define STMNT_H
 
+#include <iostream>
+
 #include "astNode.h"
 #include "varExpr.h"
 
@@ -25,98 +27,36 @@ public:
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
-	virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
+	//virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		if(next) next->resolveVariables(local, mTypes);
 	}
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
-		;
-	}*/
-	void setLocalSymTab(varSymNode* local) {
+
+	void setLocalSymTab(symTabNode* local) {
 		this->local = local;
 	}
 
-	varSymNode* getLocalSymTab(void) const {
+	symTabNode* getLocalSymTab(void) const {
 		return local;
 	}
 
+	virtual void printSymTab(void) const {
+		std::cout <<" line " << getLineNb() << "\t| " << getTypeDescr() << "\n"; 
+		if(local)
+			 symTabNode::print(local);
+		else 
+			std::cout << "NULL\n";
+		
+		if(next)
+			next->printSymTab();
+	}
+
 protected:
-	varSymNode* local;
+	symTabNode* local;
 	stmnt* next;
 	stmnt* prev;
-};
-
-//E_STMNT, 			// child[0] = E_STMNT_*
-class stmntWrapper : public stmnt
-{
-public:
-	stmntWrapper(stmnt *child, int lineNb)
-		: stmnt(astNode::E_STMNT, lineNb)
-	{
-		this->local = nullptr;
-		this->child = child;
-		this->next = nullptr;
-		this->prev = this;
-	}
-
-	~stmntWrapper() override {
-		delete child;
-		if(next)
-			delete next;
-	}
-
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) override {
-		child->resolveVariables(globalSymTab, mTypes,localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-	}
-
-	stmnt* getStmnt(void) const {
-		return child;
-	}
- 
-	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[0]->getVars(globalSymTab, processSymTab, mtypes);
-		;
-	}*/
-
-	operator std::string() const
-	{
-		return std::string(*child) + (next? std::string(*next) : "");
-	}
-
-	std::string getTypeDescr(void)
-	{
-		return "Statement wrapper (E_STMNT)";
-	}
-
-protected:
-	stmnt* child;
-};
-
-
-//E_DECL,				// symTab = declaration.
-class decl : public stmnt
-{
-public:
-	decl(varSymNode *declSymTab, int lineNb);
-
-	~decl() override ;
-
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab, symTabNode* subFieldSymTab) override ;
-
-	operator std::string() const;
-
-	std::string getTypeDescr(void)
-	{
-		return "Declaration wrapper (E_DECL)";
-	}
-
-private:
-	varSymNode* declSymTab;
 };
 
 //E_STMNT_CHAN_RCV,	// child[0] = E_VARREF, child[1] = E_EXPR_*
@@ -137,10 +77,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		chan->resolveVariables(globalSymTab, mTypes);
+		argList->resolveVariables(globalSymTab, mTypes);
+		if(next) next->resolveVariables(globalSymTab, mTypes);
 	}
 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -153,7 +94,7 @@ public:
 		return std::string(*chan) + " ? " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Channel receive (E_STMNT_CHAN_RCV)";
 	}
@@ -181,10 +122,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		chan->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		chan->resolveVariables(local, mTypes);
+		argList->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -192,7 +134,7 @@ public:
 		return std::string(*chan) + " ! " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Channel send (E_STMNT_CHAN_SND)";
 	}
@@ -228,10 +170,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		nextOpt->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		block->resolveVariables(local, mTypes);
+		nextOpt->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -239,7 +182,7 @@ public:
 		return "::" + std::string(*block) + (nextOpt? std::string(*nextOpt) : "") + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Opt (E_STMNT_OPT)";
 	}
@@ -266,9 +209,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		opts->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -276,7 +220,7 @@ public:
 		return "if\n" + std::string(*opts) + "\nfi;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "If (E_STMNT_IF)";
 	}
@@ -302,9 +246,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		opts->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		opts->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -312,7 +257,7 @@ public:
 		return "do\n" + std::string(*opts) + "\nod;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Do (E_STMNT_DO)";
 	}
@@ -335,7 +280,7 @@ public:
 		return "break;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Break (E_STMNT_BREAK)";
 	}
@@ -356,7 +301,7 @@ public:
 		return "goto " + label + ";\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Goto (E_STMNT_GOTO)";
 	}
@@ -391,13 +336,17 @@ public:
 		return label + ": \n" + std::string(*labelled) + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Label (E_STMNT_LABEL)";
 	}
 
 	std::string getLabel(void) const {
 		return label;
+	}
+
+	stmnt* getLabelledStmnt(void) const {
+		return labelled;
 	}
 
 private:
@@ -429,9 +378,10 @@ protected:
 	}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		block->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		block->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -439,7 +389,7 @@ public:
 		return "{\n" + std::string(*block) + "};\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Seq (E_STMNT_SEQ)";
 	}
@@ -462,7 +412,7 @@ public:
 		return next? res + std::string(*next) : res; 
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Atomic (E_STMNT_ATOMIC)";
 	}
@@ -486,10 +436,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		assign->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		varRef->resolveVariables(local, mTypes);
+		assign->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(globalSymTab, mTypes);
 	}
 
 	operator std::string() const
@@ -497,7 +448,7 @@ public:
 		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Assignment (E_STMNT_ASGN)";
 	}
@@ -523,9 +474,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		varRef->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -533,7 +485,7 @@ public:
 		return std::string(*varRef) + "++;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Increment (E_STMNT_INCR)";
 	}
@@ -558,9 +510,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		varRef->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -568,7 +521,7 @@ public:
 		return std::string(*varRef) + "--;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Decrement (E_STMNT_DECR)";
 	}
@@ -594,9 +547,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		argList->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		argList->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -604,7 +558,7 @@ public:
 		return "printf(" + toPrint + (argList? std::string(*argList) : "") + ");\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Print (E_STMNT_PRINT)";
 	}
@@ -636,9 +590,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		varRef->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		varRef->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -646,7 +601,7 @@ public:
 		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "PrintM (E_STMNT_PRINTM)";
 	}
@@ -672,9 +627,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		toAssert->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		toAssert->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -682,7 +638,7 @@ public:
 		return "assert(" + std::string(*toAssert) + ");\n" + (next? std::string(*next) : "") ;
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Assertion (E_STMNT_ASSERT)";
 	}
@@ -707,9 +663,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		child->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		child->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -717,7 +674,7 @@ public:
 		return *child;
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Expression wrapper (E_STMNT_EXPR)";
 	}
@@ -740,7 +697,7 @@ public:
 		return "else -> " + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Else (E_STMNT_ELSE)";
 	}
@@ -762,9 +719,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		timer->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		timer->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local, mTypes);
 	}
 
 	operator std::string() const
@@ -772,7 +730,7 @@ public:
 		return "while ( " + std::string(*timer) + " ) wait;\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Time invariant (E_STMNT_WAIT)";
 	}
@@ -800,10 +758,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		guard->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		todo->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		if(next) next->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		local = symTabNode::merge(local, globalSymTab);
+		guard->resolveVariables(local, mTypes);
+		todo->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(globalSymTab, mTypes);
 	}
 
 	operator std::string() const
@@ -811,7 +770,7 @@ public:
 		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" + (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Time guard (E_STMNT_WHEN)";
 	}

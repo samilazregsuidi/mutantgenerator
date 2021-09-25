@@ -1,3 +1,6 @@
+#ifndef TDEF_SYM_NODE_H
+#define TDEF_SYM_NODE_H
+
 #include "symTabNode.h"
 
 //T_TDEF
@@ -32,3 +35,5 @@ public:
 private:
 	varSymNode* child;
 };
+
+#endif

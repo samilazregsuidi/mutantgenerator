@@ -1,3 +1,6 @@
+#ifndef BOOL_SYM_NODE_H
+#define BOOL_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_BOOL
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif

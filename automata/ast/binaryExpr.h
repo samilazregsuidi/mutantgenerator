@@ -18,9 +18,9 @@ protected:
 		delete left;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr) override {
-		left->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
-		right->resolveVariables(globalSymTab, mTypes, localSymTab, subFieldSymTab);
+	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+		left->resolveVariables(globalSymTab, mTypes);
+		right->resolveVariables(globalSymTab, mTypes);
 	}
 
 
@@ -43,7 +43,7 @@ public:
 		return std::string(*left) + " + " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const 
 	{
 		return "Plus (E_EXPR_PLUS)";
 	}
@@ -63,7 +63,7 @@ public:
 		return std::string(*left) + " - " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Minus (E_EXPR_MINUS)";
 	}
@@ -83,7 +83,7 @@ public:
 		return std::string(*left) + " * " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Times (E_EXPR_TIMES)";
 	}
@@ -103,7 +103,7 @@ public:
 		return std::string(*left) + " / " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Divide (E_EXPR_DIV)";
 	}
@@ -123,7 +123,7 @@ public:
 		return std::string(*left) + " % " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Modulo (E_EXPR_MOD)";
 	}
@@ -143,7 +143,7 @@ public:
 		return std::string(*left) + " > " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Greater than (E_EXPR_GT)";
 	}
@@ -163,7 +163,7 @@ public:
 		return std::string(*left) + " < " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Less than (E_EXPR_LT)";
 	}
@@ -183,7 +183,7 @@ public:
 		return std::string(*left) + " >= " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Greater or equal than (E_EXPR_GE)";
 	}
@@ -203,7 +203,7 @@ public:
 		return std::string(*left) + " <= " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Less or equal than (E_EXPR_LE)";
 	}
@@ -223,7 +223,7 @@ public:
 		return std::string(*left) + " == " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Equal (E_EXPR_EQ)";
 	}
@@ -243,7 +243,7 @@ public:
 		return std::string(*left) + " != " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Not equal (E_EXPR_NE)";
 	}
@@ -263,7 +263,7 @@ public:
 		return std::string(*left) + " && " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Logical and (E_EXPR_AND)";
 	}
@@ -283,7 +283,7 @@ public:
 		return std::string(*left) + " || " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Logical or (E_EXPR_OR)";
 	}
@@ -303,7 +303,7 @@ public:
 		return std::string(*left) + " & " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Bitwise and (E_EXPR_BITWAND)";
 	}
@@ -323,7 +323,7 @@ public:
 		return std::string(*left) + " | " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Bitwise or (E_EXPR_BITWOR)";
 	}
@@ -343,7 +343,7 @@ public:
 		return std::string(*left) + " ^ " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Bitwise xor (E_EXPR_BITWXOR)";
 	}
@@ -363,7 +363,7 @@ public:
 		return std::string(*left) + " << " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
@@ -383,7 +383,7 @@ public:
 		return std::string(*left) + " >> " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void)
+	std::string getTypeDescr(void) const
 	{
 		return "Right shift (E_EXPR_RSHIFT)";
 	}

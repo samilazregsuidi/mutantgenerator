@@ -69,6 +69,7 @@ public:
 	//static symTabNode* createSymTabNode(Type itype, int lineNb, const std::string& sVal = std::string());
 
 	static symTabNode* merge(symTabNode* first, symTabNode* second);
+	static void print(symTabNode* table);
 
 	static symTabNode* deepcopy(symTabNode* symTab);
 
@@ -87,6 +88,7 @@ public:
 
 	void makeNext(symTabNode* nextSym);
 	void setNext(symTabNode* nextSym);
+	void setPrev(symTabNode* prevSym);
 	const symTabNode* cnextSym(void) const;
 	symTabNode* nextSym(void) const;
 
@@ -95,8 +97,6 @@ public:
 	//void detachAll(void);
 
 	//bool isFeature(void) const;
-
-	virtual void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes, varSymNode* localSymTab = nullptr, symTabNode* subFieldSymTab = nullptr);
 
     virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) = 0;
 

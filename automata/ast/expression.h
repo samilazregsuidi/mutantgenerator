@@ -1,5 +1,6 @@
 #include "astNode.h"
 #include "stmnt.h"
+#include "decl.h"
 #include "expr.h"
 #include "unaryExpr.h"
 #include "binaryExpr.h"

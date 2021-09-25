@@ -27,7 +27,7 @@ int yylex(YYSTYPE * yylval_param, symTabNode** globalSymTab);
 
 extern int nbrLines;
 
-int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
+int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, stmnt** program, char* msg){
 	fprintf(stderr, "Syntax error on line %d: '%s'.\n", nbrLines, msg);
 	exit(1);
 }
@@ -47,6 +47,7 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 %lex-param		{symTabNode** globalSymTab}
 %parse-param 	{symTabNode** globalSymTab}
 %parse-param 	{mTypeList** mtypes}
+%parse-param	{stmnt** program}
 
 %union { 
 	int       				iVal;
@@ -62,6 +63,7 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
+	
 	class varSymNode*		pVarSymVal;
 	class tdefSymNode*		pTdefSymVal;
 	
@@ -76,7 +78,7 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 %token <rVal> REAL
 %type  <sVal> aname
 %type  <rVal> real_expr
-%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt  
+%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt unit units proc init utype
 %type  <pStmntOptVal> options
 %type  <pExprVal> Expr expr full_expr Probe
 %type  <pConstExprVal> inst
@@ -86,7 +88,6 @@ int yyerror (symTabNode** globalSymTab, mTypeList** mtypes, char* msg){
 %type  <pExprRArgVal> rarg
 %type  <pDataVal> vardcl basetype ch_init
 %type  <pVarSymVal> decl one_decl decl_lst ivar var_list typ_list 
-%type  <pTdefSymVal> utype
 %type  <pStmntVal> body sequence option
 
 %token	TRUE FALSE SKIP ASSERT PRINT PRINTM
@@ -133,7 +134,8 @@ start_parsing	: program;
 varref_	: cmpnd_								{ $$ = $1; }
 		;
 
-pfld_	: NAME									{ 	symTabNode* symbol = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1) : nullptr;
+pfld_	: NAME									{ 	
+													symTabNode* symbol = *globalSymTab ? (*globalSymTab)->lookupInSymTab($1) : nullptr;
 													if(symbol) 
 														$$ = new exprVarRefName($1, symbol, nbrLines);
 													else {
@@ -143,32 +145,36 @@ pfld_	: NAME									{ 	symTabNode* symbol = *globalSymTab ? (*globalSymTab)->lo
 												}
 		;
 
-cmpnd_	: pfld_ sfld_							{ if($1->getType() == astNode::E_VARREF_NAME)
-													$$ = new exprVarRef($1, $2, nbrLines); 
-												  else
-												    $$ = $1;
+cmpnd_	: pfld_ sfld_							{ 
+												  	if($1->getType() == astNode::E_VARREF_NAME)
+														$$ = new exprVarRef($1, $2, nbrLines); 
+												 	else
+												    	$$ = $1;
 												}
 		;
 
 sfld_	: /* empty */							{ $$ = nullptr; }
-		| '.' cmpnd_ %prec DOT					{ $$ = $2;   }
+		| '.' cmpnd_ %prec DOT					{ $$ = $2; }
 		;
 				
 /** PROMELA Grammar Rules **/
 
 
-program	: units
+program	: units									{ *program = $1; } 
 		;
 
-units	: unit									/* dealt with locally */ 
-		| units unit							/* dealt with locally */ 
+units	: unit									{ $$ = $1; }
+		| units unit							{ $$ = stmnt::merge($1, $2); }
 		;
 
-unit	: proc		/* proctype { }       */	/* dealt with locally */ 
-		| init		/* init { }           */	/* dealt with locally */
+unit	: proc		/* proctype { }       */	{ $$ = $1; }
+		| init		/* init { }           */	{ $$ = $1; }
 		| events	/* event assertions   */  	{ std::cout << "The 'events' construct is currently not supported."; }
-		| one_decl	/* variables, chans   */	{ *globalSymTab = symTabNode::merge(*globalSymTab, $1); }
-		| utype		/* user defined types */	{ *globalSymTab = symTabNode::merge(*globalSymTab, $1); }
+		| one_decl	/* variables, chans   */	{ 
+													$$ = new varDecl($1, nbrLines); 
+													*globalSymTab = symTabNode::merge(*globalSymTab, $1); 
+												}
+		| utype		/* user defined types */	/* dealt with locally */
 		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
 		| ns		/* named sequence     */  	{ std::cout << "The 'named sequence' construct is currently not supported."; }
 		| SEMI		/* optional separator */	/* ignored */			
@@ -181,9 +187,9 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  Opt_priority							/* Ignore */
 		  Opt_enabler							/* Ignore */
 		  body									{	
-		  											symTabNode* args = symTabNode::deepcopy($5);
-		  											$9->setLocalSymTab(varSymNode::merge($5, $9->getLocalSymTab()));
-		  											symTabNode* proc = new procSymNode($3, $1, args, $9, nbrLines);
+		  											procSymNode* proc = new procSymNode($3, $1, $5, $9, nbrLines);
+		  											$$ = new procDecl(proc, nbrLines);
+		  											$$->setLocalSymTab(static_cast<varSymNode*>(symTabNode::deepcopy($5)));
 		  											*globalSymTab = symTabNode::merge(*globalSymTab, proc);
 		  										}
 		;
@@ -195,7 +201,8 @@ proctype: PROCTYPE								/* Ignore */
 inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 		| ACTIVE								{ $$ = new exprConst(1, nbrLines); }
 		| ACTIVE '[' CONST ']'					{ $$ = new exprConst($3, nbrLines); }
-		| ACTIVE '[' NAME ']'					{	varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookupInSymTab($3)) : nullptr;
+		| ACTIVE '[' NAME ']'					{	
+													varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookupInSymTab($3)) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<$3<<" does not exist.";
 													else if(var->getType() != symTabNode::T_INT && var->getType() != symTabNode::T_BYTE && var->getType() != symTabNode::T_SHORT) std::cout << "The variable "<<$3<<" is not of type int, short or bit.";
 													else if(var->getInitExpr() == nullptr || var->getInitExpr()->getType() != astNode::E_EXPR_CONST) std::cout << "The variable "<<$3<<" does not have a constant value.";
@@ -206,20 +213,26 @@ inst	: /* empty */							{ $$ = new exprConst(0, nbrLines); }
 												}
 		;
 
-init	: INIT Opt_priority body				{	if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
-	std::cout << "This is the second init process; only one is allowed.";
+init	: INIT Opt_priority body				{	
+													if(*globalSymTab && (*globalSymTab)->lookupInSymTab("init") != nullptr) 
+														std::cout << "This is the second init process; only one is allowed.";
 													else {
-														symTabNode* init = new initSymNode(nbrLines, $3);
+														initSymNode* init = new initSymNode(nbrLines, $3);
+														$$ = new initDecl(init, nbrLines);
 														*globalSymTab = symTabNode::merge(*globalSymTab, init);
 													}
-
 												}				
 		;
 
 events	: TRACE body							{ std::cout << "Event sequences (traces) are not supported."; }
 		;
 
-utype	: TYPEDEF NAME '{' decl_lst '}'			{	$$ = new tdefSymNode($2, $4, nbrLines);  free($2); } 
+utype	: TYPEDEF NAME '{' decl_lst '}'			{	
+													tdefSymNode* tdef = new tdefSymNode($2, $4, nbrLines);
+													$$ = new tdefDecl(tdef, nbrLines);
+													*globalSymTab = symTabNode::merge(*globalSymTab, tdef);
+													free($2);  
+												} 
 		;
 
 nm		: NAME									/* Unreachable */
@@ -249,28 +262,17 @@ cexpr	: C_EXPR								/* Unreachable */
 body	: '{' sequence OS '}'					{ $$ = $2; }
 		;
 
-sequence: step									{ 	$$ = $1;
-													/*$$ = new fsm();
-													if($1->getType() == astNode::E_DECL) {
-														$$->setSymTab($1->getLocalSymTab());
-														$1->setSymbol(nullptr);
-														delete $1;
-													} else if($1->getType() == astNode::E_STMNT) {
-														$$->stmnt2fsm($1->getChild0(), *globalSymTab);
-														$1->detachChild0();
-														delete $1;
-													}*/
-												}
-		| sequence MS step						{	$$ = stmnt::merge($$, $3);
-													$3->setLocalSymTab(varSymNode::merge($$->getLocalSymTab(), $3->getLocalSymTab()));
+sequence: step									{ 	$$ = $1;   }
+		| sequence MS step						{	
+													$$ = stmnt::merge($$, $3);
 												}
 		;
 		
-step    : one_decl								{ $$ = new decl($1, nbrLines); }
+step    : one_decl								{ $$ = new varDecl($1, nbrLines); }
 		| XU vref_lst							{ std::cout << "Channel assertions are currently not supported."; }
 		| NAME ':' one_decl						{ std::cout << "Declarations with labels are not suported."; }
 		| NAME ':' XU							{ std::cout << "Channel assertions are currently not supported."; }
-		| stmnt									{ $$ = new stmntWrapper($1, nbrLines); }
+		| stmnt									{ $$ = $1; }
 		| stmnt UNLESS stmnt					{ std::cout << "Unless statements are currently not supported."; }
 		;
 
@@ -412,7 +414,7 @@ Special : varref RCV rargs						{ $$ = new stmntChanRecv($1, $3, nbrLines); }
 		| DO options OD							{ $$ = new stmntDo($2, $1); }
 		| BREAK									{ $$ = new stmntBreak(nbrLines); }
 		| GOTO NAME								{ $$ = new stmntGoto($2, nbrLines); free($2); }
-		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && static_cast<stmntWrapper*>($3)->getStmnt()->getType() == astNode::E_STMNT_LABEL) 
+		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>($3)->getLabelledStmnt()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
 												  $$ = new stmntLabel($1, $3, nbrLines); free($1); }
 
@@ -607,8 +609,8 @@ rargs	: rarg									{ $$ = new exprArgList($1, nbrLines); }
 		| '(' rargs ')'							{ $$ = $2; }
 		;
 
-nlst	: NAME									{ *mtypes = (*mtypes)->addMType($1); free($1); }
-		| nlst NAME								{ *mtypes = (*mtypes)->addMType($2); free($2); }
+nlst	: NAME									{ *mtypes = mTypeList::addMType(*mtypes, $1); free($1); }
+		| nlst NAME								{ *mtypes = mTypeList::addMType(*mtypes, $2); free($2); }
 		| nlst ',' /* commas optional */		/* Ignore */
 		;
 %%

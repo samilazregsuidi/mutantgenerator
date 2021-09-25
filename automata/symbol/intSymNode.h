@@ -1,3 +1,6 @@
+#ifndef INT_SYM_NODE_H
+#define INT_SYM_NODE_H
+
 #include "varSymNode.h"
 
 //T_INT
@@ -17,3 +20,5 @@ public:
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 };
+
+#endif
