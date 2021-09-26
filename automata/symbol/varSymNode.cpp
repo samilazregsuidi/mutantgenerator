@@ -12,7 +12,7 @@
 #include "pidSymNode.h"
 #include "utypeSymNode.h"
 #include "unsgnSymNode.h"
-#include "mTypeSymNode.h"
+#include "mtypedefSymNode.h"
 
 varSymNode* varSymNode::merge(varSymNode* symTab, varSymNode* newNode){
 	if (!symTab)
@@ -44,7 +44,7 @@ varSymNode::~varSymNode(void) {
  * The return value is the next offset to be used after the variables
  * of the symtab were added.
  */
-unsigned int varSymNode::processVariables(symTabNode *globalSymTab, const mTypeList *mTypes, unsigned int iOffset, bool bGlobal) {
+/*unsigned int varSymNode::processVariables(symTabNode *globalSymTab, const mTypeList *mTypes, unsigned int iOffset, bool bGlobal) {
 	global = bGlobal;
 	if (init && init->getType() != astNode::E_EXPR_CONST && init->getType() != astNode::E_EXPR_TRUE && init->getType() != astNode::E_EXPR_FALSE)
 		assert(false);
@@ -52,7 +52,7 @@ unsigned int varSymNode::processVariables(symTabNode *globalSymTab, const mTypeL
 	memOffset = iOffset;
 	unsigned int iMemSpace = memSize * bound;
 	return !next ? iOffset + iMemSpace : next->processVariables(globalSymTab, mTypes, iOffset + iMemSpace, bGlobal);
-}
+}*/
 
 varSymNode *varSymNode::createSymTabNode(Type type, const varSymNode &old) {
 	assert(old.getType() == T_NA);
@@ -100,7 +100,7 @@ template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_UTYPE>(int lin
 }
 
 template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_MTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
-	return new mTypeSymNode(lineNb, name, bound, init);
+	return new mtypeSymNode(lineNb, name, bound, init);
 }
 
 varSymNode *varSymNode::createSymTabNode(Type type, int lineNb, const std::string& name, int bound, expr* init) {

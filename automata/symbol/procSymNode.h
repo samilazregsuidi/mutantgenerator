@@ -20,7 +20,7 @@ public:
 		return block;
 	}
 
-	unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) override ;
+	//unsigned int processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) override ;
 
 	operator std::string(void) const override ;
 
@@ -93,7 +93,7 @@ public:
 		return args;
 	}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+	//unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	operator std::string(void) const override;
 

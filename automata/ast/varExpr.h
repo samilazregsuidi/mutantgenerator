@@ -20,9 +20,9 @@ public:
 
 	~exprVarRefName() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+	void resolveVariables(symTabNode *global) override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode* subField);
+	void resolveVariables(symTabNode *global, symTabNode* subField);
 
 	symTabNode *symbolLookUpRight(void) const {
 		return sym;
@@ -58,9 +58,9 @@ public:
 
 	~exprVarRef() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+	void resolveVariables(symTabNode *global) override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode* subField);
+	void resolveVariables(symTabNode *global, symTabNode* subField);
 
 	symTabNode *symbolLookUpRight() const
 	{
@@ -110,7 +110,7 @@ public:
 
 	~exprVar() override;
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+	void resolveVariables(symTabNode *global) override;
 
 	const exprVarRef *getVarRef(void) const
 	{

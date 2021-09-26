@@ -34,6 +34,8 @@ public:
 
 		E_VAR_DECL,	 // symTab = declaration.
 		E_TDEF_DECL,
+		E_MTYPE_DECL,
+		E_CHAN_DECL,
 		E_PROC_DECL,
 		E_INIT_DECL,
 		E_STMNT, // child[0] = E_STMNT_*
@@ -134,7 +136,7 @@ public:
 	 * before.
 	 */
 	
-	virtual void resolveVariables(symTabNode *globalSymTab, const mTypeList *mTypes) = 0;
+	virtual void resolveVariables(symTabNode *globalSymTab) = 0;
 	
 	Type getType(void) const;
 

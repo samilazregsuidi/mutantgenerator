@@ -38,7 +38,7 @@
 # define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -241,7 +241,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 52 "promela.y"
+#line 47 "promela.y"
  
 	int       				iVal;
 	char*    				sVal;
@@ -257,12 +257,15 @@ union YYSTYPE
 	class exprArgList*		pExprArgListVal;
 	class exprRArg*			pExprRArgVal;
 	
+	class symTabNode*		pSymTabVal;
 	class varSymNode*		pVarSymVal;
 	class tdefSymNode*		pTdefSymVal;
+	class mtypedefSymNode*	pTypedefSymVal;
+	class mtypeList*		pMTypeListVal;
 	
 	enum symTabNode::Type   iType;
 
-#line 266 "y.tab.h"
+#line 269 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -272,6 +275,6 @@ typedef union YYSTYPE YYSTYPE;
 
 
 
-int yyparse (symTabNode** globalSymTab, mTypeList** mtypes, stmnt** program);
+int yyparse (symTabNode** globalSymTab, stmnt** program);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

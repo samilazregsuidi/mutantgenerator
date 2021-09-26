@@ -6,7 +6,7 @@
 #include "varSymNode.h"
 #include "utypeSymNode.h"
 #include "tdefSymNode.h"
-#include "mTypeList.h"
+#include "mtypedefSymNode.h"
 
 exprVarRefName::exprVarRefName(const std::string& symName, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
@@ -45,11 +45,11 @@ exprVarRefName::operator std::string() const {
 	return sym->getName() + (index ? "[" + std::string(*index) + "]" : "");
 }
 
-void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mTypes) {
-	resolveVariables(global, mTypes, nullptr);
+void exprVarRefName::resolveVariables(symTabNode *global) {
+	resolveVariables(global, nullptr);
 }
 
-void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *subField) {
+void exprVarRefName::resolveVariables(symTabNode *global, symTabNode *subField) {
 
 	if (subField)
 		sym = subField->lookupInSymTab(symName);
@@ -59,7 +59,7 @@ void exprVarRefName::resolveVariables(symTabNode *global, const mTypeList *mType
 
 	if (sym) {
 		if(index) 
-			index->resolveVariables(global, mTypes);
+			index->resolveVariables(global);
 	} else {
 		// First check if its a magic variable
 		int mvar = 0;
@@ -103,9 +103,9 @@ exprVarRef::~exprVarRef() {
 	delete subfieldsVar;
 }
 
-void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes) {
+void exprVarRef::resolveVariables(symTabNode *global) {
 
-	varRefName->resolveVariables(global, mTypes);
+	varRefName->resolveVariables(global);
 	auto symbol = varRefName->getSymbol();
 
 	if (symbol) {
@@ -113,16 +113,16 @@ void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes) {
 		if (subfieldsVar) {
 			auto uSymbol = static_cast<utypeSymNode*>(symbol);
 			assert(uSymbol->getUType());
-			subfieldsVar->resolveVariables(global, mTypes, uSymbol->getUType()->getChild());
+			subfieldsVar->resolveVariables(global, uSymbol->getUType()->getChild());
 		}
 	}
 	else
 		assert(!subfieldsVar);
 }
 
-void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes, symTabNode *subField) {
+void exprVarRef::resolveVariables(symTabNode *global, symTabNode* subField) {
 
-	varRefName->resolveVariables(global, mTypes, subField);
+	varRefName->resolveVariables(global, subField);
 	auto symbol = varRefName->getSymbol();
 
 	if (symbol) {
@@ -130,7 +130,7 @@ void exprVarRef::resolveVariables(symTabNode *global, const mTypeList *mTypes, s
 		if (subfieldsVar) {
 			auto uSymbol = static_cast<utypeSymNode*>(symbol);
 			assert(uSymbol->getUType());
-			subfieldsVar->resolveVariables(global, mTypes, uSymbol->getUType()->getChild());
+			subfieldsVar->resolveVariables(global, uSymbol->getUType()->getChild());
 		}
 	}
 	else
@@ -149,6 +149,6 @@ exprVar::~exprVar() {
 		delete varRef;
 	}
 
-void exprVar::resolveVariables(symTabNode *global, const mTypeList *mTypes) {
-	varRef->resolveVariables(global, mTypes);
+void exprVar::resolveVariables(symTabNode *global) {
+	varRef->resolveVariables(global);
 }

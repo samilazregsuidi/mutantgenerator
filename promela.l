@@ -14,6 +14,9 @@ int nbrLines = 0;
 char strBuffer[1024];
 int strBufferLen = 0;
 
+#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
+#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
+
 %}
 
 %option bison-bridge
@@ -32,130 +35,130 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 %%
 
 
-<CODE>"::"       	{ return SEP; }
-<CODE>"->"       	{ return SEMI; }
-<CODE>";"        	{ return SEMI; }
-<CODE>"--"       	{ return DECR; }
-<CODE>"++"       	{ return INCR; }
-<CODE>"<<"       	{ return LSHIFT; }
-<CODE>"<="       	{ return LE; }
-<CODE>"<"        	{ return LT; }
-<CODE>">>"       	{ return RSHIFT; }
-<CODE>">="       	{ return GE; }
-<CODE>"=>"			{ return IMPLIES; }
-<CODE>">"        	{ return GT; }
-<CODE>"=="       	{ return EQ; }
-<CODE>"="        	{ return ASGN; }
-<CODE>"!="       	{ return NE; }
-<CODE>"!!"       	{ return O_SND; /* Sorted send, p.48 */ }
-<CODE>"!"        	{ return SND; }
-<CODE>"??"       	{ return R_RCV; /* Random receive, p.48 */ }
-<CODE>"?"        	{ return RCV; }
-<CODE>"&&"       	{ return AND; }
-<CODE>"||"       	{ return OR; }
-<CODE>"spec"		{ return SPEC; }
-<CODE>"E"			{ return EVENTUALLY;}
-<CODE>"A"			{ return ALWAYS;}
-<CODE>"G"			{ return GLOBALLY;}
-<CODE>"F"			{ return FINALLY;}
-<CODE>"card"		{ return COUNT; }
-<CODE>"this"		{ return CONTEXT; }
+<CODE>"::"       	{ DBUG(SEP);return SEP; }
+<CODE>"->"       	{ DBUG(SEMI);return SEMI; }
+<CODE>";"        	{ DBUG(SEMI);return SEMI; }
+<CODE>"--"       	{ DBUG(DECR);return DECR; }
+<CODE>"++"       	{ DBUG(INCR);return INCR; }
+<CODE>"<<"       	{ DBUG(LSHIFT);return LSHIFT; }
+<CODE>"<="       	{ DBUG(LE);return LE; }
+<CODE>"<"        	{ DBUG(LT);return LT; }
+<CODE>">>"       	{ DBUG(RSHIFT);return RSHIFT; }
+<CODE>">="       	{ DBUG(GE);return GE; }
+<CODE>"=>"			{ DBUG(IMPLIES);return IMPLIES; }
+<CODE>">"        	{ DBUG(GT);return GT; }
+<CODE>"=="       	{ DBUG(EQ);return EQ; }
+<CODE>"="        	{ DBUG(ASGN);return ASGN; }
+<CODE>"!="       	{ DBUG(NE);return NE; }
+<CODE>"!!"       	{ DBUG(O_SND);return O_SND; /* Sorted send, p.48 */ }
+<CODE>"!"        	{ DBUG(SND);return SND; }
+<CODE>"??"       	{ DBUG(R_RCV);return R_RCV; /* Random receive, p.48 */ }
+<CODE>"?"        	{ DBUG(RCV);return RCV; }
+<CODE>"&&"       	{ DBUG(AND);return AND; }
+<CODE>"||"       	{ DBUG(OR);return OR; }
+<CODE>"spec"		{ DBUG(SPEC);return SPEC; }
+<CODE>"E"			{ DBUG(EVENTUALLY);return EVENTUALLY;}
+<CODE>"A"			{ DBUG(ALWAYS);return ALWAYS;}
+<CODE>"G"			{ DBUG(GLOBALLY);return GLOBALLY;}
+<CODE>"F"			{ DBUG(FINALLY);return FINALLY;}
+<CODE>"card"		{ DBUG(COUNT);return COUNT; }
+<CODE>"this"		{ DBUG(CONTEXT);return CONTEXT; }
 
-<CODE>"active"		{ return ACTIVE; }
-<CODE>"assert"		{ return ASSERT; }
-<CODE>"atomic"		{ return ATOMIC; }
-<CODE>"break"		{ return BREAK; }
-<CODE>"c_code"		{ return C_CODE; }
-<CODE>"c_decl"		{ return C_DECL; }
-<CODE>"c_expr"		{ return C_EXPR; }
-<CODE>"c_state"		{ return C_STATE; }
-<CODE>"c_track"		{ return C_TRACK; }
-<CODE>"D_proctype"	{ return D_PROCTYPE; }
-<CODE>"do"			{ yylval->iVal = nbrLines; 
+<CODE>"active"		{ DBUG(ACTIVE);return ACTIVE; }
+<CODE>"assert"		{ DBUG(ASSERT);return ASSERT; }
+<CODE>"atomic"		{ DBUG(ATOMIC);return ATOMIC; }
+<CODE>"break"		{ DBUG(BREAK);return BREAK; }
+<CODE>"c_code"		{ DBUG(C_CODE);return C_CODE; }
+<CODE>"c_decl"		{ DBUG(C_DECL);return C_DECL; }
+<CODE>"c_expr"		{ DBUG(C_EXPR);return C_EXPR; }
+<CODE>"c_state"		{ DBUG(C_STATE);return C_STATE; }
+<CODE>"c_track"		{ DBUG(C_TRACK);return C_TRACK; }
+<CODE>"D_proctype"	{ DBUG(D_PROTOTYPE);return D_PROCTYPE; }
+<CODE>"do"			{ DBUG(DO);yylval->iVal = nbrLines; 
 					  return DO; }
-<CODE>"else"		{ return ELSE; }
-<CODE>"empty"		{ return EMPTY; }
-<CODE>"enabled"		{ return ENABLED; }
-<CODE>"eval"		{ return EVAL; }
-<CODE>"fi"			{ return FI; }
-<CODE>"dg"			{ return FI; }
-<CODE>"full"		{ return FULL; }
-<CODE>"goto"		{ return GOTO; }
-<CODE>"hidden"		{ return HIDDEN; }
+<CODE>"else"		{ DBUG(ELSE);return ELSE; }
+<CODE>"empty"		{ DBUG(EMPTY);return EMPTY; }
+<CODE>"enabled"		{ DBUG(ENABLED);return ENABLED; }
+<CODE>"eval"		{ DBUG(EVAL);return EVAL; }
+<CODE>"fi"			{ DBUG(FI);return FI; }
+<CODE>"dg"			{ DBUG(FI);return FI; }
+<CODE>"full"		{ DBUG(FULL);return FULL; }
+<CODE>"goto"		{ DBUG(GOTO);return GOTO; }
+<CODE>"hidden"		{ DBUG(HIDDEN);return HIDDEN; }
 <CODE>"if"			{ yylval->iVal = nbrLines; 
-					  return IF; }
+					  DBUG(IF);return IF; }
 <CODE>"gd"			{ yylval->iVal = nbrLines; 
-					  return IF; }
-<CODE>"init"		{ return INIT; }
-<CODE>"len"			{ return LEN; }
-<CODE>"local"		{ return ISLOCAL; }
-<CODE>"nempty"		{ return NEMPTY; }
-<CODE>"never"		{ return CLAIM; }
-<CODE>"nfull"		{ return NFULL; }
-<CODE>"notrace"		{ return TRACE; }
-<CODE>"np_"			{ return NONPROGRESS; }
-<CODE>"od"			{ return OD; }
-<CODE>"of"			{ return OF; }
-<CODE>"pc_value"	{ return PC_VAL; }
-<CODE>"printf"		{ return PRINT; }
-<CODE>"printm"		{ return PRINTM; }
-<CODE>"priority"	{ return PRIORITY; }
-<CODE>"proctype"	{ return PROCTYPE; }
-<CODE>"provided"	{ return PROVIDED; }
-<CODE>"run"			{ return RUN; }
-<CODE>"d_step"		{ return D_STEP; }
-<CODE>"timeout"		{ return TIMEOUT; }
-<CODE>"trace"		{ return TRACE; }
-<CODE>"show"		{ return SHOW; }
-<CODE>"typedef"		{ return TYPEDEF; }
-<CODE>"unless"		{ return UNLESS; }
-<CODE>"xr"			{ return XU; }
-<CODE>"xs"			{ return XU; }
-<CODE>"when"		{ return WHEN; }
-<CODE>"while"		{ return WHILE; }
-<CODE>"wait"		{ return WAIT; }
-<CODE>"reset"		{ return RESET; }
+					  DBUG(IF); return IF; }
+<CODE>"init"		{ DBUG(HIDDEN);return INIT; }
+<CODE>"len"			{ DBUG(LEN); return LEN; }
+<CODE>"local"		{ DBUG(ISLOCAL); return ISLOCAL; }
+<CODE>"nempty"		{ DBUG(NEMPTY); return NEMPTY; }
+<CODE>"never"		{ DBUG(CLAIM); return CLAIM; }
+<CODE>"nfull"		{ DBUG(NFULL); return NFULL; }
+<CODE>"notrace"		{ DBUG(TRACE); return TRACE; }
+<CODE>"np_"			{ DBUG(NONPROGRESS); return NONPROGRESS; }
+<CODE>"od"			{ DBUG(OD); return OD; }
+<CODE>"of"			{ DBUG(OF); return OF; }
+<CODE>"pc_value"	{ DBUG(PC_VAL); return PC_VAL; }
+<CODE>"printf"		{ DBUG(PRINT); return PRINT; }
+<CODE>"printm"		{ DBUG(PRINTM); return PRINTM; }
+<CODE>"priority"	{ DBUG(PRIORITY); return PRIORITY; }
+<CODE>"proctype"	{ DBUG(PROCTYPE); return PROCTYPE; }
+<CODE>"provided"	{ DBUG(PROVIDED); return PROVIDED; }
+<CODE>"run"			{ DBUG(RUN); return RUN; }
+<CODE>"d_step"		{ DBUG(D_STEP); return D_STEP; }
+<CODE>"timeout"		{ DBUG(TIMEOUT); return TIMEOUT; }
+<CODE>"trace"		{ DBUG(TRACE); return TRACE; }
+<CODE>"show"		{ DBUG(SHOW); return SHOW; }
+<CODE>"typedef"		{ DBUG(TYPEDEF); return TYPEDEF; }
+<CODE>"unless"		{ DBUG(UNLESS); return UNLESS; }
+<CODE>"xr"			{ DBUG(XU); return XU; }
+<CODE>"xs"			{ DBUG(XU); return XU; }
+<CODE>"when"		{ DBUG(WHEN); return WHEN; }
+<CODE>"while"		{ DBUG(WHILE); return WHILE; }
+<CODE>"wait"		{ DBUG(WAIT); return WAIT; }
+<CODE>"reset"		{ DBUG(RESET); return RESET; }
 
 <CODE>"bit"			{ yylval->iType = symTabNode::T_BIT;
+					  DBUG(TYPE); return TYPE; }
+<CODE>"bool"		{ DBUG(TYPE); yylval->iType = symTabNode::T_BOOL;
 					  return TYPE; }
-<CODE>"bool"		{ yylval->iType = symTabNode::T_BOOL;
+<CODE>"byte"		{ DBUG(TYPE); yylval->iType = symTabNode::T_BYTE;
 					  return TYPE; }
-<CODE>"byte"		{ yylval->iType = symTabNode::T_BYTE;
+<CODE>"pid"			{ DBUG(TYPE); yylval->iType = symTabNode::T_PID;
 					  return TYPE; }
-<CODE>"pid"			{ yylval->iType = symTabNode::T_PID;
+<CODE>"short"		{ DBUG(TYPE); yylval->iType = symTabNode::T_SHORT;
 					  return TYPE; }
-<CODE>"short"		{ yylval->iType = symTabNode::T_SHORT;
-					  return TYPE; }
-<CODE>"int"			{ yylval->iType = symTabNode::T_INT;
+<CODE>"int"			{ DBUG(TYPE); yylval->iType = symTabNode::T_INT;
 					  return TYPE; }
 <CODE>"unsigned"	{ fprintf(stderr, "The 'unsigned' type is not supported.\n");
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
 							return TYPE; */ }
-<CODE>"chan"		{ yylval->iType = symTabNode::T_CID;
+<CODE>"chan"		{ DBUG(TYPE); yylval->iType = symTabNode::T_CHAN;
 					  return TYPE; }
-<CODE>"mtype"		{ yylval->iType = symTabNode::T_MTYPE;
+<CODE>"mtype"		{ DBUG(TYPE); yylval->iType = symTabNode::T_MTYPE;
 					  return TYPE; }
-<CODE>"clock"		{ yylval->iType = symTabNode::T_CLOCK;
+<CODE>"clock"		{ DBUG(TYPE); yylval->iType = symTabNode::T_CLOCK;
 					  return TYPE; }
 
 <CODE>"inline"		{ fprintf(stderr, "Inline declarations are not supported.\n");
 					  exit(1); /* return INLINE; */ }
 
-<CODE>"false"		{ yylval->iVal = 0; 
+<CODE>"false"		{ DBUG(FALSE);  yylval->iVal = 0; 
 					  return FALSE; }
 
-<CODE>"true"		{ yylval->iVal = 1; 
+<CODE>"true"		{ DBUG(TRUE); std::cout << "TOKEN: TRUE\n"; yylval->iVal = 1; 
 					  return TRUE; }
 
-<CODE>"skip"		{ return SKIP; }
+<CODE>"skip"		{ DBUG(SKIP); return SKIP; }
 
 <CODE>"\""          { BEGIN STRINGBLOCK; 													/* printf("BEGIN STRINGBLOCK AT L %d\n", nbrLines); */
 					  strBufferLen = 0; }
 <STRINGBLOCK>"\""	{ BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */
 					  strBuffer[strBufferLen] = '\0';
-					  //yylval->sVal = (char*) calloc(strBufferLen + 1, sizeof(char));
-					  //strcpy(yylval->sVal, strBuffer);
+					  yylval->sVal = (char*) calloc(strBufferLen + 1, sizeof(char));
+					  strcpy(yylval->sVal, strBuffer);
 					  yylval->sVal = strBuffer;
 					  
 					  return STRING; }
@@ -167,23 +170,31 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 					  strBufferLen++; }
  
 
-<CODE>{symbol}	 	{ return yytext[0]; } 
+<CODE>{symbol}	 	{ DBUG_CHAR(yytext[0]); return yytext[0]; } 
 
 <CODE>{id}       	{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
+					  DBUG(NAME);
+					  return NAME;
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
-					  
-					  if(*globalSymTab != nullptr) {
-					  	  symTabNode* node = (*globalSymTab)->lookupInSymTab(yylval->sVal);
-						  if(node && node->getType() == symTabNode::T_TDEF) 
+					  symTabNode* node = nullptr;
+					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookupInSymTab(yylval->sVal))) {
+					  	  if(node->getType() == symTabNode::T_TDEF) {
+						  	DBUG(UNAME);
 						  	return UNAME; 
-						  else if(node && node->getType() == symTabNode::T_PROC) 
+						  }
+						  else if(node->getType() == symTabNode::T_PROC) {
+						  	DBUG(PNAME);
 						  	return PNAME; 
-					  } else 
-					  	return NAME; }
+						  }
+					  } else {
+					  	DBUG(NAME);
+					  	return NAME;
+					  } 
+					}
 <CODE>{real}		{ yylval->rVal = atof(yytext);
-					  return REAL;  }
-<CODE>{number}		{ yylval->iVal = atoi(yytext);
+					  DBUG(REAL); return REAL;  }
+<CODE>{number}		{ DBUG(CONST); yylval->iVal = atoi(yytext);
 					  return CONST; }
 
 <CODE>"\n"       	{ nbrLines++; }

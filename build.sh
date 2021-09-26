@@ -22,7 +22,7 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	./automata/symbol/intSymNode.cpp \
 	./automata/symbol/unsgnSymNode.cpp \
 	./automata/symbol/utypeSymNode.cpp \
-	./automata/symbol/mTypeSymNode.cpp \
+	./automata/symbol/mtypeSymNode.cpp \
 	./automata/symbol/cidSymNode.cpp \
 	./automata/symbol/chanSymNode.cpp \
 	./automata/symbol/procSymNode.cpp \
@@ -30,7 +30,7 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	./automata/symbol/varSymNode.cpp \
 	./automata/symbol/naSymNode.cpp \
 	./automata/symbol/pidSymNode.cpp \
-	./automata/symbol/mTypeList.cpp \
+	./automata/symbol/mtypedefSymNode.cpp \
 	./automata/symbol/visitor/symTabCopyVisitor.cpp \
 	\
 	./automata/ast/astNode.cpp \

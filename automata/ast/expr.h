@@ -13,9 +13,8 @@ protected:
 	{}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		globalSymTab = globalSymTab;
-		mTypes = mTypes;
 	}
 };
 
@@ -31,10 +30,10 @@ public:
 		this->elsE = elsE;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
-		cond->resolveVariables(globalSymTab, mTypes);
-		then->resolveVariables(globalSymTab, mTypes);
-		elsE->resolveVariables(globalSymTab, mTypes);
+	void resolveVariables(symTabNode* globalSymTab) override {
+		cond->resolveVariables(globalSymTab);
+		then->resolveVariables(globalSymTab);
+		elsE->resolveVariables(globalSymTab);
 	}
 
 	operator std::string() const override
@@ -71,7 +70,7 @@ public:
 
 	symTabNode *symbolLookUpLeft(void) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override;
+	void resolveVariables(symTabNode* globalSymTab) override;
 
 	operator std::string() const override;
 
@@ -94,8 +93,8 @@ public:
 		this->toEval = toEval;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
-		toEval->resolveVariables(globalSymTab, mTypes);
+	void resolveVariables(symTabNode* globalSymTab) override {
+		toEval->resolveVariables(globalSymTab);
 	}
 
 	operator std::string() const override
@@ -155,9 +154,9 @@ public:
 		this->list = nullptr;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
-		node->resolveVariables(globalSymTab, mTypes);
-		list->resolveVariables(globalSymTab, mTypes);
+	void resolveVariables(symTabNode* globalSymTab) override {
+		node->resolveVariables(globalSymTab);
+		list->resolveVariables(globalSymTab);
 	}
 
 	operator std::string() const override
@@ -185,7 +184,7 @@ public:
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
-	void resolveVariables(symTabNode *global, const mTypeList *mTypes) override;
+	void resolveVariables(symTabNode *global) override;
 
 	operator std::string() const override;
 

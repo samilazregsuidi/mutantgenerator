@@ -7,8 +7,9 @@
 #include "shortSymNode.h"
 #include "intSymNode.h"
 #include "unsgnSymNode.h"
-#include "mTypeSymNode.h"
+#include "mtypeSymNode.h"
 #include "utypeSymNode.h"
+#include "mtypedefSymNode.h"
 #include "pidSymNode.h"
 #include "cidSymNode.h"
 #include "tdefSymNode.h"
@@ -71,8 +72,8 @@ void symTabCopyVisitor::visitUnsgn(const unsgnSymNode *sym){
 	tmp = new unsgnSymNode(*sym);
 }
 
-void symTabCopyVisitor::visitMtype(const mTypeSymNode *sym){
-	tmp = new mTypeSymNode(*sym);
+void symTabCopyVisitor::visitMtype(const mtypeSymNode *sym){
+	tmp = new mtypeSymNode(*sym);
 }
 
 void symTabCopyVisitor::visitChan(const chanSymNode *sym){
@@ -102,3 +103,8 @@ void symTabCopyVisitor::visitNever(const neverSymNode *sym){
 void symTabCopyVisitor::visitInit(const initSymNode *sym){
 	tmp = new initSymNode(*sym);
 }
+
+void symTabCopyVisitor::visitMtypedef(const mtypedefSymNode *sym){
+	tmp = new mtypedefSymNode(*sym);
+}
+

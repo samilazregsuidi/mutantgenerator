@@ -7,7 +7,6 @@
 #include "utypeSymNode.h"
 #include "tdefSymNode.h"
 #include "procSymNode.h"
-#include "mTypeList.h"
 
 stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	if (!stmnts)

@@ -21,7 +21,6 @@ class fsmTrans;
 class varSymNode;
 class symTabVisitor;
 
-class mTypeList;
 
 class symTabNode {
 public:
@@ -38,6 +37,7 @@ public:
 		T_UNSGN, 	// not supported yet
 		T_MTYPE,
 		T_CLOCK ,	// dense time clock
+		T_MTYPE_DEF,
 
 		//T_FEAT,
 		//T_UFEAT,
@@ -76,15 +76,15 @@ public:
 	//symTabNode* addToSymTab(symTabNode* newNode);
 	//void remove(void);
 
-	symTabNode* lookupInSymTab(const exprVarRefName* expr);
+	/*symTabNode* lookupInSymTab(const exprVarRefName* expr);
 	symTabNode* lookupInSymTab(const exprVarRef* expr);
-	symTabNode* lookupInSymTab(const exprVar* expr);
-	symTabNode* lookupInSymTab(const std::string& name);
+	symTabNode* lookupInSymTab(const exprVar* expr);*/
+	virtual symTabNode* lookupInSymTab(const std::string& name);
 
-	const symTabNode* lookupInSymTab(const exprVarRefName* expr) const;
+	/*const symTabNode* lookupInSymTab(const exprVarRefName* expr) const;
 	const symTabNode* lookupInSymTab(const exprVarRef* expr) const;
 	const symTabNode* lookupInSymTab(const exprVar* expr) const;
-	const symTabNode* lookupInSymTab(const std::string& name) const;
+	virtual const symTabNode* lookupInSymTab(const std::string& name) const;*/
 
 	void makeNext(symTabNode* nextSym);
 	void setNext(symTabNode* nextSym);
@@ -98,7 +98,7 @@ public:
 
 	//bool isFeature(void) const;
 
-    virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) = 0;
+    //virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) = 0;
 
 	void printSymTab(int level, const std::string& title) const;
 	Type getType(void) const;

@@ -6,7 +6,7 @@
 #include "varSymNode.h"
 #include "utypeSymNode.h"
 #include "tdefSymNode.h"
-#include "mTypeList.h"
+#include "mtypedefSymNode.h"
 /**
  * Just creates a node with the given values.
  */

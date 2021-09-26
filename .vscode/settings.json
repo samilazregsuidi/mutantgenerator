@@ -80,6 +80,7 @@
         "typeindex": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "bitsymnode.h": "c"
+        "bitsymnode.h": "c",
+        "cassert": "cpp"
     }
 }

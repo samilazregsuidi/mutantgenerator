@@ -24,7 +24,7 @@ void procSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitProc(this);
 }
 
-unsigned int seqSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
+/*unsigned int seqSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
 	//memSize = block->processVariables(global, mTypes, 0, 0);
 	return !next ? iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
 }
@@ -34,7 +34,7 @@ unsigned int procSymNode::processVariables(symTabNode *global, const mTypeList *
 		active->resolveVariables(global, mTypes);
 	//memSize = block->processVariables(global, mTypes, 0, 0);
 	return !next ? iOffset : next->processVariables(global, mTypes, iOffset, isGlobal);
-}
+}*/
 
 seqSymNode::operator std::string(void) const {
 	return name + "{\n" + (block? std::string(*block) : "") + "\n}";

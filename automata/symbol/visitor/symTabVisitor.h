@@ -9,7 +9,7 @@ class byteSymNode;
 class shortSymNode;
 class intSymNode;
 class unsgnSymNode;
-class mTypeSymNode;
+class mtypeSymNode;
 class chanSymNode;
 class cidSymNode;
 class pidSymNode;
@@ -18,6 +18,7 @@ class procSymNode;
 class utypeSymNode;
 class neverSymNode;
 class initSymNode;
+class mtypedefSymNode;
 
 class symTabVisitor {
 public:
@@ -28,7 +29,7 @@ public:
 	virtual void visitShort(const shortSymNode* sym) = 0;
 	virtual void visitInt(const intSymNode* sym) = 0;
 	virtual void visitUnsgn(const unsgnSymNode* sym) = 0;
-	virtual void visitMtype(const mTypeSymNode* sym) = 0;
+	virtual void visitMtype(const mtypeSymNode* sym) = 0;
 	virtual void visitChan(const chanSymNode* sym) = 0;
 	virtual void visitCid(const cidSymNode* sym) = 0;
 	virtual void visitPid(const pidSymNode* sym) = 0;
@@ -37,6 +38,7 @@ public:
 	virtual void visitUtype(const utypeSymNode* sym) = 0;
 	virtual void visitNever(const neverSymNode* sym) = 0;
 	virtual void visitInit(const initSymNode* sym) = 0;
+	virtual void visitMtypedef(const mtypedefSymNode* sym) = 0;
 };
 
 #endif

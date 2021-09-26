@@ -23,7 +23,14 @@ public:
 		return 0;
 	}
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+	varSymNode* getTypeList(void) const {
+		return child;
+	}
+
+	int getCapacity(void) const {
+		return capacity;
+	}
+	//unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 

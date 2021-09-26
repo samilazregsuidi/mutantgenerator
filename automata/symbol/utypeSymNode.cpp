@@ -13,9 +13,9 @@ void utypeSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitUtype(this);
 }
 
-unsigned int utypeSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
+/*unsigned int utypeSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
 	memSize = utype->getMemorySize();
 	memOffset = iOffset;
 	unsigned int iMemSpace = memSize * bound;
 	return !next ? iOffset + iMemSpace : next->processVariables(global, mTypes, iOffset + iMemSpace, isGlobal);
-}
+}*/

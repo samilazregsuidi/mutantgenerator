@@ -11,18 +11,14 @@
 #include "lexer.h"
 
 
-#define SYS_VARS_SIZE 5 + sizeof(void *)
-
-
 extern FILE* yyin;
-extern int yyparse(symTabNode* symTable, mTypeList** mtypes);
+extern int yyparse(symTabNode** symTable, stmnt** program);
 extern void init_lex();
 
 // Settings defined in main
 
 // Other global variables from main
 symTabNode* globalSymTab = nullptr;
-mTypeList* mtypes = nullptr;
 stmnt* program = nullptr;
 
 /**
@@ -68,11 +64,11 @@ int main(int argc, char *argv[]) {
 	if(yyin == NULL) { std::cout << "Could not open temporary working file ("<<argv[argc - 1]<<").\n"; exit(1); }
 	init_lex();
 
-	if(yyparse(&globalSymTab, &mtypes, &program) != 0) { 
+	if(yyparse(&globalSymTab, &program) != 0) { 
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	program->resolveVariables(globalSymTab, mtypes);
+	program->resolveVariables(globalSymTab);
 	std::cout << std::string(*program);
 
 	if(yyin != NULL) fclose(yyin);

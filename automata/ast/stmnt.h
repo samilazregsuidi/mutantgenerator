@@ -29,9 +29,9 @@ public:
 
 	//virtual unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		if(next) next->resolveVariables(local, mTypes);
+		if(next) next->resolveVariables(local);
 	}
 
 	void setLocalSymTab(symTabNode* local) {
@@ -77,11 +77,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		chan->resolveVariables(globalSymTab, mTypes);
-		argList->resolveVariables(globalSymTab, mTypes);
-		if(next) next->resolveVariables(globalSymTab, mTypes);
+		chan->resolveVariables(globalSymTab);
+		argList->resolveVariables(globalSymTab);
+		if(next) next->resolveVariables(globalSymTab);
 	}
 
 	/*std::list<std::string> getVars(const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
@@ -122,11 +122,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		chan->resolveVariables(local, mTypes);
-		argList->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		chan->resolveVariables(local);
+		argList->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -170,11 +170,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		block->resolveVariables(local, mTypes);
-		nextOpt->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		block->resolveVariables(local);
+		nextOpt->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -209,10 +209,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		opts->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		opts->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -246,10 +246,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		opts->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		opts->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -378,10 +378,10 @@ protected:
 	}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		block->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		block->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -436,11 +436,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		varRef->resolveVariables(local, mTypes);
-		assign->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(globalSymTab, mTypes);
+		varRef->resolveVariables(local);
+		assign->resolveVariables(local);
+		if(next) next->resolveVariables(globalSymTab);
 	}
 
 	operator std::string() const
@@ -474,10 +474,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		varRef->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		varRef->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -510,10 +510,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		varRef->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		varRef->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -547,10 +547,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		argList->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		argList->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -590,10 +590,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		varRef->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		varRef->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -627,10 +627,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		toAssert->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		toAssert->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -663,10 +663,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		child->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		child->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -719,10 +719,10 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		timer->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(local, mTypes);
+		timer->resolveVariables(local);
+		if(next) next->resolveVariables(local);
 	}
 
 	operator std::string() const
@@ -758,11 +758,11 @@ public:
 			delete next;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
+	void resolveVariables(symTabNode* globalSymTab) override {
 		local = symTabNode::merge(local, globalSymTab);
-		guard->resolveVariables(local, mTypes);
-		todo->resolveVariables(local, mTypes);
-		if(next) next->resolveVariables(globalSymTab, mTypes);
+		guard->resolveVariables(local);
+		todo->resolveVariables(local);
+		if(next) next->resolveVariables(globalSymTab);
 	}
 
 	operator std::string() const

@@ -17,8 +17,8 @@ protected:
 		delete expression;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
-		expression->resolveVariables(globalSymTab, mTypes);
+	void resolveVariables(symTabNode* globalSymTab) override {
+		expression->resolveVariables(globalSymTab);
 	}
 
 protected:

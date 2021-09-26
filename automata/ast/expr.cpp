@@ -6,7 +6,6 @@
 
 #include "symTabNode.h"
 #include "procSymNode.h"
-#include "mTypeList.h"
 
 exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	: exprRArg(astNode::E_RARG_VAR, lineNb)
@@ -22,8 +21,8 @@ symTabNode *exprRArgVar::symbolLookUpLeft(void) const {
 	return varRef->symbolLookUpLeft();
 }
 
-void exprRArgVar::resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) {
-	varRef->resolveVariables(globalSymTab, mTypes);
+void exprRArgVar::resolveVariables(symTabNode* globalSymTab) {
+	varRef->resolveVariables(globalSymTab);
 }
 
 
@@ -54,13 +53,13 @@ exprRun::operator std::string() const
 	return "run " + procName + (card ? " [" + std::string(*card) + "]" : "") + "( " + std::string(*argList) + " ) ";
 }
 
-void exprRun::resolveVariables(symTabNode *global, const mTypeList *mTypes) {
+void exprRun::resolveVariables(symTabNode *global) {
 
 	if (global)
 		procSym = static_cast<procSymNode*>(global->lookupInSymTab(procName));
 
 	assert(procSym && procSym->getType() == symTabNode::T_PROC);
 
-	card->resolveVariables(global, mTypes);
-	argList->resolveVariables(global, mTypes);
+	card->resolveVariables(global);
+	argList->resolveVariables(global);
 }

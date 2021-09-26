@@ -18,9 +18,9 @@ protected:
 		delete left;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab, const mTypeList* mTypes) override {
-		left->resolveVariables(globalSymTab, mTypes);
-		right->resolveVariables(globalSymTab, mTypes);
+	void resolveVariables(symTabNode* globalSymTab) override {
+		left->resolveVariables(globalSymTab);
+		right->resolveVariables(globalSymTab);
 	}
 
 

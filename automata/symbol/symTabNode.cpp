@@ -14,7 +14,7 @@
 #include "shortSymNode.h"
 #include "intSymNode.h"
 #include "unsgnSymNode.h"
-#include "mTypeSymNode.h"
+#include "mtypedefSymNode.h"
 #include "utypeSymNode.h"
 #include "pidSymNode.h"
 #include "cidSymNode.h"
@@ -135,17 +135,17 @@ symTabNode *symTabNode::deepcopy(symTabNode *symTab)
 	return this;
 }*/
 
-symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr)
+/*symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr)
 {
 	return lookupInSymTab(expr->getName());
-}
+}*/
 
-const symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr) const
+/*const symTabNode *symTabNode::lookupInSymTab(const exprVarRefName *expr) const
 {
 	return lookupInSymTab(expr->getName());
-}
+}*/
 
-symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
+/*symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
 	symTabNode *sym = lookupInSymTab(expr->getField());
 	assert(sym);
 	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
@@ -156,9 +156,9 @@ symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) {
 		return child->lookupInSymTab(expr->getSubField());
 	}
 	return nullptr;
-}
+}*/
 
-const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
+/*const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
 	const symTabNode *sym = lookupInSymTab(expr->getField());
 	assert(sym);
 	//if (expr->hasSubField() && (uSym = sym->getUType()) && (uSym = uSym->getUType()->getChild()))
@@ -169,17 +169,17 @@ const symTabNode *symTabNode::lookupInSymTab(const exprVarRef *expr) const {
 		return child->lookupInSymTab(expr->getSubField());
 	}
 	return nullptr;
-}
+}*/
 
-symTabNode *symTabNode::lookupInSymTab(const exprVar *expr)
+/*symTabNode *symTabNode::lookupInSymTab(const exprVar *expr)
 {
 	return lookupInSymTab(expr->getVarRef());
-}
+}*/
 
-const symTabNode *symTabNode::lookupInSymTab(const exprVar *expr) const
+/*const symTabNode *symTabNode::lookupInSymTab(const exprVar *expr) const
 {
 	return lookupInSymTab(expr->getVarRef());
-}
+}*/
 
 /**
  * Returns the symbol with the given name or NULL if there is no such symbol in the symTab.
@@ -189,10 +189,10 @@ symTabNode *symTabNode::lookupInSymTab(const std::string &name)
 	return name == getName() ? this : (next? next->lookupInSymTab(name) : nullptr);
 }
 
-const symTabNode *symTabNode::lookupInSymTab(const std::string &name) const
+/*const symTabNode *symTabNode::lookupInSymTab(const std::string &name) const
 {
 	return name == getName() ? this : (next? next->lookupInSymTab(name) : nullptr);
-}
+}*/
 
 /*bool symTabNode::isFeature(void) const {
 	return type == T_FEAT;

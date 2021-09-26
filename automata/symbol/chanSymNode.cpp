@@ -9,7 +9,7 @@ void chanSymNode::acceptVisitor(symTabVisitor *visitor) const{
 	visitor->visitChan(this);
 }
 
-unsigned int chanSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
+/*unsigned int chanSymNode::processVariables(symTabNode *global, const mTypeList *mTypes, unsigned int iOffset, bool isGlobal) {
 	assert(init);
 	unsigned int iMemSpace = 0;
 	this->memOffset = iOffset;
@@ -19,4 +19,4 @@ unsigned int chanSymNode::processVariables(symTabNode *global, const mTypeList *
 	else
 		iMemSpace = memSize * bound + bound;
 	return !next ? iOffset + iMemSpace : next->processVariables(global, mTypes, iOffset + iMemSpace, isGlobal);
-}
+}*/

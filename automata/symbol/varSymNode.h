@@ -22,7 +22,7 @@ public:
 	static varSymNode *createSymTabNode(Type type, const varSymNode &old);
 	template<Type type> static varSymNode* createSymTabNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
 
-	unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override;
+	//unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override;
 	
 	expr* getInitExpr(void) const {
 		return init;
