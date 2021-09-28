@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	program->resolveVariables(globalSymTab);
+	program->resolveVariables(nullptr);
 	std::cout << std::string(*program);
 
 	if(yyin != NULL) fclose(yyin);

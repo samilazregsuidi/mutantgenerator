@@ -76,7 +76,7 @@ int yyerror (symTabNode** globalSymTab, stmnt** program, const char* msg){
 %token <rVal> REAL
 %type  <sVal> aname
 %type  <rVal> real_expr
-%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt unit units proc init utype mtypedef
+%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt unit units proc init utype mtype program
 %type  <pStmntOptVal> options
 %type  <pExprVal> Expr expr full_expr Probe
 %type  <pConstExprVal> inst
@@ -141,20 +141,22 @@ units	: unit									{ std::cout<< "REDUCE: unit -> units\n"; }
 		| units unit							{ std::cout<< "REDUCE: units unit -> units\n"; }
 		;
 
-unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; $$ = $1; }
-		| init		/* init { }           */	{ std::cout<< "REDUCE: init -> unit\n"; $$ = $1; }
+unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| init		/* init { }           */	{ std::cout<< "REDUCE: init -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| events	/* event assertions   */  	{ std::cout << "The 'events' construct is currently not supported."; }
 		| one_decl	/* variables, chans   */	{ 
-													std::cout << "REDUCE: one_decl -> unit\n";
-													if ($1->getType() == symTabNode::T_MTYPE_DEF)
-														$$ = new mtypeDecl(static_cast<mtypedefSymNode*>($1), nbrLines); 
+													std::cout << "REDUCE: one_decl -> unit\n"; 
 													if ($1->getType() == symTabNode::T_CHAN) 
 														$$ = new chanDecl(static_cast<chanSymNode*>($1), nbrLines);
-													else 
+													else {
+														assert($1->getType() != symTabNode::T_MTYPE_DEF && $1->getType() != symTabNode::T_UTYPE);
 														$$ = new varDecl(static_cast<varSymNode*>($1), nbrLines);
-													*globalSymTab = symTabNode::merge(*globalSymTab, $1); 
+													}
+													*globalSymTab = symTabNode::merge(*globalSymTab, $1);
+													*program = stmnt::merge(*program, $$);
 												}
-		| utype		/* user defined types */	{ std::cout<< "REDUCE: utype -> unit\n"; $$ = $1; }
+		| utype		/* user defined types */	{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| mtype									{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
 		| ns		/* named sequence     */  	{ std::cout << "The 'named sequence' construct is currently not supported."; }
 		| SEMI		/* optional separator */	/* ignored */			
@@ -220,6 +222,17 @@ utype	: TYPEDEF NAME '{' decl_lst '}'			{
 												}
 		;
 		
+mtype 	: vis TYPE asgn '{' nlst '}'			{	
+													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
+													if($2 != symTabNode::T_MTYPE) {
+														std::cout <<  "This syntax only works for MTYPEs.";
+														exit(1);
+													}
+													mtypedefSymNode* mtypeDef = new mtypedefSymNode($5, nbrLines);
+													*globalSymTab = symTabNode::merge(*globalSymTab, mtypeDef);
+													$$ = new mtypeDecl(mtypeDef, nbrLines);
+													// The mtype values are added in the nlst rule.
+												}
 		;
 
 nm		: NAME									/* Unreachable */
@@ -289,7 +302,6 @@ one_decl: vis TYPE var_list						{	std::cout << "REDUCE: vis TYPE var_list -> on
 														
 														if(cur->getType() == symTabNode::T_NA) { 
 															varSymNode* next = varSymNode::createSymTabNode($2, cur->getLineNb(), cur->getName(), cur->getBound(), cur->getInitExpr());
-															next->setLineNb(nbrLines);
 															// If type != 0, then the var is a T_CHAN
 														
 															//cur->getType() = $2
@@ -300,17 +312,9 @@ one_decl: vis TYPE var_list						{	std::cout << "REDUCE: vis TYPE var_list -> on
 																tmp->makeNext(next);
 																tmp = static_cast<varSymNode*>(tmp->nextSym());
 															}
-														} else {
-															assert(cur->getType() == symTabNode::T_CHAN);
-															varSymNode* next = new chanSymNode(*static_cast<chanSymNode*>(cur));
-															
-															if(res == nullptr) {
-																res = next;
-																tmp = next;
-															} else {
-																tmp->makeNext(next);
-																tmp = static_cast<varSymNode*>(tmp->nextSym());
-															}
+														} else if (cur->getType() == symTabNode::T_CHAN) {
+															res = $3;
+															break;
 														}
 														
 														//cur->detachChildAndInitSymNodes();
@@ -333,16 +337,6 @@ one_decl: vis TYPE var_list						{	std::cout << "REDUCE: vis TYPE var_list -> on
 														$$ = $3;
 													}
 	 												free($2);
-												}
-		| vis TYPE asgn '{' nlst '}'			{	
-													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
-													if($2 != symTabNode::T_MTYPE) {
-														std::cout <<  "This syntax only works for MTYPEs.";
-														exit(1);
-													}
-													mtypedefSymNode* mtypeDef = new mtypedefSymNode($5, nbrLines);
-													$$ = mtypeDef;
-													// The mtype values are added in the nlst rule.
 												}
 		;
 
