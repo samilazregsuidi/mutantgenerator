@@ -3048,7 +3048,7 @@ yyreduce:
   case 173:
 #line 540 "promela.y"
                                                                                 {	std::cout << "REDUCE: basetype -> typ_list\n";
-													if((yyvsp[0].pDataVal).iType != symTabNode::T_UTYPE) {
+													if((yyvsp[0].pDataVal).iType != symTabNode::T_UTYPE && (yyvsp[0].pDataVal).iType) {
 														(yyval.pVarSymVal) = varSymNode::createSymTabNode((yyvsp[0].pDataVal).iType, nbrLines);
 													} else {
 														tdefSymNode* pType = *globalSymTab ? static_cast<tdefSymNode*>((*globalSymTab)->lookupInSymTab((yyvsp[0].pDataVal).sVal)) : nullptr;

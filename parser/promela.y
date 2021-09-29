@@ -538,7 +538,7 @@ basetype: TYPE									{ $$.sVal = nullptr; $$.iType = $1; }
 		;
 
 typ_list: basetype								{	std::cout << "REDUCE: basetype -> typ_list\n";
-													if($1.iType != symTabNode::T_UTYPE) {
+													if($1.iType != symTabNode::T_UTYPE && $1.iType) {
 														$$ = varSymNode::createSymTabNode($1.iType, nbrLines);
 													} else {
 														tdefSymNode* pType = *globalSymTab ? static_cast<tdefSymNode*>((*globalSymTab)->lookupInSymTab($1.sVal)) : nullptr;

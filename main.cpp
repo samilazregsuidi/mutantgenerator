@@ -49,7 +49,7 @@ int copyFile(const std::string& source, const std::string& target) {
 
 int main(int argc, char *argv[]) {
 
-	if(sizeof(int) != 4)	{ std::cout << "Bad architecture: int type must be four bytes long.\n"; exit(1); }
+	if(sizeof(int)   != 4)	{ std::cout << "Bad architecture: int type must be four bytes long.\n"; exit(1); }
 	if(sizeof(short) != 2)	{ std::cout << "Bad architecture: short type must be two bytes long.\n"; exit(1); }
 	if(sizeof(void*) != 8)  { std::cout << "Bad architecture: pointer type must be eight bytes long.\n"; exit(1); }
 
@@ -61,17 +61,17 @@ int main(int argc, char *argv[]) {
 	if(system("cpp __workingfile.tmp __workingfile.tmp.cpp") != 0) { std::cout << "Could not run the c preprocessor (cpp).\n"; exit(1); }
 
 	yyin = fopen("__workingfile.tmp.cpp", "r");
-	if(yyin == NULL) { std::cout << "Could not open temporary working file ("<<argv[argc - 1]<<").\n"; exit(1); }
+	if(yyin == nullptr) { std::cout << "Could not open temporary working file ("<<argv[argc - 1]<<").\n"; exit(1); }
 	init_lex();
 
 	if(yyparse(&globalSymTab, &program) != 0) { 
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	program->resolveVariables(nullptr);
+	//program->resolveVariables(nullptr);
 	std::cout << std::string(*program);
 
-	if(yyin != NULL) fclose(yyin);
+	if(yyin != nullptr) fclose(yyin);
 	
 	exit(0);
 }
