@@ -14,7 +14,8 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	./parser/lex.yy.c \
 	./parser/y.tab.c \
 	\
-	./automata/symbol/symTabNode.cpp \
+	./automata/symbol/symbol.cpp \
+	./automata/symbol/symTable.cpp \
 	./automata/symbol/bitSymNode.cpp \
 	./automata/symbol/boolSymNode.cpp \
 	./automata/symbol/byteSymNode.cpp \
@@ -31,7 +32,6 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	./automata/symbol/naSymNode.cpp \
 	./automata/symbol/pidSymNode.cpp \
 	./automata/symbol/mtypedefSymNode.cpp \
-	./automata/symbol/visitor/symTabCopyVisitor.cpp \
 	\
 	./automata/ast/astNode.cpp \
 	./automata/ast/stmnt.cpp \

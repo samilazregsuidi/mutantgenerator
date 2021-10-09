@@ -20,7 +20,7 @@ varSymNode* varSymNode::merge(varSymNode* symTab, varSymNode* newNode){
 	if (!newNode)
 		return symTab;
 
-	symTabNode *newlistTail = newNode->prev;
+	symbol *newlistTail = newNode->prev;
 	newNode->prev = symTab->prev;
 	newNode->prev->setNext(newNode);
 	symTab->prev = newlistTail;
@@ -44,7 +44,7 @@ varSymNode::~varSymNode(void) {
  * The return value is the next offset to be used after the variables
  * of the symtab were added.
  */
-/*unsigned int varSymNode::processVariables(symTabNode *globalSymTab, const mTypeList *mTypes, unsigned int iOffset, bool bGlobal) {
+/*unsigned int varSymNode::processVariables(symbol *globalSymTab, const mTypeList *mTypes, unsigned int iOffset, bool bGlobal) {
 	global = bGlobal;
 	if (init && init->getType() != astNode::E_EXPR_CONST && init->getType() != astNode::E_EXPR_TRUE && init->getType() != astNode::E_EXPR_FALSE)
 		assert(false);
@@ -54,81 +54,81 @@ varSymNode::~varSymNode(void) {
 	return !next ? iOffset + iMemSpace : next->processVariables(globalSymTab, mTypes, iOffset + iMemSpace, bGlobal);
 }*/
 
-varSymNode *varSymNode::createSymTabNode(Type type, const varSymNode &old) {
+varSymNode *varSymNode::createSymbol(symbol::Type type, const varSymNode &old) {
 	assert(old.getType() == T_NA);
-	return createSymTabNode(type, old.getLineNb(), old.getName(), old.getBound(), old.getInitExpr());
+	return createSymbol(type, old.getLineNb(), old.getName(), old.getBound(), old.getInitExpr());
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_BIT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BIT>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new bitSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_BOOL>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BOOL>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new boolSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_NA>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_NA>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new naSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_BYTE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BYTE>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new byteSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_CID>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_CID>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new cidSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_INT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_INT>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new intSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_PID>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_PID>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new pidSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_SHORT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_SHORT>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new shortSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_UNSGN>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_UNSGN>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new unsgnSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_UTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_UTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new utypeSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymTabNode<symTabNode::T_MTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_MTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
 	return new mtypeSymNode(lineNb, name, bound, init);
 }
 
-varSymNode *varSymNode::createSymTabNode(Type type, int lineNb, const std::string& name, int bound, expr* init) {
+varSymNode *varSymNode::createSymbol(Type type, int lineNb, const std::string& name, int bound, expr* init) {
 
 	switch (type)
 	{
 	case T_NA:
-		return createSymTabNode<T_NA>(lineNb, name, bound, init);
+		return createSymbol<T_NA>(lineNb, name, bound, init);
 	case T_BIT:
-		return createSymTabNode<T_BIT>(lineNb, name, bound, init);
+		return createSymbol<T_BIT>(lineNb, name, bound, init);
 	case T_BOOL:
-		return createSymTabNode<T_BOOL>(lineNb, name, bound, init);
+		return createSymbol<T_BOOL>(lineNb, name, bound, init);
 	case T_BYTE:
-		return createSymTabNode<T_BYTE>(lineNb, name, bound, init);
+		return createSymbol<T_BYTE>(lineNb, name, bound, init);
 	case T_SHORT:
-		return createSymTabNode<T_SHORT>(lineNb, name, bound, init);
+		return createSymbol<T_SHORT>(lineNb, name, bound, init);
 	case T_INT:
-		return createSymTabNode<T_INT>(lineNb, name, bound, init);
+		return createSymbol<T_INT>(lineNb, name, bound, init);
 	case T_UNSGN: // not supported yet
-		return createSymTabNode<T_UNSGN>(lineNb, name, bound, init);
+		return createSymbol<T_UNSGN>(lineNb, name, bound, init);
 	case T_MTYPE:
-		return createSymTabNode<T_MTYPE>(lineNb, name, bound, init);
+		return createSymbol<T_MTYPE>(lineNb, name, bound, init);
 	case T_CID: // Channel: capacity used; children denote message fields
-		return createSymTabNode<T_CID>(lineNb, name, bound, init);
+		return createSymbol<T_CID>(lineNb, name, bound, init);
 	case T_PID: // Channel: capacity used; children denote message fields
-		return createSymTabNode<T_PID>(lineNb, name, bound, init);
+		return createSymbol<T_PID>(lineNb, name, bound, init);
 	case T_UTYPE: // Type of variable is a user type (basically, a T_TDEF record is being used as the type): utype points to the type record
-		return createSymTabNode<T_UTYPE>(lineNb, name, bound, init);
+		return createSymbol<T_UTYPE>(lineNb, name, bound, init);
 	default:
 		assert(false);
 	}

@@ -13,9 +13,9 @@ protected:
 	{}
 
 public:
-	void resolveVariables(symTabNode* globalSymTab) override {
+	/*void resolveVariables(symTable* globalSymTab) override {
 		globalSymTab = globalSymTab;
-	}
+	}*/
 };
 
 //E_EXPR_COND,		// child[0] = E_EXPR_* (the condition), child[1] = E_EXPR_* (then), child[2] = E_EXPR_* (else)
@@ -30,11 +30,11 @@ public:
 		this->elsE = elsE;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab) override {
+	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
 		cond->resolveVariables(globalSymTab);
 		then->resolveVariables(globalSymTab);
 		elsE->resolveVariables(globalSymTab);
-	}
+	}*/
 
 	operator std::string() const override
 	{
@@ -66,11 +66,11 @@ class exprRArgVar : public exprRArg
 public:
 	exprRArgVar(exprVarRef *varRef, int lineNb);
 
-	symTabNode *symbolLookUpRight(void) const;
+	symbol *symbolLookUpRight(void) const;
 
-	symTabNode *symbolLookUpLeft(void) const;
+	symbol *symbolLookUpLeft(void) const;
 
-	void resolveVariables(symTabNode* globalSymTab) override;
+	//void resolveVariables(symTable* globalSymTab = nullptr) override;
 
 	operator std::string() const override;
 
@@ -93,9 +93,9 @@ public:
 		this->toEval = toEval;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab) override {
+	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
 		toEval->resolveVariables(globalSymTab);
-	}
+	}*/
 
 	operator std::string() const override
 	{
@@ -154,10 +154,10 @@ public:
 		this->list = nullptr;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab) override {
+	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
 		node->resolveVariables(globalSymTab);
 		list->resolveVariables(globalSymTab);
-	}
+	}*/
 
 	operator std::string() const override
 	{
@@ -184,7 +184,7 @@ public:
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
-	void resolveVariables(symTabNode *global) override;
+	//void resolveVariables(symTable *global = nullptr) override;
 
 	operator std::string() const override;
 

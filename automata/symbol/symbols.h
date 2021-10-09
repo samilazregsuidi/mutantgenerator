@@ -1,4 +1,5 @@
-#include "symTabNode.h"
+#include "symTable.h"
+#include "symbol.h"
 #include "naSymNode.h"
 #include "bitSymNode.h"
 #include "boolSymNode.h"

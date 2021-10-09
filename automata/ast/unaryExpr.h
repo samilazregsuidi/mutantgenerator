@@ -17,9 +17,9 @@ protected:
 		delete expression;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab) override {
-		expression->resolveVariables(globalSymTab);
-	}
+	/*void resolveVariables(symTable* parent) override {
+		expression->resolveVariables(parent);
+	}*/
 
 protected:
 	expr* expression;

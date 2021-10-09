@@ -2,7 +2,8 @@
 #include <string>
 
 #include "expression.h"
-#include "symTabNode.h"
+#include "symbol.h"
+#include "symTable.h"
 #include "varSymNode.h"
 #include "utypeSymNode.h"
 #include "tdefSymNode.h"

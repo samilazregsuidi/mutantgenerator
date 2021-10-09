@@ -136,7 +136,7 @@ public:
 	 * before.
 	 */
 	
-	virtual void resolveVariables(symTabNode *globalSymTab) = 0;
+	//virtual void resolveVariables(symTable* global = nullptr) = 0;
 	
 	Type getType(void) const;
 

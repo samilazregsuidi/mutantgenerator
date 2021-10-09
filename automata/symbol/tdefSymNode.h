@@ -1,16 +1,16 @@
 #ifndef TDEF_SYM_NODE_H
 #define TDEF_SYM_NODE_H
 
-#include "symTabNode.h"
+#include <list>
+
+#include "symbol.h"
+
+class symTable;
 
 //T_TDEF
-class tdefSymNode : public symTabNode{
+class tdefSymNode : public symbol{
 public:
-	tdefSymNode(const std::string& name,  varSymNode* child, int lineNb)
-		: symTabNode(symTabNode::T_TDEF, name, lineNb)
-	{
-		this->child = child;
-	}
+	tdefSymNode(const std::string& name,  std::list<varSymNode*> fields, int lineNb);
 
 	~tdefSymNode(void) override ;
 
@@ -22,18 +22,23 @@ public:
 		return 1;
 	}
 
-	varSymNode* getChild(void) const {
-		return child;
+	std::list<varSymNode*> getFields(void) const {
+		return fields;
 	}
 
-	//unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+	symTable* getSymTable(void) const {
+		return symTab;
+	}
+
+	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	operator std::string(void) const override ;
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 
 private:
-	varSymNode* child;
+	std::list<varSymNode*> fields;
+	symTable* symTab;
 };
 
 #endif

@@ -7,8 +7,6 @@ seqSymNode::~seqSymNode(void) {
 }
 
 procSymNode::~procSymNode(void) {
-	if(args) 
-		delete args;
 	delete active;
 }
 
@@ -51,11 +49,9 @@ procSymNode::operator std::string(void) const {
 	}
 
 	res += " proctype " + name + "(";
-	const auto *arg = args;
-	while (arg) {
-		res += std::string(*arg) + (arg->cnextSym() ? ", " : "");
-		arg = static_cast<const varSymNode*>(arg->cnextSym());
-	}
+	for(auto it = args.cbegin(); it != args.cend(); )
+		res += (*it)->getTypeName() + (*it)->getName() + (++it != args.cend() ? "; " : "");
+
 	res += "){\n" + (block? std::string(*block) : "") + "}\n";
 
 	return res;

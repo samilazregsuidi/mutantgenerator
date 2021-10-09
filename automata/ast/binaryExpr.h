@@ -18,10 +18,10 @@ protected:
 		delete left;
 	}
 
-	void resolveVariables(symTabNode* globalSymTab) override {
-		left->resolveVariables(globalSymTab);
-		right->resolveVariables(globalSymTab);
-	}
+	/*void resolveVariables(symTable* parent = nullptr) override {
+		left->resolveVariables(parent);
+		right->resolveVariables(parent);
+	}*/
 
 
 protected:

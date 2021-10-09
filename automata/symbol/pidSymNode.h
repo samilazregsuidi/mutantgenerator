@@ -7,7 +7,7 @@
 class pidSymNode : public varSymNode{
 public:
 	pidSymNode(int lineNb, const std::string& name, int bound = 1, expr* init = nullptr)
-		: varSymNode(symTabNode::T_PID, lineNb, name, bound, init)
+		: varSymNode(symbol::T_PID, lineNb, name, bound, init)
 	{}
 	
 	std::string getTypeName(void) const override {

@@ -2,7 +2,6 @@
 #include <string>
 
 #include "stmnt.h"
-#include "symTabNode.h"
 #include "varSymNode.h"
 #include "utypeSymNode.h"
 #include "tdefSymNode.h"

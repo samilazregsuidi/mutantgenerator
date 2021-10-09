@@ -12,13 +12,13 @@
 
 
 extern FILE* yyin;
-extern int yyparse(symTabNode** symTable, stmnt** program);
+extern int yyparse(symTable** symTable, stmnt** program);
 extern void init_lex();
 
 // Settings defined in main
 
 // Other global variables from main
-symTabNode* globalSymTab = nullptr;
+symTable* globalSymTab = nullptr;
 stmnt* program = nullptr;
 
 /**

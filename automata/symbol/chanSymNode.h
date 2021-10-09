@@ -1,16 +1,18 @@
 #ifndef CHAN_SYM_NODE_H
 #define CHAN_SYM_NODE_H
 
+#include <list>
+
 #include "varSymNode.h"
 
 //T_CHAN
 class chanSymNode : public varSymNode{
 public:
-	chanSymNode(int lineNb, const std::string& name, int bound, int capacity, varSymNode* child)
-		: varSymNode(symTabNode::T_CHAN, lineNb, name, bound)
+	chanSymNode(int lineNb, const std::string& name, int bound, int capacity, std::list<symbol*> types)
+		: varSymNode(symbol::T_CHAN, lineNb, name, bound)
 	{
 		this->capacity = capacity;
-		this->child = child;
+		this->types = types;
 	}
 
 	~chanSymNode(void) override ;
@@ -23,19 +25,19 @@ public:
 		return 0;
 	}
 
-	varSymNode* getTypeList(void) const {
-		return child;
+	std::list<symbol*> getTypeList(void) const {
+		return types;
 	}
 
 	int getCapacity(void) const {
 		return capacity;
 	}
-	//unsigned int processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
 
 	void acceptVisitor(symTabVisitor* visitor) const override;
 
 private:
-	varSymNode* child;
+	std::list<symbol*> types;
 	int capacity;
 };
 

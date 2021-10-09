@@ -16,23 +16,23 @@ public:
 
 	exprVarRefName(const std::string& symName, expr *index, int lineNb);
 
-	exprVarRefName(const std::string& symName, symTabNode *sym, int lineNb);
+	exprVarRefName(const std::string& symName, symbol *sym, int lineNb);
 
 	~exprVarRefName() override;
 
-	void resolveVariables(symTabNode *global) override;
+	void resolve(symTable *global);
 
-	void resolveVariables(symTabNode *global, symTabNode* subField);
+	void resolve(symTable *global, symTable* subField);
 
-	symTabNode *symbolLookUpRight(void) const {
+	symbol *symbolLookUpRight(void) const {
 		return sym;
 	}
 
-	symTabNode *symbolLookUpLeft(void) const {
+	symbol *symbolLookUpLeft(void) const {
 		return sym;
 	}
 
-	symTabNode* getSymbol(void) const {
+	symbol* getSymbol(void) const {
 		return sym;
 	}
 
@@ -47,7 +47,7 @@ public:
 private:
 	std::string symName;
 	expr* index;
-	symTabNode* sym; 
+	symbol* sym; 
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
@@ -58,16 +58,14 @@ public:
 
 	~exprVarRef() override;
 
-	void resolveVariables(symTabNode *global) override;
+	void resolve(symTable *global, symTable* subField = nullptr);
 
-	void resolveVariables(symTabNode *global, symTabNode* subField);
-
-	symTabNode *symbolLookUpRight() const
+	symbol *symbolLookUpRight() const
 	{
 		return subfieldsVar ? subfieldsVar->symbolLookUpRight() : varRefName->symbolLookUpRight();
 	}
 
-	symTabNode *symbolLookUpLeft(void) const
+	symbol *symbolLookUpLeft(void) const
 	{
 		return varRefName->symbolLookUpLeft();
 	}
@@ -110,8 +108,6 @@ public:
 
 	~exprVar() override;
 
-	void resolveVariables(symTabNode *global) override;
-
 	const exprVarRef *getVarRef(void) const
 	{
 		return varRef;
@@ -127,12 +123,12 @@ public:
 		return child[0]->var2String(globalSymTab, processSymTab, mtypes) == var;
 	}*/
 
-	symTabNode *symbolLookUpRight(void) const
+	symbol *symbolLookUpRight(void) const
 	{
 		return varRef->symbolLookUpRight();
 	}
 
-	symTabNode *symbolLookUpLeft(void) const
+	symbol *symbolLookUpLeft(void) const
 	{
 		return varRef->symbolLookUpLeft();
 	}

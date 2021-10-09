@@ -665,7 +665,7 @@ char *yytext;
 
 #include "y.tab.h"
 
-#define YY_DECL int yylex(YYSTYPE * yylval_param, symTabNode** globalSymTab)
+#define YY_DECL int yylex(YYSTYPE * yylval_param, symTable** globalSymTab)
 
 int nbrLines = 0;
 char strBuffer[1024];
@@ -1370,37 +1370,37 @@ YY_RULE_SETUP
 case 80:
 YY_RULE_SETUP
 #line 122 "promela.l"
-{ yylval->iType = symTabNode::T_BIT;
+{ yylval->iType = symbol::T_BIT;
 					  DBUG(TYPE); return TYPE; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
 #line 124 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_BOOL;
+{ DBUG(TYPE); yylval->iType = symbol::T_BOOL;
 					  return TYPE; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
 #line 126 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_BYTE;
+{ DBUG(TYPE); yylval->iType = symbol::T_BYTE;
 					  return TYPE; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
 #line 128 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_PID;
+{ DBUG(TYPE); yylval->iType = symbol::T_PID;
 					  return TYPE; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
 #line 130 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_SHORT;
+{ DBUG(TYPE); yylval->iType = symbol::T_SHORT;
 					  return TYPE; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
 #line 132 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_INT;
+{ DBUG(TYPE); yylval->iType = symbol::T_INT;
 					  return TYPE; }
 	YY_BREAK
 case 86:
@@ -1414,19 +1414,19 @@ YY_RULE_SETUP
 case 87:
 YY_RULE_SETUP
 #line 138 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_CHAN;
+{ DBUG(TYPE); yylval->iType = symbol::T_CHAN;
 					  return TYPE; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
 #line 140 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_MTYPE;
+{ DBUG(TYPE); yylval->iType = symbol::T_MTYPE;
 					  return TYPE; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
 #line 142 "promela.l"
-{ DBUG(TYPE); yylval->iType = symTabNode::T_CLOCK;
+{ DBUG(TYPE); yylval->iType = symbol::T_CLOCK;
 					  return TYPE; }
 	YY_BREAK
 case 90:
@@ -1501,13 +1501,13 @@ YY_RULE_SETUP
 					  DBUG(NAME);
 					  return NAME;
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
-					  symTabNode* node = nullptr;
-					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookupInSymTab(yylval->sVal))) {
-					  	  if(node->getType() == symTabNode::T_TDEF) {
+					  symbol* node = nullptr;
+					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookup(yylval->sVal))) {
+					  	  if(node->getType() == symbol::T_TDEF) {
 						  	DBUG(UNAME);
 						  	return UNAME; 
 						  }
-						  else if(node->getType() == symTabNode::T_PROC) {
+						  else if(node->getType() == symbol::T_PROC) {
 						  	DBUG(PNAME);
 						  	return PNAME; 
 						  }

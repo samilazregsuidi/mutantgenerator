@@ -8,7 +8,7 @@
 
 #include "y.tab.h"
 
-#define YY_DECL int yylex(YYSTYPE * yylval_param, symTabNode** globalSymTab)
+#define YY_DECL int yylex(YYSTYPE * yylval_param, symTable** globalSymTab)
 
 int nbrLines = 0;
 char strBuffer[1024];
@@ -119,27 +119,27 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"wait"		{ DBUG(WAIT); return WAIT; }
 <CODE>"reset"		{ DBUG(RESET); return RESET; }
 
-<CODE>"bit"			{ yylval->iType = symTabNode::T_BIT;
+<CODE>"bit"			{ yylval->iType = symbol::T_BIT;
 					  DBUG(TYPE); return TYPE; }
-<CODE>"bool"		{ DBUG(TYPE); yylval->iType = symTabNode::T_BOOL;
+<CODE>"bool"		{ DBUG(TYPE); yylval->iType = symbol::T_BOOL;
 					  return TYPE; }
-<CODE>"byte"		{ DBUG(TYPE); yylval->iType = symTabNode::T_BYTE;
+<CODE>"byte"		{ DBUG(TYPE); yylval->iType = symbol::T_BYTE;
 					  return TYPE; }
-<CODE>"pid"			{ DBUG(TYPE); yylval->iType = symTabNode::T_PID;
+<CODE>"pid"			{ DBUG(TYPE); yylval->iType = symbol::T_PID;
 					  return TYPE; }
-<CODE>"short"		{ DBUG(TYPE); yylval->iType = symTabNode::T_SHORT;
+<CODE>"short"		{ DBUG(TYPE); yylval->iType = symbol::T_SHORT;
 					  return TYPE; }
-<CODE>"int"			{ DBUG(TYPE); yylval->iType = symTabNode::T_INT;
+<CODE>"int"			{ DBUG(TYPE); yylval->iType = symbol::T_INT;
 					  return TYPE; }
 <CODE>"unsigned"	{ fprintf(stderr, "The 'unsigned' type is not supported.\n");
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
 							return TYPE; */ }
-<CODE>"chan"		{ DBUG(TYPE); yylval->iType = symTabNode::T_CHAN;
+<CODE>"chan"		{ DBUG(TYPE); yylval->iType = symbol::T_CHAN;
 					  return TYPE; }
-<CODE>"mtype"		{ DBUG(TYPE); yylval->iType = symTabNode::T_MTYPE;
+<CODE>"mtype"		{ DBUG(TYPE); yylval->iType = symbol::T_MTYPE;
 					  return TYPE; }
-<CODE>"clock"		{ DBUG(TYPE); yylval->iType = symTabNode::T_CLOCK;
+<CODE>"clock"		{ DBUG(TYPE); yylval->iType = symbol::T_CLOCK;
 					  return TYPE; }
 
 <CODE>"inline"		{ fprintf(stderr, "Inline declarations are not supported.\n");
@@ -177,13 +177,13 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 					  DBUG(NAME);
 					  return NAME;
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
-					  symTabNode* node = nullptr;
-					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookupInSymTab(yylval->sVal))) {
-					  	  if(node->getType() == symTabNode::T_TDEF) {
+					  symbol* node = nullptr;
+					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookup(yylval->sVal))) {
+					  	  if(node->getType() == symbol::T_TDEF) {
 						  	DBUG(UNAME);
 						  	return UNAME; 
 						  }
-						  else if(node->getType() == symTabNode::T_PROC) {
+						  else if(node->getType() == symbol::T_PROC) {
 						  	DBUG(PNAME);
 						  	return PNAME; 
 						  }

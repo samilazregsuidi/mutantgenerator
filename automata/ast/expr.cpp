@@ -4,7 +4,7 @@
 #include "expr.h"
 #include "varExpr.h"
 
-#include "symTabNode.h"
+#include "symbol.h"
 #include "procSymNode.h"
 
 exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
@@ -13,17 +13,17 @@ exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	this->varRef = varRef;
 }
 
-symTabNode *exprRArgVar::symbolLookUpRight(void) const {
+symbol *exprRArgVar::symbolLookUpRight(void) const {
 	return varRef->symbolLookUpRight();
 }
 
-symTabNode *exprRArgVar::symbolLookUpLeft(void) const {
+symbol *exprRArgVar::symbolLookUpLeft(void) const {
 	return varRef->symbolLookUpLeft();
 }
 
-void exprRArgVar::resolveVariables(symTabNode* globalSymTab) {
+/*void exprRArgVar::resolveVariables(symTable* globalSymTab) {
 	varRef->resolveVariables(globalSymTab);
-}
+}*/
 
 
 exprRArgVar::operator std::string() const {
@@ -53,13 +53,13 @@ exprRun::operator std::string() const
 	return "run " + procName + (card ? " [" + std::string(*card) + "]" : "") + "( " + std::string(*argList) + " ) ";
 }
 
-void exprRun::resolveVariables(symTabNode *global) {
+/*void exprRun::resolveVariables(symTable *global) {
 
 	if (global)
-		procSym = static_cast<procSymNode*>(global->lookupInSymTab(procName));
+		procSym = static_cast<procSymNode*>(global->lookup(procName));
 
-	assert(procSym && procSym->getType() == symTabNode::T_PROC);
+	assert(procSym && procSym->getType() == symbol::T_PROC);
 
 	card->resolveVariables(global);
 	argList->resolveVariables(global);
-}
+}*/
