@@ -159,7 +159,7 @@ unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *p
 													if (declSyms.front()->getType() == symbol::T_CHAN) 
 														decl = new chanDecl(declSyms, nbrLines);
 													else {
-														assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF && declSyms.front()->getType() != symbol::T_UTYPE);
+														assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF && declSyms.front()->getType() != symbol::T_TDEF);
 														decl = new varDecl(declSyms, nbrLines);
 													}
 													assert(decl);
@@ -247,7 +247,7 @@ utype	: TYPEDEF NAME '{' decl_lst '}'			{
 mtype 	: vis TYPE asgn '{' nlst '}'			{	
 													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
 													if($2 != symbol::T_MTYPE) {
-														std::cout <<  "This syntax only works for MTYPEs.";
+														std::cout <<  "This syntax only works for MTYPEs definition.";
 														exit(1);
 													}
 													mtypedefSymNode* mtypeDef = new mtypedefSymNode(mtypes, nbrLines);

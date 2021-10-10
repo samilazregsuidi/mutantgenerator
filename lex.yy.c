@@ -1498,8 +1498,7 @@ YY_RULE_SETUP
 #line 175 "promela.l"
 { yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
-					  DBUG(NAME);
-					  return NAME;
+ 
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
 					  symbol* node = nullptr;
 					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookup(yylval->sVal))) {
@@ -1511,10 +1510,10 @@ YY_RULE_SETUP
 						  	DBUG(PNAME);
 						  	return PNAME; 
 						  }
-					  } else {
-					  	DBUG(NAME);
-					  	return NAME;
-					  } 
+					  }
+					  
+					  DBUG(NAME);
+					  return NAME;
 					}
 	YY_BREAK
 case 101:
@@ -1609,7 +1608,7 @@ YY_RULE_SETUP
 #line 220 "promela.l"
 ECHO;
 	YY_BREAK
-#line 1613 "lex.yy.c"
+#line 1612 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CODE):
 case YY_STATE_EOF(COMMENTBLOCK):

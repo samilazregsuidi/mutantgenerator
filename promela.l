@@ -174,8 +174,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 
 <CODE>{id}       	{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
-					  DBUG(NAME);
-					  return NAME;
+ 
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
 					  symbol* node = nullptr;
 					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookup(yylval->sVal))) {
@@ -187,11 +186,12 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 						  	DBUG(PNAME);
 						  	return PNAME; 
 						  }
-					  } else {
-					  	DBUG(NAME);
-					  	return NAME;
-					  } 
+					  }
+					  
+					  DBUG(NAME);
+					  return NAME;
 					}
+					
 <CODE>{real}		{ yylval->rVal = atof(yytext);
 					  DBUG(REAL); return REAL;  }
 <CODE>{number}		{ DBUG(CONST); yylval->iVal = atoi(yytext);

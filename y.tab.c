@@ -2096,7 +2096,7 @@ yyreduce:
 													if (declSyms.front()->getType() == symbol::T_CHAN) 
 														decl = new chanDecl(declSyms, nbrLines);
 													else {
-														assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF && declSyms.front()->getType() != symbol::T_UTYPE);
+														assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF && declSyms.front()->getType() != symbol::T_TDEF);
 														decl = new varDecl(declSyms, nbrLines);
 													}
 													assert(decl);
@@ -2246,7 +2246,7 @@ yyreduce:
                                                         {	
 													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
 													if((yyvsp[-4].iType) != symbol::T_MTYPE) {
-														std::cout <<  "This syntax only works for MTYPEs.";
+														std::cout <<  "This syntax only works for MTYPEs definition.";
 														exit(1);
 													}
 													mtypedefSymNode* mtypeDef = new mtypedefSymNode(mtypes, nbrLines);

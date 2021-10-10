@@ -50,9 +50,14 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 
 	if (subField)
 		sym = subField->lookup(symName);
-	else if (global)
-		sym = global->lookup(symName);
-	else {
+	else if (global) {
+		do {
+			sym = global->lookup(symName);
+			global = global->prevSymTab();
+		} while(!sym && global);
+	} 
+	
+	if(!sym) {
 		std::cout<< "unknown symbol : "<< symName << "\n";
 		assert(false);
 	}
@@ -103,10 +108,7 @@ exprVarRef::~exprVarRef() {
 
 void exprVarRef::resolve(symTable *global, symTable* subField) {
 
-	do {
-		varRefName->resolve(global, subField);
-		global = global->prevSymTab();
-	} while (!varRefName->getSymbol() && global); 
+	varRefName->resolve(global, subField);
 
 	auto sym = varRefName->getSymbol();
 	assert(sym);
