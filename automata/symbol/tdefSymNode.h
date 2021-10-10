@@ -22,7 +22,7 @@ public:
 		return 1;
 	}
 
-	std::list<varSymNode*> getFields(void) const {
+	const std::list<varSymNode*>& getFields(void) const {
 		return fields;
 	}
 

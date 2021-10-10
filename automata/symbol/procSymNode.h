@@ -91,7 +91,7 @@ public:
 		return active;
 	}
 
-	std::list<varSymNode*> getArgs(void) const {
+	const std::list<varSymNode*>& getArgs(void) const {
 		return args;
 	}
 

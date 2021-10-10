@@ -99,13 +99,16 @@ exprVarRef::~exprVarRef() {
 
 void exprVarRef::resolve(symTable *global, symTable* subField) {
 
-	varRefName->resolve(global, subField);
-	auto symbol = varRefName->getSymbol();
+	do {
+		varRefName->resolve(global, subField);
+		global = global->prevSymTab();
+	} while (!varRefName->getSymbol() && global); 
 
-	assert(symbol);
+	auto sym = varRefName->getSymbol();
+	assert(sym);
 	// Resolve subfields, but with the symbol table of the type
 	if (subfieldsVar) {
-		auto uSymbol = static_cast<utypeSymNode*>(symbol);
+		auto uSymbol = static_cast<utypeSymNode*>(sym);
 		assert(uSymbol->getUType());
 		subfieldsVar->resolve(global, uSymbol->getUType()->getSymTable());
 	}

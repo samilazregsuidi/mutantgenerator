@@ -4,6 +4,7 @@
 #include <string.h>
 #include <assert.h>
 #include <iostream>
+#include <fstream>
 
 #include "symbols.h"
 #include "expression.h"
@@ -68,8 +69,10 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	//program->resolveVariables(nullptr);
-	std::cout << std::string(*program);
+	std::ofstream output;
+	output.open("format.pml");
+	output << std::string(*program);
+	output.close();
 
 	if(yyin != nullptr) fclose(yyin);
 	

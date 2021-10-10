@@ -25,7 +25,7 @@ public:
 		return 0;
 	}
 
-	std::list<symbol*> getTypeList(void) const {
+	const std::list<symbol*>& getTypeList(void) const {
 		return types;
 	}
 

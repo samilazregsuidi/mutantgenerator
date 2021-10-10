@@ -2048,7 +2048,7 @@ yyreduce:
     {
   case 2:
 #line 141 "promela.y"
-                  { *globalSymTab = new symTable("global"); currentSymTab = *globalSymTab; }
+                  { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; }
 #line 2053 "y.tab.c"
     break;
 
@@ -2260,13 +2260,13 @@ yyreduce:
 
   case 41:
 #line 285 "promela.y"
-                                                                                { savedSymTab = currentSymTab; currentSymTab = new symTable(nameSpace, currentSymTab); nameSpace = ""; }
+                                                                                { savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); nameSpace = ""; }
 #line 2265 "y.tab.c"
     break;
 
   case 42:
 #line 287 "promela.y"
-                                                                                        { std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab = savedSymTab; }
+                                                                                        { std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab->setBlock((yyvsp[-2].pStmntVal)); currentSymTab = savedSymTab; }
 #line 2271 "y.tab.c"
     break;
 

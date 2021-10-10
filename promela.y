@@ -138,7 +138,7 @@ int mtypeId = 0;
 
 %%
 
-start_parsing	: { *globalSymTab = new symTable("global"); currentSymTab = *globalSymTab; } program;
+start_parsing	: { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; } program;
 				
 /** PROMELA Grammar Rules **/
 
@@ -282,9 +282,9 @@ ccode	: C_CODE								/* Unreachable */
 cexpr	: C_EXPR								/* Unreachable */
 		;
 
-body	: '{' 									{ savedSymTab = currentSymTab; currentSymTab = new symTable(nameSpace, currentSymTab); nameSpace = ""; } 
+body	: '{' 									{ savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); nameSpace = ""; } 
 				sequence OS 
-		  '}'									{ std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab = savedSymTab; }
+		  '}'									{ std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab->setBlock($3); currentSymTab = savedSymTab; }
 		;
 
 sequence: step									{ std::cout << "REDUCE: step -> sequence\n"; $$ = $1;   }
