@@ -34,9 +34,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "( " + std::string(*expression) + " )";
+		return "(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const
@@ -54,9 +54,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "count( " + std::string(*expression) + " ) ";
+		return "count(" + std::string(*expression) + ") ";
 	}
 
 	std::string getTypeDescr(void) const
@@ -74,7 +74,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return "-" + std::string(*expression);
 	}
@@ -94,7 +94,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return "!" + std::string(*expression);
 	}
@@ -114,9 +114,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return " ~ " + std::string(*expression);
+		return "~" + std::string(*expression);
 	}
 
 	std::string getTypeDescr(void) const
@@ -134,9 +134,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "len( " + std::string(*expression) + " )";
+		return "len(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const
@@ -154,9 +154,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "full( " + std::string(*expression) + ")";
+		return "full(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const
@@ -174,9 +174,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "nfull( " + std::string(*expression) + ")";
+		return "nfull(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const
@@ -194,9 +194,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "empty( " + std::string(*expression) + ")";
+		return "empty(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const
@@ -214,9 +214,9 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
-		return "nempty( " + std::string(*expression) + ")";
+		return "nempty(" + std::string(*expression) + ")";
 	}
 
 	std::string getTypeDescr(void) const

@@ -23,3 +23,12 @@ astNode::Type astNode::getType(void) const {
 int astNode::getLineNb(void) const {
 	return lineNb;
 }
+
+int astNode::tab_lvl = 0;
+
+std::string astNode::_tab(int adjust) {
+	std::string res = "";
+	for(int i = 0; i < tab_lvl + adjust; ++i)
+		res += "\t";
+	return res;
+}

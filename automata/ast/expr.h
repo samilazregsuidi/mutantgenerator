@@ -38,7 +38,7 @@ public:
 
 	operator std::string() const override
 	{
-		return "( " + std::string(*cond) + " ? " + std::string(*then) + " : " + std::string(*elsE) + " )";
+		return "(" + std::string(*cond) + "? " + std::string(*then) + ": " + std::string(*elsE) + ")";
 	}
 
 	std::string getTypeDescr(void) const override
@@ -99,7 +99,7 @@ public:
 
 	operator std::string() const override
 	{
-		return "eval( " + std::string(*toEval) + ")";
+		return "eval(" + std::string(*toEval) + ")";
 	}
 
 	std::string getTypeDescr(void) const override
@@ -161,7 +161,7 @@ public:
 
 	operator std::string() const override
 	{
-		return std::string(*node) + (list ? "," + std::string(*list) : "");
+		return std::string(*node) + (list ? ", " + std::string(*list) : "");
 	}
 
 	std::string getTypeDescr(void) const override

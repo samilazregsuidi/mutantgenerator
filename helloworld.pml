@@ -1,2 +1,3 @@
-mtype = {stop}
-chan cCmd = [0] of {mtype};
+proctype test(){
+	true -> printf("true");
+}

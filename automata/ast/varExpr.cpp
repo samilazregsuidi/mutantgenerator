@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <string>
+#include <iostream>
 
 #include "varExpr.h"
 #include "symTable.h"
@@ -51,7 +52,10 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 		sym = subField->lookup(symName);
 	else if (global)
 		sym = global->lookup(symName);
-	else assert(false);
+	else {
+		std::cout<< "unknown symbol : "<< symName << "\n";
+		assert(false);
+	}
 
 /*to add in global sym table 
 	if (!sym) {

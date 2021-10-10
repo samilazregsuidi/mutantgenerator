@@ -2272,13 +2272,13 @@ yyreduce:
 
   case 43:
 #line 290 "promela.y"
-                                                                                { std::cout << "REDUCE: step -> sequence\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal);   }
+                                                                                { std::cout << "REDUCE: step -> sequence\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal);  }
 #line 2277 "y.tab.c"
     break;
 
   case 44:
 #line 291 "promela.y"
-                                                                                { std::cout << "REDUCE: sequence MS step -> sequence\n"; (yyval.pStmntVal) = stmnt::merge((yyval.pStmntVal), (yyvsp[0].pStmntVal)); }
+                                                                                { std::cout << "REDUCE: sequence MS step -> sequence\n"; (yyval.pStmntVal) = stmnt::merge((yyvsp[-2].pStmntVal), (yyvsp[0].pStmntVal)); }
 #line 2283 "y.tab.c"
     break;
 

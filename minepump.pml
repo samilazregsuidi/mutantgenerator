@@ -19,77 +19,101 @@ active proctype controller() {
 	mtype pcommand = start;
 	mtype level = medium;
 	
-	do	::	atomic {
-				cCmd?pcommand;
-				readMsg = commandMsg; 
-			};
-			if	::	pcommand == stop;
-			
-					if :: atomic {
-						pstate == running;
-						pumpOn = false;
-						pstate = stopped;
-					}  :: else -> skip;
-					fi;
+	do	
+	::	atomic {
+			cCmd?pcommand;
+			readMsg = commandMsg; 
+		};
+		
+		if	
+		::	pcommand == stop;
+		
+			if 
+			::	atomic {
+					pstate == running;
+					pumpOn = false;
+					pstate = stopped;
+				}  
+			::	else -> skip;
+			fi;
 						
-				::	pcommand == start;
+		::	pcommand == start;
 					
-					if :: atomic {
-						pstate != running;
-						pstate = ready;
-					}; :: else -> skip;
-					fi;
+			if 
+			::	atomic {
+					pstate != running;
+					pstate = ready;
+				}; 
+			::	else -> skip;
+			fi;
 								
-				fi;
-			cCmd!pstate;
+		fi;
+		
+		cCmd!pstate;
 			
-		::	atomic { 
-				cAlarm?_;
-				readMsg = alarmMsg;
-			};
+	::	atomic { 
+			cAlarm?_;
+			readMsg = alarmMsg;
+		};
 			
-			if :: atomic {
+		if 
+		::	atomic {
 				pstate == running;
 				pumpOn = false;
 				pstate = methanestop;
-			}; :: else -> skip;
-			fi;
+			}; 
+		::	else -> skip;
+		fi;
 			
-		::	atomic { 
-				cLevel?level;
-				readMsg = levelMsg;
-			};
-			if	::	level == high;
+	::	atomic { 
+			cLevel?level;
+			readMsg = levelMsg;
+		};
+		
+		if
+		::	level == high;
 					
-							if	::	pstate == ready  ||  pstate == lowstop;
-									
-								if :: atomic {
-									cMethane!pstate;
-									cMethane?pstate;
-									if	::	pstate == ready;
-											pstate = running;
-											pumpOn = true;
-										::	else -> skip;
-									fi;
-								}; :: else -> skip;
-								fi;
-										
-								::	else -> skip;
-								fi;
-							
-				::	level == low;
-				
-					if :: atomic {
-						pstate == running;
-						pumpOn = false;
-						pstate = lowstop;
-					}; :: else -> skip;
-					fi;
+			if
+			::	pstate == ready || pstate == lowstop;
+					
+				if 
+				::	atomic {
+						cMethane!pstate;
+						cMethane?pstate;
 						
-				::	level == medium;
-					skip;
+						if
+						::	pstate == ready;
+							pstate = running;
+							pumpOn = true;
+							
+						::	else -> skip;
+						fi;
+					}; 
+				
+				::	else -> skip;
 				fi;
-		od;
+						
+			::	else -> skip;
+			
+			fi;
+							
+		::	level == low;
+				
+			if 
+			::	atomic {
+					pstate == running;
+					pumpOn = false;
+					pstate = lowstop;
+				}; 
+			::	else -> skip;
+			fi;
+				
+		::	level == medium;
+			skip;
+			
+		fi;
+		
+	od;
 }
 
 active proctype methanealarm() {

@@ -287,8 +287,8 @@ body	: '{' 									{ savedSymTab = currentSymTab; currentSymTab = currentSymTab
 		  '}'									{ std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab->setBlock($3); currentSymTab = savedSymTab; }
 		;
 
-sequence: step									{ std::cout << "REDUCE: step -> sequence\n"; $$ = $1;   }
-		| sequence MS step						{ std::cout << "REDUCE: sequence MS step -> sequence\n"; $$ = stmnt::merge($$, $3); }
+sequence: step									{ std::cout << "REDUCE: step -> sequence\n"; $$ = $1;  }
+		| sequence MS step						{ std::cout << "REDUCE: sequence MS step -> sequence\n"; $$ = stmnt::merge($1, $3); }
 		;
 		
 step    : one_decl								{ 

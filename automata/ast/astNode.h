@@ -150,6 +150,10 @@ public:
 
 	virtual operator std::string() const = 0;
 
+	static int tab_lvl;
+
+	static std::string _tab(int adjust = 0);
+
 protected:
 	Type type;
 	int lineNb;

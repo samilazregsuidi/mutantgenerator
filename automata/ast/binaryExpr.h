@@ -38,7 +38,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " + " + std::string(*right);
 	}
@@ -58,7 +58,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " - " + std::string(*right);
 	}
@@ -78,7 +78,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " * " + std::string(*right);
 	}
@@ -98,7 +98,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " / " + std::string(*right);
 	}
@@ -118,7 +118,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " % " + std::string(*right);
 	}
@@ -138,7 +138,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " > " + std::string(*right);
 	}
@@ -158,7 +158,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " < " + std::string(*right);
 	}
@@ -178,7 +178,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " >= " + std::string(*right);
 	}
@@ -198,7 +198,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " <= " + std::string(*right);
 	}
@@ -218,7 +218,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " == " + std::string(*right);
 	}
@@ -238,7 +238,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " != " + std::string(*right);
 	}
@@ -258,7 +258,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " && " + std::string(*right);
 	}
@@ -278,7 +278,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " || " + std::string(*right);
 	}
@@ -298,7 +298,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " & " + std::string(*right);
 	}
@@ -318,7 +318,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " | " + std::string(*right);
 	}
@@ -338,7 +338,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " ^ " + std::string(*right);
 	}
@@ -358,7 +358,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " << " + std::string(*right);
 	}
@@ -378,7 +378,7 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*left) + " >> " + std::string(*right);
 	}

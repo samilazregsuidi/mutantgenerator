@@ -48,9 +48,8 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 	this->argList = argList;
 }
 
-exprRun::operator std::string() const
-{
-	return "run " + procName + (card ? " [" + std::string(*card) + "]" : "") + "( " + std::string(*argList) + " ) ";
+exprRun::operator std::string() const {
+	return "run " + procName + (card ? "[" + std::string(*card) + "]" : "") + "(" + std::string(*argList) + ")";
 }
 
 /*void exprRun::resolveVariables(symTable *global) {

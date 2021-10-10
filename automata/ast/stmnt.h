@@ -91,7 +91,8 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*chan) + " ? " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
+		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -130,7 +131,8 @@ public:
 
 	operator std::string() const
 	{
-		return std::string(*chan) + " ! " + ( argList? std::string(*argList) : "") + ";\n" + (next? std::string(*next) : "");
+		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -177,8 +179,9 @@ public:
 
 	operator std::string() const
 	{
-		return "\n::" + std::string(*block) + (nextOpt? std::string(*nextOpt) : "") 
-		+ (next? std::string(*next) : "");
+		return _tab(-1) + "::\t" + std::string(*block) 
+		+ (nextOpt? std::string(*nextOpt) : "") 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -215,8 +218,12 @@ public:
 
 	operator std::string() const
 	{
-		return "\nif" + std::string(*opts) + "fi;\n" 
-		+ (next? std::string(*next) : "");
+		std::string res = "if\n";
+		tab_lvl++;
+		res += std::string(*opts);
+		tab_lvl--;
+		return res + _tab() + "fi;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -252,8 +259,12 @@ public:
 
 	operator std::string() const
 	{
-		return "\ndo" + std::string(*opts) + "od;\n" 
-		+ (next? std::string(*next) : "");
+		std::string res = "do\n"; 
+		tab_lvl++;
+		res += std::string(*opts); 
+		tab_lvl--;
+		return res + _tab() +"od;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -276,7 +287,8 @@ public:
 
 	operator std::string() const
 	{
-		return "break;\n" + (next? std::string(*next) : "");
+		return "break;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -297,7 +309,8 @@ public:
 
 	operator std::string() const
 	{
-		return "goto " + label + ";\n" + (next? std::string(*next) : "");
+		return "goto " + label + ";\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -332,7 +345,8 @@ public:
 
 	operator std::string() const
 	{
-		return label + ": \n" + std::string(*labelled) + (next? std::string(*next) : "");
+		return label + ": \n" + std::string(*labelled) 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -384,7 +398,12 @@ public:
 
 	operator std::string() const
 	{
-		return "{\n" + std::string(*block) + "};\n" + (next? std::string(*next) : "");
+		std::string res = "{\n";
+		tab_lvl++;
+		res += _tab() + std::string(*block);
+		tab_lvl--;
+		res += _tab() + "};\n"; 
+		return res + (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const
@@ -405,8 +424,8 @@ public:
 	{}
 
 	operator std::string() const{
-		std::string res = "atomic " + stmntSeq::operator std::string();
-		return next? res + std::string(*next) : res; 
+		return "atomic " + stmntSeq::operator std::string()
+		+ (next? _tab() + std::string(*next) : ""); 
 	}
 
 	std::string getTypeDescr(void) const{
@@ -440,7 +459,7 @@ public:
 
 	operator std::string() const{
 		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" 
-		+ (next? std::string(*next) : "");
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -474,7 +493,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return std::string(*varRef) + "++;\n" + (next? std::string(*next) : "");
+		return std::string(*varRef) + "++;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -507,7 +527,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return std::string(*varRef) + "--;\n" + (next? std::string(*next) : "");
+		return std::string(*varRef) + "--;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -541,7 +562,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return "printf(" + toPrint + (argList? std::string(*argList) : "") + ");\n" + (next? std::string(*next) : "");
+		return "printf(" + '\"' + toPrint + '\"' + (argList? std::string(*argList) : ", ") + ");\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -581,7 +603,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" + (next? std::string(*next) : "");
+		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -615,7 +638,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return "assert(" + std::string(*toAssert) + ");\n" + (next? std::string(*next) : "") ;
+		return "assert(" + std::string(*toAssert) + ");\n" 
+		+ (next? _tab() + std::string(*next) : "") ;
 	}
 
 	std::string getTypeDescr(void) const{
@@ -631,7 +655,7 @@ class stmntExpr : public stmnt
 {
 public:
 	stmntExpr(expr *child, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, lineNb)
+		: stmnt(astNode::E_STMNT_EXPR, lineNb)
 	{
 		this->child = child;
 	}
@@ -647,8 +671,9 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
-		return *child;
+	operator std::string() const override{
+		return std::string(*child) + ";\n"
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -669,7 +694,8 @@ public:
 	}
 
 	operator std::string() const{
-		return "else -> " + (next? std::string(*next) : "");
+		return "else -> " 
+		+ (next? std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -699,7 +725,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return "while ( " + std::string(*timer) + " ) wait;\n" + (next? std::string(*next) : "");
+		return "while ( " + std::string(*timer) + " ) wait;\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
@@ -736,7 +763,8 @@ public:
 	}*/
 
 	operator std::string() const{
-		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" + (next? std::string(*next) : "");
+		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" 
+		+ (next? _tab() + std::string(*next) : "");
 	}
 
 	std::string getTypeDescr(void) const{
