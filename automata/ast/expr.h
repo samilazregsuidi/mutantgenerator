@@ -28,6 +28,10 @@ public:
 		this->cond = cond;
 		this->then = then;
 		this->elsE = elsE;
+
+		this->cond->setParent(this);
+		this->then->setParent(this);
+		this->elsE->setParent(this);
 	}
 
 	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
@@ -45,6 +49,10 @@ public:
 	{
 		return "Conditional expression (E_EXPR_COND)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* cond;
@@ -79,6 +87,10 @@ public:
 		return "Receive argument variable (E_RARG_VAR)";
 	}
 
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
+
 private:
 	exprVarRef* varRef;
 };
@@ -91,6 +103,8 @@ public:
 		: exprRArg(astNode::E_RARG_EVAL, lineNb)
 	{
 		this->toEval = toEval;
+
+		this->toEval->setParent(this);
 	}
 
 	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
@@ -106,6 +120,10 @@ public:
 	{
 		return "Receive argument eval (E_RARG_EVAL)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* toEval;
@@ -131,6 +149,10 @@ public:
 		return "Receive argument constant (E_RARG_CONST)";
 	}
 
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
+
 private:
 	int constant;
 };
@@ -145,6 +167,9 @@ public:
 	{
 		this->node = node;
 		this->list = list;
+
+		this->node->setParent(this);
+		this->list->setParent(this);
 	}
 
 	exprArgList(exprRArg *node, int lineNb)
@@ -152,6 +177,8 @@ public:
 	{
 		this->node = node;
 		this->list = nullptr;
+
+		this->node->setParent(this);
 	}
 
 	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
@@ -168,6 +195,10 @@ public:
 	{
 		return "Argument list (E_ARGLIST)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprRArg* node;
@@ -192,6 +223,10 @@ public:
 	{
 		return "Run (E_EXPR_RUN)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	std::string procName;
@@ -228,6 +263,10 @@ public:
 		return "Constant (E_EXPR_CONST)";
 	}
 
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
+
 private:
 	int constant;
 };
@@ -250,6 +289,10 @@ public:
 	{
 		return "Timeout (E_EXPR_TIMEOUT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_SKIP,		// iVal = 1
@@ -270,6 +313,10 @@ public:
 	{
 		return "Skip (E_EXPR_SKIP)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_TRUE,		// iVal = 1
@@ -290,6 +337,10 @@ public:
 	{
 		return "True (E_EXPR_TRUE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_FALSE,		// iVal = 0
@@ -310,6 +361,10 @@ public:
 	{
 		return "False (E_EXPR_FALSE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 #endif

@@ -11,6 +11,9 @@ protected:
 	{
 		this->left = left;
 		this->right = right;
+
+		this->left->setParent(this);
+		this->right->setParent(this);
 	}
 
 	~exprBinary() override {
@@ -43,10 +46,14 @@ public:
 		return std::string(*left) + " + " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const 
+	std::string getTypeDescr(void) const override
 	{
 		return "Plus (E_EXPR_PLUS)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_MINUS,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -63,10 +70,14 @@ public:
 		return std::string(*left) + " - " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Minus (E_EXPR_MINUS)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_TIMES,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -83,10 +94,14 @@ public:
 		return std::string(*left) + " * " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Times (E_EXPR_TIMES)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_DIV,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -103,10 +118,14 @@ public:
 		return std::string(*left) + " / " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Divide (E_EXPR_DIV)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_MOD,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -123,10 +142,14 @@ public:
 		return std::string(*left) + " % " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Modulo (E_EXPR_MOD)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_GT,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -143,10 +166,14 @@ public:
 		return std::string(*left) + " > " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Greater than (E_EXPR_GT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_LT,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -163,10 +190,14 @@ public:
 		return std::string(*left) + " < " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Less than (E_EXPR_LT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_GE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -183,10 +214,14 @@ public:
 		return std::string(*left) + " >= " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Greater or equal than (E_EXPR_GE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_LE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -203,10 +238,14 @@ public:
 		return std::string(*left) + " <= " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Less or equal than (E_EXPR_LE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_EQ,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -223,10 +262,14 @@ public:
 		return std::string(*left) + " == " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Equal (E_EXPR_EQ)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_NE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -243,10 +286,14 @@ public:
 		return std::string(*left) + " != " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Not equal (E_EXPR_NE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_AND,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -263,7 +310,7 @@ public:
 		return std::string(*left) + " && " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Logical and (E_EXPR_AND)";
 	}
@@ -283,10 +330,14 @@ public:
 		return std::string(*left) + " || " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Logical or (E_EXPR_OR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_BITWAND,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -303,10 +354,14 @@ public:
 		return std::string(*left) + " & " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Bitwise and (E_EXPR_BITWAND)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_BITWOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -323,10 +378,14 @@ public:
 		return std::string(*left) + " | " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Bitwise or (E_EXPR_BITWOR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_BITWXOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -343,10 +402,14 @@ public:
 		return std::string(*left) + " ^ " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Bitwise xor (E_EXPR_BITWXOR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_LSHIFT,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -363,10 +426,14 @@ public:
 		return std::string(*left) + " << " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_RSHIFT,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -383,10 +450,14 @@ public:
 		return std::string(*left) + " >> " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Right shift (E_EXPR_RSHIFT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 #endif

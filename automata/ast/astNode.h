@@ -6,6 +6,9 @@
 
 #include "symbols.h"
 
+class ASTVisitor;
+class ASTConstVisitor;
+
 class fsm;
 class fsmNode;
 class fsmTrans;
@@ -150,13 +153,22 @@ public:
 
 	virtual operator std::string() const = 0;
 
+	virtual void accept(ASTVisitor* visitor) = 0;
+
+	virtual void accept(ASTConstVisitor* visitor) const = 0;
+
 	static int tab_lvl;
 
 	static std::string _tab(int adjust = 0);
 
+	void setParent(astNode* parent);
+
+	astNode* getParent(void) const;
+
 protected:
 	Type type;
 	int lineNb;
+	astNode* parent;
 };
 
 #endif

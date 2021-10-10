@@ -67,8 +67,11 @@ public:
 	stmntChanRecv(exprVarRef *chan, exprArgList *argList, int lineNb)
 		: stmnt(astNode::E_STMNT_CHAN_RCV, lineNb)
 	{
-		this->chan = chan;
-		this->argList = argList;
+		this->chan = chan; 
+		this->argList = argList; 
+
+		this->chan->setParent(this); 
+		this->argList->setParent(this);
 	}
 	
 	~stmntChanRecv() override {
@@ -89,16 +92,20 @@ public:
 		return child[1]->getVars(globalSymTab, processSymTab, mtypes);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Channel receive (E_STMNT_CHAN_RCV)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* chan;
@@ -112,8 +119,11 @@ public:
 	stmntChanSnd(exprVarRef *chan, exprArgList *argList, int lineNb)
 		: stmnt(astNode::E_STMNT_CHAN_SND, lineNb)
 	{
-		this->chan = chan;
+		this->chan = chan; 
 		this->argList = argList;
+
+		this->chan->setParent(this); 
+		this->argList->setParent(this);
 	}
 
 	~stmntChanSnd() override {
@@ -129,16 +139,20 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Channel send (E_STMNT_CHAN_SND)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* chan;
@@ -154,6 +168,9 @@ public:
 	{
 		this->block = block;
 		this->nextOpt = nextOpt;
+
+		this->block->setParent(this);
+		this->nextOpt->setParent(this);
 	}
 
 	stmntOpt(stmnt* block, int lineNb)
@@ -161,6 +178,8 @@ public:
 	{
 		this->block = block;
 		this->nextOpt = nullptr;
+
+		this->block->setParent(this);
 	}
 
 	~stmntOpt() override {
@@ -177,17 +196,21 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return _tab(-1) + "::\t" + std::string(*block) 
 		+ (nextOpt? std::string(*nextOpt) : "") 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Opt (E_STMNT_OPT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	stmnt* block;
@@ -202,6 +225,8 @@ public:
 		: stmnt(astNode::E_STMNT_IF, lineNb)
 	{
 		this->opts = opts;
+
+		this->opts->setParent(this);
 	}
 
 	~stmntIf() override {
@@ -216,7 +241,7 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		std::string res = "if\n";
 		tab_lvl++;
@@ -226,10 +251,14 @@ public:
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "If (E_STMNT_IF)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	stmntOpt* opts;
@@ -243,6 +272,8 @@ public:
 		: stmnt(astNode::E_STMNT_DO, lineNb)
 	{
 		this->opts = opts;
+
+		this->opts->setParent(this);
 	}
 
 	~stmntDo() override {
@@ -257,7 +288,7 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		std::string res = "do\n"; 
 		tab_lvl++;
@@ -267,10 +298,14 @@ public:
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Do (E_STMNT_DO)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	stmntOpt* opts;
@@ -285,16 +320,20 @@ public:
 	{
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return "break;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Break (E_STMNT_BREAK)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_STMNT_GOTO,		// sVal = the label to go to
@@ -307,13 +346,13 @@ public:
 		this->label = label;
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return "goto " + label + ";\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Goto (E_STMNT_GOTO)";
 	}
@@ -321,6 +360,10 @@ public:
 	std::string getLabel(void) const {
 		return label;
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	std::string label;
@@ -335,6 +378,8 @@ public:
 	{
 		this->label = label;
 		this->labelled = labelled;
+
+		this->labelled->setParent(this);
 	}
 
 	~stmntLabel() override {
@@ -343,13 +388,13 @@ public:
 			delete next;
 	}
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		return label + ": \n" + std::string(*labelled) 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Label (E_STMNT_LABEL)";
 	}
@@ -361,6 +406,10 @@ public:
 	stmnt* getLabelledStmnt(void) const {
 		return labelled;
 	}
+	
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	std::string label;
@@ -375,6 +424,8 @@ public:
 		: stmnt(astNode::E_STMNT_SEQ, lineNb)
 	{
 		this->block = block;
+
+		this->block->setParent(this);
 	}
 
 	~stmntSeq() override {
@@ -396,7 +447,7 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const
+	operator std::string() const override
 	{
 		std::string res = "{\n";
 		tab_lvl++;
@@ -406,10 +457,14 @@ public:
 		return res + (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const
+	std::string getTypeDescr(void) const override
 	{
 		return "Seq (E_STMNT_SEQ)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 protected:
 	stmnt* block;
@@ -423,12 +478,12 @@ public:
 		: stmntSeq(astNode::E_STMNT_ATOMIC, block, lineNb)
 	{}
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "atomic " + stmntSeq::operator std::string()
 		+ (next? _tab() + std::string(*next) : ""); 
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Atomic (E_STMNT_ATOMIC)";
 	}
 };
@@ -442,6 +497,9 @@ public:
 	{
 		this->varRef = varRef;
 		this->assign = assign;
+
+		this->varRef->setParent(this);
+		this->assign->setParent(this);
 	}
 
 	~stmntAsgn() override {
@@ -457,14 +515,18 @@ public:
 		if(next) next->resolveVariables(globalSymTab);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Assignment (E_STMNT_ASGN)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* varRef;
@@ -479,6 +541,8 @@ public:
 		: stmnt(astNode::E_STMNT_INCR, lineNb)
 	{
 		this->varRef = varRef;
+
+		this->varRef->setParent(this);
 	}
 
 	~stmntIncr() override {
@@ -492,14 +556,18 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return std::string(*varRef) + "++;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Increment (E_STMNT_INCR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* varRef;
@@ -513,6 +581,8 @@ public:
 		: stmnt(astNode::E_STMNT_DECR, lineNb)
 	{
 		this->varRef = varRef;
+
+		this->varRef->setParent(this);
 	}
 
 	~stmntDecr() override {
@@ -526,14 +596,18 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return std::string(*varRef) + "--;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Decrement (E_STMNT_DECR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* varRef;
@@ -548,6 +622,8 @@ public:
 	{
 		this->toPrint = toPrint;
 		this->argList = argList;
+
+		this->argList->setParent(this);
 	}
 
 	~stmntPrint() override {
@@ -561,14 +637,19 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "printf(" + '\"' + toPrint + '\"' + (argList? std::string(*argList) : ", ") + ");\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Print (E_STMNT_PRINT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
+
 private:
 	std::string toPrint;
 	exprArgList* argList;
@@ -582,6 +663,8 @@ public:
 		: stmnt(astNode::E_STMNT_PRINTM, lineNb)
 	{
 		this->varRef = varRef;
+
+		this->varRef->setParent(this);
 	}
 
 	stmntPrintm(int constant, int lineNb)
@@ -602,14 +685,18 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "PrintM (E_STMNT_PRINTM)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	exprVarRef* varRef;
@@ -624,6 +711,8 @@ public:
 		: stmnt(astNode::E_STMNT_ASSERT, lineNb)
 	{
 		this->toAssert = toAssert;
+
+		this->toAssert->setParent(this);
 	}
 
 	~stmntAssert() override {
@@ -637,14 +726,18 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "assert(" + std::string(*toAssert) + ");\n" 
 		+ (next? _tab() + std::string(*next) : "") ;
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Assertion (E_STMNT_ASSERT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* toAssert;
@@ -658,6 +751,8 @@ public:
 		: stmnt(astNode::E_STMNT_EXPR, lineNb)
 	{
 		this->child = child;
+
+		this->child->setParent(this);
 	}
 
 	~stmntExpr() override {
@@ -676,9 +771,13 @@ public:
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Expression wrapper (E_STMNT_EXPR)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* child;
@@ -693,14 +792,18 @@ public:
 	{
 	}
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "else -> " 
 		+ (next? std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Else (E_STMNT_ELSE)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_STMNT_WAIT,		// child[0] = E_EXPR_*
@@ -711,6 +814,8 @@ public:
 		: stmnt(astNode::E_STMNT_WAIT, lineNb)
 	{
 		this->timer = timer;
+
+		this->timer->setParent(this);
 	}
 
 	~stmntWait() override {
@@ -724,14 +829,18 @@ public:
 		if(next) next->resolveVariables(local);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "while ( " + std::string(*timer) + " ) wait;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Time invariant (E_STMNT_WAIT)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* timer;
@@ -747,6 +856,9 @@ public:
 		this->guard = guard;
 		this->todo = todo;
 		this->clocks = clocks;
+
+		this->guard->setParent(this);
+		this->todo->setParent(this);
 	}
 
 	~stmntWhen() override {
@@ -762,14 +874,18 @@ public:
 		if(next) next->resolveVariables(globalSymTab);
 	}*/
 
-	operator std::string() const{
+	operator std::string() const override{
 		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const{
+	std::string getTypeDescr(void) const override{
 		return "Time guard (E_STMNT_WHEN)";
 	}
+
+	void accept(ASTVisitor* visitor) override;
+
+	void accept(ASTConstVisitor* visitor) const override;
 
 private:
 	expr* guard;

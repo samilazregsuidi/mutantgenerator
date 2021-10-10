@@ -11,6 +11,8 @@ exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	: exprRArg(astNode::E_RARG_VAR, lineNb)
 {
 	this->varRef = varRef;
+
+	this->varRef->setParent(this);
 }
 
 symbol *exprRArgVar::symbolLookUpRight(void) const {
@@ -37,6 +39,9 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, exprVarRef *
 	this->procSym = nullptr;
 	this->card = card;
 	this->argList = argList;
+	
+	this->card->setParent(this);
+	this->argList->setParent(this);
 }
 
 exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
@@ -46,6 +51,8 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 	this->procSym = nullptr;
 	this->card = nullptr;
 	this->argList = argList;
+
+	this->argList->setParent(this);
 }
 
 exprRun::operator std::string() const {

@@ -24,6 +24,14 @@ int astNode::getLineNb(void) const {
 	return lineNb;
 }
 
+void astNode::setParent(astNode* parent) {
+	this->parent = parent;
+}
+
+astNode* astNode::getParent(void) const {
+	return parent;
+}
+
 int astNode::tab_lvl = 0;
 
 std::string astNode::_tab(int adjust) {
