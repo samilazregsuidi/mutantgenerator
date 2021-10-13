@@ -1,6 +1,7 @@
 #include "procSymNode.h"
 #include "symTabVisitor.h"
-#include "expression.h"
+#include "constExpr.h"
+#include "stmnt.h"
 
 seqSymNode::~seqSymNode(void) {
 	delete block;
@@ -10,15 +11,27 @@ procSymNode::~procSymNode(void) {
 	delete active;
 }
 
-void neverSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void neverSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitNever(this);
 }
 
-void initSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void neverSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
+	visitor->visitNever(this);
+}
+
+void initSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitInit(this);
 }
 
-void procSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void initSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
+	visitor->visitInit(this);
+}
+
+void procSymNode::acceptVisitor(symTabVisitor *visitor) {
+	visitor->visitProc(this);
+}
+
+void procSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
 	visitor->visitProc(this);
 }
 

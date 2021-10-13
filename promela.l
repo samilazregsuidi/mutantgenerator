@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "symbols.h"
-#include "expression.h"
+#include "ast.h"
 
 #include "y.tab.h"
 

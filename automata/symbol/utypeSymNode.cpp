@@ -9,7 +9,11 @@ utypeSymNode::utypeSymNode(tdefSymNode* utype, int lineNb)
 	this->utype = utype;
 }
 
-void utypeSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void utypeSymNode::acceptVisitor(symTabVisitor *visitor) {
+	visitor->visitUtype(this);
+}
+
+void utypeSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
 	visitor->visitUtype(this);
 }
 

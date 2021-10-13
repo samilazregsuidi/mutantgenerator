@@ -34,7 +34,9 @@ public:
 
 	operator std::string(void) const override ;
 
-	void acceptVisitor(symTabVisitor* visitor) const override;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 
 private:
 	std::list<varSymNode*> fields;

@@ -18,7 +18,9 @@ public:
 		return 4;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const override;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 };
 
 #endif

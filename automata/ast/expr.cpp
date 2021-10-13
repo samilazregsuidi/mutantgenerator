@@ -2,35 +2,10 @@
 #include <string>
 
 #include "expr.h"
+#include "argExpr.h"
 #include "varExpr.h"
 
-#include "symbol.h"
 #include "procSymNode.h"
-
-exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
-	: exprRArg(astNode::E_RARG_VAR, lineNb)
-{
-	this->varRef = varRef;
-
-	this->varRef->setParent(this);
-}
-
-symbol *exprRArgVar::symbolLookUpRight(void) const {
-	return varRef->symbolLookUpRight();
-}
-
-symbol *exprRArgVar::symbolLookUpLeft(void) const {
-	return varRef->symbolLookUpLeft();
-}
-
-/*void exprRArgVar::resolveVariables(symTable* globalSymTab) {
-	varRef->resolveVariables(globalSymTab);
-}*/
-
-
-exprRArgVar::operator std::string() const {
-	return *varRef;
-}
 
 exprRun::exprRun(const std::string& procName, exprArgList *argList, exprVarRef *card, int lineNb)
 	: expr(astNode::E_EXPR_RUN, lineNb)

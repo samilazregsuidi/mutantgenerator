@@ -19,7 +19,9 @@ public:
 		return 0;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const override;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 };
 
 #endif

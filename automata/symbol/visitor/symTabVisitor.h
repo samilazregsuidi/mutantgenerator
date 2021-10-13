@@ -22,7 +22,7 @@ class initSymNode;
 class mtypedefSymNode;
 class cmtypeSymNode;
 
-class symTableConstVisitor {
+class symTabConstVisitor {
 public:
 	virtual void visitTab(const symTable* tab) = 0;
 	virtual void visitNA(const naSymNode* sym) = 0;
@@ -45,7 +45,7 @@ public:
 	virtual void visitCmtype(const cmtypeSymNode* sym) = 0;
 };
 
-class symVisitor {
+class symTabVisitor {
 public:
 	virtual void visitTab(symTable* tab) = 0;
 	virtual void visitNA(naSymNode* sym) = 0;

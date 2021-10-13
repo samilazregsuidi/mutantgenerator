@@ -23,7 +23,7 @@ protected:
 		expression->resolveVariables(parent);
 	}*/
 
-protected:
+public:
 	expr* expression;
 };
 
@@ -45,10 +45,6 @@ public:
 	{
 		return "Parentheses (E_EXPR_PAR)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_COUNT,		// child[0] = E_EXPR_*
@@ -69,10 +65,6 @@ public:
 	{
 		return "Clones count (E_EXPR_COUNT)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_UMIN,		// child[0] = E_EXPR_*
@@ -93,10 +85,6 @@ public:
 	{
 		return "Unary minus (E_EXPR_UMIN)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_NEG,			// child[0] = E_EXPR_*
@@ -117,10 +105,6 @@ public:
 	{
 		return "Negation (E_EXPR_NEG)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_BITWNEG,		// child[0] = E_EXPR_*
@@ -141,10 +125,6 @@ public:
 	{
 		return "Bitwise neg (E_EXPR_BITWNEG)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_LEN,			// child[0] = E_VARREF
@@ -165,10 +145,6 @@ public:
 	{
 		return "Length (E_EXPR_LEN)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_FULL,		// child[0] = E_VARREF
@@ -189,10 +165,6 @@ public:
 	{
 		return "Full probe (E_EXPR_FULL)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_NFULL,		// child[0] = E_VARREF
@@ -213,10 +185,6 @@ public:
 	{
 		return "Not full probe (E_EXPR_NFULL)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_EMPTY,		// child[0] = E_VARREF
@@ -237,10 +205,6 @@ public:
 	{
 		return "Empty probe (E_EXPR_EMPTY)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 //E_EXPR_NEMPTY,		// child[0] = E_VARREF
@@ -261,10 +225,6 @@ public:
 	{
 		return "Not empty probe (E_EXPR_NEMPTY)";
 	}
-
-	void accept(ASTVisitor* visitor) override;
-
-	void accept(ASTConstVisitor* visitor) const override;
 };
 
 #endif

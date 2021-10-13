@@ -81,6 +81,9 @@
         "valarray": "cpp",
         "variant": "cpp",
         "bitsymnode.h": "c",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "expr.h": "c",
+        "astnode.h": "c",
+        "symbols.h": "c"
     }
 }

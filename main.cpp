@@ -7,7 +7,7 @@
 #include <fstream>
 
 #include "symbols.h"
-#include "expression.h"
+#include "ast.h"
 #include "y.tab.h"
 #include "lexer.h"
 

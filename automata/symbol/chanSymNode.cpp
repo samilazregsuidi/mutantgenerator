@@ -6,7 +6,11 @@ chanSymNode::~chanSymNode(){
 		delete it;
 }
 
-void chanSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void chanSymNode::acceptVisitor(symTabVisitor *visitor) {
+	visitor->visitChan(this);
+}
+
+void chanSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
 	visitor->visitChan(this);
 }
 

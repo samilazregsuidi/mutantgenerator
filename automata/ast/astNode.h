@@ -15,15 +15,37 @@ class fsmTrans;
 
 class stmnt;
 
-// These constants are used to identify magic (predefined) variables inside an E_VARREF_NAME (to avoid strcmp).
-#define MVAR_SCRATCH -1
-#define MVARID_SCRATCH "_" // A write-only variable that can be used to destroy a field read from a channel
-#define MVAR_PID -2
-#define MVARID_PID "_pid" // The pid of the currently executing proctype
-#define MVAR_LAST -3
-#define MVARID_LAST "_last" // The pid of the proctype that executed the last step in the current execution
-#define MVAR_NRPR -4
-#define MVARID_NRPR "_nr_pr" // The number of running proctypes
+class Mutation {
+
+public:
+	virtual void apply(void) = 0;
+
+	virtual void undo(void) = 0;
+};
+
+template <typename T, typename U> class MutationImpl : public Mutation {
+public:
+	MutationImpl(T* toMutate, U* T::* ptr, U* mutant)
+		: toMutate(toMutate)
+		, ptr(ptr)
+		, initial(toMutate->*ptr)
+		, mutant(mutant)
+	{}
+
+	void apply(void) override {
+		toMutate->*ptr = mutant;
+	}
+
+	void undo(void) override {
+		toMutate->*ptr = initial;
+	}
+
+private:
+	T* toMutate;
+	U* T::* ptr;
+	U* initial;
+	U* mutant;
+};
 
 class astNode
 {
@@ -153,9 +175,11 @@ public:
 
 	virtual operator std::string() const = 0;
 
-	virtual void accept(ASTVisitor* visitor) = 0;
+	//virtual void accept(ASTConstVisitor* visitor) const = 0;
 
-	virtual void accept(ASTConstVisitor* visitor) const = 0;
+	//virtual void accept(ASTVisitor* visitor) = 0;
+
+	//virtual void accept(ASTMutator* visitor) = 0;
 
 	static int tab_lvl;
 
@@ -164,6 +188,10 @@ public:
 	void setParent(astNode* parent);
 
 	astNode* getParent(void) const;
+
+	virtual std::list<Mutation*> getMutations(void) {
+		return std::list<Mutation*>();
+	}
 
 protected:
 	Type type;

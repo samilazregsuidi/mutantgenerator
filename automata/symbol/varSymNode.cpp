@@ -1,6 +1,6 @@
 #include "varSymNode.h"
 #include "symTabVisitor.h"
-#include "expression.h"
+#include "expr.h"
 
 #include "naSymNode.h"
 #include "bitSymNode.h"

@@ -32,7 +32,9 @@ public:
 		return 1;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const override ;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 
 private:
 	tdefSymNode* utype;

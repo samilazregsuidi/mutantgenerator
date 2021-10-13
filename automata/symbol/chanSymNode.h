@@ -32,9 +32,10 @@ public:
 	int getCapacity(void) const {
 		return capacity;
 	}
-	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+	
+	void acceptVisitor(symTabVisitor* visitor) override;
 
-	void acceptVisitor(symTabVisitor* visitor) const override;
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 
 private:
 	std::list<symbol*> types;

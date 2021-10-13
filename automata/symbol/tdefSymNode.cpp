@@ -17,7 +17,11 @@ tdefSymNode::~tdefSymNode(void) {
 		delete f;
 }
 
-void tdefSymNode::acceptVisitor(symTabVisitor *visitor) const{
+void tdefSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
+	visitor->visitTdef(this);
+}
+
+void tdefSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitTdef(this);
 }
 

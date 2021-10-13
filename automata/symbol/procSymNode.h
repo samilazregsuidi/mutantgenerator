@@ -44,7 +44,9 @@ public:
 		return 1;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 };
 
 class neverSymNode : public seqSymNode {
@@ -61,7 +63,9 @@ public:
 		return 1;
 	}
 
-	void acceptVisitor(symTabVisitor* visitor) const ;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 };
 
 class exprConst;
@@ -99,7 +103,9 @@ public:
 
 	operator std::string(void) const override;
 
-	void acceptVisitor(symTabVisitor* visitor) const override;
+	void acceptVisitor(symTabVisitor* visitor) override;
+
+	void acceptVisitor(symTabConstVisitor* visitor) const override;
 
 private:
 	std::list<varSymNode*> args;

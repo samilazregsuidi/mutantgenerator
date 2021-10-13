@@ -35,11 +35,17 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	\
 	./automata/ast/astNode.cpp \
 	./automata/ast/stmnt.cpp \
+	./automata/ast/chanStmnt.cpp \
+	./automata/ast/flowStmnt.cpp \
+	./automata/ast/stdlibStmnt.cpp \
+	./automata/ast/clockStmnt.cpp \
 	./automata/ast/decl.cpp \
 	./automata/ast/expr.cpp \
 	./automata/ast/unaryExpr.cpp \
 	./automata/ast/binaryExpr.cpp \
 	./automata/ast/varExpr.cpp \
+	./automata/ast/constExpr.cpp \
+	./automata/ast/argExpr.cpp \
 	\
 	-I./automata/symbol -I./automata/symbol/visitor -I./automata/ast -I./parser \
 	\
