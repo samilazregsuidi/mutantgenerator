@@ -299,7 +299,7 @@ public:
 
 	virtual unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0);
 
-	//virtual astNode* mutateMutable(unsigned int id) const; 
+	virtual void mutateMutable(unsigned int id) = 0;
 
 	static int tab_lvl;
 
@@ -308,6 +308,10 @@ public:
 	void setParent(astNode* parent);
 
 	astNode* getParent(void) const;
+
+	unsigned int getMId(void) const {
+		return mId;
+	}
 
 protected:
 	Type type;

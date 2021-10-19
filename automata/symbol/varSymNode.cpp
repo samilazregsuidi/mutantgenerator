@@ -14,19 +14,6 @@
 #include "unsgnSymNode.h"
 #include "mtypedefSymNode.h"
 
-varSymNode* varSymNode::merge(varSymNode* symTab, varSymNode* newNode){
-	if (!symTab)
-		return newNode;
-	if (!newNode)
-		return symTab;
-
-	symbol *newlistTail = newNode->prev;
-	newNode->prev = symTab->prev;
-	newNode->prev->setNext(newNode);
-	symTab->prev = newlistTail;
-	return symTab;
-}
-
 varSymNode::~varSymNode(void) {
 	if(init)
 		delete init;
@@ -59,51 +46,51 @@ varSymNode *varSymNode::createSymbol(symbol::Type type, const varSymNode &old) {
 	return createSymbol(type, old.getLineNb(), old.getName(), old.getBound(), old.getInitExpr());
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_BIT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BIT>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new bitSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_BOOL>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BOOL>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new boolSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_NA>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_NA>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new naSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_BYTE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_BYTE>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new byteSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_CID>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_CID>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new cidSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_INT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_INT>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new intSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_PID>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_PID>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new pidSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_SHORT>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_SHORT>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new shortSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_UNSGN>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_UNSGN>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new unsgnSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_UTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_UTYPE>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new utypeSymNode(lineNb, name, bound, init);
 }
 
-template<> varSymNode* varSymNode::createSymbol<symbol::T_MTYPE>(int lineNb, const std::string& name, int bound, expr* init) {
+template<> varSymNode* varSymNode::createSymbol<symbol::T_MTYPE>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
 	return new mtypeSymNode(lineNb, name, bound, init);
 }
 
-varSymNode *varSymNode::createSymbol(Type type, int lineNb, const std::string& name, int bound, expr* init) {
+varSymNode *varSymNode::createSymbol(Type type, int lineNb, const std::string& name, unsigned int bound, expr* init) {
 
 	switch (type)
 	{

@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <iostream>
 #include <fstream>
+#include <time.h>
 
 #include "symbols.h"
 #include "ast.h"
@@ -69,10 +70,20 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
-	std::cout << "NUMBER OF MUTABLE NODE " << program->assignMutables() << "\n";
+	unsigned int index = program->assignMutables();
+	std::cout << "NUMBER OF MUTABLE NODE " << index << "\n";
 
 	std::ofstream output;
-	output.open("format.pml");
+	output.open("original.pml");
+	output << std::string(*program);
+	output.close();
+
+	srand(time(nullptr));
+	//int index = rand() % index;
+	unsigned int i = 10;
+	program->mutateMutable(std::stoi(argv[1]));
+
+	output.open("mutant.pml");
 	output << std::string(*program);
 	output.close();
 

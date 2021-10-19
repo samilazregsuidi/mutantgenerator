@@ -1,8 +1,11 @@
 #include <assert.h>
 #include <string>
 #include <iostream>
+#include <cstdlib>
 
 #include "varExpr.h"
+#include "constExpr.h"
+
 #include "symTable.h"
 #include "varSymNode.h"
 #include "utypeSymNode.h"
@@ -34,7 +37,7 @@ exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int line
 }
 
 exprVarRefName::~exprVarRefName() {
-	delete sym;
+	//delete sym;
 	delete index;
 }
 
@@ -92,11 +95,8 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 	}*/
 }
 
-std::list<expr*> exprVarRefName::getMutations(void) const {
-	std::list<symbol*> symList = sym->getSymTable()->getSymbols(sym->getType());
-	std::list<expr*> mutations;
-	for(auto& s: symList)
-		mutations.push_back(new exprVarRefName(s->getName(), s, lineNb));
+symbol::Type exprVarRefName::getExprType(void) const {
+	return sym->getType();
 }
 
 /*******************************************************************************************************************/
@@ -125,6 +125,30 @@ void exprVarRef::resolve(symTable *global, symTable* subField) {
 		assert(uSymbol->getUType());
 		subfieldsVar->resolve(global, uSymbol->getUType()->getSymTable());
 	}
+}
+
+symbol::Type exprVarRef::getExprType(void) const {
+	return subfieldsVar? subfieldsVar->getExprType() : varRefName->getExprType();
+}
+
+std::vector<expr*> exprVarRef::getMutations(void) const {
+	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType());
+	symList.remove(varRefName->getSymbol());
+	std::vector<expr*> mutations;
+	for(auto& s: symList) {
+		auto sCast = static_cast<varSymNode*>(s);
+		assert(sCast);
+		
+		if(sCast->getBound() > 1)
+			for(int i = 0; i < sCast->getBound(); i++) {
+				exprVarRefName* newVar = new exprVarRefName(s->getName(), s, lineNb);
+				newVar->setIndex(new exprConst(i, lineNb));
+				mutations.push_back(newVar);
+			}
+		else
+			mutations.push_back(new exprVarRefName(s->getName(), s, lineNb));
+	}
+	return mutations;
 }
 
 /**********************************************************************************************************/

@@ -3,6 +3,9 @@
 
 #include "expr.h"
 
+#include <vector>
+#include <cstdlib>
+
 class exprBinary : public expr
 {
 protected:
@@ -17,8 +20,8 @@ protected:
 	}
 
 	~exprBinary() override {
-		delete right;
-		delete left;
+		//delete right;
+		//delete left;
 	}
 
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
@@ -28,6 +31,29 @@ protected:
 			id = right->assignMutables(mask, id);
 		}
 		return id; 
+	}
+
+	void mutateMutable(unsigned int id) override {
+
+		if(left->getMId() == id) {
+			auto mutations = left->getMutations();
+			assert(mutations.size());
+			delete left;
+			left = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		if(right->getMId() == id) {
+			auto mutations = right->getMutations();
+			assert(mutations.size());
+			delete right;
+			right = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		left->mutateMutable(id);
+		right->mutateMutable(id);		
+
 	}
 
 
@@ -53,14 +79,7 @@ public:
 		return "Plus (E_EXPR_PLUS)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprMinus(left, right, lineNb), 
-			new exprTimes(left, right, lineNb),
-			new exprDiv(left, right, lineNb),
-			new exprMod(left, right, lineNb)
-			};
-	} 
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_MINUS,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -82,14 +101,8 @@ public:
 		return "Minus (E_EXPR_MINUS)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprPlus(left, right, lineNb), 
-			new exprTimes(left, right, lineNb),
-			new exprDiv(left, right, lineNb),
-			new exprMod(left, right, lineNb)
-			};
-	} 
+	std::vector<expr*> getMutations(void) const override;
+
 };
 
 //E_EXPR_TIMES,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -111,14 +124,8 @@ public:
 		return "Times (E_EXPR_TIMES)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprPlus(left, right, lineNb), 
-			new exprMinus(left, right, lineNb),
-			new exprDiv(left, right, lineNb),
-			new exprMod(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
+
 };
 
 //E_EXPR_DIV,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -140,14 +147,7 @@ public:
 		return "Divide (E_EXPR_DIV)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprPlus(left, right, lineNb), 
-			new exprMinus(left, right, lineNb),
-			new exprTimes(left, right, lineNb),
-			new exprMod(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_MOD,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -169,14 +169,7 @@ public:
 		return "Modulo (E_EXPR_MOD)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprPlus(left, right, lineNb), 
-			new exprMinus(left, right, lineNb),
-			new exprDiv(left, right, lineNb),
-			new exprDiv(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_GT,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -198,16 +191,7 @@ public:
 		return "Greater than (E_EXPR_GT)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return {
-			//new exprGT(left, right, lineNb),
-			new exprLT(left, right, lineNb), 
-			new exprGE(left, right, lineNb),
-			new exprLE(left, right, lineNb),
-			new exprEQ(left, right, lineNb),
-			new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_LT,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -229,16 +213,7 @@ public:
 		return "Less than (E_EXPR_LT)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprGT(left, right, lineNb),
-			//new exprLT(left, right, lineNb), 
-			new exprGE(left, right, lineNb),
-			new exprLE(left, right, lineNb),
-			new exprEQ(left, right, lineNb),
-			new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_GE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -260,16 +235,7 @@ public:
 		return "Greater or equal than (E_EXPR_GE)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprLT(left, right, lineNb), 
-			new exprGT(left, right, lineNb),
-			//new exprGE(left, right, lineNb),
-			new exprLE(left, right, lineNb),
-			new exprEQ(left, right, lineNb),
-			new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_LE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -291,16 +257,7 @@ public:
 		return "Less or equal than (E_EXPR_LE)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprLT(left, right, lineNb), 
-			new exprGT(left, right, lineNb),
-			new exprGE(left, right, lineNb),
-			//new exprLE(left, right, lineNb),
-			new exprEQ(left, right, lineNb),
-			new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_EQ,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -322,16 +279,7 @@ public:
 		return "Equal (E_EXPR_EQ)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprLT(left, right, lineNb), 
-			new exprGT(left, right, lineNb),
-			new exprGE(left, right, lineNb),
-			new exprLE(left, right, lineNb),
-			//new exprEQ(left, right, lineNb),
-			new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_NE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -353,16 +301,7 @@ public:
 		return "Not equal (E_EXPR_NE)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprLT(left, right, lineNb), 
-			new exprGT(left, right, lineNb),
-			new exprGE(left, right, lineNb),
-			new exprLE(left, right, lineNb),
-			new exprEQ(left, right, lineNb)
-			//new exprNE(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_AND,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -384,12 +323,7 @@ public:
 		return "Logical and (E_EXPR_AND)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			//new exprAnd(left, right, lineNb), 
-			new exprOr(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_OR,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -411,12 +345,7 @@ public:
 		return "Logical or (E_EXPR_OR)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprAnd(left, right, lineNb), 
-			//new exprOr(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_BITWAND,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -438,15 +367,7 @@ public:
 		return "Bitwise and (E_EXPR_BITWAND)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			//new exprBitwAnd(left, right, lineNb), 
-			new exprBitwOr(left, right, lineNb),
-			new exprBitwXor(left, right, lineNb), 
-			new exprLShift(left, right, lineNb),
-			new exprRShift(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_BITWOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -468,15 +389,7 @@ public:
 		return "Bitwise or (E_EXPR_BITWOR)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprBitwAnd(left, right, lineNb), 
-			//new exprBitwOr(left, right, lineNb),
-			new exprBitwXor(left, right, lineNb), 
-			new exprLShift(left, right, lineNb),
-			new exprRShift(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_BITWXOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -498,15 +411,7 @@ public:
 		return "Bitwise xor (E_EXPR_BITWXOR)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprBitwAnd(left, right, lineNb), 
-			new exprBitwOr(left, right, lineNb),
-			//new exprBitwXor(left, right, lineNb), 
-			new exprLShift(left, right, lineNb),
-			new exprRShift(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_LSHIFT,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -528,15 +433,7 @@ public:
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprBitwAnd(left, right, lineNb), 
-			new exprBitwOr(left, right, lineNb),
-			new exprBitwXor(left, right, lineNb), 
-			//new exprLShift(left, right, lineNb),
-			new exprRShift(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 //E_EXPR_RSHIFT,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -558,15 +455,7 @@ public:
 		return "Right shift (E_EXPR_RSHIFT)";
 	}
 
-	std::list<expr*> getMutations(void) const {
-		return { 
-			new exprBitwAnd(left, right, lineNb), 
-			new exprBitwOr(left, right, lineNb),
-			new exprBitwXor(left, right, lineNb), 
-			new exprLShift(left, right, lineNb)
-			//new exprRShift(left, right, lineNb)
-			};
-	}
+	std::vector<expr*> getMutations(void) const override;
 };
 
 #endif

@@ -7,7 +7,7 @@ class expr;
 
 class varSymNode : public symbol{
 public:
-	varSymNode(Type type, int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr)
+	varSymNode(Type type, int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr)
 		: symbol(type, lineNb, name)
 	{
 		this->init = init;
@@ -16,11 +16,9 @@ public:
 
 	~varSymNode() override ;
 
-	static varSymNode* merge(varSymNode* list, varSymNode* newSym);
-
-	static varSymNode *createSymbol(Type type, int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
+	static varSymNode *createSymbol(Type type, int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
 	static varSymNode *createSymbol(Type type, const varSymNode &old);
-	template<Type type> static varSymNode* createSymbol(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
+	template<Type type> static varSymNode* createSymbol(int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
 
 	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override;
 	
@@ -34,7 +32,7 @@ public:
 
 protected:
 	expr* init;
-	int bound;
+	unsigned int bound;
 };
 
 #endif

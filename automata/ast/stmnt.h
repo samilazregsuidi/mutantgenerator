@@ -32,6 +32,11 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
+	void mutateMutable(unsigned int id) override {
+		if (next)
+			next->mutateMutable(id);
+	}
+
 	void setLocalSymTab(symTable* local) {
 		this->local = local;
 		if(next)
@@ -52,6 +57,8 @@ public:
 		if(next)
 			next->printSymTab();
 	}
+
+	//virtual stmnt* deepCopy(void) const = 0;
 
 protected:
 	symTable* local;
@@ -104,6 +111,23 @@ public:
 			id = block->assignMutables(mask, id);
 		return (next? next->assignMutables(mask, id) : id);
 	}
+
+	void mutateMutable(unsigned int id) override {
+
+		block->mutateMutable(id);
+
+		if(next) 
+			next->mutateMutable(id);
+
+	}
+
+	/*stmnt* deepCopy(void) const {
+		stmntDecr* copy = new stmntSeq(*this);
+		copy->block = block->deepCopy();
+
+		copy->next = next? next->copy() : nullptr;
+		if(copy->next) copy->next->prev = copy;
+	}*/
 
 protected:
 	stmnt* block;
@@ -165,6 +189,41 @@ public:
 		return + (next? next->assignMutables(mask, id) : id);
 	}
 
+	void mutateMutable(unsigned int id) override {
+
+		if(varRef->getMId() == id) {
+			auto mutations = varRef->getMutations();
+			assert(mutations.size());
+			delete varRef;
+			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
+
+		if(assign->getMId() == id) {
+			auto mutations = assign->getMutations();
+			assert(mutations.size());
+			delete assign;
+			assign = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		varRef->mutateMutable(id);
+		assign->mutateMutable(id);
+
+		if(next) 
+			next->mutateMutable(id);	
+
+	}
+
+	/*stmnt* deepCopy(void) const {
+		stmntDecr* copy = new stmntAsgn(*this);
+		copy->varRef = varRef->deepCopy();
+		copy->assign = assign->deepCopy();
+
+		copy->next = next? next->copy() : nullptr;
+		if(copy->next) copy->next->prev = copy;
+	}*/
+
 private:
 	exprVarRef* varRef;
 	expr* assign;
@@ -203,6 +262,31 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
+	void mutateMutable(unsigned int id) override {
+
+		if(varRef->getMId() == id) {
+			auto mutations = varRef->getMutations();
+			assert(mutations.size());
+			delete varRef;
+			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
+
+		varRef->mutateMutable(id);
+
+		if(next) 
+			next->mutateMutable(id);
+
+	}
+	
+	/*stmnt* deepCopy(void) const {
+		stmntDecr* copy = new stmntIncr(*this);
+		copy->varRef = varRef->deepCopy();
+
+		copy->next = next? next->copy() : nullptr;
+		if(copy->next) copy->next->prev = copy;
+	}*/
+
 private:
 	exprVarRef* varRef;
 };
@@ -240,6 +324,31 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
+	void mutateMutable(unsigned int id) override {
+
+		if(varRef->getMId() == id) {
+			auto mutations = varRef->getMutations();
+			assert(mutations.size());
+			delete varRef;
+			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
+
+		varRef->mutateMutable(id);
+
+		if(next) 
+			next->mutateMutable(id);
+
+	}
+
+	/*stmnt* deepCopy(void) const {
+		stmntDecr* copy = new stmntDecr(*this);
+		copy->varRef = varRef->deepCopy();
+
+		copy->next = next? next->copy() : nullptr;
+		if(copy->next) copy->next->prev = copy;
+	}*/
+
 private:
 	exprVarRef* varRef;
 };
@@ -252,7 +361,6 @@ public:
 		: stmnt(astNode::E_STMNT_EXPR, lineNb)
 	{
 		this->child = child;
-
 		this->child->setParent(this);
 	}
 
@@ -276,6 +384,31 @@ public:
 			id = child->assignMutables(mask, id);
 		return (next? next->assignMutables(mask, id) : id);
 	}
+
+	void mutateMutable(unsigned int id) override {
+
+		if(child->getMId() == id) {
+			auto mutations = child->getMutations();
+			assert(mutations.size());
+			delete child;
+			child = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
+
+		child->mutateMutable(id);
+
+		if(next) 
+			next->mutateMutable(id);
+
+	}
+
+	/*stmnt* deepCopy(void) const {
+		stmntExpr* copy = new stmntExpr(*this);
+		copy->child = child->deepCopy();
+
+		copy->next = next? next->copy() : nullptr;
+		if(copy->next) copy->next->prev = copy;
+	}*/
 
 private:
 	expr* child;

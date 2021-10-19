@@ -1,6 +1,8 @@
 #ifndef EXPR_H
 #define EXPR_H
 
+#include <vector>
+
 #include "astNode.h"
 
 class exprVarRef;
@@ -12,6 +14,20 @@ protected:
 	expr(Type type, int lineNb)
 		: astNode(type, lineNb)
 	{}
+
+public:
+
+	void mutateMutable(unsigned int id) override {
+		id++;//keep compiler happy
+		return;
+	}
+
+	virtual std::vector<expr*> getMutations(void) const {
+		assert(false);
+		return std::vector<expr*>();
+	}
+
+	//virtual expr* deepCopy(void) const = 0;
 };
 
 //E_EXPR_COND,		// child[0] = E_EXPR_* (the condition), child[1] = E_EXPR_* (then), child[2] = E_EXPR_* (else)
@@ -48,6 +64,42 @@ public:
 		}
 		return id;
 	}
+
+	void mutateMutable(unsigned int id) override {
+
+		if(cond->getMId() == id) {
+			auto mutations = cond->getMutations();
+			assert(mutations.size());
+			delete cond;
+			cond = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		if(then->getMId() == id) {
+			auto mutations = then->getMutations();
+			assert(mutations.size());
+			delete then;
+			then = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		if(elsE->getMId() == id) {
+			auto mutations = elsE->getMutations();
+			assert(mutations.size());
+			delete elsE;
+			elsE = mutations[rand() % mutations.size()]; 
+			return;
+		}
+
+		cond->mutateMutable(id);
+		then->mutateMutable(id);
+		elsE->mutateMutable(id);	
+
+	}
+
+	/*virtual expr* deepCopy(void) const override {
+		
+	}*/
 
 private:
 	expr* cond;

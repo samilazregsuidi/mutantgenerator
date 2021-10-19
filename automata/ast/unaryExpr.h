@@ -25,6 +25,20 @@ protected:
 		return id;
 	}
 
+	void mutateMutable(unsigned int id) override {
+
+		if(expression->getMId() == id) {
+			auto mutations = expression->getMutations();
+			assert(mutations.size());
+			delete expression;
+			expression = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
+
+		expression->mutateMutable(id);	
+
+	}
+
 
 public:
 	expr* expression;

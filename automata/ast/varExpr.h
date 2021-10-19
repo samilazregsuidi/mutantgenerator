@@ -36,6 +36,14 @@ public:
 		return sym;
 	}
 
+	expr* getIndex(void) const {
+		return index;
+	}
+
+	void setIndex(expr* index) {
+		this->index = index;
+	}
+
 	std::string getName(void) const;
 
 	operator std::string() const override;
@@ -44,16 +52,8 @@ public:
 		return "Variable or field name (E_VARREF_NAME)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type)){
-			id = (index? index->assignMutables(mask, id) : id);
-			mId = ++id;
-		}
-		return id;
-	}
+	symbol::Type getExprType(void) const;
 
-	std::list<expr*> getMutations(void) const;
-	
 private:
 	std::string symName;
 	expr* index;
@@ -94,12 +94,15 @@ public:
 
 	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
 		if(mask.isPresent(type)) {
-			id = varRefName->assignMutables(mask, id);
-			id = (subfieldsVar? subfieldsVar->assignMutables(mask, id) : id);
+			mId = ++id;
 		}
 		return id;
 	}
 
+	std::vector<expr*> getMutations(void) const;
+
+	symbol::Type getExprType(void) const;
+	
 private:
 	exprVarRefName *varRefName;
 	exprVarRef *subfieldsVar;
@@ -133,6 +136,16 @@ public:
 		if(mask.isPresent(type))
 			id = varRef->assignMutables(mask, id);
 		return id;
+	}
+
+	void mutateMutable(unsigned int id) override {
+		if(varRef->getMId() == id){
+			auto mutations = varRef->getMutations();
+			assert(mutations.size());
+			delete varRef;
+			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			return;
+		}
 	}
 
 private:
