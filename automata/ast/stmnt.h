@@ -27,11 +27,10 @@ public:
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
-	//virtual unsigned int processVariables(symTable* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const;
-
-	/*void resolveVariables(symTable* global = nullptr) override {
-		if(next) next->resolveVariables(global);
-	}*/
+	//called for non mutable stmnts (e.g., vardecl)
+	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
+		return (next? next->assignMutables(mask, id) : id);
+	}
 
 	void setLocalSymTab(symTable* local) {
 		this->local = local;
@@ -86,10 +85,6 @@ protected:
 	}
 
 public:
-	/*void resolveVariables(symTable* globalSymTab = nullptr) override {	
-		block->resolveVariables(local);
-		if(next) next->resolveVariables(local);
-	}*/
 
 	operator std::string() const override {
 		std::string res = "{\n";
@@ -104,6 +99,12 @@ public:
 		return "Seq (E_STMNT_SEQ)";
 	}
 
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = block->assignMutables(mask, id);
+		return (next? next->assignMutables(mask, id) : id);
+	}
+
 protected:
 	stmnt* block;
 };
@@ -116,12 +117,12 @@ public:
 		: stmntSeq(astNode::E_STMNT_ATOMIC, block, lineNb)
 	{}
 
-	operator std::string() const override{
+	operator std::string() const override {
 		return "atomic " + stmntSeq::operator std::string()
 		+ (next? _tab() + std::string(*next) : ""); 
 	}
 
-	std::string getTypeDescr(void) const override{
+	std::string getTypeDescr(void) const override {
 		return "Atomic (E_STMNT_ATOMIC)";
 	}
 };
@@ -147,12 +148,6 @@ public:
 			delete next;
 	}
 
-	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
-		varRef->resolveVariables(local);
-		assign->resolveVariables(local);
-		if(next) next->resolveVariables(globalSymTab);
-	}*/
-
 	operator std::string() const override{
 		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" 
 		+ (next? _tab() + std::string(*next) : "");
@@ -160,6 +155,14 @@ public:
 
 	std::string getTypeDescr(void) const override{
 		return "Assignment (E_STMNT_ASGN)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type)) {
+			id = varRef->assignMutables(mask, id);
+			id = assign->assignMutables(mask, id);
+		}
+		return + (next? next->assignMutables(mask, id) : id);
 	}
 
 private:
@@ -185,18 +188,19 @@ public:
 			delete next;
 	}
 
-	/*void resolveVariables(symTable* globalSymTab = nullptr) override {	
-		varRef->resolveVariables(local);
-		if(next) next->resolveVariables(local);
-	}*/
-
-	operator std::string() const override{
+	operator std::string() const override {
 		return std::string(*varRef) + "++;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const override{
+	std::string getTypeDescr(void) const override {
 		return "Increment (E_STMNT_INCR)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = varRef->assignMutables(mask, id);
+		return (next? next->assignMutables(mask, id) : id);
 	}
 
 private:
@@ -221,18 +225,19 @@ public:
 			delete next;
 	}
 
-	/*void resolveVariables(symTable* globalSymTab = nullptr) override {	
-		varRef->resolveVariables(local);
-		if(next) next->resolveVariables(local);
-	}*/
-
-	operator std::string() const override{
+	operator std::string() const override {
 		return std::string(*varRef) + "--;\n" 
 		+ (next? _tab() + std::string(*next) : "");
 	}
 
-	std::string getTypeDescr(void) const override{
+	std::string getTypeDescr(void) const override {
 		return "Decrement (E_STMNT_DECR)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = varRef->assignMutables(mask, id);
+		return (next? next->assignMutables(mask, id) : id);
 	}
 
 private:
@@ -257,11 +262,6 @@ public:
 			delete next;
 	}
 
-	/*void resolveVariables(symTable* globalSymTab = nullptr) override {
-		child->resolveVariables(local);
-		if(next) next->resolveVariables(local);
-	}*/
-
 	operator std::string() const override{
 		return std::string(*child) + ";\n"
 		+ (next? _tab() + std::string(*next) : "");
@@ -269,6 +269,12 @@ public:
 
 	std::string getTypeDescr(void) const override{
 		return "Expression wrapper (E_STMNT_EXPR)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = child->assignMutables(mask, id);
+		return (next? next->assignMutables(mask, id) : id);
 	}
 
 private:

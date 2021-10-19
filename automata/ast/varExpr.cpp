@@ -92,6 +92,13 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 	}*/
 }
 
+std::list<expr*> exprVarRefName::getMutations(void) const {
+	std::list<symbol*> symList = sym->getSymTable()->getSymbols(sym->getType());
+	std::list<expr*> mutations;
+	for(auto& s: symList)
+		mutations.push_back(new exprVarRefName(s->getName(), s, lineNb));
+}
+
 /*******************************************************************************************************************/
 
 exprVarRef::exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar = nullptr)

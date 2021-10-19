@@ -21,6 +21,15 @@ protected:
 		delete left;
 	}
 
+	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
+		if(mask.isPresent(type)) {
+			id = left->assignMutables(mask, id);
+			mId = ++id;//operator Id;
+			id = right->assignMutables(mask, id);
+		}
+		return id; 
+	}
+
 
 protected:
 	expr* left;
@@ -43,6 +52,15 @@ public:
 	std::string getTypeDescr(void) const override {
 		return "Plus (E_EXPR_PLUS)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprMinus(left, right, lineNb), 
+			new exprTimes(left, right, lineNb),
+			new exprDiv(left, right, lineNb),
+			new exprMod(left, right, lineNb)
+			};
+	} 
 };
 
 //E_EXPR_MINUS,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -63,6 +81,15 @@ public:
 	{
 		return "Minus (E_EXPR_MINUS)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprPlus(left, right, lineNb), 
+			new exprTimes(left, right, lineNb),
+			new exprDiv(left, right, lineNb),
+			new exprMod(left, right, lineNb)
+			};
+	} 
 };
 
 //E_EXPR_TIMES,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -82,6 +109,15 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Times (E_EXPR_TIMES)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprPlus(left, right, lineNb), 
+			new exprMinus(left, right, lineNb),
+			new exprDiv(left, right, lineNb),
+			new exprMod(left, right, lineNb)
+			};
 	}
 };
 
@@ -103,6 +139,15 @@ public:
 	{
 		return "Divide (E_EXPR_DIV)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprPlus(left, right, lineNb), 
+			new exprMinus(left, right, lineNb),
+			new exprTimes(left, right, lineNb),
+			new exprMod(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_MOD,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -122,6 +167,15 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Modulo (E_EXPR_MOD)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprPlus(left, right, lineNb), 
+			new exprMinus(left, right, lineNb),
+			new exprDiv(left, right, lineNb),
+			new exprDiv(left, right, lineNb)
+			};
 	}
 };
 
@@ -143,6 +197,17 @@ public:
 	{
 		return "Greater than (E_EXPR_GT)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return {
+			//new exprGT(left, right, lineNb),
+			new exprLT(left, right, lineNb), 
+			new exprGE(left, right, lineNb),
+			new exprLE(left, right, lineNb),
+			new exprEQ(left, right, lineNb),
+			new exprNE(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_LT,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -162,6 +227,17 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Less than (E_EXPR_LT)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprGT(left, right, lineNb),
+			//new exprLT(left, right, lineNb), 
+			new exprGE(left, right, lineNb),
+			new exprLE(left, right, lineNb),
+			new exprEQ(left, right, lineNb),
+			new exprNE(left, right, lineNb)
+			};
 	}
 };
 
@@ -183,6 +259,17 @@ public:
 	{
 		return "Greater or equal than (E_EXPR_GE)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprLT(left, right, lineNb), 
+			new exprGT(left, right, lineNb),
+			//new exprGE(left, right, lineNb),
+			new exprLE(left, right, lineNb),
+			new exprEQ(left, right, lineNb),
+			new exprNE(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_LE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -202,6 +289,17 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Less or equal than (E_EXPR_LE)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprLT(left, right, lineNb), 
+			new exprGT(left, right, lineNb),
+			new exprGE(left, right, lineNb),
+			//new exprLE(left, right, lineNb),
+			new exprEQ(left, right, lineNb),
+			new exprNE(left, right, lineNb)
+			};
 	}
 };
 
@@ -223,6 +321,17 @@ public:
 	{
 		return "Equal (E_EXPR_EQ)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprLT(left, right, lineNb), 
+			new exprGT(left, right, lineNb),
+			new exprGE(left, right, lineNb),
+			new exprLE(left, right, lineNb),
+			//new exprEQ(left, right, lineNb),
+			new exprNE(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_NE,			// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -242,6 +351,17 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Not equal (E_EXPR_NE)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprLT(left, right, lineNb), 
+			new exprGT(left, right, lineNb),
+			new exprGE(left, right, lineNb),
+			new exprLE(left, right, lineNb),
+			new exprEQ(left, right, lineNb)
+			//new exprNE(left, right, lineNb)
+			};
 	}
 };
 
@@ -264,8 +384,11 @@ public:
 		return "Logical and (E_EXPR_AND)";
 	}
 
-	void mutate(void) {
-		left->getMutations();
+	std::list<expr*> getMutations(void) const {
+		return { 
+			//new exprAnd(left, right, lineNb), 
+			new exprOr(left, right, lineNb)
+			};
 	}
 };
 
@@ -287,6 +410,13 @@ public:
 	{
 		return "Logical or (E_EXPR_OR)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprAnd(left, right, lineNb), 
+			//new exprOr(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_BITWAND,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -306,6 +436,16 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Bitwise and (E_EXPR_BITWAND)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			//new exprBitwAnd(left, right, lineNb), 
+			new exprBitwOr(left, right, lineNb),
+			new exprBitwXor(left, right, lineNb), 
+			new exprLShift(left, right, lineNb),
+			new exprRShift(left, right, lineNb)
+			};
 	}
 };
 
@@ -327,6 +467,16 @@ public:
 	{
 		return "Bitwise or (E_EXPR_BITWOR)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprBitwAnd(left, right, lineNb), 
+			//new exprBitwOr(left, right, lineNb),
+			new exprBitwXor(left, right, lineNb), 
+			new exprLShift(left, right, lineNb),
+			new exprRShift(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_BITWXOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -346,6 +496,16 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Bitwise xor (E_EXPR_BITWXOR)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprBitwAnd(left, right, lineNb), 
+			new exprBitwOr(left, right, lineNb),
+			//new exprBitwXor(left, right, lineNb), 
+			new exprLShift(left, right, lineNb),
+			new exprRShift(left, right, lineNb)
+			};
 	}
 };
 
@@ -367,6 +527,16 @@ public:
 	{
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprBitwAnd(left, right, lineNb), 
+			new exprBitwOr(left, right, lineNb),
+			new exprBitwXor(left, right, lineNb), 
+			//new exprLShift(left, right, lineNb),
+			new exprRShift(left, right, lineNb)
+			};
+	}
 };
 
 //E_EXPR_RSHIFT,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
@@ -386,6 +556,16 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Right shift (E_EXPR_RSHIFT)";
+	}
+
+	std::list<expr*> getMutations(void) const {
+		return { 
+			new exprBitwAnd(left, right, lineNb), 
+			new exprBitwOr(left, right, lineNb),
+			new exprBitwXor(left, right, lineNb), 
+			new exprLShift(left, right, lineNb)
+			//new exprRShift(left, right, lineNb)
+			};
 	}
 };
 

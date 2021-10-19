@@ -19,9 +19,12 @@ protected:
 		delete expression;
 	}
 
-	/*void resolveVariables(symTable* parent) override {
-		expression->resolveVariables(parent);
-	}*/
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = expression->assignMutables(mask, id);
+		return id;
+	}
+
 
 public:
 	expr* expression;

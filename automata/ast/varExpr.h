@@ -38,12 +38,22 @@ public:
 
 	std::string getName(void) const;
 
-	operator std::string() const;
+	operator std::string() const override;
 
-	std::string getTypeDescr(void) const 
-	{
+	std::string getTypeDescr(void) const override {
 		return "Variable or field name (E_VARREF_NAME)";
 	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type)){
+			id = (index? index->assignMutables(mask, id) : id);
+			mId = ++id;
+		}
+		return id;
+	}
+
+	std::list<expr*> getMutations(void) const;
+	
 private:
 	std::string symName;
 	expr* index;
@@ -60,16 +70,6 @@ public:
 
 	void resolve(symTable *global, symTable* subField = nullptr);
 
-	symbol *symbolLookUpRight() const
-	{
-		return subfieldsVar ? subfieldsVar->symbolLookUpRight() : varRefName->symbolLookUpRight();
-	}
-
-	symbol *symbolLookUpLeft(void) const
-	{
-		return varRefName->symbolLookUpLeft();
-	}
-
 	bool hasSubField(void) const
 	{
 		return subfieldsVar != nullptr;
@@ -80,19 +80,24 @@ public:
 		return subfieldsVar;
 	}
 
-	const exprVarRefName *getField() const
-	{
+	const exprVarRefName *getField() const {
 		return varRefName;
 	}
 
-	operator std::string() const
-	{
+	operator std::string() const override {
 		return std::string(*varRefName) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
 	}
 
-	std::string getTypeDescr(void) const
-	{
+	std::string getTypeDescr(void) const override {
 		return "Variable reference (E_VARREF)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type)) {
+			id = varRefName->assignMutables(mask, id);
+			id = (subfieldsVar? subfieldsVar->assignMutables(mask, id) : id);
+		}
+		return id;
 	}
 
 private:
@@ -108,39 +113,26 @@ public:
 
 	~exprVar() override;
 
-	const exprVarRef *getVarRef(void) const
-	{
+	const exprVarRef *getVarRef(void) const {
 		return varRef;
 	}
 
-	const exprVarRefName *getVarRefName(void) const
-	{
+	const exprVarRefName *getVarRefName(void) const {
 		return getVarRef()->getField();
 	}
 
-	/*bool varOccurs(const std::string &var, const symTabNode *globalSymTab, const symTabNode *processSymTab, const mTypeList *mtypes) const
-	{
-		return child[0]->var2String(globalSymTab, processSymTab, mtypes) == var;
-	}*/
-
-	symbol *symbolLookUpRight(void) const
-	{
-		return varRef->symbolLookUpRight();
-	}
-
-	symbol *symbolLookUpLeft(void) const
-	{
-		return varRef->symbolLookUpLeft();
-	}
-
-	operator std::string() const
-	{
+	operator std::string() const override {
 		return *varRef;
 	}
 
-	std::string getTypeDescr(void) const
-	{
+	std::string getTypeDescr(void) const override {
 		return "Variable reference wrapper (E_EXPR_VAR)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type))
+			id = varRef->assignMutables(mask, id);
+		return id;
 	}
 
 private:

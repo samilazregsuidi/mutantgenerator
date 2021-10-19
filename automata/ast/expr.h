@@ -12,11 +12,6 @@ protected:
 	expr(Type type, int lineNb)
 		: astNode(type, lineNb)
 	{}
-
-public:
-	/*void resolveVariables(symTable* globalSymTab) override {
-		globalSymTab = globalSymTab;
-	}*/
 };
 
 //E_EXPR_COND,		// child[0] = E_EXPR_* (the condition), child[1] = E_EXPR_* (then), child[2] = E_EXPR_* (else)
@@ -43,6 +38,15 @@ public:
 	std::string getTypeDescr(void) const override
 	{
 		return "Conditional expression (E_EXPR_COND)";
+	}
+
+	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
+		if(mask.isPresent(type)){
+			id = cond->assignMutables(mask, id);
+			id = then->assignMutables(mask, id);
+			id = elsE->assignMutables(mask, id);
+		}
+		return id;
 	}
 
 private:

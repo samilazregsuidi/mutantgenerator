@@ -15,6 +15,7 @@
 astNode::astNode(Type type, int lineNb) {
 	this->type			= type;
 	this->lineNb 		= lineNb;
+	this->mId 			= 0;
 }
 
 astNode::Type astNode::getType(void) const {
@@ -31,6 +32,13 @@ void astNode::setParent(astNode* parent) {
 
 astNode* astNode::getParent(void) const {
 	return parent;
+}
+
+unsigned int astNode::assignMutables(const Mask& mask, unsigned int id) {
+	if(mask.isPresent(type)) {
+		return (mId = ++id);
+	}
+	return id;
 }
 
 int astNode::tab_lvl = 0;

@@ -69,6 +69,8 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
+	std::cout << "NUMBER OF MUTABLE NODE " << program->assignMutables() << "\n";
+
 	std::ofstream output;
 	output.open("format.pml");
 	output << std::string(*program);
