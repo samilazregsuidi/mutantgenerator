@@ -206,7 +206,7 @@ public:
 				E_EXPR_NFULL,	// child[0] = E_VARREF
 				E_EXPR_EMPTY,	// child[0] = E_VARREF
 				E_EXPR_NEMPTY,	// child[0] = E_VARREF
-				E_EXPR_SKIP,	//
+				//E_EXPR_SKIP,	//
 				E_EXPR_TRUE,	//
 				E_EXPR_FALSE,	//
 

@@ -74,16 +74,20 @@ int main(int argc, char *argv[]) {
 	std::cout << "NUMBER OF MUTABLE NODE " << index << "\n";
 
 	std::ofstream output;
-	output.open("original.pml");
+	output.open("test/original.pml");
 	output << std::string(*program);
 	output.close();
 
-	srand(time(nullptr));
-	//int index = rand() % index;
-	unsigned int i = 10;
-	program->mutateMutable(std::stoi(argv[1]));
+	for(int j = 1; j < 2; j++)
+	for(unsigned int i = 1; i <= index; i++) {
+		auto copy = program->deepCopy();
+		copy->mutateMutable(i);
+		output.open("test/mutant_"+ std::to_string(i*j) + ".pml");
+		output << std::string(*copy);
+		output.close();
+	}
 
-	output.open("mutant.pml");
+	output.open("test/original_.pml");
 	output << std::string(*program);
 	output.close();
 

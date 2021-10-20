@@ -16,37 +16,38 @@ g++ -Wall -Wextra -ggdb -O0 -o mutantgenerator main.cpp \
 	\
 	./automata/symbol/symbol.cpp \
 	./automata/symbol/symTable.cpp \
-	./automata/symbol/bitSymNode.cpp \
-	./automata/symbol/boolSymNode.cpp \
-	./automata/symbol/byteSymNode.cpp \
-	./automata/symbol/shortSymNode.cpp \
-	./automata/symbol/intSymNode.cpp \
-	./automata/symbol/unsgnSymNode.cpp \
-	./automata/symbol/utypeSymNode.cpp \
-	./automata/symbol/mtypeSymNode.cpp \
-	./automata/symbol/cidSymNode.cpp \
-	./automata/symbol/chanSymNode.cpp \
-	./automata/symbol/procSymNode.cpp \
-	./automata/symbol/tdefSymNode.cpp \
-	./automata/symbol/varSymNode.cpp \
-	./automata/symbol/naSymNode.cpp \
-	./automata/symbol/pidSymNode.cpp \
-	./automata/symbol/mtypedefSymNode.cpp \
+	./automata/symbol/typedef/procSymNode.cpp \
+	./automata/symbol/typedef/tdefSymNode.cpp \
+	./automata/symbol/typedef/mtypedefSymNode.cpp \
+	./automata/symbol/vardef/bitSymNode.cpp \
+	./automata/symbol/vardef/boolSymNode.cpp \
+	./automata/symbol/vardef/byteSymNode.cpp \
+	./automata/symbol/vardef/shortSymNode.cpp \
+	./automata/symbol/vardef/intSymNode.cpp \
+	./automata/symbol/vardef/unsgnSymNode.cpp \
+	./automata/symbol/vardef/utypeSymNode.cpp \
+	./automata/symbol/vardef/mtypeSymNode.cpp \
+	./automata/symbol/vardef/cidSymNode.cpp \
+	./automata/symbol/vardef/chanSymNode.cpp \
+	./automata/symbol/vardef/varSymNode.cpp \
+	./automata/symbol/vardef/naSymNode.cpp \
+	./automata/symbol/vardef/pidSymNode.cpp \
 	\
 	./automata/ast/astNode.cpp \
-	./automata/ast/stmnt.cpp \
-	./automata/ast/chanStmnt.cpp \
-	./automata/ast/flowStmnt.cpp \
-	./automata/ast/stdlibStmnt.cpp \
-	./automata/ast/clockStmnt.cpp \
-	./automata/ast/decl.cpp \
-	./automata/ast/expr.cpp \
-	./automata/ast/unaryExpr.cpp \
-	./automata/ast/binaryExpr.cpp \
-	./automata/ast/varExpr.cpp \
-	./automata/ast/constExpr.cpp \
-	./automata/ast/argExpr.cpp \
+	./automata/ast/stmnt/stmnt.cpp \
+	./automata/ast/stmnt/chanStmnt.cpp \
+	./automata/ast/stmnt/flowStmnt.cpp \
+	./automata/ast/stmnt/stdlibStmnt.cpp \
+	./automata/ast/stmnt/clockStmnt.cpp \
+	./automata/ast/stmnt/decl.cpp \
+	./automata/ast/expr/expr.cpp \
+	./automata/ast/expr/unaryExpr.cpp \
+	./automata/ast/expr/binaryExpr.cpp \
+	./automata/ast/expr/varExpr.cpp \
+	./automata/ast/expr/constExpr.cpp \
+	./automata/ast/expr/argExpr.cpp \
 	\
-	-I./automata/symbol -I./automata/symbol/visitor -I./automata/ast -I./parser \
+	-I./automata/symbol -I./automata/symbol/typedef -I./automata/symbol/vardef -I./automata/symbol/visitor \
+	-I./automata/ast -I./automata/ast/stmnt -I./automata/ast/expr -I./parser \
 	\
 	-lstdc++
