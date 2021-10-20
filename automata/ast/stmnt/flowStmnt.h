@@ -17,6 +17,8 @@ public:
 
 		this->block->setParent(this);
 		this->nextOpt->setParent(this);
+
+		//std::cout << "OPT $1 $2 : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
 	stmntOpt(stmnt* block, int lineNb)
@@ -26,6 +28,8 @@ public:
 		this->nextOpt = nullptr;
 
 		this->block->setParent(this);
+
+		//std::cout << "OPT $1 : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
 	~stmntOpt() override {
@@ -86,6 +90,8 @@ public:
 	{
 		this->opts = opts;
 		this->opts->setParent(this);
+
+		//std::cout << "IF : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
 	~stmntIf() override {

@@ -8,6 +8,11 @@
 #include "procSymNode.h"
 
 stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
+
+	//std::cout << "PROG : "<< (stmnts ? std::string(*stmnts) : "null") << "\n";
+
+	//std::cout << "NEWS : "<< (newStmnt? std::string(*newStmnt) : "null") << "\n";
+
 	if (!stmnts)
 		return newStmnt;
 	if (!newStmnt)

@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 	output << std::string(*program);
 	output.close();
 
-	for(int j = 1; j < 2; j++)
+	for(int j = 1; j < 1000; j++)
 	for(unsigned int i = 1; i <= index; i++) {
 		auto copy = program->deepCopy();
 		copy->mutateMutable(i);

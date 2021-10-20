@@ -89,6 +89,8 @@ protected:
 		: stmnt(type, lineNb)
 	{
 		this->block = block;
+
+		//std::cout << "SEQ : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
 public:
@@ -140,11 +142,12 @@ class stmntAtomic : public stmntSeq
 public:
 	stmntAtomic(stmnt *block, int lineNb)
 		: stmntSeq(astNode::E_STMNT_ATOMIC, block, lineNb)
-	{}
+	{
+		//std::cout << "ATOMIC : line " << lineNb << " _ " << std::string(*this) << "\n";
+	}
 
 	operator std::string() const override {
-		return "atomic " + stmntSeq::operator std::string()
-		+ (next? _tab() + std::string(*next) : ""); 
+		return "atomic " + stmntSeq::operator std::string();
 	}
 
 	std::string getTypeDescr(void) const override {

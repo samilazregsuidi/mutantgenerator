@@ -14,8 +14,15 @@ int nbrLines = 0;
 char strBuffer[1024];
 int strBufferLen = 0;
 
-#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
-#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
+#define DBOUG 0
+
+#ifdef DBOUG
+	#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
+	#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
+#elif
+	#define DBUG(TOKEN)
+	#define DBUG_CHAR(CHAR)
+#endif
 
 %}
 

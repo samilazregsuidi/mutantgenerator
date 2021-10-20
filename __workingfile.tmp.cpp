@@ -26,7 +26,7 @@ active proctype controller() {
  mtype pcommand = start;
  mtype level = medium;
 
- do
+ if
  :: atomic {
    cCmd?pcommand;
    readMsg = commandMsg;
@@ -120,7 +120,7 @@ active proctype controller() {
 
   fi;
 
- od;
+ fi;
 }
 
 active proctype methanealarm() {
