@@ -18,7 +18,11 @@ public:
 
 	exprVarRefName(const std::string& symName, symbol *sym, int lineNb);
 
-	~exprVarRefName() override;
+	void setIndex(expr* index) {
+		rmChild(this->index);
+		addChild(index);
+		this->index = index;
+	}
 
 	void resolve(symTable *global);
 
@@ -38,10 +42,6 @@ public:
 
 	expr* getIndex(void) const {
 		return index;
-	}
-
-	void setIndex(expr* index) {
-		this->index = index;
 	}
 
 	std::string getName(void) const;
@@ -68,7 +68,17 @@ class exprVarRef : public expr
 public:
 	exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar);
 
-	~exprVarRef() override;
+	void setVarRefName(exprVarRefName* varRefName) {
+		rmChild(this->varRefName);
+		addChild(varRefName);
+		this->varRefName = varRefName;
+	}
+
+	void setSubField(exprVarRef* subField) {
+		rmChild(this->subfieldsVar);
+		addChild(subField);
+		this->subfieldsVar = subField;
+	}
 
 	void resolve(symTable *global, symTable* subField = nullptr);
 
@@ -118,7 +128,11 @@ class exprVar : public expr
 public:
 	exprVar(exprVarRef *varRef, int lineNb);
 
-	~exprVar() override;
+	void setVarRef(exprVarRef* varRef) {
+		rmChild(this->varRef);
+		addChild(varRef);
+		this->varRef = varRef;
+	}
 
 	const exprVarRef *getVarRef(void) const {
 		return varRef;
@@ -146,14 +160,15 @@ public:
 		return id;
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 		if(varRef->getMId() == id){
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
 			delete varRef;
-			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			setVarRef(static_cast<exprVarRef*>(mutations[rand() % mutations.size()])); 
+			return true;
 		}
+		return false;
 	}
 
 	expr* deepCopy(void) const override;

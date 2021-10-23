@@ -14,20 +14,18 @@ public:
 		: stmnt(astNode::E_STMNT_PRINT, lineNb)
 	{
 		this->toPrint = toPrint;
-		this->argList = argList;
 
-		this->argList->setParent(this);
+		setArgList(argList);
 	}
 
-	~stmntPrint() override {
-		delete argList;
-		if(next)
-			delete next;
+	void setArgList(exprArgList* argList) {
+		rmChild(this->argList);
+		addChild(argList);
+		this->argList = argList;
 	}
 
 	operator std::string() const override{
-		return "printf(" + '\"' + toPrint + '\"' + (argList? std::string(*argList) : ", ") + ");\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return "printf(" + '\"' + toPrint + '\"' + (argList? std::string(*argList) : ", ") + ");\n";
 	}
 
 	std::string getTypeDescr(void) const override{
@@ -56,27 +54,23 @@ public:
 	stmntPrintm(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_PRINTM, lineNb)
 	{
-		this->varRef = varRef;
-
-		this->varRef->setParent(this);
+		setVarRef(varRef);
 	}
 
 	stmntPrintm(int constant, int lineNb)
 		: stmnt(astNode::E_STMNT_PRINTM,  lineNb)
 	{
-		this->varRef = nullptr;
 		this->constant = constant;
 	}
 
-	~stmntPrintm() override {
-		delete varRef;
-		if(next)
-			delete next;
+	void setVarRef(exprVarRef* varRef) {
+		rmChild(this->varRef);
+		addChild(varRef);
+		this->varRef = varRef;
 	}
 
 	operator std::string() const override{
-		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return "printm("+(varRef ? std::string(*varRef) : std::to_string(constant)) + ");\n";
 	}
 
 	std::string getTypeDescr(void) const override{
@@ -105,20 +99,17 @@ public:
 	stmntAssert(expr *toAssert, int lineNb)
 		: stmnt(astNode::E_STMNT_ASSERT, lineNb)
 	{
+		setToAssert(toAssert);
+	}
+	
+	void setToAssert(expr* toAssert) {
+		rmChild(this->toAssert);
+		addChild(toAssert);
 		this->toAssert = toAssert;
-
-		this->toAssert->setParent(this);
 	}
 
-	~stmntAssert() override {
-		delete toAssert;
-		if(next)
-			delete next;
-	}
-
-	operator std::string() const override{
-		return "assert(" + std::string(*toAssert) + ");\n" 
-		+ (next? _tab() + std::string(*next) : "") ;
+	operator std::string() const override {
+		return "assert(" + std::string(*toAssert) + ");\n";
 	}
 
 	std::string getTypeDescr(void) const override{

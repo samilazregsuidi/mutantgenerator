@@ -7,68 +7,65 @@
 class exprUnary : public expr
 {
 protected:
-	exprUnary(Type type, expr* expression, int lineNb)
+	exprUnary(Type type, expr* mExpr, int lineNb)
 		: expr(type, lineNb)
 	{
-		this->expression = expression;
-
-		this->expression->setParent(this);
+		setExpr(mExpr);
 	}
 
-	~exprUnary() override {
-		delete expression;
+	void setExpr(expr* mExpr) {
+		rmChild(this->mExpr);
+		addChild(mExpr);
+		this->mExpr = mExpr;
 	}
 
 	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
 		if(mask.isPresent(type))
-			id = expression->assignMutables(mask, id);
+			id = mExpr->assignMutables(mask, id);
 		return id;
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
-		if(expression->getMId() == id) {
-			auto mutations = expression->getMutations();
+		if(mExpr->getMId() == id) {
+			auto mutations = mExpr->getMutations();
 			assert(mutations.size());
-			delete expression;
-			expression = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			setExpr(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			return true;
 		}
 
-		expression->mutateMutable(id);	
+		return false;
 
 	}
 
 	symbol::Type getExprType(void) const {
-		return expression->getExprType();
+		return mExpr->getExprType();
 	}
 
 public:
-	expr* expression;
+	expr* mExpr;
 };
 
 //E_EXPR_PAR,			// child[0] = E_EXPR_*
 class exprPar : public exprUnary
 {
 public:
-	exprPar(expr *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_PAR, expression, lineNb)
+	exprPar(expr *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_PAR, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "(" + std::string(*expression) + ")";
+	operator std::string() const override {
+		return "(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Parentheses (E_EXPR_PAR)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprPar* copy = new exprPar(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -77,24 +74,22 @@ public:
 class exprCount : public exprUnary
 {
 public:
-	exprCount(expr *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_COUNT, expression, lineNb)
+	exprCount(expr *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_COUNT, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "count(" + std::string(*expression) + ") ";
+	operator std::string() const override {
+		return "count(" + std::string(*mExpr) + ") ";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Clones count (E_EXPR_COUNT)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprCount* copy = new exprCount(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -103,24 +98,22 @@ public:
 class exprUMin : public exprUnary
 {
 public:
-	exprUMin(expr *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_UMIN, expression, lineNb)
+	exprUMin(expr *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_UMIN, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "-" + std::string(*expression);
+	operator std::string() const override {
+		return "-" + std::string(*mExpr);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Unary minus (E_EXPR_UMIN)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprUMin* copy = new exprUMin(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -129,24 +122,22 @@ public:
 class exprNeg : public exprUnary
 {
 public:
-	exprNeg(expr *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEG, expression, lineNb)
+	exprNeg(expr *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_NEG, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "!" + std::string(*expression);
+	operator std::string() const override {
+		return "!" + std::string(*mExpr);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Negation (E_EXPR_NEG)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprNeg* copy = new exprNeg(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -155,24 +146,22 @@ public:
 class exprBitwNeg : public exprUnary
 {
 public:
-	exprBitwNeg(expr *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_BITWNEG, expression, lineNb)
+	exprBitwNeg(expr *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_BITWNEG, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "~" + std::string(*expression);
+	operator std::string() const override {
+		return "~" + std::string(*mExpr);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Bitwise neg (E_EXPR_BITWNEG)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprBitwNeg* copy = new exprBitwNeg(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -181,24 +170,22 @@ public:
 class exprLen : public exprUnary
 {
 public:
-	exprLen(exprVarRef *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_LEN, expression, lineNb)
+	exprLen(exprVarRef *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_LEN, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "len(" + std::string(*expression) + ")";
+	operator std::string() const override {
+		return "len(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Length (E_EXPR_LEN)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprLen* copy = new exprLen(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -207,24 +194,22 @@ public:
 class exprFull : public exprUnary
 {
 public:
-	exprFull(exprVarRef *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_FULL, expression, lineNb)
+	exprFull(exprVarRef *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_FULL, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "full(" + std::string(*expression) + ")";
+	operator std::string() const override {
+		return "full(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Full probe (E_EXPR_FULL)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprFull* copy = new exprFull(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -233,24 +218,22 @@ public:
 class exprNFull : public exprUnary
 {
 public:
-	exprNFull(exprVarRef *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_NFULL, expression, lineNb)
+	exprNFull(exprVarRef *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_NFULL, mExpr, lineNb)
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "nfull(" + std::string(*expression) + ")";
+	operator std::string() const override {
+		return "nfull(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Not full probe (E_EXPR_NFULL)";
 	}
 
 	expr* deepCopy(void) const override {
 		exprNFull* copy = new exprNFull(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -259,14 +242,14 @@ public:
 class exprEmpty : public exprUnary
 {
 public:
-	exprEmpty(exprVarRef *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_EMPTY, expression, lineNb)
+	exprEmpty(exprVarRef *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_EMPTY, mExpr, lineNb)
 	{
 	}
 
 	operator std::string() const override
 	{
-		return "empty(" + std::string(*expression) + ")";
+		return "empty(" + std::string(*mExpr) + ")";
 	}
 
 	std::string getTypeDescr(void) const override
@@ -276,7 +259,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprEmpty* copy = new exprEmpty(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };
@@ -285,14 +268,14 @@ public:
 class exprNEmpty : public exprUnary
 {
 public:
-	exprNEmpty(exprVarRef *expression, int lineNb)
-		: exprUnary(astNode::E_EXPR_NEMPTY, expression, lineNb)
+	exprNEmpty(exprVarRef *mExpr, int lineNb)
+		: exprUnary(astNode::E_EXPR_NEMPTY, mExpr, lineNb)
 	{
 	}
 
 	operator std::string() const override
 	{
-		return "nempty(" + std::string(*expression) + ")";
+		return "nempty(" + std::string(*mExpr) + ")";
 	}
 
 	std::string getTypeDescr(void) const override
@@ -302,7 +285,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprNEmpty* copy = new exprNEmpty(*this);
-		copy->expression = expression->deepCopy();
+		copy->mExpr = mExpr->deepCopy();
 		return copy;
 	}
 };

@@ -18,14 +18,21 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	if (!newStmnt)
 		return stmnts;
 
+	stmnts->prev->addChild(newStmnt);
+
 	stmnt* newlistTail = newStmnt->prev;
 	newStmnt->prev = stmnts->prev;
 	newStmnt->prev->next = newStmnt;
 	stmnts->prev = newlistTail;
+
 	return stmnts;
 }
 
-/*unsigned int stmnt::processVariables(symTabNode* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) const {
-	offset += local ? local->processVariables(global, mTypes, offset, isGlobal) : 0;
-	return offset + (next? next->processVariables(global, mTypes, offset, isGlobal) : 0);
-}*/
+stmnt* stmnt::print(stmnt* list) {
+	std::string res = "";
+	auto cur = list;
+	while (cur) {
+		res += _tab() + std::string(*cur);
+		cur = cur->next;
+	}
+}

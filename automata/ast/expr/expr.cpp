@@ -12,11 +12,9 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, exprVarRef *
 {
 	this->procName = procName;
 	this->procSym = nullptr;
-	this->card = card;
-	this->argList = argList;
-	
-	this->card->setParent(this);
-	this->argList->setParent(this);
+
+	setArgList(argList);
+	setCard(card);
 }
 
 exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
@@ -24,10 +22,21 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 {
 	this->procName = procName;
 	this->procSym = nullptr;
-	this->card = nullptr;
-	this->argList = argList;
 
-	this->argList->setParent(this);
+	setArgList(argList);
+	setCard(nullptr);
+}
+
+void exprRun::setCard(exprVarRef* card) {
+	rmChild(this->card);
+	addChild(card);
+	this->card = card;
+}
+
+void exprRun::setArgList(exprArgList* argList) {
+	rmChild(this->argList);
+	addChild(argList);
+	this->argList = argList;
 }
 
 exprRun::operator std::string() const {

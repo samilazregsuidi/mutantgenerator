@@ -20,21 +20,14 @@ protected:
 	}
 
 public:
-	~stmnt() override {
-		if(next)
-			delete next;
-	}
 
 	static stmnt* merge(stmnt* list, stmnt* node);
+
+	static stmnt* print(stmnt* list);
 
 	//called for non mutable stmnts (e.g., vardecl)
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
 		return (next? next->assignMutables(mask, id) : id);
-	}
-
-	void mutateMutable(unsigned int id) override {
-		if (next)
-			next->mutateMutable(id);
 	}
 
 	void setLocalSymTab(symTable* local) {
@@ -45,6 +38,10 @@ public:
 
 	symTable* getLocalSymTab(void) const {
 		return local;
+	}
+
+	stmnt* getNext(void) const {
+		return next;
 	}
 
 	virtual void printSymTab(void) const {
@@ -69,39 +66,42 @@ protected:
 //E_STMNT_SEQ,		// fsm = fsm of this sequence
 class stmntSeq : public stmnt
 {
-public:
-	stmntSeq(stmnt* block, int lineNb)
-		: stmnt(astNode::E_STMNT_SEQ, lineNb)
-	{
-		this->block = block;
-
-		this->block->setParent(this);
-	}
-
-	~stmntSeq() override {
-		delete block;
-		if(next)
-			delete next;
-	}
-
 protected:
 	stmntSeq(Type type, stmnt* block, int lineNb)
 		: stmnt(type, lineNb)
 	{
-		this->block = block;
-
+		setBlock(block);
 		//std::cout << "SEQ : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
 public:
+	stmntSeq(stmnt* block, int lineNb)
+		: stmnt(astNode::E_STMNT_SEQ, lineNb)
+	{
+		setBlock(block);
+	}
+
+public:
+
+	void setBlock(stmnt* block) {
+		rmChild(this->block);
+		addChild(block);
+		this->block = block;
+	}
 
 	operator std::string() const override {
 		std::string res = "{\n";
 		tab_lvl++;
-		res += _tab() + std::string(*block);
+
+		auto cur = block;
+		while(cur) {
+			res += _tab() + std::string(*cur);
+			cur = cur->getNext();
+		}
+		
 		tab_lvl--;
 		res += _tab() + "};\n"; 
-		return res + (next? _tab() + std::string(*next) : "");
+		return res;
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -114,16 +114,7 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
-
-		block->mutateMutable(id);
-
-		if(next) 
-			next->mutateMutable(id);
-
-	}
-
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntSeq* copy = new stmntSeq(*this);
 		copy->prev = copy;
 		copy->block = block->deepCopy();
@@ -154,7 +145,7 @@ public:
 		return "Atomic (E_STMNT_ATOMIC)";
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntAtomic* copy = new stmntAtomic(*this);
 		copy->prev = copy;
 		copy->block = block->deepCopy();
@@ -171,23 +162,24 @@ public:
 	stmntAsgn(exprVarRef *varRef, expr *assign, int lineNb)
 		: stmnt(astNode::E_STMNT_ASGN, lineNb)
 	{
-		this->varRef = varRef;
-		this->assign = assign;
-
-		this->varRef->setParent(this);
-		this->assign->setParent(this);
+		setVarRef(varRef);
+		setAssign(assign);
 	}
 
-	~stmntAsgn() override {
-		delete varRef;
-		delete assign;
-		if(next)
-			delete next;
+	void setVarRef(exprVarRef* varRef) {
+		rmChild(this->varRef);
+		addChild(varRef);
+		this->varRef = varRef;
+	}
+
+	void setAssign(expr* assign) {
+		rmChild(this->assign);
+		addChild(assign);
+		this->assign = assign;
 	}
 
 	operator std::string() const override{
-		return std::string(*varRef) + " = " + std::string(*assign) + ";\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return std::string(*varRef) + " = " + std::string(*assign) + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override{
@@ -202,35 +194,28 @@ public:
 		return + (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			delete varRef;
 			int debug = rand() % mutations.size();
 			auto ddebug = static_cast<exprVarRef*>(mutations[debug]);
-			varRef = ddebug;
-			return;
+			setVarRef(ddebug);
+			return true;
 		}
 
 		if(assign->getMId() == id) {
 			auto mutations = assign->getMutations();
 			assert(mutations.size());
-			delete assign;
-			assign = mutations[rand() % mutations.size()]; 
-			return;
+			setAssign(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
-		varRef->mutateMutable(id);
-		assign->mutateMutable(id);
-
-		if(next) 
-			next->mutateMutable(id);	
-
+		return false;
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntAsgn* copy = new stmntAsgn(*this);
 		copy->prev = copy;
 		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
@@ -253,20 +238,17 @@ public:
 	stmntIncr(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_INCR, lineNb)
 	{
-		this->varRef = varRef;
-
-		this->varRef->setParent(this);
+		setVarRef(varRef);
 	}
 
-	~stmntIncr() override {
-		delete varRef;
-		if(next)
-			delete next;
+	void setVarRef(exprVarRef* varRef) {
+		rmChild(this->varRef);
+		addChild(varRef);
+		this->varRef = varRef;
 	}
 
 	operator std::string() const override {
-		return std::string(*varRef) + "++;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return std::string(*varRef) + "++;\n";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -279,24 +261,20 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			delete varRef;
-			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			setVarRef(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			return true;
 		}
 
-		varRef->mutateMutable(id);
-
-		if(next) 
-			next->mutateMutable(id);
+		return false;
 
 	}
 	
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntIncr* copy = new stmntIncr(*this);
 		copy->prev = copy;
 		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
@@ -317,20 +295,17 @@ public:
 	stmntDecr(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_DECR, lineNb)
 	{
-		this->varRef = varRef;
-
-		this->varRef->setParent(this);
+		setVarRef(varRef);
 	}
 
-	~stmntDecr() override {
-		delete varRef;
-		if(next)
-			delete next;
+	void setVarRef(exprVarRef* varRef) {
+		rmChild(this->varRef);
+		addChild(varRef);
+		this->varRef = varRef;
 	}
 
 	operator std::string() const override {
-		return std::string(*varRef) + "--;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return std::string(*varRef) + "--;\n";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -343,24 +318,20 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			delete varRef;
 			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			return true;
 		}
 
-		varRef->mutateMutable(id);
-
-		if(next) 
-			next->mutateMutable(id);
+		return false;
 
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntDecr* copy = new stmntDecr(*this);
 		copy->prev = copy;
 		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
@@ -381,22 +352,20 @@ public:
 	stmntExpr(expr *child, int lineNb)
 		: stmnt(astNode::E_STMNT_EXPR, lineNb)
 	{
+		setChild(child);
+	}
+
+	void setChild(expr* child) {
+		rmChild(this->child);
+		addChild(child);
 		this->child = child;
-		this->child->setParent(this);
 	}
 
-	~stmntExpr() override {
-		delete child;
-		if(next)
-			delete next;
+	operator std::string() const override {
+		return std::string(*child) + ";\n";
 	}
 
-	operator std::string() const override{
-		return std::string(*child) + ";\n"
-		+ (next? _tab() + std::string(*next) : "");
-	}
-
-	std::string getTypeDescr(void) const override{
+	std::string getTypeDescr(void) const override {
 		return "Expression wrapper (E_STMNT_EXPR)";
 	}
 
@@ -406,24 +375,20 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(child->getMId() == id) {
 			auto mutations = child->getMutations();
 			assert(mutations.size());
-			delete child;
-			child = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			setChild(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			return true;
 		}
 
-		child->mutateMutable(id);
-
-		if(next) 
-			next->mutateMutable(id);
+		return false;
 
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntExpr* copy = new stmntExpr(*this);
 		copy->prev = copy;
 		copy->child = child->deepCopy();

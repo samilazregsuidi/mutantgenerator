@@ -84,6 +84,8 @@
         "cassert": "cpp",
         "expr.h": "c",
         "astnode.h": "c",
-        "symbols.h": "c"
+        "symbols.h": "c",
+        "intsymnode.h": "c",
+        "procsymnode.h": "c"
     }
 }

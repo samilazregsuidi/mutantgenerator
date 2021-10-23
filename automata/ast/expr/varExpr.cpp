@@ -17,7 +17,8 @@ exprVarRefName::exprVarRefName(const std::string& symName, int lineNb)
 {
 	this->symName = symName;
 	this->sym = nullptr;
-	this->index = nullptr;
+	
+	setIndex(nullptr);
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, expr *index, int lineNb)
@@ -25,7 +26,8 @@ exprVarRefName::exprVarRefName(const std::string& symName, expr *index, int line
 {
 	this->symName = symName;
 	this->sym = nullptr;
-	this->index = index;
+
+	setIndex(index);
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int lineNb)
@@ -34,11 +36,6 @@ exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int line
 	this->symName = symName;
 	this->index = nullptr;
 	this->sym = sym;
-}
-
-exprVarRefName::~exprVarRefName() {
-	//delete sym;
-	delete index;
 }
 
 std::string exprVarRefName::getName(void) const {
@@ -110,13 +107,8 @@ expr* exprVarRefName::deepCopy(void) const {
 exprVarRef::exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar = nullptr)
 	: expr(astNode::E_VARREF, lineNb)
 {
-	this->varRefName = symRef;
-	this->subfieldsVar = subfieldsVar;
-}
-
-exprVarRef::~exprVarRef() {
-	delete varRefName;
-	delete subfieldsVar;
+	setVarRefName(symRef);
+	setSubField(subfieldsVar);
 }
 
 void exprVarRef::resolve(symTable *global, symTable* subField) {
@@ -139,7 +131,7 @@ symbol::Type exprVarRef::getExprType(void) const {
 
 std::vector<expr*> exprVarRef::getMutations(void) const {
 	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType(), varRefName->getSymbol()->getMask());
-	if(symList.size())
+	if(symList.size() > 1)
 		symList.remove(varRefName->getSymbol());
 	std::vector<expr*> mutations;
 	for(auto& s: symList) {
@@ -171,11 +163,7 @@ expr* exprVarRef::deepCopy(void) const {
 exprVar::exprVar(exprVarRef *varRef, int lineNb)
 		: expr(astNode::E_EXPR_VAR, lineNb)
 {
-	this->varRef = varRef;
-}
-
-exprVar::~exprVar() {
-	delete varRef;
+	setVarRef(varRef);
 }
 
 expr* exprVar::deepCopy(void) const {

@@ -7,9 +7,13 @@
 exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	: exprRArg(astNode::E_RARG_VAR, lineNb)
 {
-	this->varRef = varRef;
+	setVarRef(varRef);
+}
 
-	this->varRef->setParent(this);
+void exprRArgVar::setVarRef(exprVarRef* varRef) {
+	rmChild(this->varRef);
+	addChild(varRef);
+	this->varRef = varRef;
 }
 
 exprRArgVar::operator std::string() const {

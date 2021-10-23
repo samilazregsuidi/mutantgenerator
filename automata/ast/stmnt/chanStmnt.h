@@ -6,36 +6,27 @@
 #include "stmnt.h"
 #include "argExpr.h"
 
-//E_STMNT_CHAN_RCV,	// child[0] = E_VARREF, child[1] = E_EXPR_*
-class stmntChanRecv : public stmnt
+class stmntChan : public stmnt 
 {
-public:
-	stmntChanRecv(exprVarRef *chan, exprArgList *argList, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_RCV, lineNb)
+protected:
+	stmntChan(Type type, exprVarRef *chan, exprArgList *argList, int lineNb)
+		: stmnt(type, lineNb)
 	{
-		this->chan = chan; 
-		this->argList = argList; 
-
-		this->chan->setParent(this); 
-		this->argList->setParent(this);
-	}
-	
-	~stmntChanRecv() override {
-		delete chan;
-		delete argList;
-		if(next)
-			delete next;
+		setChan(chan);
+		setArgList(argList);
 	}
 
-	operator std::string() const override
-	{
-		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n" 
-		+ (next? _tab() + std::string(*next) : "");
+public:	
+	void setChan(exprVarRef* chan) {
+		rmChild(this->chan);
+		addChild(chan);
+		this->chan = chan;
 	}
 
-	std::string getTypeDescr(void) const override
-	{
-		return "Channel receive (E_STMNT_CHAN_RCV)";
+	void setArgList(exprArgList* argList) {
+		rmChild(this->argList);
+		addChild(argList);
+		this->argList = argList;
 	}
 
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
@@ -45,27 +36,45 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(chan->getMId() == id) {
 			auto mutations = chan->getMutations();
 			assert(mutations.size());
-			delete chan;
-			chan = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
+			setChan(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			return true;
 		}
 
 		if(argList->getMId() == id) {
 			auto mutations = argList->getMutations();
 			assert(mutations.size());
-			delete argList;
-			argList = static_cast<exprArgList*>(mutations[rand() % mutations.size()]); 
-			return;
+			setArgList(static_cast<exprArgList*>(mutations[rand() % mutations.size()]));
+			return true;
 		}
 
-		chan->mutateMutable(id);
-		argList->mutateMutable(id);		
+		return false;
 
+	}
+
+protected:
+	exprVarRef* chan;
+	exprArgList* argList;
+};
+
+//E_STMNT_CHAN_RCV,	// child[0] = E_VARREF, child[1] = E_EXPR_*
+class stmntChanRecv : public stmntChan
+{
+public:
+	stmntChanRecv(exprVarRef *chan, exprArgList *argList, int lineNb)
+		: stmntChan(astNode::E_STMNT_CHAN_RCV, chan, argList, lineNb)
+	{}
+
+	operator std::string() const override {
+		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n";
+	}
+
+	std::string getTypeDescr(void) const override {
+		return "Channel receive (E_STMNT_CHAN_RCV)";
 	}
 
 	stmnt* deepCopy(void) const {
@@ -78,72 +87,22 @@ public:
 			return stmnt::merge(copy, next->deepCopy());
 		return copy;
 	}
-
-private:
-	exprVarRef* chan;
-	exprArgList* argList;
 };
 
 //E_STMNT_CHAN_SND,	// child[0] = E_VARREF, child[1] = E_EXPR_*
-class stmntChanSnd : public stmnt
+class stmntChanSnd : public stmntChan
 {
 public:
 	stmntChanSnd(exprVarRef *chan, exprArgList *argList, int lineNb)
-		: stmnt(astNode::E_STMNT_CHAN_SND, lineNb)
-	{
-		this->chan = chan; 
-		this->argList = argList;
+		: stmntChan(astNode::E_STMNT_CHAN_SND, chan, argList, lineNb)
+	{}
 
-		this->chan->setParent(this); 
-		this->argList->setParent(this);
+	operator std::string() const override {
+		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n";
 	}
 
-	~stmntChanSnd() override {
-		delete chan;
-		delete argList;
-		if(next)
-			delete next;
-	}
-
-	operator std::string() const override
-	{
-		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n" 
-		+ (next? _tab() + std::string(*next) : "");
-	}
-
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Channel send (E_STMNT_CHAN_SND)";
-	}
-
-	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = chan->assignMutables(mask, id);
-			id = argList->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
-	void mutateMutable(unsigned int id) override {
-
-		if(chan->getMId() == id) {
-			auto mutations = chan->getMutations();
-			assert(mutations.size());
-			delete chan;
-			chan = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
-			return;
-		}
-
-		if(argList->getMId() == id) {
-			auto mutations = argList->getMutations();
-			assert(mutations.size());
-			delete argList;
-			argList = static_cast<exprArgList*>(mutations[rand() % mutations.size()]); 
-			return;
-		}
-
-		chan->mutateMutable(id);
-		argList->mutateMutable(id);		
-
 	}
 
 	stmnt* deepCopy(void) const {
@@ -156,10 +115,6 @@ public:
 			return stmnt::merge(copy, next->deepCopy());
 		return copy;
 	}
-
-private:
-	exprVarRef* chan;
-	exprArgList* argList;
 };
 
 #endif

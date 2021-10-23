@@ -12,11 +12,8 @@ public:
 	stmntOpt(stmnt* block, stmntOpt *nextOpt, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
-		this->block = block;
-		this->nextOpt = nextOpt;
-
-		this->block->setParent(this);
-		this->nextOpt->setParent(this);
+		setBlock(block);
+		setNextOpt(nextOpt);
 
 		//std::cout << "OPT $1 $2 : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
@@ -24,31 +21,37 @@ public:
 	stmntOpt(stmnt* block, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
 	{
-		this->block = block;
-		this->nextOpt = nullptr;
-
-		this->block->setParent(this);
+		setBlock(block);
+		setNextOpt(nextOpt);
 
 		//std::cout << "OPT $1 : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
-	~stmntOpt() override {
-		delete block;
-		if(nextOpt)
-			delete nextOpt;
-		if (next)
-			delete next;
+	void setBlock(stmnt* block) {
+		rmChild(this->block);
+		addChild(block);
+		this->block = block;
 	}
 
-	operator std::string() const override
-	{
-		return _tab(-1) + "::\t" + std::string(*block) 
-		+ (nextOpt? std::string(*nextOpt) : "") 
-		+ (next? _tab() + std::string(*next) : "");
+	void setNextOpt(stmntOpt* nextOpt) {
+		rmChild(this->nextOpt);
+		addChild(nextOpt);
+		this->nextOpt = nextOpt;
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	operator std::string() const override {
+		std::string res = _tab(-1) + "::\t" + std::string(*block);
+
+		auto cur = block->getNext();
+		while(cur) {
+			res += _tab() + std::string(*cur);
+			cur = cur->getNext();
+		}
+		
+		return res + (nextOpt? std::string(*nextOpt) : "");
+	}
+
+	std::string getTypeDescr(void) const override {
 		return "Opt (E_STMNT_OPT)";
 	}
 
@@ -59,13 +62,7 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
-		block->mutateMutable(id);
-		if (nextOpt) nextOpt->mutateMutable(id);
-		if (next) next->mutateMutable(id);
-	}
-
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntOpt* copy = new stmntOpt(*this);
 		copy->prev = copy;
 		copy->block = block->deepCopy();
@@ -88,31 +85,26 @@ public:
 	stmntIf(stmntOpt *opts, int lineNb)
 		: stmnt(astNode::E_STMNT_IF, lineNb)
 	{
-		this->opts = opts;
-		this->opts->setParent(this);
+		setOpts(opts);
 
 		//std::cout << "IF : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
-	~stmntIf() override {
-		if(opts)
-			delete opts;
-		if (next)
-			delete next;
+	void setOpts(stmntOpt* opts) {
+		rmChild(this->opts);
+		addChild(opts);
+		this->opts = opts;
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		std::string res = "if\n";
 		tab_lvl++;
 		res += std::string(*opts);
 		tab_lvl--;
-		return res + _tab() + "fi;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return res + _tab() + "fi;\n";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "If (E_STMNT_IF)";
 	}
 
@@ -122,12 +114,7 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
-		opts->mutateMutable(id);
-		if (next) next->mutateMutable(id);
-	}
-
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntIf* copy = new stmntIf(*this);
 		copy->prev = copy;
 		copy->opts = static_cast<stmntOpt*>(opts->deepCopy());
@@ -148,30 +135,24 @@ public:
 	stmntDo(stmntOpt *opts, int lineNb)
 		: stmnt(astNode::E_STMNT_DO, lineNb)
 	{
+		setOpts(opts);
+	}
+
+	void setOpts(stmntOpt* opts) {
+		rmChild(this->opts);
+		addChild(opts);
 		this->opts = opts;
-
-		this->opts->setParent(this);
 	}
 
-	~stmntDo() override {
-		if(opts)
-			delete opts;
-		if (next)
-			delete next;
-	}
-
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		std::string res = "do\n"; 
 		tab_lvl++;
 		res += std::string(*opts); 
 		tab_lvl--;
-		return res + _tab() +"od;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return res + _tab() +"od;\n";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Do (E_STMNT_DO)";
 	}
 
@@ -181,12 +162,7 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
-		opts->mutateMutable(id);
-		if (next) next->mutateMutable(id);
-	}
-
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntDo* copy = new stmntDo(*this);
 		copy->prev = copy;
 		copy->opts = static_cast<stmntOpt*>(opts->deepCopy());
@@ -209,18 +185,15 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
-		return "break;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+	operator std::string() const override {
+		return "break;\n";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Break (E_STMNT_BREAK)";
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntBreak* copy = new stmntBreak(*this);
 		copy->prev = copy;
 
@@ -240,14 +213,11 @@ public:
 		this->label = label;
 	}
 
-	operator std::string() const override
-	{
-		return "goto " + label + ";\n" 
-		+ (next? _tab() + std::string(*next) : "");
+	operator std::string() const override {
+		return "goto " + label + ";\n";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Goto (E_STMNT_GOTO)";
 	}
 	
@@ -255,7 +225,7 @@ public:
 		return label;
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntGoto* copy = new stmntGoto(*this);
 		copy->prev = copy;
 
@@ -276,25 +246,21 @@ public:
 		: stmnt(astNode::E_STMNT_LABEL, lineNb)
 	{
 		this->label = label;
+
+		setLabelled(labelled);
+	}
+
+	void setLabelled(stmnt* labelled) {
+		rmChild(this->labelled);
+		addChild(labelled);
 		this->labelled = labelled;
-
-		this->labelled->setParent(this);
 	}
 
-	~stmntLabel() override {
-		delete labelled;
-		if (next)
-			delete next;
+	operator std::string() const override {
+		return label + ": \n" + std::string(*labelled);
 	}
 
-	operator std::string() const override
-	{
-		return label + ": \n" + std::string(*labelled) 
-		+ (next? _tab() + std::string(*next) : "");
-	}
-
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Label (E_STMNT_LABEL)";
 	}
 
@@ -312,12 +278,7 @@ public:
 		return (next? next->assignMutables(mask, id) : id);
 	}
 
-	void mutateMutable(unsigned int id) override {
-		labelled->mutateMutable(id);
-		if (next) next->mutateMutable(id);
-	}
-
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntLabel* copy = new stmntLabel(*this);
 		copy->prev = copy;
 		copy->labelled = labelled->deepCopy();
@@ -342,15 +303,14 @@ public:
 	}
 
 	operator std::string() const override{
-		return "else -> " 
-		+ (next? std::string(*next) : "");
+		return "else -> ";
 	}
 
 	std::string getTypeDescr(void) const override{
 		return "Else (E_STMNT_ELSE)";
 	}
 
-	stmnt* deepCopy(void) const {
+	stmnt* deepCopy(void) const override {
 		stmntElse* copy = new stmntElse(*this);
 		copy->prev = copy;
 

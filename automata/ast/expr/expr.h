@@ -17,11 +17,6 @@ protected:
 
 public:
 
-	void mutateMutable(unsigned int id) override {
-		id++;//keep compiler happy
-		return;
-	}
-
 	virtual std::vector<expr*> getMutations(void) const {
 		assert(false);
 		return std::vector<expr*>();
@@ -41,22 +36,34 @@ public:
 	exprCond(expr *cond, expr *then, expr *elsE, int lineNb)
 		: expr(astNode::E_EXPR_COND, lineNb)
 	{
-		this->cond = cond;
-		this->then = then;
-		this->elsE = elsE;
-
-		this->cond->setParent(this);
-		this->then->setParent(this);
-		this->elsE->setParent(this);
+		setCond(cond);
+		setThen(then);
+		setElse(elsE);
 	}
 
-	operator std::string() const override
-	{
+	void setCond(expr* cond) {
+		rmChild(this->cond);
+		addChild(cond);
+		this->cond = cond;
+	}
+
+	void setThen(expr* then) {
+		rmChild(this->then);
+		addChild(then);
+		this->then = then;
+	}
+
+	void setElse(expr* elsE) {
+		rmChild(this->elsE);
+		addChild(elsE);
+		this->elsE = elsE;
+	}
+
+	operator std::string() const override {
 		return "(" + std::string(*cond) + "? " + std::string(*then) + ": " + std::string(*elsE) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Conditional expression (E_EXPR_COND)";
 	}
 
@@ -69,35 +76,30 @@ public:
 		return id;
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(cond->getMId() == id) {
 			auto mutations = cond->getMutations();
 			assert(mutations.size());
-			delete cond;
-			cond = mutations[rand() % mutations.size()]; 
-			return;
+			setCond(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
 		if(then->getMId() == id) {
 			auto mutations = then->getMutations();
 			assert(mutations.size());
-			delete then;
-			then = mutations[rand() % mutations.size()]; 
-			return;
+			setThen(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
 		if(elsE->getMId() == id) {
 			auto mutations = elsE->getMutations();
 			assert(mutations.size());
-			delete elsE;
-			elsE = mutations[rand() % mutations.size()]; 
-			return;
+			setElse(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
-		cond->mutateMutable(id);
-		then->mutateMutable(id);
-		elsE->mutateMutable(id);	
+		return false;
 
 	}
 
@@ -125,10 +127,13 @@ public:
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
+	void setCard(exprVarRef* card);
+
+	void setArgList(exprArgList* argList);
+
 	operator std::string() const override;
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Run (E_EXPR_RUN)";
 	}
 
@@ -150,13 +155,11 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return "timeout";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Timeout (E_EXPR_TIMEOUT)";
 	}
 
@@ -175,13 +178,11 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return "skip";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Skip (E_EXPR_SKIP)";
 	}
 

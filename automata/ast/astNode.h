@@ -16,38 +16,6 @@ class fsmTrans;
 
 class stmnt;
 
-class Mutation {
-
-public:
-	virtual void apply(void) = 0;
-
-	virtual void undo(void) = 0;
-};
-
-template <typename T, typename U> class MutationImpl : public Mutation {
-public:
-	MutationImpl(T* toMutate, U* T::* ptr, U* mutant)
-		: toMutate(toMutate)
-		, ptr(ptr)
-		, initial(toMutate->*ptr)
-		, mutant(mutant)
-	{}
-
-	void apply(void) override {
-		toMutate->*ptr = mutant;
-	}
-
-	void undo(void) override {
-		toMutate->*ptr = initial;
-	}
-
-private:
-	T* toMutate;
-	U* T::* ptr;
-	U* initial;
-	U* mutant;
-};
-
 class astNode
 {
 
@@ -258,7 +226,7 @@ public:
 
 	//astNode(Type type, int iVal, astNode *child0, astNode *child1, astNode *child2, int lineNb, stmnt *block = nullptr, symTabNode *symTabChild = nullptr);
 	astNode(Type type, int lineNb);
-	virtual ~astNode() {}
+	virtual ~astNode();
 
 	/**
 	 * Goes through the expression and all its children and looks up all references to
@@ -299,11 +267,13 @@ public:
 
 	virtual unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0);
 
-	virtual void mutateMutable(unsigned int id) = 0;
+	virtual bool mutateMutable(unsigned int id);
 
 	static int tab_lvl;
 
 	static std::string _tab(int adjust = 0);
+
+	static astNode* mutate(astNode* ast, unsigned int id);
 
 	void setParent(astNode* parent);
 
@@ -314,10 +284,26 @@ public:
 	}
 
 protected:
+	void addChild(astNode* child) {
+		if(child) {
+			children.push_back(child);
+			child->setParent(this);
+		}
+	}
+
+	void rmChild(astNode* child) {
+		if(child) {
+			children.remove(child);
+			child->setParent(nullptr);
+		}
+	}
+
+protected:
 	Type type;
 	int lineNb;
 	astNode* parent;
 	unsigned int mId;
+	std::list<astNode*> children;
 };
 
 #endif

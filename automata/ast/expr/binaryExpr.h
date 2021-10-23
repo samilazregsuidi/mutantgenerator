@@ -12,16 +12,20 @@ protected:
 	exprBinary(Type type, expr* left, expr* right, int lineNb)
 		: expr(type, lineNb)
 	{
-		this->left = left;
-		this->right = right;
-
-		this->left->setParent(this);
-		this->right->setParent(this);
+		setLeft(left);
+		setRight(right);
 	}
 
-	~exprBinary() override {
-		//delete right;
-		//delete left;
+	void setLeft(expr* left) {
+		rmChild(this->left);
+		addChild(left);
+		this->left = left;
+	}
+
+	void setRight(expr* right) {
+		rmChild(this->right);
+		addChild(right);
+		this->right = right;
 	}
 
 	symbol::Type getExprType(void) const {
@@ -38,27 +42,25 @@ protected:
 		return id; 
 	}
 
-	void mutateMutable(unsigned int id) override {
+	bool mutateMutable(unsigned int id) override {
 
 		if(left->getMId() == id) {
 			auto mutations = left->getMutations();
 			assert(mutations.size());
 			delete left;
-			left = mutations[rand() % mutations.size()]; 
-			return;
+			setLeft(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
 		if(right->getMId() == id) {
 			auto mutations = right->getMutations();
 			assert(mutations.size());
 			delete right;
-			right = mutations[rand() % mutations.size()]; 
-			return;
+			setRight(mutations[rand() % mutations.size()]); 
+			return true;
 		}
 
-		left->mutateMutable(id);
-		right->mutateMutable(id);		
-
+		return false;
 	}
 
 

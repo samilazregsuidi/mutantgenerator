@@ -16,11 +16,6 @@ varDecl::varDecl(std::list<varSymNode *> declSymTab, int lineNb)
 	this->declSymTab = declSymTab;
 }
 
-varDecl::~varDecl() {
-	if(next)
-		delete next;
-}
-
 varDecl::operator std::string() const {
 	std::string res = declSymTab.front()->getTypeName() + " ";
 	unsigned int count = 0; 
@@ -29,7 +24,7 @@ varDecl::operator std::string() const {
 		+ (sym->getInitExpr()? " = " + std::string(*sym->getInitExpr()) : "") 
 		+ (++count < declSymTab.size()? ",": "");
 	}
-	return res + ";\n" + (next? _tab() + std::string(*next) : "");
+	return res + ";\n";
 }
 
 /*******************************************************************************************************************************/
@@ -62,7 +57,7 @@ chanDecl::operator std::string() const {
 		res += "}";
 		res += (++count < declSymTab.size()? ", ": ";\n");
 	}
-	return res + (next? std::string(*next) : "");
+	return res;
 }
 
 /******************************************************************************************************************************************/
@@ -73,12 +68,6 @@ mtypeDecl::mtypeDecl(mtypedefSymNode* decl, int lineNb)
 	this->decl = decl;
 }
 
-mtypeDecl::~mtypeDecl() {
-	delete decl;
-	if(next)
-		delete next;
-}
-
 mtypeDecl::operator std::string() const {
 	std::string res = "mtype = {";
 	unsigned int count = 0;
@@ -86,7 +75,7 @@ mtypeDecl::operator std::string() const {
 		res += mtype.first + (++count < decl->getMTypeList().size()? ", " : "");
 	}
 	res += "}\n";
-	return res + (next?  std::string(*next) : "");
+	return res;
 }
 
 /*********************************************************************************************************************************/
@@ -97,38 +86,19 @@ tdefDecl::tdefDecl(tdefSymNode *tdefSym, int lineNb)
 	this->tdefSym = tdefSym;
 }
 
-tdefDecl::~tdefDecl() {
-	delete tdefSym;
-	if(next)
-		delete next;
-}
-
 tdefDecl::operator std::string() const {
 	std::string res = "typedef " + tdefSym->getName() + " {\n";
 	for(auto& f : tdefSym->getFields())
 		res += "\t" + f->getTypeName() + " " + f->getName() + ";\n";
-	return res + "}\n\n" + (next? std::string(*next) : "");
+	return res + "}\n\n";
 }
 
 /********************************************************************************************************************************************/
 
 procDecl::procDecl(procSymNode *procSym, int lineNb)
-	: stmnt(astNode::E_PROC_DECL, lineNb)
+	: stmntSeq(astNode::E_PROC_DECL, procSym->getBlock(), lineNb)
 {
 	this->procSym = procSym;
-	this->block = procSym->getBlock();
-}
-
-procDecl::~procDecl() {
-	delete procSym;
-	if(next)
-		delete next;
-}
-
-unsigned int procDecl::assignMutables(const Mask& mask, unsigned int id) {
-	if(mask.isPresent(type))
-		id = block->assignMutables(mask, id);
-	return (next? next->assignMutables(mask, id) : id);
 }
 
 procDecl::operator std::string() const {
@@ -144,37 +114,19 @@ procDecl::operator std::string() const {
 	for(auto& arg : procSym->getArgs())
 		res += arg->getTypeName() + arg->getName() +  "; ";
 
-	res += "){\n";
-	tab_lvl++;
-	res += (block? _tab() + std::string(*block) : "") + "}\n\n";
-	tab_lvl--;
+	res += ")";
 
-	return res + (next? std::string(*next) : "");
+	res += stmntSeq::operator std::string();
+
+	return res;
 }
 
 /**********************************************************************************************************************************************/
 
 initDecl::initDecl(initSymNode *procSym, int lineNb)
-	: stmnt(astNode::E_INIT_DECL, lineNb)
-{
-	this->procSym = procSym;
-}
-
-initDecl::~initDecl() {
-	delete procSym;
-	if(next)
-		delete next;
-}
-
-/*void initDecl::resolveVariables(symTable* global = nullptr) {
-	procSym->getBlock()->resolveVariables(local);
-	if(next) next->resolveVariables(local);
-}*/
+	: stmntSeq(astNode::E_INIT_DECL, this->block = procSym->getBlock(), lineNb)
+{}
 
 initDecl::operator std::string() const {
-	std::string res = "\ninit {\n\n";
-	tab_lvl++;
-	res += (procSym->getBlock()? std::string(*procSym->getBlock()) : "") + "}\n\n";
-	tab_lvl--;
-	return res + (next? std::string(*next) : "");
+	return "\ninit " + stmntSeq::operator std::string();
 }

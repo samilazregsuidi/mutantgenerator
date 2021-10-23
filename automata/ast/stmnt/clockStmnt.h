@@ -12,19 +12,17 @@ public:
 	stmntWait(expr *timer, int lineNb)
 		: stmnt(astNode::E_STMNT_WAIT, lineNb)
 	{
-		this->timer = timer;
-		this->timer->setParent(this);
+		setTimer(timer);
 	}
 
-	~stmntWait() override {
-		delete timer;
-		if(next)
-			delete next;
+	void setTimer(expr* timer) {
+		rmChild(this->timer);
+		addChild(timer);
+		this->timer = timer;
 	}
 
 	operator std::string() const override{
-		return "while ( " + std::string(*timer) + " ) wait;\n" 
-		+ (next? _tab() + std::string(*next) : "");
+		return "while ( " + std::string(*timer) + " ) wait;\n";
 	}
 
 	std::string getTypeDescr(void) const override{
@@ -52,24 +50,26 @@ public:
 	stmntWhen(expr *guard, stmnt *todo, int lineNb, std::list<symbol*> clocks)
 		: stmnt(astNode::E_STMNT_WHEN, lineNb)
 	{
-		this->guard = guard;
-		this->todo = todo;
 		this->clocks = clocks;
 
-		this->guard->setParent(this);
-		this->todo->setParent(this);
+		setGuard(guard);
+		setTodo(todo);
 	}
 
-	~stmntWhen() override {
-		delete guard;
-		delete todo;
-		if(next)
-			delete next;
+	void setGuard(expr* guard) {
+		rmChild(this->guard);
+		addChild(guard);
+		this->guard = guard;
 	}
 
-	operator std::string() const override{
-		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n" 
-		+ (next? _tab() + std::string(*next) : "");
+	void setTodo(stmnt* todo) {
+		rmChild(this->todo);
+		addChild(todo);
+		this->todo = todo;
+	}
+
+	operator std::string() const override {
+		return "when ( " + std::string(*guard) + " ) do " + std::string(*todo) + "\n";
 	}
 
 	std::string getTypeDescr(void) const override{

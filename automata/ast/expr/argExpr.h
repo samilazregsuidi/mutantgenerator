@@ -22,10 +22,11 @@ class exprRArgVar : public exprRArg
 public:
 	exprRArgVar(exprVarRef *varRef, int lineNb);
 
+	void setVarRef(exprVarRef* varRef);
+	
 	operator std::string() const override;
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Receive argument variable (E_RARG_VAR)";
 	}
 
@@ -42,17 +43,20 @@ public:
 	exprRArgEval(expr *toEval, int lineNb)
 		: exprRArg(astNode::E_RARG_EVAL, lineNb)
 	{
-		this->toEval = toEval;
-		this->toEval->setParent(this);
+		setToEval(toEval);
 	}
 
-	operator std::string() const override
-	{
+	void setToEval(expr* toEval) {
+		rmChild(this->toEval);
+		addChild(toEval);
+		this->toEval = toEval;
+	}
+
+	operator std::string() const override {
 		return "eval(" + std::string(*toEval) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Receive argument eval (E_RARG_EVAL)";
 	}
 
@@ -76,13 +80,11 @@ public:
 		this->constant = constant;
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return std::to_string(constant);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Receive argument constant (E_RARG_CONST)";
 	}
 
@@ -103,29 +105,35 @@ public:
 	exprArgList(exprRArg *node, exprArgList *list, int lineNb)
 		: expr(astNode::E_ARGLIST, lineNb)
 	{
-		this->node = node;
-		this->list = list;
-
-		this->node->setParent(this);
-		this->list->setParent(this);
+		
+		setRArg(node);
+		setArgList(list);
 	}
 
 	exprArgList(exprRArg *node, int lineNb)
 		: expr(astNode::E_ARGLIST, lineNb)
 	{
-		this->node = node;
-		this->list = nullptr;
-
-		this->node->setParent(this);
+		setRArg(node);
+		setArgList(nullptr);
 	}
 
-	operator std::string() const override
-	{
+	void setRArg(exprRArg* node) {
+		rmChild(this->node);
+		addChild(node);
+		this->node = node;
+	}
+
+	void setArgList(exprArgList* list) {
+		rmChild(this->list);
+		addChild(list);
+		this->list = list;
+	}
+
+	operator std::string() const override {
 		return std::string(*node) + (list ? ", " + std::string(*list) : "");
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Argument list (E_ARGLIST)";
 	}
 

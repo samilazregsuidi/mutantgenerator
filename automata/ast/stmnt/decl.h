@@ -11,8 +11,6 @@ class varDecl : public stmnt
 public:
 	varDecl(std::list<varSymNode *> declSymTab, int lineNb);
 
-	~varDecl() override ;
-
 	std::list<varSymNode*> getDeclSymTab(void) const {
 		return declSymTab;
 	}
@@ -80,8 +78,6 @@ class mtypeDecl : public stmnt
 public:
 	mtypeDecl(mtypedefSymNode* decl, int lineNb);
 
-	~mtypeDecl() override ;
-
 	mtypedefSymNode* getDeclSymTab(void) const {
 		return decl;
 	}
@@ -110,8 +106,6 @@ class tdefDecl : public stmnt {
 public:
 	tdefDecl(tdefSymNode *declSymTab, int lineNb);
 
-	~tdefDecl() override ;
-
 	operator std::string() const;
 
 	std::string getTypeDescr(void) const
@@ -132,21 +126,16 @@ private:
 };
 
 //E_PROC_DECL
-class procDecl : public stmnt
+class procDecl : public stmntSeq
 {
 public:
 	procDecl(procSymNode *procSym, int lineNb);
 
-	~procDecl() override ;
-
 	operator std::string() const override;
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Proctype declaration wrapper (E_PROC_DECL)";
 	}
-
-	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override;
 
 	virtual void printSymTab(void) const {
 		std::cout <<" line " << getLineNb() << "\t|\t" << getTypeDescr() << "\n"; 
@@ -159,11 +148,6 @@ public:
 
 		if(next)
 			next->printSymTab();
-	}
-
-	void mutateMutable(unsigned int id) override {
-		block->mutateMutable(id);
-		if (next) next->mutateMutable(id);
 	}
 
 	stmnt* deepCopy(void) const {
@@ -182,14 +166,10 @@ private:
 };
 
 //E_INIT_DECL
-class initDecl : public stmnt
+class initDecl : public stmntSeq
 {
 public:
 	initDecl(initSymNode *procSym, int lineNb);
-
-	~initDecl() override ;
-
-	//void resolveVariables(symTable* parent) override ;
 
 	operator std::string() const;
 
@@ -208,6 +188,7 @@ public:
 
 private:
 	initSymNode* procSym;
+	stmnt* block;
 };
 
 #endif

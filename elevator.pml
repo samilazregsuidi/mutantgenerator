@@ -106,7 +106,7 @@ active proctype controller() {
     :: else -> skip;
     fi;
 
-   atomic {
+   /*atomic {
     bool set = false;
     if :: set;
        set = false;
@@ -120,6 +120,6 @@ active proctype controller() {
               ))));
      fi;
     floor = (direction == up ; floor + 1 : (direction == down ; floor - 1 : floor));
-   };
+   };*/
   od;
 }

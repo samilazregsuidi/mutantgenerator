@@ -21,13 +21,11 @@ public:
 		this->constant = constant;
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return std::to_string(constant);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Constant (E_EXPR_CONST)";
 	}
 
@@ -35,12 +33,7 @@ public:
 		return symbol::T_INT;
 	}
 
-	std::vector<expr*> getMutations(void) const override {
-		return { 
-			new exprConst(constant - 1, lineNb), 
-			new exprConst(constant + 1, lineNb) 
-		};
-	}
+	std::vector<expr*> getMutations(void) const override ;
 
 	expr* deepCopy(void) const override {
 		exprConst* copy = new exprConst(*this);
@@ -60,13 +53,11 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return "true";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "True (E_EXPR_TRUE)";
 	}
 
@@ -92,13 +83,11 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return "false";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "False (E_EXPR_FALSE)";
 	}
 
