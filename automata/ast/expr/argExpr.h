@@ -62,7 +62,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprRArgEval* copy = new exprRArgEval(*this);
-		copy->toEval = toEval->deepCopy();
+		copy->setToEval(toEval->deepCopy());
 		return copy;
 	}
 
@@ -139,14 +139,9 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprArgList* copy = new exprArgList(*this);
-		copy->node = static_cast<exprRArg*>(node->deepCopy());
-		copy->list = list? static_cast<exprArgList*>(list->deepCopy()) : nullptr;
+		copy->setRArg(static_cast<exprRArg*>(node->deepCopy()));
+		copy->setArgList(list? static_cast<exprArgList*>(list->deepCopy()) : nullptr);
 		return copy;
-	}
-
-	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
-		mask.isPresent(type);
-		return id;
 	}
 
 private:

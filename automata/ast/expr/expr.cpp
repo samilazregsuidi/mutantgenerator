@@ -43,10 +43,9 @@ exprRun::operator std::string() const {
 	return "run " + procName + (card ? "[" + std::string(*card) + "]" : "") + "(" + std::string(*argList) + ")";
 }
 
-
 expr* exprRun::deepCopy(void) const {
 	exprRun* copy = new exprRun(*this);
-	copy->argList = static_cast<exprArgList*>(argList->deepCopy());
-	copy->card = static_cast<exprVarRef*>(card->deepCopy());
+	copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
+	copy->setCard(static_cast<exprVarRef*>(card->deepCopy()));
 	return copy;
 }

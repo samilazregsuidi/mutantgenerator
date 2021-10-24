@@ -18,7 +18,7 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	if (!newStmnt)
 		return stmnts;
 
-	stmnts->prev->addChild(newStmnt);
+	stmnts->prev->setNext(newStmnt);
 
 	stmnt* newlistTail = newStmnt->prev;
 	newStmnt->prev = stmnts->prev;
@@ -28,11 +28,12 @@ stmnt* stmnt::merge(stmnt* stmnts, stmnt* newStmnt) {
 	return stmnts;
 }
 
-stmnt* stmnt::print(stmnt* list) {
+std::string stmnt::string(stmnt* list) {
 	std::string res = "";
 	auto cur = list;
 	while (cur) {
 		res += _tab() + std::string(*cur);
 		cur = cur->next;
 	}
+	return res;
 }

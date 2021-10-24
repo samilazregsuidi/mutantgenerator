@@ -23,11 +23,17 @@ public:
 
 	static stmnt* merge(stmnt* list, stmnt* node);
 
-	static stmnt* print(stmnt* list);
+	static std::string string(stmnt* list);
 
 	//called for non mutable stmnts (e.g., vardecl)
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
-		return (next? next->assignMutables(mask, id) : id);
+		if(mask.isPresent(type))
+			for(auto c : children)
+				id = c->assignMutables(mask, id);
+
+		else if (next)
+			id = next->assignMutables(mask, id);
+		return id;
 	}
 
 	void setLocalSymTab(symTable* local) {
@@ -38,6 +44,12 @@ public:
 
 	symTable* getLocalSymTab(void) const {
 		return local;
+	}
+
+	void setNext(stmnt* next) {
+		rmChild(this->next);
+		addChild(next);
+		this->next = next;
 	}
 
 	stmnt* getNext(void) const {
@@ -108,16 +120,10 @@ public:
 		return "Seq (E_STMNT_SEQ)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = block->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	stmnt* deepCopy(void) const override {
 		stmntSeq* copy = new stmntSeq(*this);
 		copy->prev = copy;
-		copy->block = block->deepCopy();
+		copy->setBlock(block->deepCopy());
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
 		return copy;
@@ -148,7 +154,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntAtomic* copy = new stmntAtomic(*this);
 		copy->prev = copy;
-		copy->block = block->deepCopy();
+		copy->setBlock(block->deepCopy());
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
 		return copy;
@@ -186,14 +192,6 @@ public:
 		return "Assignment (E_STMNT_ASGN)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type)) {
-			id = varRef->assignMutables(mask, id);
-			id = assign->assignMutables(mask, id);
-		}
-		return + (next? next->assignMutables(mask, id) : id);
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
@@ -218,8 +216,8 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntAsgn* copy = new stmntAsgn(*this);
 		copy->prev = copy;
-		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
-		copy->assign = assign->deepCopy();
+		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+		copy->setAssign(assign->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -255,12 +253,6 @@ public:
 		return "Increment (E_STMNT_INCR)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = varRef->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
@@ -277,7 +269,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntIncr* copy = new stmntIncr(*this);
 		copy->prev = copy;
-		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
+		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -312,12 +304,6 @@ public:
 		return "Decrement (E_STMNT_DECR)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = varRef->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(varRef->getMId() == id) {
@@ -334,7 +320,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntDecr* copy = new stmntDecr(*this);
 		copy->prev = copy;
-		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
+		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -352,6 +338,7 @@ public:
 	stmntExpr(expr *child, int lineNb)
 		: stmnt(astNode::E_STMNT_EXPR, lineNb)
 	{
+		this->child = nullptr;
 		setChild(child);
 	}
 
@@ -367,12 +354,6 @@ public:
 
 	std::string getTypeDescr(void) const override {
 		return "Expression wrapper (E_STMNT_EXPR)";
-	}
-
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = child->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
 	}
 
 	bool mutateMutable(unsigned int id) override {
@@ -391,7 +372,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntExpr* copy = new stmntExpr(*this);
 		copy->prev = copy;
-		copy->child = child->deepCopy();
+		copy->setChild(child->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());

@@ -2390,7 +2390,7 @@ yyreduce:
 
   case 65:
 #line 341 "promela.y"
-                                                                                { std::cout << "REDUCE: ivar , var_list -> var_list\n"; }
+                                                                                { std::cout << "REDUCE: ivar , var_list -> var_list\n"; currentSymTab->insert((yyvsp[-2].pVarSymVal)); declSyms.push_front((yyvsp[-2].pVarSymVal)); }
 #line 2395 "y.tab.c"
     break;
 

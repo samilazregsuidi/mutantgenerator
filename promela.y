@@ -338,7 +338,7 @@ decl    : /* empty */							{ std::cout << "REDUCE: void -> decl\n"; }
 		;
 
 var_list: ivar									{ std::cout << "REDUCE: ivar -> var_list\n"; currentSymTab->insert($1); declSyms.push_front($1); }
-		| ivar ',' var_list						{ std::cout << "REDUCE: ivar , var_list -> var_list\n"; }
+		| ivar ',' var_list						{ std::cout << "REDUCE: ivar , var_list -> var_list\n"; currentSymTab->insert($1); declSyms.push_front($1); }
 		;
 
 ivar    : vardcl								{ std::cout << "REDUCE: var_decl -> ivar\n"; $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal); if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); } }

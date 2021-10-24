@@ -27,6 +27,11 @@ public:
 	virtual symbol::Type getExprType(void) const {
 		return symbol::T_NA;
 	}
+
+	virtual bool castToExprType(symbol::Type type) const {
+		type = type;//keep compiler happt
+		return false;
+	}
 };
 
 //E_EXPR_COND,		// child[0] = E_EXPR_* (the condition), child[1] = E_EXPR_* (then), child[2] = E_EXPR_* (else)
@@ -67,15 +72,6 @@ public:
 		return "Conditional expression (E_EXPR_COND)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type)){
-			id = cond->assignMutables(mask, id);
-			id = then->assignMutables(mask, id);
-			id = elsE->assignMutables(mask, id);
-		}
-		return id;
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(cond->getMId() == id) {
@@ -105,9 +101,9 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprCond* copy = new exprCond(*this);
-		copy->cond = cond->deepCopy();
-		copy->then = then->deepCopy();
-		copy->elsE = elsE->deepCopy();
+		copy->setCond(cond->deepCopy());
+		copy->setThen(then->deepCopy());
+		copy->setElse(elsE->deepCopy());
 		return copy;
 	}
 

@@ -55,18 +55,11 @@ public:
 		return "Opt (E_STMNT_OPT)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = block->assignMutables(mask, id);
-			id = (nextOpt? nextOpt->assignMutables(mask, id) : id); 
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	stmnt* deepCopy(void) const override {
 		stmntOpt* copy = new stmntOpt(*this);
 		copy->prev = copy;
-		copy->block = block->deepCopy();
-		copy->nextOpt = nextOpt? static_cast<stmntOpt*>(nextOpt->deepCopy()) : nullptr;
+		copy->setBlock(block->deepCopy());
+		copy->setNextOpt(nextOpt? static_cast<stmntOpt*>(nextOpt->deepCopy()) : nullptr);
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -108,16 +101,10 @@ public:
 		return "If (E_STMNT_IF)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = opts->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	stmnt* deepCopy(void) const override {
 		stmntIf* copy = new stmntIf(*this);
 		copy->prev = copy;
-		copy->opts = static_cast<stmntOpt*>(opts->deepCopy());
+		copy->setOpts(static_cast<stmntOpt*>(opts->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -156,16 +143,10 @@ public:
 		return "Do (E_STMNT_DO)";
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = opts->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	stmnt* deepCopy(void) const override {
 		stmntDo* copy = new stmntDo(*this);
 		copy->prev = copy;
-		copy->opts = static_cast<stmntOpt*>(opts->deepCopy());
+		copy->setOpts(static_cast<stmntOpt*>(opts->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -272,16 +253,10 @@ public:
 		return labelled;
 	}
 
-	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = labelled->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	stmnt* deepCopy(void) const override {
 		stmntLabel* copy = new stmntLabel(*this);
 		copy->prev = copy;
-		copy->labelled = labelled->deepCopy();
+		copy->setLabelled(labelled->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -303,7 +278,7 @@ public:
 	}
 
 	operator std::string() const override{
-		return "else -> ";
+		return "else ->\n";
 	}
 
 	std::string getTypeDescr(void) const override{

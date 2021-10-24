@@ -42,7 +42,10 @@ astNode* astNode::getParent(void) const {
 
 unsigned int astNode::assignMutables(const Mask& mask, unsigned int id) {
 	if(mask.isPresent(type)) {
-		return (mId = ++id);
+		if(children.empty())
+			mId = ++id;
+		for(auto c : children)
+			id = c->assignMutables(mask, id);
 	}
 	return id;
 }

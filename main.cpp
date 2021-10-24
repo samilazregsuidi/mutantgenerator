@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 
 	std::ofstream output;
 	output.open("test/original.pml");
-	output << std::string(*program);
+	output << stmnt::string(program);
 	output.close();
 
 	for(int j = 1; j <= 1; j++)
@@ -83,12 +83,12 @@ int main(int argc, char *argv[]) {
 		auto copy = program->deepCopy();
 		astNode::mutate(copy, i);
 		output.open("test/mutant_"+ std::to_string(i*j) + ".pml");
-		output << std::string(*copy);
+		output << stmnt::string(copy);
 		output.close();
 	}
 
 	output.open("test/original_.pml");
-	output << std::string(*program);
+	output << stmnt::string(program);
 	output.close();
 
 	if(yyin != nullptr) fclose(yyin);

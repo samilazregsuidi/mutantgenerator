@@ -22,7 +22,7 @@ varDecl::operator std::string() const {
 	for(auto sym : declSymTab) {
 		res += sym->getName() + (sym->getBound() > 1 ? "[" + std::to_string(sym->getBound()) + "]" : "")
 		+ (sym->getInitExpr()? " = " + std::string(*sym->getInitExpr()) : "") 
-		+ (++count < declSymTab.size()? ",": "");
+		+ (++count < declSymTab.size()? ", ": "");
 	}
 	return res + ";\n";
 }

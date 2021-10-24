@@ -35,7 +35,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntPrint* copy = new stmntPrint(*this);
 		copy->prev = copy;
-		copy->argList = static_cast<exprArgList*>(argList->deepCopy());
+		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -80,7 +80,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntPrintm* copy = new stmntPrintm(*this);
 		copy->prev = copy;
-		copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
+		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -119,7 +119,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntAssert* copy = new stmntAssert(*this);
 		copy->prev = copy;
-		copy->toAssert = toAssert->deepCopy();
+		copy->setToAssert(toAssert->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());

@@ -19,12 +19,6 @@ protected:
 		this->mExpr = mExpr;
 	}
 
-	unsigned int assignMutables(const Mask& mask, unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = mExpr->assignMutables(mask, id);
-		return id;
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(mExpr->getMId() == id) {
@@ -65,7 +59,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprPar* copy = new exprPar(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -89,7 +83,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprCount* copy = new exprCount(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -113,7 +107,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprUMin* copy = new exprUMin(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -137,7 +131,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprNeg* copy = new exprNeg(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -161,7 +155,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprBitwNeg* copy = new exprBitwNeg(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -185,7 +179,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprLen* copy = new exprLen(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -209,7 +203,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprFull* copy = new exprFull(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -233,7 +227,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprNFull* copy = new exprNFull(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -259,7 +253,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprEmpty* copy = new exprEmpty(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };
@@ -285,7 +279,7 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprNEmpty* copy = new exprNEmpty(*this);
-		copy->mExpr = mExpr->deepCopy();
+		copy->setExpr(mExpr->deepCopy());
 		return copy;
 	}
 };

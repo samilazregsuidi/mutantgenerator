@@ -32,7 +32,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntWait* copy = new stmntWait(*this);
 		copy->prev = copy;
-		copy->timer = timer->deepCopy();
+		copy->setTimer(timer->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -79,8 +79,8 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntWhen* copy = new stmntWhen(*this);
 		copy->prev = copy;
-		copy->guard = guard->deepCopy();
-		copy->todo = todo->deepCopy();
+		copy->setGuard(guard->deepCopy());
+		copy->setTodo(todo->deepCopy());
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());

@@ -1,11 +1,12 @@
 proctype test(){
-	bool a;
+	bool a, b;
 	
 	a = true;
+	b = false;
 	
 	if
 	:: a != true 	-> a = true;
-	:: a != false 	-> a = false;
+	:: b != false 	-> b = false;
 	fi;
 }
 

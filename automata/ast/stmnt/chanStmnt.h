@@ -29,13 +29,6 @@ public:
 		this->argList = argList;
 	}
 
-	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
-		if(mask.isPresent(type))
-			id = chan->assignMutables(mask, id);
-			id = argList->assignMutables(mask, id);
-		return (next? next->assignMutables(mask, id) : id);
-	}
-
 	bool mutateMutable(unsigned int id) override {
 
 		if(chan->getMId() == id) {
@@ -70,7 +63,7 @@ public:
 	{}
 
 	operator std::string() const override {
-		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n";
+		return std::string(*chan) + "? " + ( argList? std::string(*argList) : "") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -80,8 +73,8 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntChanRecv* copy = new stmntChanRecv(*this);
 		copy->prev = copy;
-		copy->chan = static_cast<exprVarRef*>(chan->deepCopy());
-		copy->argList = static_cast<exprArgList*>(argList->deepCopy());
+		copy->setChan(static_cast<exprVarRef*>(chan->deepCopy()));
+		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -98,7 +91,7 @@ public:
 	{}
 
 	operator std::string() const override {
-		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n";
+		return std::string(*chan) + "! " + ( argList? std::string(*argList) : "") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -108,8 +101,8 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntChanSnd* copy = new stmntChanSnd(*this);
 		copy->prev = copy;
-		copy->chan = static_cast<exprVarRef*>(chan->deepCopy());
-		copy->argList = static_cast<exprArgList*>(argList->deepCopy());
+		copy->setChan(static_cast<exprVarRef*>(chan->deepCopy()));
+		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());

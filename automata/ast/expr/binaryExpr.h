@@ -29,8 +29,16 @@ protected:
 	}
 
 	symbol::Type getExprType(void) const {
-		assert(left->getExprType() == right->getExprType());
-		return left->getExprType();
+		if(left->getExprType() == right->getExprType())
+			return left->getExprType();
+		else if(left->castToExprType(right->getExprType()))
+			return right->getExprType();
+		else if(right->castToExprType(left->getExprType()))
+			return left->getExprType();
+		else
+			assert(false);
+
+		return symbol::T_NA;
 	}
 
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {
@@ -47,7 +55,6 @@ protected:
 		if(left->getMId() == id) {
 			auto mutations = left->getMutations();
 			assert(mutations.size());
-			delete left;
 			setLeft(mutations[rand() % mutations.size()]); 
 			return true;
 		}
@@ -55,7 +62,6 @@ protected:
 		if(right->getMId() == id) {
 			auto mutations = right->getMutations();
 			assert(mutations.size());
-			delete right;
 			setRight(mutations[rand() % mutations.size()]); 
 			return true;
 		}
@@ -90,8 +96,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprPlus* copy = new exprPlus(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -119,8 +125,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprMinus* copy = new exprMinus(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 
@@ -149,8 +155,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprTimes* copy = new exprTimes(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 
@@ -179,8 +185,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprDiv* copy = new exprDiv(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -208,8 +214,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprMod* copy = new exprMod(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -237,8 +243,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprGT* copy = new exprGT(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -266,8 +272,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprLT* copy = new exprLT(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -295,8 +301,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprGE* copy = new exprGE(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -324,8 +330,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprLE* copy = new exprLE(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -353,8 +359,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprEQ* copy = new exprEQ(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -382,8 +388,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprNE* copy = new exprNE(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -411,8 +417,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprAnd* copy = new exprAnd(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -440,8 +446,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprOr* copy = new exprOr(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -469,8 +475,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprBitwAnd* copy = new exprBitwAnd(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -498,8 +504,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprBitwOr* copy = new exprBitwOr(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -527,8 +533,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprBitwXor* copy = new exprBitwXor(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -542,13 +548,11 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return std::string(*left) + " << " + std::string(*right);
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
 
@@ -556,8 +560,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprLShift* copy = new exprLShift(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };
@@ -585,8 +589,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprRShift* copy = new exprRShift(*this);
-		copy->left = left->deepCopy();
-		copy->right = right->deepCopy();
+		copy->setLeft(left->deepCopy());
+		copy->setRight(right->deepCopy());
 		return copy;
 	}
 };

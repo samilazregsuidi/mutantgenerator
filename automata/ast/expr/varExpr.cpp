@@ -98,7 +98,7 @@ symbol::Type exprVarRefName::getExprType(void) const {
 
 expr* exprVarRefName::deepCopy(void) const {
 	exprVarRefName* copy = new exprVarRefName(*this);
-	copy->index = index ? index->deepCopy() : nullptr;
+	copy->setIndex(index ? index->deepCopy() : nullptr);
 	return copy;
 }
 
@@ -129,6 +129,10 @@ symbol::Type exprVarRef::getExprType(void) const {
 	return subfieldsVar? subfieldsVar->getExprType() : varRefName->getExprType();
 }
 
+bool exprVarRef::castToExprType(symbol::Type type) const {
+	return getExprType() == type;
+}
+
 std::vector<expr*> exprVarRef::getMutations(void) const {
 	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType(), varRefName->getSymbol()->getMask());
 	if(symList.size() > 1)
@@ -153,8 +157,8 @@ std::vector<expr*> exprVarRef::getMutations(void) const {
 
 expr* exprVarRef::deepCopy(void) const {
 	exprVarRef* copy = new exprVarRef(*this);
-	copy->varRefName = static_cast<exprVarRefName*>(varRefName->deepCopy());
-	copy->subfieldsVar = subfieldsVar? static_cast<exprVarRef*>(subfieldsVar->deepCopy()) : nullptr;
+	copy->setVarRefName(static_cast<exprVarRefName*>(varRefName->deepCopy()));
+	copy->setSubField(subfieldsVar? static_cast<exprVarRef*>(subfieldsVar->deepCopy()) : nullptr);
 	return copy;
 }
 
@@ -168,6 +172,6 @@ exprVar::exprVar(exprVarRef *varRef, int lineNb)
 
 expr* exprVar::deepCopy(void) const {
 	exprVar* copy = new exprVar(*this);
-	copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
+	copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
 	return copy;
 }

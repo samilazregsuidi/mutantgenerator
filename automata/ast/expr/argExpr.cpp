@@ -22,6 +22,6 @@ exprRArgVar::operator std::string() const {
 
 expr* exprRArgVar::deepCopy(void) const {
 	exprRArgVar* copy = new exprRArgVar(*this);
-	copy->varRef = static_cast<exprVarRef*>(varRef->deepCopy());
+	copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
 	return copy;
 }

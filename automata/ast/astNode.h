@@ -178,7 +178,7 @@ public:
 				E_EXPR_TRUE,	//
 				E_EXPR_FALSE,	//
 
-				E_ARGLIST,	   // child[0] = E_EXPR_* or E_RARG_VAR or E_RARG_EVAL or E_RARG_CONST, E_ARGLIST (next argument, or NULL)
+				//E_ARGLIST,	   // child[0] = E_EXPR_* or E_RARG_VAR or E_RARG_EVAL or E_RARG_CONST, E_ARGLIST (next argument, or NULL)
 				E_VARREF,	   // child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
 				E_VARREF_NAME, // child[0] = E_EXPR_* (index into the array, or NULL), sVal = the variable/field name
 
@@ -187,9 +187,9 @@ public:
 				//- If the symbol denotes an mtype, then symTab is NULL, and iVal >= 0 is the mtype value.
 				//- If the symbol denotes a special variable, then iVal < 0 and is one of MVAR_*
 
-				E_RARG_VAR,	  // child[0] = E_VARREF
-				E_RARG_EVAL,  // child[0] = E_EXPR_*
-				E_RARG_CONST // iVal = the constant
+				//E_RARG_VAR,	  // child[0] = E_VARREF
+				//E_RARG_EVAL,  // child[0] = E_EXPR_*
+				//E_RARG_CONST // iVal = the constant
 				
 				} 
 		{}

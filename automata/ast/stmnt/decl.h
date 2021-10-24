@@ -115,6 +115,7 @@ public:
 
 	stmnt* deepCopy(void) const {
 		tdefDecl* copy = new tdefDecl(*this);
+		copy->prev = copy;
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -153,7 +154,7 @@ public:
 	stmnt* deepCopy(void) const {
 		procDecl* copy = new procDecl(*this);
 		copy->prev = copy;
-		copy->block = block->deepCopy();
+		copy->setBlock(block->deepCopy());
 		
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -162,7 +163,6 @@ public:
 
 private:
 	procSymNode* procSym;
-	stmnt* block;
 };
 
 //E_INIT_DECL
@@ -188,7 +188,6 @@ public:
 
 private:
 	initSymNode* procSym;
-	stmnt* block;
 };
 
 #endif

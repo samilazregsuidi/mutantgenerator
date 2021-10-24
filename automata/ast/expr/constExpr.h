@@ -33,6 +33,33 @@ public:
 		return symbol::T_INT;
 	}
 
+	bool castToExprType(symbol::Type type) const {
+		switch(type) {
+			case symbol::T_BIT:
+				if(constant != 1 && constant != 0)
+					break;
+				return true;
+			case symbol::T_BYTE:
+				if(constant < 0 || constant > 0xFF)
+					break;
+				return true;
+			case symbol::T_SHORT:
+				if(constant < -0xFFFF || constant > 0xFFFF)
+					break;
+				return true;
+			case symbol::T_UNSGN:
+				if(constant < 0)
+					break;
+				return true;
+			case symbol::T_INT:
+				return true;
+			default:
+				assert(false);
+				break;
+		}
+		return false;
+	}
+
 	std::vector<expr*> getMutations(void) const override ;
 
 	expr* deepCopy(void) const override {
