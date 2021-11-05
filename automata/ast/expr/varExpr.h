@@ -162,7 +162,7 @@ public:
 	bool mutateMutable(unsigned int id) override {
 		if(varRef->getMId() == id){
 			auto mutations = varRef->getMutations();
-			assert(mutations.size());
+			//assert(mutations.size());
 			setVarRef(static_cast<exprVarRef*>(mutations[rand() % mutations.size()])); 
 			return true;
 		}

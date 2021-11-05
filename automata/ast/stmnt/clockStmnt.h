@@ -47,11 +47,18 @@ private:
 class stmntWhen : public stmnt
 {
 public:
-	stmntWhen(expr *guard, stmnt *todo, int lineNb, std::list<symbol*> clocks)
+	stmntWhen(expr *guard, stmnt *todo, std::list<symbol*> clocks, int lineNb)
 		: stmnt(astNode::E_STMNT_WHEN, lineNb)
 	{
 		this->clocks = clocks;
 
+		setGuard(guard);
+		setTodo(todo);
+	}
+	
+	stmntWhen(expr *guard, stmnt *todo, int lineNb)
+		: stmnt(astNode::E_STMNT_WHEN, lineNb)
+	{
 		setGuard(guard);
 		setTodo(todo);
 	}

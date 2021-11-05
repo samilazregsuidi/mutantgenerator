@@ -29,16 +29,7 @@ protected:
 	}
 
 	symbol::Type getExprType(void) const {
-		if(left->getExprType() == right->getExprType())
-			return left->getExprType();
-		else if(left->castToExprType(right->getExprType()))
-			return right->getExprType();
-		else if(right->castToExprType(left->getExprType()))
-			return left->getExprType();
-		else
-			assert(false);
-
-		return symbol::T_NA;
+		return expr::getExprType(left, right);
 	}
 
 	unsigned int assignMutables(const Mask& mask = Mask(), unsigned int id = 0) override {

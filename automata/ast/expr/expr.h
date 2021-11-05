@@ -13,7 +13,9 @@ class expr : public astNode
 protected:
 	expr(Type type, int lineNb)
 		: astNode(type, lineNb)
-	{}
+	{
+		exprType = symbol::T_NA;
+	}
 
 public:
 
@@ -25,13 +27,33 @@ public:
 	virtual expr* deepCopy(void) const = 0;
 
 	virtual symbol::Type getExprType(void) const {
-		return symbol::T_NA;
+		return exprType;
+	}
+
+	void setExprType(symbol::Type exprType) {
+		this->exprType = exprType;
 	}
 
 	virtual bool castToExprType(symbol::Type type) const {
 		type = type;//keep compiler happt
 		return false;
 	}
+
+	static symbol::Type getExprType(expr* left, expr* right) {
+		if(left->getExprType() == right->getExprType())
+			return left->getExprType();
+		else if(left->castToExprType(right->getExprType()))
+			return right->getExprType();
+		else if(right->castToExprType(left->getExprType()))
+			return left->getExprType();
+		else
+			assert(false);
+
+		return symbol::T_NA;
+	}
+
+protected:
+	symbol::Type exprType;
 };
 
 //E_EXPR_COND,		// child[0] = E_EXPR_* (the condition), child[1] = E_EXPR_* (then), child[2] = E_EXPR_* (else)
@@ -65,11 +87,15 @@ public:
 	}
 
 	operator std::string() const override {
-		return "(" + std::string(*cond) + "? " + std::string(*then) + ": " + std::string(*elsE) + ")";
+		return "(" + std::string(*cond) + "; " + std::string(*then) + ": " + std::string(*elsE) + ")";
 	}
 
 	std::string getTypeDescr(void) const override {
 		return "Conditional expression (E_EXPR_COND)";
+	}
+
+	symbol::Type getExprType(void) const override {
+		return expr::getExprType(then, elsE);
 	}
 
 	bool mutateMutable(unsigned int id) override {
@@ -133,6 +159,10 @@ public:
 		return "Run (E_EXPR_RUN)";
 	}
 
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BYTE;
+	}
+
 	expr* deepCopy(void) const override;
 
 private:
@@ -159,6 +189,10 @@ public:
 		return "Timeout (E_EXPR_TIMEOUT)";
 	}
 
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
+	}
+
 	expr* deepCopy(void) const override {
 		exprTimeout* copy = new exprTimeout(*this);
 		return copy;
@@ -180,6 +214,10 @@ public:
 
 	std::string getTypeDescr(void) const override {
 		return "Skip (E_EXPR_SKIP)";
+	}
+
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
 	}
 
 	expr* deepCopy(void) const override {

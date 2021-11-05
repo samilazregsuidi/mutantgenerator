@@ -74,6 +74,11 @@ void symTable::insert(symbol* sym) {
 	sym->setSymTable(this);
 }
 
+void symTable::remove(const std::string& name) {
+	assert(syms.find(name) != syms.end());
+	syms.erase(name);
+}
+
 void symTable::setBlock(stmnt* block) {
 	this->block = block;
 }

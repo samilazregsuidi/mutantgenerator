@@ -81,6 +81,10 @@ public:
 		return "Clones count (E_EXPR_COUNT)";
 	}
 
+	symbol::Type getExprType(void) const {
+		return symbol::T_BYTE;
+	}
+
 	expr* deepCopy(void) const override {
 		exprCount* copy = new exprCount(*this);
 		copy->setExpr(mExpr->deepCopy());
@@ -177,6 +181,10 @@ public:
 		return "Length (E_EXPR_LEN)";
 	}
 
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BYTE;
+	}
+
 	expr* deepCopy(void) const override {
 		exprLen* copy = new exprLen(*this);
 		copy->setExpr(mExpr->deepCopy());
@@ -199,6 +207,10 @@ public:
 
 	std::string getTypeDescr(void) const override {
 		return "Full probe (E_EXPR_FULL)";
+	}
+
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
 	}
 
 	expr* deepCopy(void) const override {
@@ -225,6 +237,10 @@ public:
 		return "Not full probe (E_EXPR_NFULL)";
 	}
 
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
+	}
+
 	expr* deepCopy(void) const override {
 		exprNFull* copy = new exprNFull(*this);
 		copy->setExpr(mExpr->deepCopy());
@@ -246,9 +262,12 @@ public:
 		return "empty(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Empty probe (E_EXPR_EMPTY)";
+	}
+
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
 	}
 
 	expr* deepCopy(void) const override {
@@ -267,14 +286,16 @@ public:
 	{
 	}
 
-	operator std::string() const override
-	{
+	operator std::string() const override {
 		return "nempty(" + std::string(*mExpr) + ")";
 	}
 
-	std::string getTypeDescr(void) const override
-	{
+	std::string getTypeDescr(void) const override {
 		return "Not empty probe (E_EXPR_NEMPTY)";
+	}
+
+	symbol::Type getExprType(void) const override {
+		return symbol::T_BOOL;
 	}
 
 	expr* deepCopy(void) const override {

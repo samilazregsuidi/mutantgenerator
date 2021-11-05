@@ -1,12 +1,15 @@
+typedef object {
+	bool a;
+	bool b
+}
+
+object mine;
+
 proctype test(){
-	bool a, b;
-	
-	a = true;
-	b = false;
 	
 	if
-	:: a != true 	-> a = true;
-	:: b != false 	-> b = false;
+	:: mine.a != true 	-> mine.a = true;
+	:: mine.b != false 	-> mine.b = false;
 	fi;
 }
 

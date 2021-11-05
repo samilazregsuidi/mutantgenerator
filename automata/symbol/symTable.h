@@ -39,18 +39,27 @@ public:
 	std::string getNameSpace(void) const;
 
 	void print(int tab = 0) const;
+
 	symbol* lookup(const std::string& name) const;
+
 	std::list<symbol*> getSymbols(symbol::Type type, unsigned int mask) const;
+
 	void insert(symbol* sym);
+	
+	void remove(const std::string& name);
 
 	void setBlock(stmnt* block);
+
 	stmnt* getBlock(void) const;
 
 	symTable* prevSymTab(void) const;
 	
 	void printSymTab(int level, const std::string& title) const;
+
 	bool isGlobal(void) const;
+
 	unsigned int getMemorySize(void) const;
+
 	operator std::string(void) const;
 
 	static void addPredefinedSym(symTable* tab);

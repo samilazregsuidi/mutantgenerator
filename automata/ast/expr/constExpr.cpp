@@ -1,10 +1,14 @@
 #include "constExpr.h"
 
 std::vector<expr*> exprConst::getMutations(void) const {
-    return { 
-        new exprConst(constant - 1, lineNb), 
-        new exprConst(constant + 1, lineNb) 
-    };
+    
+    std::vector<expr*> res;
+    if(!exceed_limits(- 1))
+        res.push_back(new exprConst(constant - 1, lineNb));
+    if(!exceed_limits(+ 1))
+        res.push_back(new exprConst(constant + 1, lineNb));
+
+    return res;
 }
 
 std::vector<expr*> exprTrue::getMutations(void) const {

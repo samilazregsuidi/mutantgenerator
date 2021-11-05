@@ -121,7 +121,7 @@ int mtypeId = 0;
 
 %type  <sVal> aname
 %type  <rVal> real_expr
-%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt proc init utype mtype body sequence option
+%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt proc init utypedef mtypedef body sequence option
 %type  <pStmntOptVal> options
 %type  <pExprVal> Expr expr full_expr Probe
 %type  <pConstExprVal> inst
@@ -166,8 +166,8 @@ unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *p
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-		| utype		/* user defined types */	{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| mtype									{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| utypedef		/* user defined types */	{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| mtypedef									{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
 		| ns		/* named sequence     */  	{ std::cout << "The 'named sequence' construct is currently not supported."; }
 		| SEMI		/* optional separator */	/* ignored */			
@@ -234,17 +234,19 @@ init	: INIT
 events	: TRACE body							{ std::cout << "Event sequences (traces) are not supported."; }
 		;
 
-utype	: TYPEDEF NAME '{' decl_lst '}'			{	
+utypedef: TYPEDEF NAME '{' decl_lst '}'			{	
 													std::cout << "REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n";
 													tdefSymNode* tdef = new tdefSymNode($2, declSyms, nbrLines);
-													declSyms.clear();
 													$$ = new tdefDecl(tdef, nbrLines);
 													(*globalSymTab)->insert(tdef);
+													for(auto declSym : declSyms)
+														(*globalSymTab)->remove(declSym->getName());
+													declSyms.clear();
 													free($2);  
 												}
 		;
 		
-mtype 	: vis TYPE asgn '{' nlst '}'			{	
+mtypedef: vis TYPE asgn '{' nlst '}'			{	
 													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
 													if($2 != symbol::T_MTYPE) {
 														std::cout <<  "This syntax only works for MTYPEs definition.";

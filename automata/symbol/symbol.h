@@ -56,6 +56,9 @@ public:
 		T_NEVER,	// Never claim
 	};
 
+	static int getUpperBound(Type type);
+	static int getLowerBound(Type type);
+
 	static const unsigned int READ_ACCESS = 0x1;
 	static const unsigned int WRITE_ACCESS = 0x2;
 	static const unsigned int PREDEFINED = 0x4;

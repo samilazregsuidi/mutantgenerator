@@ -63,7 +63,7 @@ public:
 	{}
 
 	operator std::string() const override {
-		return std::string(*chan) + "? " + ( argList? std::string(*argList) : "") + ";\n";
+		return std::string(*chan) + "?" + ( argList? std::string(*argList) : "") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -91,7 +91,7 @@ public:
 	{}
 
 	operator std::string() const override {
-		return std::string(*chan) + "! " + ( argList? std::string(*argList) : "") + ";\n";
+		return std::string(*chan) + "!" + ( argList? std::string(*argList) : "") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override {

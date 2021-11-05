@@ -30,8 +30,6 @@ public:
 		return symTab;
 	}
 
-	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
-
 	operator std::string(void) const override ;
 
 	void acceptVisitor(symTabVisitor* visitor) override;

@@ -29,8 +29,8 @@ public:
 		return "Constant (E_EXPR_CONST)";
 	}
 
-	symbol::Type getExprType(void) const {
-		return symbol::T_INT;
+	symbol::Type getExprType(void) const override {
+		return exprType == symbol::T_NA? symbol::T_INT : exprType;
 	}
 
 	bool castToExprType(symbol::Type type) const {
@@ -65,6 +65,12 @@ public:
 	expr* deepCopy(void) const override {
 		exprConst* copy = new exprConst(*this);
 		return copy;
+	}
+
+private:
+	bool exceed_limits(int add) const {
+		return (constant + add > symbol::getUpperBound(getExprType()) 
+		|| constant + add < symbol::getLowerBound(getExprType()));
 	}
 
 private:

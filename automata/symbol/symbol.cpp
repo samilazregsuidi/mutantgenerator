@@ -23,7 +23,40 @@
 
 #include "symTable.h"
 
+int symbol::getUpperBound(Type type) {
+	switch(type) {
+		case symbol::T_BIT:
+			return 1;
+		case symbol::T_BYTE:
+			return 0xFF;
+		case symbol::T_SHORT:
+			return 0xFFFF;
+		case symbol::T_UNSGN:
+		case symbol::T_INT:
+			return 0xFFFFFFFF;
+		default:
+			assert(false);
+			return 0;
+	}
+}
 
+int symbol::getLowerBound(Type type) {
+	switch(type) {
+		case symbol::T_BIT:
+			return 0;
+		case symbol::T_BYTE:
+			return 0;
+		case symbol::T_SHORT:
+			return -0xFFFF;
+		case symbol::T_UNSGN:
+			return 0;
+		case symbol::T_INT:
+			return -0xFFFFFFFF;
+		default:
+			assert(false);
+			return 0;
+	}
+}
 
 /*
  * SYMBOL TABLE

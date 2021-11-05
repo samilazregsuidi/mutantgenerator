@@ -170,6 +170,8 @@ public:
 	{
 		setVarRef(varRef);
 		setAssign(assign);
+
+		assign->setExprType(varRef->getExprType());
 	}
 
 	void setVarRef(exprVarRef* varRef) {

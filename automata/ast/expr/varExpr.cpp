@@ -130,7 +130,28 @@ symbol::Type exprVarRef::getExprType(void) const {
 }
 
 bool exprVarRef::castToExprType(symbol::Type type) const {
-	return getExprType() == type;
+	auto exprType = getExprType();
+	switch(exprType){
+		case symbol::T_BIT:
+		case symbol::T_BYTE:
+		case symbol::T_SHORT:
+		case symbol::T_INT:
+		case symbol::T_UNSGN:
+			if(type == symbol::T_BIT
+			|| type == symbol::T_BYTE
+			|| type == symbol::T_SHORT
+			|| type == symbol::T_INT
+			|| type == symbol::T_UNSGN)
+				return true;
+			return false;
+		case symbol::T_BOOL:
+			if(type == symbol::T_BOOL)
+				return true;
+			return false;
+		default:
+			break;
+	}
+	return false;
 }
 
 std::vector<expr*> exprVarRef::getMutations(void) const {
