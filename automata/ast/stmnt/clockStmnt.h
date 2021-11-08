@@ -47,7 +47,7 @@ private:
 class stmntWhen : public stmnt
 {
 public:
-	stmntWhen(expr *guard, stmnt *todo, std::list<symbol*> clocks, int lineNb)
+	stmntWhen(expr *guard, stmnt *todo, std::list<varSymNode*> clocks, int lineNb)
 		: stmnt(astNode::E_STMNT_WHEN, lineNb)
 	{
 		this->clocks = clocks;
@@ -97,7 +97,7 @@ public:
 private:
 	expr* guard;
 	stmnt* todo;
-	std::list<symbol*> clocks;
+	std::list<varSymNode*> clocks;
 };
 
 #endif
