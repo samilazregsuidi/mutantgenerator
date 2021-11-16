@@ -135,17 +135,20 @@ std::vector<expr*> exprVarRef::getMutations(void) const {
 	std::vector<expr*> mutations;
 	for(auto& s: symList) {
 		auto sCast = dynamic_cast<varSymNode*>(s);
-		assert(sCast);
+		//TODO : actual fix
+		//assert(sCast);
 		
-		if(sCast->getBound() > 1)
-			for(int i = 0; i < sCast->getBound(); i++) {
-				exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
-				exprVarRef* newVar = new exprVarRef(lineNb, symRef);
-				symRef->setIndex(new exprConst(i, lineNb));
-				mutations.push_back(newVar);
-			}
-		else
-			mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb)));
+		if(sCast) {
+			if(sCast->getBound() > 1)
+				for(int i = 0; i < sCast->getBound(); i++) {
+					exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
+					exprVarRef* newVar = new exprVarRef(lineNb, symRef);
+					symRef->setIndex(new exprConst(i, lineNb));
+					mutations.push_back(newVar);
+				}
+			else
+				mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb)));
+		}
 	}
 	return mutations;
 }
