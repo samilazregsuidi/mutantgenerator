@@ -13,10 +13,3 @@ parser/y.tab.c
 parser/y.tab.h
 promela.y
 y.tab.c
-parser/lex.yy.c
-lex.yy.c
-y.tab.c
-.gitignore
-parser/lexer.h
-parser/y.tab.c
-parser/y.tab.h
