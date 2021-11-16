@@ -1,6 +1,8 @@
 #ifndef CONST_EXPR_H
 #define CONST_EXPR_H
 
+#include <limits>
+
 #include "expr.h"
 
 //E_EXPR_CONST,		// iVal = the value

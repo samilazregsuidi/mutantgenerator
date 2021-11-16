@@ -18,6 +18,12 @@ protected:
 		setRight(right);
 	}
 
+	exprBinary(exprBinary* e) : expr(e->getType(), e->getLineNb()), left(nullptr), right(nullptr)
+	{
+		setLeft(e->left);
+		setRight(e->right);
+	}
+
 	virtual ~exprBinary() {
 		delete left;
 		delete right;
@@ -82,6 +88,8 @@ public:
 	{
 	}
 
+	exprPlus(exprPlus* e) : exprBinary(e) {}
+
 	operator std::string() const override {
 		return std::string(*left) + " + " + std::string(*right);
 	}
@@ -108,6 +116,9 @@ public:
 		: exprBinary(astNode::E_EXPR_MINUS, left, right, lineNb)
 	{
 	}
+
+	exprMinus(exprMinus* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -139,6 +150,9 @@ public:
 	{
 	}
 
+	exprTimes(exprTimes* e) : exprBinary(e) {}
+
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " * " + std::string(*right);
@@ -169,6 +183,9 @@ public:
 	{
 	}
 
+	exprDiv(exprDiv* e) : exprBinary(e) {}
+
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " / " + std::string(*right);
@@ -197,6 +214,9 @@ public:
 		: exprBinary(astNode::E_EXPR_MOD, left, right, lineNb)
 	{
 	}
+
+	exprMod(exprMod* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -227,6 +247,9 @@ public:
 	{
 	}
 
+	exprGT(exprGT* e) : exprBinary(e) {}
+
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " > " + std::string(*right);
@@ -255,6 +278,9 @@ public:
 		: exprBinary(astNode::E_EXPR_LT, left, right, lineNb)
 	{
 	}
+
+	exprLT(exprLT* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -285,6 +311,8 @@ public:
 	{
 	}
 
+	exprGE(exprGE* e) : exprBinary(e) {}
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " >= " + std::string(*right);
@@ -313,6 +341,9 @@ public:
 		: exprBinary(astNode::E_EXPR_LE, left, right, lineNb)
 	{
 	}
+
+	exprLE(exprLE* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -343,6 +374,8 @@ public:
 	{
 	}
 
+	exprEQ(exprEQ* e) : exprBinary(e) {}
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " == " + std::string(*right);
@@ -371,6 +404,9 @@ public:
 		: exprBinary(astNode::E_EXPR_NE, left, right, lineNb)
 	{
 	}
+
+	exprNE(exprNE* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -401,6 +437,9 @@ public:
 	{
 	}
 
+	exprAnd(exprAnd* e) : exprBinary(e) {}
+
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " && " + std::string(*right);
@@ -429,6 +468,9 @@ public:
 		: exprBinary(astNode::E_EXPR_OR, left, right, lineNb)
 	{
 	}
+
+	exprOr(exprOr* e) : exprBinary(e) {}
+
 
 	operator std::string() const override
 	{
@@ -459,6 +501,9 @@ public:
 	{
 	}
 
+	exprBitwAnd(exprBitwAnd* e) : exprBinary(e) {}
+
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " & " + std::string(*right);
@@ -487,6 +532,8 @@ public:
 		: exprBinary(astNode::E_EXPR_BITWOR, left, right, lineNb)
 	{
 	}
+
+	exprBitwOr(exprBitwOr* e) : exprBinary(e) {}
 
 	operator std::string() const override
 	{
@@ -517,6 +564,8 @@ public:
 	{
 	}
 
+	exprBitwXor(exprBitwXor* e) : exprBinary(e) {}
+
 	operator std::string() const override
 	{
 		return std::string(*left) + " ^ " + std::string(*right);
@@ -546,6 +595,8 @@ public:
 	{
 	}
 
+	exprLShift(exprLShift* e) : exprBinary(e) {}
+
 	operator std::string() const override {
 		return std::string(*left) + " << " + std::string(*right);
 	}
@@ -572,6 +623,8 @@ public:
 		: exprBinary(astNode::E_EXPR_RSHIFT, left, right, lineNb)
 	{
 	}
+
+	exprRShift(exprRShift* e) : exprBinary(e) {}
 
 	operator std::string() const override
 	{
