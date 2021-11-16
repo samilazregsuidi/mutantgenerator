@@ -144,7 +144,8 @@ public:
 	}
 
 	operator std::string() const override {
-		return std::string(*node) + (list ? ", " + std::string(*list) : "");
+		//TODO : check nullptr
+		return (node ? std::string(*node) : "nullptr") + (list ? ", " + std::string(*list) : "");
 	}
 
 	std::string getTypeDescr(void) const override {
