@@ -12,10 +12,14 @@ class stmntPrint : public stmnt
 public:
 	stmntPrint(const std::string &toPrint, exprArgList *argList, int lineNb)
 		: stmnt(astNode::E_STMNT_PRINT, lineNb)
+		, toPrint(toPrint)
+		, argList(nullptr)
 	{
-		this->toPrint = toPrint;
-
 		setArgList(argList);
+	}
+
+	virtual ~stmntPrint() {
+		delete argList;
 	}
 
 	void setArgList(exprArgList* argList) {
@@ -35,7 +39,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntPrint* copy = new stmntPrint(*this);
 		copy->prev = copy;
-		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
+		copy->setArgList(dynamic_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -53,6 +57,7 @@ class stmntPrintm : public stmnt
 public:
 	stmntPrintm(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_PRINTM, lineNb)
+		, varRef(nullptr)
 	{
 		setVarRef(varRef);
 	}
@@ -61,6 +66,10 @@ public:
 		: stmnt(astNode::E_STMNT_PRINTM,  lineNb)
 	{
 		this->constant = constant;
+	}
+
+	virtual ~stmntPrintm() {
+		delete varRef;
 	}
 
 	void setVarRef(exprVarRef* varRef) {
@@ -80,7 +89,7 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntPrintm* copy = new stmntPrintm(*this);
 		copy->prev = copy;
-		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+		copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -98,8 +107,13 @@ class stmntAssert : public stmnt
 public:
 	stmntAssert(expr *toAssert, int lineNb)
 		: stmnt(astNode::E_STMNT_ASSERT, lineNb)
+		, toAssert(nullptr)
 	{
 		setToAssert(toAssert);
+	}
+
+	virtual ~stmntAssert() {
+		delete toAssert;
 	}
 	
 	void setToAssert(expr* toAssert) {

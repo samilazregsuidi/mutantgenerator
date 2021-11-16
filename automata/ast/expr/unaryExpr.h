@@ -9,8 +9,13 @@ class exprUnary : public expr
 protected:
 	exprUnary(Type type, expr* mExpr, int lineNb)
 		: expr(type, lineNb)
+		, mExpr(nullptr)
 	{
 		setExpr(mExpr);
+	}
+
+	virtual ~exprUnary() {
+		delete mExpr;
 	}
 
 	void setExpr(expr* mExpr) {
@@ -24,7 +29,7 @@ protected:
 		if(mExpr->getMId() == id) {
 			auto mutations = mExpr->getMutations();
 			assert(mutations.size());
-			setExpr(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			setExpr(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
 			return true;
 		}
 

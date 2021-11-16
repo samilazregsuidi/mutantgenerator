@@ -9,8 +9,8 @@ class exprConst : public expr
 public:
 	exprConst(int constant, int lineNb)
 		: expr(astNode::E_EXPR_CONST, lineNb)
+		, constant(constant)
 	{
-		this->constant = constant;
 	}
 	
 	int getCstValue(void) const {
@@ -40,18 +40,24 @@ public:
 					break;
 				return true;
 			case symbol::T_BYTE:
-				if(constant < 0 || constant > 0xFF)
+				if(constant < static_cast<int>(std::numeric_limits<char>::min()) 
+				|| constant > static_cast<int>(std::numeric_limits<char>::max()))
 					break;
 				return true;
 			case symbol::T_SHORT:
-				if(constant < -0xFFFF || constant > 0xFFFF)
+				if(constant < static_cast<int>(std::numeric_limits<short>::min())
+				|| constant > static_cast<int>(std::numeric_limits<short>::max()))
 					break;
 				return true;
 			case symbol::T_UNSGN:
-				if(constant < 0)
+				//if(constant < std::numeric_limits<unsigned int>::min() 
+				//|| constant > std::numeric_limits<unsigned int>::max())
 					break;
 				return true;
 			case symbol::T_INT:
+				if(constant < std::numeric_limits<int>::min() 
+				|| constant > std::numeric_limits<int>::max())
+					break;
 				return true;
 			default:
 				assert(false);
@@ -60,7 +66,7 @@ public:
 		return false;
 	}
 
-	std::vector<expr*> getMutations(void) const override ;
+	std::vector<std::unique_ptr<expr>> getMutations(void) const override ;
 
 	expr* deepCopy(void) const override {
 		exprConst* copy = new exprConst(*this);
@@ -98,7 +104,7 @@ public:
 		return symbol::T_BOOL;
 	}
 
-	std::vector<expr*> getMutations(void) const override;
+	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprTrue* copy = new exprTrue(*this);
@@ -128,7 +134,7 @@ public:
 		return symbol::T_BOOL;
 	}
 
-	std::vector<expr*> getMutations(void) const override;
+	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprFalse* copy = new exprFalse(*this);

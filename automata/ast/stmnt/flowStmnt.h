@@ -11,6 +11,8 @@ class stmntOpt : public stmnt
 public:
 	stmntOpt(stmnt* block, stmntOpt *nextOpt, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
+		, block(nullptr)
+		, nextOpt(nullptr)
 	{
 		setBlock(block);
 		setNextOpt(nextOpt);
@@ -20,11 +22,18 @@ public:
 
 	stmntOpt(stmnt* block, int lineNb)
 		: stmnt(astNode::E_STMNT_OPT, lineNb)
+		, block(nullptr)
+		, nextOpt(nullptr)
 	{
 		setBlock(block);
 		setNextOpt(nextOpt);
 
 		//std::cout << "OPT $1 : line " << lineNb << " _ " << std::string(*this) << "\n";
+	}
+
+	virtual ~stmntOpt() {
+		delete block;
+		delete nextOpt;
 	}
 
 	void setBlock(stmnt* block) {
@@ -59,7 +68,7 @@ public:
 		stmntOpt* copy = new stmntOpt(*this);
 		copy->prev = copy;
 		copy->setBlock(block->deepCopy());
-		copy->setNextOpt(nextOpt? static_cast<stmntOpt*>(nextOpt->deepCopy()) : nullptr);
+		copy->setNextOpt(nextOpt? dynamic_cast<stmntOpt*>(nextOpt->deepCopy()) : nullptr);
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -77,10 +86,15 @@ class stmntIf : public stmnt
 public:
 	stmntIf(stmntOpt *opts, int lineNb)
 		: stmnt(astNode::E_STMNT_IF, lineNb)
+		, opts(nullptr)
 	{
 		setOpts(opts);
 
 		//std::cout << "IF : line " << lineNb << " _ " << std::string(*this) << "\n";
+	}
+
+	virtual ~stmntIf() {
+		delete opts;
 	}
 
 	void setOpts(stmntOpt* opts) {
@@ -104,7 +118,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntIf* copy = new stmntIf(*this);
 		copy->prev = copy;
-		copy->setOpts(static_cast<stmntOpt*>(opts->deepCopy()));
+		copy->setOpts(dynamic_cast<stmntOpt*>(opts->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -121,8 +135,13 @@ class stmntDo : public stmnt
 public:
 	stmntDo(stmntOpt *opts, int lineNb)
 		: stmnt(astNode::E_STMNT_DO, lineNb)
+		, opts(nullptr)
 	{
 		setOpts(opts);
+	}
+
+	virtual ~stmntDo() {
+		delete opts;
 	}
 
 	void setOpts(stmntOpt* opts) {
@@ -146,7 +165,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntDo* copy = new stmntDo(*this);
 		copy->prev = copy;
-		copy->setOpts(static_cast<stmntOpt*>(opts->deepCopy()));
+		copy->setOpts(dynamic_cast<stmntOpt*>(opts->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -190,8 +209,8 @@ class stmntGoto : public stmnt
 public:
 	stmntGoto(const std::string& label, int lineNb)
 		: stmnt(astNode::E_STMNT_GOTO, lineNb)
+		, label(label)
 	{
-		this->label = label;
 	}
 
 	operator std::string() const override {
@@ -225,11 +244,16 @@ class stmntLabel : public stmnt
 public:
 	stmntLabel(const std::string& label, stmnt *labelled, int lineNb)
 		: stmnt(astNode::E_STMNT_LABEL, lineNb)
+		, label(label)
+		, labelled(nullptr)
 	{
-		this->label = label;
-
 		setLabelled(labelled);
 	}
+
+	virtual ~stmntLabel() {
+		delete labelled;
+	}
+
 
 	void setLabelled(stmnt* labelled) {
 		rmChild(this->labelled);

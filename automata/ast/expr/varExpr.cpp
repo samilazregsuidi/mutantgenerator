@@ -14,28 +14,29 @@
 
 exprVarRefName::exprVarRefName(const std::string& symName, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
+	, symName(symName)
+	, sym(nullptr)
+	, index(nullptr)
 {
-	this->symName = symName;
-	this->sym = nullptr;
-	
-	setIndex(nullptr);
+
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, expr *index, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
+	, symName(symName)
+	, sym(nullptr)
+	, index(nullptr)
 {
-	this->symName = symName;
-	this->sym = nullptr;
-
 	setIndex(index);
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
+	, symName(symName)
+	, sym(sym)
+	, index(nullptr)
 {
-	this->symName = symName;
-	this->index = nullptr;
-	this->sym = sym;
+
 }
 
 std::string exprVarRefName::getName(void) const {
@@ -61,35 +62,6 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 		std::cout<< "unknown symbol : "<< symName << "\n";
 		assert(false);
 	}
-
-/*to add in global sym table 
-	if (!sym) {
-		// First check if its a magic variable
-		int mvar = 0;
-		if (mvar == 0 && symName == MVARID_LAST)
-			mvar = MVAR_LAST;
-		if (mvar == 0 && symName == MVARID_NRPR)
-			mvar = MVAR_NRPR;
-		if (mvar == 0 && symName == MVARID_PID)
-			mvar = MVAR_PID;
-		if (mvar == 0 && symName == MVARID_SCRATCH)
-			mvar = MVAR_SCRATCH;
-
-		if (mvar < 0)
-		{
-			// MVar IDs are negative!
-			//iVal = mvar;
-			assert(false);
-		}
-		else
-		{
-			// Then check if it's an mtype
-			//int value = mTypes? mTypes->getMTypeValue(symName) : -1;
-			//assert(!(value == -1 && !iVal));
-			//iVal = value;
-			assert(false);
-		}
-	}*/
 }
 
 symbol::Type exprVarRefName::getExprType(void) const {
@@ -106,6 +78,8 @@ expr* exprVarRefName::deepCopy(void) const {
 
 exprVarRef::exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar = nullptr)
 	: expr(astNode::E_VARREF, lineNb)
+	, varRefName(nullptr)
+	, subfieldsVar(nullptr)
 {
 	setVarRefName(symRef);
 	setSubField(subfieldsVar);
@@ -119,7 +93,7 @@ void exprVarRef::resolve(symTable *global, symTable* subField) {
 	assert(sym);
 	// Resolve subfields, but with the symbol table of the type
 	if (subfieldsVar) {
-		auto uSymbol = static_cast<utypeSymNode*>(sym);
+		auto uSymbol = dynamic_cast<utypeSymNode*>(sym);
 		assert(uSymbol->getUType());
 		subfieldsVar->resolve(global, uSymbol->getUType()->getSymTable());
 	}
@@ -154,13 +128,13 @@ bool exprVarRef::castToExprType(symbol::Type type) const {
 	return false;
 }
 
-std::vector<expr*> exprVarRef::getMutations(void) const {
+std::vector<std::unique_ptr<expr>> exprVarRef::getMutations(void) const {
 	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType(), varRefName->getSymbol()->getMask());
 	if(symList.size() > 1)
 		symList.remove(varRefName->getSymbol());
-	std::vector<expr*> mutations;
+	std::vector<std::unique_ptr<expr>> mutations;
 	for(auto& s: symList) {
-		auto sCast = static_cast<varSymNode*>(s);
+		auto sCast = dynamic_cast<varSymNode*>(s);
 		assert(sCast);
 		
 		if(sCast->getBound() > 1)
@@ -168,18 +142,18 @@ std::vector<expr*> exprVarRef::getMutations(void) const {
 				exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
 				exprVarRef* newVar = new exprVarRef(lineNb, symRef);
 				symRef->setIndex(new exprConst(i, lineNb));
-				mutations.push_back(newVar);
+				mutations.push_back(std::unique_ptr<expr>(newVar));
 			}
 		else
-			mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb)));
+			mutations.push_back(std::unique_ptr<exprVarRef>(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb))));
 	}
 	return mutations;
 }
 
 expr* exprVarRef::deepCopy(void) const {
 	exprVarRef* copy = new exprVarRef(*this);
-	copy->setVarRefName(static_cast<exprVarRefName*>(varRefName->deepCopy()));
-	copy->setSubField(subfieldsVar? static_cast<exprVarRef*>(subfieldsVar->deepCopy()) : nullptr);
+	copy->setVarRefName(dynamic_cast<exprVarRefName*>(varRefName->deepCopy()));
+	copy->setSubField(subfieldsVar? dynamic_cast<exprVarRef*>(subfieldsVar->deepCopy()) : nullptr);
 	return copy;
 }
 
@@ -187,12 +161,13 @@ expr* exprVarRef::deepCopy(void) const {
 
 exprVar::exprVar(exprVarRef *varRef, int lineNb)
 		: expr(astNode::E_EXPR_VAR, lineNb)
+		, varRef(nullptr)
 {
 	setVarRef(varRef);
 }
 
 expr* exprVar::deepCopy(void) const {
 	exprVar* copy = new exprVar(*this);
-	copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+	copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 	return copy;
 }

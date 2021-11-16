@@ -10,6 +10,10 @@ exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	setVarRef(varRef);
 }
 
+exprRArgVar::~exprRArgVar() {
+	delete varRef;
+}
+
 void exprRArgVar::setVarRef(exprVarRef* varRef) {
 	rmChild(this->varRef);
 	addChild(varRef);
@@ -22,6 +26,6 @@ exprRArgVar::operator std::string() const {
 
 expr* exprRArgVar::deepCopy(void) const {
 	exprRArgVar* copy = new exprRArgVar(*this);
-	copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+	copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 	return copy;
 }

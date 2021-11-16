@@ -18,6 +18,10 @@ public:
 
 	exprVarRefName(const std::string& symName, symbol *sym, int lineNb);
 
+	virtual ~exprVarRefName() {
+		delete index;
+	}
+
 	void setIndex(expr* index) {
 		rmChild(this->index);
 		addChild(index);
@@ -58,15 +62,20 @@ public:
 
 private:
 	std::string symName;
+	symbol* sym;
 	expr* index;
-	symbol* sym; 
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
 class exprVarRef : public expr
 {
 public:
-	exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar);
+	exprVarRef(int lineNb, exprVarRefName *varRefName, exprVarRef *subfieldsVar);
+
+	virtual ~exprVarRef() {
+		delete varRefName;
+		delete subfieldsVar;
+	}
 
 	void setVarRefName(exprVarRefName* varRefName) {
 		rmChild(this->varRefName);
@@ -110,7 +119,7 @@ public:
 		return id;
 	}
 
-	std::vector<expr*> getMutations(void) const override;
+	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
 
 	symbol::Type getExprType(void) const override;
 
@@ -129,9 +138,15 @@ class exprVar : public expr
 public:
 	exprVar(exprVarRef *varRef, int lineNb);
 
+	virtual ~exprVar() {
+		delete varRef;
+	}
+
 	void setVarRef(exprVarRef* varRef) {
-		rmChild(this->varRef);
-		addChild(varRef);
+		if(this->varRef)
+			rmChild(this->varRef);
+		if(varRef)
+			addChild(varRef);
 		this->varRef = varRef;
 	}
 
@@ -163,7 +178,7 @@ public:
 		if(varRef->getMId() == id){
 			auto mutations = varRef->getMutations();
 			//assert(mutations.size());
-			setVarRef(static_cast<exprVarRef*>(mutations[rand() % mutations.size()])); 
+			setVarRef(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release())); 
 			return true;
 		}
 		return false;

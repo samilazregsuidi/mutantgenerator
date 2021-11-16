@@ -27,6 +27,11 @@ exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 	setCard(nullptr);
 }
 
+exprRun::~exprRun() {
+	delete argList;
+	delete card;
+}
+
 void exprRun::setCard(exprVarRef* card) {
 	rmChild(this->card);
 	addChild(card);
@@ -45,7 +50,7 @@ exprRun::operator std::string() const {
 
 expr* exprRun::deepCopy(void) const {
 	exprRun* copy = new exprRun(*this);
-	copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
-	copy->setCard(static_cast<exprVarRef*>(card->deepCopy()));
+	copy->setArgList(dynamic_cast<exprArgList*>(argList->deepCopy()));
+	copy->setCard(dynamic_cast<exprVarRef*>(card->deepCopy()));
 	return copy;
 }

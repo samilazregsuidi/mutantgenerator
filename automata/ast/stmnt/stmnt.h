@@ -13,11 +13,10 @@ class stmnt : public astNode
 protected:
 	stmnt(Type type, int lineNb)
 		: astNode(type, lineNb)
-	{
-		this->local = nullptr;
-		this->next = nullptr;
-		this->prev = this;
-	}
+		, local(nullptr)
+		, next(nullptr)
+		, prev(this)
+	{}
 
 public:
 
@@ -81,14 +80,20 @@ class stmntSeq : public stmnt
 protected:
 	stmntSeq(Type type, stmnt* block, int lineNb)
 		: stmnt(type, lineNb)
+		, block(nullptr)
 	{
 		setBlock(block);
 		//std::cout << "SEQ : line " << lineNb << " _ " << std::string(*this) << "\n";
 	}
 
+	virtual ~stmntSeq() {
+		delete block;
+	}
+
 public:
 	stmntSeq(stmnt* block, int lineNb)
 		: stmnt(astNode::E_STMNT_SEQ, lineNb)
+		, block(nullptr)
 	{
 		setBlock(block);
 	}
@@ -167,11 +172,18 @@ class stmntAsgn : public stmnt
 public:
 	stmntAsgn(exprVarRef *varRef, expr *assign, int lineNb)
 		: stmnt(astNode::E_STMNT_ASGN, lineNb)
+		, varRef(nullptr)
+		, assign(nullptr)
 	{
 		setVarRef(varRef);
 		setAssign(assign);
 
 		assign->setExprType(varRef->getExprType());
+	}
+
+	virtual ~stmntAsgn() {
+		delete varRef;
+		delete assign;
 	}
 
 	void setVarRef(exprVarRef* varRef) {
@@ -200,15 +212,17 @@ public:
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
 			int debug = rand() % mutations.size();
-			auto ddebug = static_cast<exprVarRef*>(mutations[debug]);
+			auto ddebug = dynamic_cast<exprVarRef*>(mutations[debug].release());
 			setVarRef(ddebug);
 			return true;
 		}
 
 		if(assign->getMId() == id) {
 			auto mutations = assign->getMutations();
-			assert(mutations.size());
-			setAssign(mutations[rand() % mutations.size()]); 
+			if(mutations.size() == 0){
+				assert(mutations.size());
+			}
+			setAssign(mutations[rand() % mutations.size()].release()); 
 			return true;
 		}
 
@@ -218,7 +232,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntAsgn* copy = new stmntAsgn(*this);
 		copy->prev = copy;
-		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+		copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 		copy->setAssign(assign->deepCopy());
 
 		if(next)
@@ -237,8 +251,13 @@ class stmntIncr : public stmnt
 public:
 	stmntIncr(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_INCR, lineNb)
+		, varRef(nullptr)
 	{
 		setVarRef(varRef);
+	}
+
+	virtual ~stmntIncr(void) {
+		delete varRef;
 	}
 
 	void setVarRef(exprVarRef* varRef) {
@@ -260,7 +279,7 @@ public:
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			setVarRef(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			setVarRef(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
 			return true;
 		}
 
@@ -271,7 +290,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntIncr* copy = new stmntIncr(*this);
 		copy->prev = copy;
-		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+		copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -288,8 +307,13 @@ class stmntDecr : public stmnt
 public:
 	stmntDecr(exprVarRef *varRef, int lineNb)
 		: stmnt(astNode::E_STMNT_DECR, lineNb)
+		, varRef(nullptr)
 	{
 		setVarRef(varRef);
+	}
+
+	virtual ~stmntDecr() {
+		delete varRef;
 	}
 
 	void setVarRef(exprVarRef* varRef) {
@@ -311,7 +335,7 @@ public:
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			varRef = static_cast<exprVarRef*>(mutations[rand() % mutations.size()]); 
+			varRef = dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()); 
 			return true;
 		}
 
@@ -322,7 +346,7 @@ public:
 	stmnt* deepCopy(void) const override {
 		stmntDecr* copy = new stmntDecr(*this);
 		copy->prev = copy;
-		copy->setVarRef(static_cast<exprVarRef*>(varRef->deepCopy()));
+		copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -339,9 +363,13 @@ class stmntExpr : public stmnt
 public:
 	stmntExpr(expr *child, int lineNb)
 		: stmnt(astNode::E_STMNT_EXPR, lineNb)
+		, child(nullptr)
 	{
-		this->child = nullptr;
 		setChild(child);
+	}
+
+	virtual ~stmntExpr() {
+		delete child;
 	}
 
 	void setChild(expr* child) {
@@ -363,7 +391,8 @@ public:
 		if(child->getMId() == id) {
 			auto mutations = child->getMutations();
 			assert(mutations.size());
-			setChild(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			auto mutation = dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release());
+			setChild(mutation);
 			return true;
 		}
 

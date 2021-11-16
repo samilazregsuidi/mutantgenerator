@@ -22,6 +22,8 @@ class exprRArgVar : public exprRArg
 public:
 	exprRArgVar(exprVarRef *varRef, int lineNb);
 
+	virtual ~exprRArgVar();
+
 	void setVarRef(exprVarRef* varRef);
 	
 	operator std::string() const override;
@@ -42,8 +44,13 @@ class exprRArgEval : public exprRArg
 public:
 	exprRArgEval(expr *toEval, int lineNb)
 		: exprRArg(astNode::E_RARG_EVAL, lineNb)
+		, toEval(nullptr)
 	{
 		setToEval(toEval);
+	}
+
+	virtual ~exprRArgEval() {
+		delete toEval;
 	}
 
 	void setToEval(expr* toEval) {
@@ -76,8 +83,8 @@ class exprRArgConst : public exprRArg
 public:
 	exprRArgConst(int constant, int lineNb)
 		: exprRArg(astNode::E_RARG_EVAL, lineNb)
+		, constant(constant)
 	{
-		this->constant = constant;
 	}
 
 	operator std::string() const override {
@@ -104,6 +111,8 @@ class exprArgList : public expr
 public:
 	exprArgList(exprRArg *node, exprArgList *list, int lineNb)
 		: expr(astNode::E_ARGLIST, lineNb)
+		, node(nullptr)
+		, list(list)
 	{
 		
 		setRArg(node);
@@ -115,6 +124,11 @@ public:
 	{
 		setRArg(node);
 		setArgList(nullptr);
+	}
+
+	virtual ~exprArgList() {
+		delete node;
+		delete list;
 	}
 
 	void setRArg(exprRArg* node) {
@@ -139,8 +153,8 @@ public:
 
 	expr* deepCopy(void) const override {
 		exprArgList* copy = new exprArgList(*this);
-		copy->setRArg(static_cast<exprRArg*>(node->deepCopy()));
-		copy->setArgList(list? static_cast<exprArgList*>(list->deepCopy()) : nullptr);
+		copy->setRArg(dynamic_cast<exprRArg*>(node->deepCopy()));
+		copy->setArgList(list? dynamic_cast<exprArgList*>(list->deepCopy()) : nullptr);
 		return copy;
 	}
 

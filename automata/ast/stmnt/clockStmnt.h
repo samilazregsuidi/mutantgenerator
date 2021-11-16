@@ -11,8 +11,13 @@ class stmntWait : public stmnt
 public:
 	stmntWait(expr *timer, int lineNb)
 		: stmnt(astNode::E_STMNT_WAIT, lineNb)
+		, timer(nullptr)
 	{
 		setTimer(timer);
+	}
+
+	virtual ~stmntWait() {
+		delete timer;
 	}
 
 	void setTimer(expr* timer) {
@@ -49,9 +54,10 @@ class stmntWhen : public stmnt
 public:
 	stmntWhen(expr *guard, stmnt *todo, std::list<varSymNode*> clocks, int lineNb)
 		: stmnt(astNode::E_STMNT_WHEN, lineNb)
+		, guard(nullptr)
+		, todo(nullptr)
+		, clocks(clocks)
 	{
-		this->clocks = clocks;
-
 		setGuard(guard);
 		setTodo(todo);
 	}
@@ -61,6 +67,11 @@ public:
 	{
 		setGuard(guard);
 		setTodo(todo);
+	}
+
+	virtual ~stmntWhen() {
+		delete guard;
+		delete todo;
 	}
 
 	void setGuard(expr* guard) {

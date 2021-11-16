@@ -539,7 +539,7 @@ Probe	: FULL '(' varref ')'					{ $$ = new exprFull	($3, nbrLines); }
 		;
 
 /* ProcType and Inline arguments */
-args    : /* empty */
+args    : /* empty */                           { $$ = nullptr; }
 		| arg									{ $$ = $1; }
 		;
 

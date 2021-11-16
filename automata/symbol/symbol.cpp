@@ -28,12 +28,14 @@ int symbol::getUpperBound(Type type) {
 		case symbol::T_BIT:
 			return 1;
 		case symbol::T_BYTE:
-			return 0xFF;
+			return std::numeric_limits<char>::max();
 		case symbol::T_SHORT:
-			return 0xFFFF;
+			return std::numeric_limits<short>::max();
 		case symbol::T_UNSGN:
+			assert(false);
+			return std::numeric_limits<unsigned int>::max();
 		case symbol::T_INT:
-			return 0xFFFFFFFF;
+			return std::numeric_limits<int>::max();
 		default:
 			assert(false);
 			return 0;
@@ -45,13 +47,14 @@ int symbol::getLowerBound(Type type) {
 		case symbol::T_BIT:
 			return 0;
 		case symbol::T_BYTE:
-			return 0;
+			return std::numeric_limits<char>::min();
 		case symbol::T_SHORT:
-			return -0xFFFF;
+			return std::numeric_limits<short>::min();
 		case symbol::T_UNSGN:
-			return 0;
+			assert(false);
+			return std::numeric_limits<unsigned int>::min();
 		case symbol::T_INT:
-			return -0xFFFFFFFF;
+			return std::numeric_limits<int>::min();
 		default:
 			assert(false);
 			return 0;

@@ -13,15 +13,18 @@
 /**
  * Just creates a node with the given values.
  */
-astNode::astNode(Type type, int lineNb) {
-	this->type			= type;
-	this->lineNb 		= lineNb;
-	this->mId 			= 0;
+astNode::astNode(Type type, int lineNb)
+	: type(type)
+	, lineNb(lineNb)
+	, parent(nullptr)
+	, mId(0)
+{
+
 }
 
 astNode::~astNode() {
-	for(auto n : children)
-		delete n;
+	/*for(auto n : children)
+		delete n;*/
 }
 
 astNode::Type astNode::getType(void) const {

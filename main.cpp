@@ -85,11 +85,14 @@ int main(int argc, char *argv[]) {
 		output.open("test/mutant_"+ std::to_string(i*j) + ".pml");
 		output << stmnt::string(copy);
 		output.close();
+		delete copy;
 	}
 
 	output.open("test/original_.pml");
 	output << stmnt::string(program);
 	output.close();
+
+	delete program;
 
 	if(yyin != nullptr) fclose(yyin);
 	

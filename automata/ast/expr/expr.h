@@ -2,6 +2,7 @@
 #define EXPR_H
 
 #include <vector>
+#include <memory>
 
 #include "astNode.h"
 
@@ -19,12 +20,12 @@ protected:
 
 public:
 
-	virtual std::vector<expr*> getMutations(void) const {
+	virtual std::vector<std::unique_ptr<expr>> getMutations(void) const {
 		assert(false);
-		return std::vector<expr*>();
+		return std::vector<std::unique_ptr<expr>>();
 	}
 
-	virtual expr* deepCopy(void) const = 0;
+	virtual expr* deepCopy(void) const { assert(false); return nullptr; };
 
 	virtual symbol::Type getExprType(void) const {
 		return exprType;
@@ -68,6 +69,12 @@ public:
 		setElse(elsE);
 	}
 
+	virtual ~exprCond() {
+		delete cond;
+		delete then;
+		delete elsE;
+	}
+
 	void setCond(expr* cond) {
 		rmChild(this->cond);
 		addChild(cond);
@@ -103,21 +110,21 @@ public:
 		if(cond->getMId() == id) {
 			auto mutations = cond->getMutations();
 			assert(mutations.size());
-			setCond(mutations[rand() % mutations.size()]); 
+			setCond(mutations[rand() % mutations.size()].release()); 
 			return true;
 		}
 
 		if(then->getMId() == id) {
 			auto mutations = then->getMutations();
 			assert(mutations.size());
-			setThen(mutations[rand() % mutations.size()]); 
+			setThen(mutations[rand() % mutations.size()].release()); 
 			return true;
 		}
 
 		if(elsE->getMId() == id) {
 			auto mutations = elsE->getMutations();
 			assert(mutations.size());
-			setElse(mutations[rand() % mutations.size()]); 
+			setElse(mutations[rand() % mutations.size()].release()); 
 			return true;
 		}
 
@@ -148,6 +155,8 @@ public:
 	exprRun(const std::string& procName, exprArgList *argList, exprVarRef *card, int lineNb);
 
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
+
+	virtual ~exprRun();
 
 	void setCard(exprVarRef* card);
 

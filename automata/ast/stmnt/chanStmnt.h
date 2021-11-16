@@ -11,9 +11,16 @@ class stmntChan : public stmnt
 protected:
 	stmntChan(Type type, exprVarRef *chan, exprArgList *argList, int lineNb)
 		: stmnt(type, lineNb)
+		, chan(nullptr)
+		, argList(nullptr)
 	{
 		setChan(chan);
 		setArgList(argList);
+	}
+
+	virtual ~stmntChan() {
+		delete chan;
+		delete argList;
 	}
 
 public:	
@@ -34,14 +41,14 @@ public:
 		if(chan->getMId() == id) {
 			auto mutations = chan->getMutations();
 			assert(mutations.size());
-			setChan(static_cast<exprVarRef*>(mutations[rand() % mutations.size()]));
+			setChan(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
 			return true;
 		}
 
 		if(argList->getMId() == id) {
 			auto mutations = argList->getMutations();
 			assert(mutations.size());
-			setArgList(static_cast<exprArgList*>(mutations[rand() % mutations.size()]));
+			setArgList(dynamic_cast<exprArgList*>(mutations[rand() % mutations.size()].release()));
 			return true;
 		}
 
@@ -73,8 +80,8 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntChanRecv* copy = new stmntChanRecv(*this);
 		copy->prev = copy;
-		copy->setChan(static_cast<exprVarRef*>(chan->deepCopy()));
-		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
+		copy->setChan(dynamic_cast<exprVarRef*>(chan->deepCopy()));
+		copy->setArgList(dynamic_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());
@@ -101,8 +108,8 @@ public:
 	stmnt* deepCopy(void) const {
 		stmntChanSnd* copy = new stmntChanSnd(*this);
 		copy->prev = copy;
-		copy->setChan(static_cast<exprVarRef*>(chan->deepCopy()));
-		copy->setArgList(static_cast<exprArgList*>(argList->deepCopy()));
+		copy->setChan(dynamic_cast<exprVarRef*>(chan->deepCopy()));
+		copy->setArgList(dynamic_cast<exprArgList*>(argList->deepCopy()));
 
 		if(next)
 			return stmnt::merge(copy, next->deepCopy());

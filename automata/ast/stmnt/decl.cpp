@@ -39,7 +39,7 @@ chanDecl::chanDecl(std::list<varSymNode *> declSymTab, int lineNb)
 	: stmnt(astNode::E_VAR_DECL, lineNb)
 {
 	for(auto s : declSymTab) {
-		auto var = static_cast<chanSymNode*>(s);
+		auto var = dynamic_cast<chanSymNode*>(s);
 		assert(var);
 		this->declSymTab.push_back(var);
 	}
@@ -124,7 +124,7 @@ procDecl::operator std::string() const {
 /**********************************************************************************************************************************************/
 
 initDecl::initDecl(initSymNode *procSym, int lineNb)
-	: stmntSeq(astNode::E_INIT_DECL, this->block = procSym->getBlock(), lineNb)
+	: stmntSeq(astNode::E_INIT_DECL, procSym->getBlock(), lineNb)
 {}
 
 initDecl::operator std::string() const {
