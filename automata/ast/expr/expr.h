@@ -18,11 +18,13 @@ protected:
 		exprType = symbol::T_NA;
 	}
 
-public:
+	expr(const expr&) = default;
+	expr(expr&&) = default;
 
-	virtual std::vector<std::unique_ptr<expr>> getMutations(void) const {
+public:
+	virtual std::vector<expr*> getMutations(void) const {
 		assert(false);
-		return std::vector<std::unique_ptr<expr>>();
+		return std::vector<expr*>();
 	}
 
 	virtual expr* deepCopy(void) const { assert(false); return nullptr; };
@@ -110,21 +112,36 @@ public:
 		if(cond->getMId() == id) {
 			auto mutations = cond->getMutations();
 			assert(mutations.size());
-			setCond(mutations[rand() % mutations.size()].release()); 
+
+			size_t i = rand() % mutations.size();
+			setCond(mutations[i]);
+			mutations.erase(mutations.begin() + i);
+
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
 		if(then->getMId() == id) {
 			auto mutations = then->getMutations();
 			assert(mutations.size());
-			setThen(mutations[rand() % mutations.size()].release()); 
+
+			size_t i = rand() % mutations.size();
+			setThen(mutations[i]);
+			mutations.erase(mutations.begin() + 1);
+
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
 		if(elsE->getMId() == id) {
 			auto mutations = elsE->getMutations();
 			assert(mutations.size());
-			setElse(mutations[rand() % mutations.size()].release()); 
+
+			size_t i = rand() % mutations.size();
+			setElse(mutations[i]);
+			mutations.erase(mutations.begin() + 1);
+
+			for(auto i : mutations) delete i;
 			return true;
 		}
 

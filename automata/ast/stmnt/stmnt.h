@@ -212,7 +212,9 @@ public:
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
 			int debug = rand() % mutations.size();
-			auto ddebug = dynamic_cast<exprVarRef*>(mutations[debug].release());
+			auto ddebug = dynamic_cast<exprVarRef*>(mutations[debug]);
+			mutations.erase(mutations.begin() + debug);
+			for(auto i : mutations) delete i;
 			setVarRef(ddebug);
 			return true;
 		}
@@ -222,7 +224,10 @@ public:
 			if(mutations.size() == 0){
 				assert(mutations.size());
 			}
-			setAssign(mutations[rand() % mutations.size()].release()); 
+			size_t i = rand() % mutations.size();
+			setAssign(mutations[i]);
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
@@ -279,7 +284,10 @@ public:
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			setVarRef(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
+			size_t i = rand() % mutations.size();
+			setVarRef(dynamic_cast<exprVarRef*>(mutations[i]));
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
@@ -335,7 +343,10 @@ public:
 		if(varRef->getMId() == id) {
 			auto mutations = varRef->getMutations();
 			assert(mutations.size());
-			varRef = dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()); 
+			size_t i = rand() % mutations.size();
+			varRef = dynamic_cast<exprVarRef*>(mutations[i]); 
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
@@ -391,7 +402,10 @@ public:
 		if(child->getMId() == id) {
 			auto mutations = child->getMutations();
 			assert(mutations.size());
-			auto mutation = dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release());
+			size_t i = rand() % mutations.size();
+			auto mutation = dynamic_cast<exprVarRef*>(mutations[i]);
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			setChild(mutation);
 			return true;
 		}

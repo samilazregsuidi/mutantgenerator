@@ -119,7 +119,7 @@ public:
 		return id;
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	symbol::Type getExprType(void) const override;
 
@@ -178,7 +178,10 @@ public:
 		if(varRef->getMId() == id){
 			auto mutations = varRef->getMutations();
 			//assert(mutations.size());
-			setVarRef(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release())); 
+			size_t i = rand() % mutations.size();
+			setVarRef(dynamic_cast<exprVarRef*>(mutations[i])); 
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 		return false;

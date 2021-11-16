@@ -16,8 +16,8 @@
                 "${workspaceFolder}/automata/symbol/typedef",
                 "${workspaceFolder}/automata/symbol/visitor",
                 "${workspaceFolder}/parser/**",
-                "/usr/include/**"
-                
+                "/usr/include/**",
+                "/usr/include"
             ],
             "defines": [],
             "compilerPath": "/bin/g++",

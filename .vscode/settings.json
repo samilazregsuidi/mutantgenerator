@@ -86,6 +86,9 @@
         "astnode.h": "c",
         "symbols.h": "c",
         "intsymnode.h": "c",
-        "procsymnode.h": "c"
+        "procsymnode.h": "c",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "numbers": "cpp"
     }
 }

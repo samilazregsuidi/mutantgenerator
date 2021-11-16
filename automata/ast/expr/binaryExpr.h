@@ -59,14 +59,20 @@ protected:
 		if(left->getMId() == id) {
 			auto mutations = left->getMutations();
 			assert(mutations.size());
-			setLeft(mutations[rand() % mutations.size()].release()); 
+			size_t i = rand() % mutations.size();
+			setLeft(mutations[i]); 
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
 		if(right->getMId() == id) {
 			auto mutations = right->getMutations();
 			assert(mutations.size());
-			setRight(mutations[rand() % mutations.size()].release()); 
+			size_t i = rand() % mutations.size();
+			setRight(mutations[i]);
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
@@ -98,7 +104,7 @@ public:
 		return "Plus (E_EXPR_PLUS)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprPlus* copy = new exprPlus(*this);
@@ -130,7 +136,7 @@ public:
 		return "Minus (E_EXPR_MINUS)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprMinus* copy = new exprMinus(*this);
@@ -163,7 +169,7 @@ public:
 		return "Times (E_EXPR_TIMES)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprTimes* copy = new exprTimes(*this);
@@ -196,7 +202,7 @@ public:
 		return "Divide (E_EXPR_DIV)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprDiv* copy = new exprDiv(*this);
@@ -228,7 +234,7 @@ public:
 		return "Modulo (E_EXPR_MOD)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprMod* copy = new exprMod(*this);
@@ -260,7 +266,7 @@ public:
 		return "Greater than (E_EXPR_GT)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprGT* copy = new exprGT(*this);
@@ -292,7 +298,7 @@ public:
 		return "Less than (E_EXPR_LT)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprLT* copy = new exprLT(*this);
@@ -323,7 +329,7 @@ public:
 		return "Greater or equal than (E_EXPR_GE)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprGE* copy = new exprGE(*this);
@@ -355,7 +361,7 @@ public:
 		return "Less or equal than (E_EXPR_LE)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprLE* copy = new exprLE(*this);
@@ -386,7 +392,7 @@ public:
 		return "Equal (E_EXPR_EQ)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprEQ* copy = new exprEQ(*this);
@@ -418,7 +424,7 @@ public:
 		return "Not equal (E_EXPR_NE)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprNE* copy = new exprNE(*this);
@@ -450,7 +456,7 @@ public:
 		return "Logical and (E_EXPR_AND)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprAnd* copy = new exprAnd(*this);
@@ -482,7 +488,7 @@ public:
 		return "Logical or (E_EXPR_OR)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprOr* copy = new exprOr(*this);
@@ -514,7 +520,7 @@ public:
 		return "Bitwise and (E_EXPR_BITWAND)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprBitwAnd* copy = new exprBitwAnd(*this);
@@ -545,7 +551,7 @@ public:
 		return "Bitwise or (E_EXPR_BITWOR)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprBitwOr* copy = new exprBitwOr(*this);
@@ -576,7 +582,7 @@ public:
 		return "Bitwise xor (E_EXPR_BITWXOR)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprBitwXor* copy = new exprBitwXor(*this);
@@ -605,7 +611,7 @@ public:
 		return "Left shift (E_EXPR_LSHIFT)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprLShift* copy = new exprLShift(*this);
@@ -636,7 +642,7 @@ public:
 		return "Right shift (E_EXPR_RSHIFT)";
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprRShift* copy = new exprRShift(*this);

@@ -68,7 +68,7 @@ public:
 		return false;
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override ;
+	std::vector<expr*> getMutations(void) const override ;
 
 	expr* deepCopy(void) const override {
 		exprConst* copy = new exprConst(*this);
@@ -106,7 +106,7 @@ public:
 		return symbol::T_BOOL;
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprTrue* copy = new exprTrue(*this);
@@ -136,7 +136,7 @@ public:
 		return symbol::T_BOOL;
 	}
 
-	std::vector<std::unique_ptr<expr>> getMutations(void) const override;
+	std::vector<expr*> getMutations(void) const override;
 
 	expr* deepCopy(void) const override {
 		exprFalse* copy = new exprFalse(*this);

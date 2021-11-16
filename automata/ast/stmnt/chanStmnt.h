@@ -41,14 +41,20 @@ public:
 		if(chan->getMId() == id) {
 			auto mutations = chan->getMutations();
 			assert(mutations.size());
-			setChan(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
+			size_t i = rand() % mutations.size();
+			setChan(dynamic_cast<exprVarRef*>(mutations[i]));
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 
 		if(argList->getMId() == id) {
 			auto mutations = argList->getMutations();
 			assert(mutations.size());
-			setArgList(dynamic_cast<exprArgList*>(mutations[rand() % mutations.size()].release()));
+			size_t i = rand() % mutations.size();
+			setArgList(dynamic_cast<exprArgList*>(mutations[i]));
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 

@@ -29,7 +29,10 @@ protected:
 		if(mExpr->getMId() == id) {
 			auto mutations = mExpr->getMutations();
 			assert(mutations.size());
-			setExpr(dynamic_cast<exprVarRef*>(mutations[rand() % mutations.size()].release()));
+			size_t i = rand() % mutations.size();
+			setExpr(dynamic_cast<exprVarRef*>(mutations[i]));
+			mutations.erase(mutations.begin() + i);
+			for(auto i : mutations) delete i;
 			return true;
 		}
 

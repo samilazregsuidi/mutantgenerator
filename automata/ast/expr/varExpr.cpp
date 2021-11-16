@@ -128,11 +128,11 @@ bool exprVarRef::castToExprType(symbol::Type type) const {
 	return false;
 }
 
-std::vector<std::unique_ptr<expr>> exprVarRef::getMutations(void) const {
+std::vector<expr*> exprVarRef::getMutations(void) const {
 	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType(), varRefName->getSymbol()->getMask());
 	if(symList.size() > 1)
 		symList.remove(varRefName->getSymbol());
-	std::vector<std::unique_ptr<expr>> mutations;
+	std::vector<expr*> mutations;
 	for(auto& s: symList) {
 		auto sCast = dynamic_cast<varSymNode*>(s);
 		assert(sCast);
@@ -142,10 +142,10 @@ std::vector<std::unique_ptr<expr>> exprVarRef::getMutations(void) const {
 				exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
 				exprVarRef* newVar = new exprVarRef(lineNb, symRef);
 				symRef->setIndex(new exprConst(i, lineNb));
-				mutations.push_back(std::unique_ptr<expr>(newVar));
+				mutations.push_back(newVar);
 			}
 		else
-			mutations.push_back(std::unique_ptr<exprVarRef>(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb))));
+			mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb)));
 	}
 	return mutations;
 }
