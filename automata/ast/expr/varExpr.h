@@ -178,6 +178,10 @@ public:
 		if(varRef->getMId() == id){
 			auto mutations = varRef->getMutations();
 			//assert(mutations.size());
+			//TODO: fix
+			if(mutations.size() <= 0) {
+				return false;
+			}
 			size_t i = rand() % mutations.size();
 			setVarRef(dynamic_cast<exprVarRef*>(mutations[i])); 
 			mutations.erase(mutations.begin() + i);

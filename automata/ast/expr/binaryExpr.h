@@ -25,8 +25,10 @@ protected:
 	}
 
 	virtual ~exprBinary() {
-		delete left;
-		delete right;
+		if(left)
+			delete left;
+		if(right)
+			delete right;
 	}
 
 	void setLeft(expr* left) {

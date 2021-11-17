@@ -390,7 +390,7 @@ public:
 	}
 
 	operator std::string() const override {
-		return std::string(*child) + ";\n";
+		return (child ? std::string(*child) : "nullptr") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override {
