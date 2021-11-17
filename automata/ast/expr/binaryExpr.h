@@ -25,10 +25,10 @@ protected:
 	}
 
 	virtual ~exprBinary() {
-		if(left)
-			delete left;
-		if(right)
-			delete right;
+		//TODO : fix eventual double delete on example "elevator.pml"
+		//if(left) does not work
+		delete left;
+		delete right;
 	}
 
 	void setLeft(expr* left) {

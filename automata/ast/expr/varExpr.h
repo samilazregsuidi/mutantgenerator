@@ -1,6 +1,8 @@
 #ifndef VAR_EXPR_H
 #define VAR_EXPR_H
 
+#include <iostream>
+
 #include "expr.h"
 
 //E_VARREF_NAME,		// child[0] = E_EXPR_* (index into the array, or NULL), sVal = the variable/field name
@@ -180,6 +182,7 @@ public:
 			//assert(mutations.size());
 			//TODO: fix
 			if(mutations.size() <= 0) {
+				std::cerr << "varExpr::mutateMutable(uint) error : mutations.size() <= 0\n";
 				return false;
 			}
 			size_t i = rand() % mutations.size();
