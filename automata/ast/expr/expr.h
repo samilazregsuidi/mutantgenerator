@@ -63,12 +63,12 @@ protected:
 class exprCond : public expr
 {
 public:
-	exprCond(expr *cond, expr *then, expr *elsE, int lineNb)
-		: expr(astNode::E_EXPR_COND, lineNb)
+	exprCond(expr *pcond, expr *pthen, expr *pelsE, int lineNb)
+		: expr(astNode::E_EXPR_COND, lineNb), cond(nullptr), then(nullptr), elsE(nullptr)
 	{
-		setCond(cond);
-		setThen(then);
-		setElse(elsE);
+		setCond(pcond);
+		setThen(pthen);
+		setElse(pelsE);
 	}
 
 	virtual ~exprCond() {
