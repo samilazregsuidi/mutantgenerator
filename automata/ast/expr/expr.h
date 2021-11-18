@@ -55,6 +55,11 @@ public:
 		return symbol::T_NA;
 	}
 
+public:
+	virtual void clearChildren() override {
+		astNode::clearChildren();
+	}
+
 protected:
 	symbol::Type exprType;
 };
@@ -96,7 +101,7 @@ public:
 	}
 
 	operator std::string() const override {
-		return "(" + std::string(*cond) + "; " + std::string(*then) + ": " + std::string(*elsE) + ")";
+		return "(" + (cond ? std::string(*cond) : "nullptr" ) + "; " + (then ? std::string(*then) : "nullptr") + ": " + (elsE ? std::string(*elsE) : "nullptr") + ")";
 	}
 
 	std::string getTypeDescr(void) const override {
@@ -114,10 +119,15 @@ public:
 			assert(mutations.size());
 
 			size_t i = rand() % mutations.size();
-			setCond(mutations[i]);
+			auto tmp = mutations[i];
+			setCond(tmp);
 			mutations.erase(mutations.begin() + i);
 
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
@@ -126,10 +136,15 @@ public:
 			assert(mutations.size());
 
 			size_t i = rand() % mutations.size();
-			setThen(mutations[i]);
-			mutations.erase(mutations.begin() + 1);
+			auto tmp = mutations[i];
+			setThen(tmp);
+			mutations.erase(mutations.begin() + i);
 
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
@@ -138,10 +153,15 @@ public:
 			assert(mutations.size());
 
 			size_t i = rand() % mutations.size();
-			setElse(mutations[i]);
-			mutations.erase(mutations.begin() + 1);
+			auto tmp = mutations[i];
+			setElse(tmp);
+			mutations.erase(mutations.begin() + i);
 
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
@@ -155,6 +175,13 @@ public:
 		copy->setThen(then->deepCopy());
 		copy->setElse(elsE->deepCopy());
 		return copy;
+	}
+
+public:
+	virtual void clearChildren() override {
+		setCond(nullptr);
+		setThen(nullptr);
+		setElse(nullptr);
 	}
 
 private:
@@ -190,6 +217,12 @@ public:
 	}
 
 	expr* deepCopy(void) const override;
+
+public:
+	virtual void clearChildren() override {
+		setCard(nullptr);
+		setArgList(nullptr);
+	}
 
 private:
 	std::string procName;

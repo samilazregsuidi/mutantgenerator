@@ -25,8 +25,7 @@ protected:
 	}
 
 	virtual ~exprBinary() {
-		//TODO : fix eventual double delete on example "elevator.pml"
-		//if(left) does not work
+		//TODO : fix double delete on example "elevator.pml"
 		delete left;
 		delete right;
 	}
@@ -62,9 +61,14 @@ protected:
 			auto mutations = left->getMutations();
 			assert(mutations.size());
 			size_t i = rand() % mutations.size();
-			setLeft(mutations[i]); 
+			auto tmp = mutations[i];
+			setLeft(tmp); 
 			mutations.erase(mutations.begin() + i);
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
@@ -72,13 +76,24 @@ protected:
 			auto mutations = right->getMutations();
 			assert(mutations.size());
 			size_t i = rand() % mutations.size();
-			setRight(mutations[i]);
+			auto tmp = mutations[i];
+			setRight(tmp);
 			mutations.erase(mutations.begin() + i);
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
 		return false;
+	}
+
+public:
+	virtual void clearChildren() override {
+		setLeft(nullptr);
+		setRight(nullptr);
 	}
 
 

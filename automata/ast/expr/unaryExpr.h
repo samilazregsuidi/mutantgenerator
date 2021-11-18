@@ -30,9 +30,14 @@ protected:
 			auto mutations = mExpr->getMutations();
 			assert(mutations.size());
 			size_t i = rand() % mutations.size();
-			setExpr(dynamic_cast<exprVarRef*>(mutations[i]));
+			auto tmp = mutations[i];
+			setExpr(dynamic_cast<exprVarRef*>(tmp));
 			mutations.erase(mutations.begin() + i);
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
+			tmp->forceParentOnChildren();
 			return true;
 		}
 
@@ -43,6 +48,12 @@ protected:
 	symbol::Type getExprType(void) const {
 		return mExpr->getExprType();
 	}
+
+public:
+	virtual void clearChildren() override {
+		setExpr(nullptr);
+	}
+
 
 public:
 	expr* mExpr;
@@ -58,7 +69,7 @@ public:
 	}
 
 	operator std::string() const override {
-		return "(" + std::string(*mExpr) + ")";
+		return "(" + (mExpr ? std::string(*mExpr) : "nullptr") + ")";
 	}
 
 	std::string getTypeDescr(void) const override {

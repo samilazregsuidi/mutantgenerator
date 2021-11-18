@@ -199,7 +199,7 @@ public:
 	}
 
 	operator std::string() const override{
-		return std::string(*varRef) + " = " + std::string(*assign) + ";\n";
+		return (varRef ? std::string(*varRef) : "nullptr") + " = " + (assign ? std::string(*assign) : "nullptr") + ";\n";
 	}
 
 	std::string getTypeDescr(void) const override{
@@ -403,9 +403,13 @@ public:
 			auto mutations = child->getMutations();
 			assert(mutations.size());
 			size_t i = rand() % mutations.size();
-			auto mutation = dynamic_cast<exprVarRef*>(mutations[i]);
+			auto tmp = mutations[i];
+			auto mutation = dynamic_cast<exprVarRef*>(tmp);
 			mutations.erase(mutations.begin() + i);
-			for(auto i : mutations) delete i;
+			for(auto i : mutations) {
+				i->clearChildren();
+				delete i;
+			}
 			setChild(mutation);
 			return true;
 		}

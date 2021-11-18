@@ -298,6 +298,26 @@ protected:
 		}
 	}
 
+public:
+	/**
+	 * UNSAFE
+	 */
+	virtual void clearChildren() {
+		for(auto i : children) {
+			i->setParent(nullptr);
+		}
+		children.clear();
+	}
+
+	/**
+	 * UNSAFE
+	 */
+	void forceParentOnChildren() {
+		for(auto i : children) {
+			i->setParent(this);
+		}
+	}
+
 protected:
 	Type type;
 	int lineNb;

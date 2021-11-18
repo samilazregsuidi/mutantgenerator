@@ -62,6 +62,11 @@ public:
 
 	expr* deepCopy(void) const override;
 
+public:
+	virtual void clearChildren() override {
+		setIndex(nullptr);
+	}
+
 private:
 	std::string symName;
 	symbol* sym;
@@ -128,6 +133,12 @@ public:
 	bool castToExprType(symbol::Type type) const override;
 
 	expr* deepCopy(void) const override;
+
+public:
+	virtual void clearChildren() override {
+		setVarRefName(nullptr);
+		setSubField(nullptr);
+	}
 	
 private:
 	exprVarRefName *varRefName;
@@ -195,6 +206,11 @@ public:
 	}
 
 	expr* deepCopy(void) const override;
+
+public:
+	virtual void clearChildren() override {
+		setVarRef(nullptr);
+	}
 
 private:
 	exprVarRef* varRef;
