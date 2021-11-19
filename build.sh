@@ -10,7 +10,8 @@ cp promela.l promela.y lex.yy.c y.tab.c ../
 
 cd ..
 
-g++ -Wall -Wextra -ggdb -O0 -fsanitize=address -fno-omit-frame-pointer -static-libasan -g -o mutantgenerator main.cpp \
+#g++ -Wall -Wextra -ggdb -O0 -fsanitize=address -fno-omit-frame-pointer -static-libasan -g -o mutantgenerator main.cpp \
+g++ -Wall -Wextra -ggdb -O0 -g -o mutantgenerator main.cpp \
 	./parser/lex.yy.c \
 	./parser/y.tab.c \
 	\
