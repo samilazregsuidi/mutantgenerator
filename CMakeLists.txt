@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(mutantgenerator LANGUAGES CXX)
 
+set(ASAN -fsanitize=address -fno-omit-frame-pointer -static-libasan)
+
 set(Parser "y.tab.cpp")
 set(Lexer "lex.yy.cpp")
 add_custom_command(
@@ -16,6 +18,17 @@ add_custom_command(
     COMMAND flex -o ${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.l
     COMMENT "running flex"
+)
+add_compile_options(
+	-Wall
+	-Wextra
+	-pedantic
+	-ggdb
+	-O0
+	${ASAN}
+)
+add_link_options(
+	${ASAN}
 )
 
 add_executable(mutantgenerator
