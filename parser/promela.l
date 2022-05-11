@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "symbols.h"
-#include "ast.h"
+#include "symbols.hpp"
+#include "ast.hpp"
 
 #include "y.tab.h"
 
@@ -149,8 +149,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"clock"		{ DBUG(TYPE); yylval->iType = symbol::T_CLOCK;
 					  return TYPE; }
 
-<CODE>"inline"		{ fprintf(stderr, "Inline declarations are not supported.\n");
-					  exit(1); /* return INLINE; */ }
+<CODE>"inline"		{ return INLINE; }
 
 <CODE>"false"		{ DBUG(FALSE);  yylval->iVal = 0; 
 					  return FALSE; }
@@ -179,19 +178,27 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 
 <CODE>{symbol}	 	{ DBUG_CHAR(yytext[0]); return yytext[0]; } 
 
-<CODE>{id}       	{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
+<CODE>{id}       	{
+					  yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
  
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else
 					  symbol* node = nullptr;
 					  if(*globalSymTab != nullptr && (node = (*globalSymTab)->lookup(yylval->sVal))) {
-					  	  if(node->getType() == symbol::T_TDEF) {
-						  	DBUG(UNAME);
-						  	return UNAME; 
-						  }
-						  else if(node->getType() == symbol::T_PROC) {
-						  	DBUG(PNAME);
-						  	return PNAME; 
+					  	  switch(node->getType()) {
+							  case symbol::T_TDEF:
+						   		 DBUG(UNAME);
+						  	     return UNAME; 
+
+						      case symbol::T_PROC:
+						  	     DBUG(PNAME);
+						  	     return PNAME;
+                              
+							  case symbol::T_INLINE:
+							     DBUG(INAME);
+								 return INAME;
+							  default:
+							  	 break;
 						  }
 					  }
 					  

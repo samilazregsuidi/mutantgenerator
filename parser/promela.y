@@ -16,8 +16,8 @@
 #include <iostream>
 #include <list>
 
-#include "symbols.h"
-#include "ast.h"
+#include "symbols.hpp"
+#include "ast.hpp"
 
 #include "y.tab.h"
 
@@ -45,8 +45,10 @@ symTable* savedSymTab = nullptr;
 std::list<varSymNode*> declSyms;
 std::list<symbol*> typeLst;
 std::unordered_map<std::string, cmtypeSymNode*> mtypes; 
+std::list<std::string> params;
 
 int mtypeId = 0;
+bool inInline = false;
 
 %}
 
@@ -70,6 +72,7 @@ int mtypeId = 0;
 	class exprVarRef*		pExprVarRefVal;
 	class exprVarRefName*	pExprVarRefNameVal;
 	class exprArgList*		pExprArgListVal;
+	class exprRArgList*		pExprRArgListVal;
 	class exprRArg*			pExprRArgVal;
 	
 	class symbol*			pSymTabVal;
@@ -121,14 +124,15 @@ int mtypeId = 0;
 
 %type  <sVal> aname
 %type  <rVal> real_expr
-%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt proc init utypedef mtypedef body sequence option
+%type  <pStmntVal> step stmnt timed_stmnt Special Stmnt proc init utypedef mtypedef body sequence option ns
 %type  <pStmntOptVal> options
 %type  <pExprVal> Expr expr full_expr Probe
 %type  <pConstExprVal> inst
 %type  <pExprVarRefVal> varref cmpnd sfld  
 %type  <pExprVarRefNameVal> pfld
-%type  <pExprArgListVal> arg args rargs margs prargs
+%type  <pExprRArgListVal> rargs
 %type  <pExprRArgVal> rarg
+%type  <pExprArgListVal> arg args margs prargs
 %type  <pDataVal> vardcl basetype ch_init
 %type  <pVarSymVal> ivar
 
@@ -143,7 +147,7 @@ start_parsing	: { *globalSymTab = new symTable("global"); symTable::addPredefine
 /** PROMELA Grammar Rules **/
 
 
-program	: units	 								{ std::cout<< "REDUCE: units -> program\n"; }
+program	: units	 								{ std::cout<< "REDUCE: units -> program\n";}
 		;
 
 units	: unit									{ std::cout<< "REDUCE: unit -> units\n"; }
@@ -152,7 +156,7 @@ units	: unit									{ std::cout<< "REDUCE: unit -> units\n"; }
 
 unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| init		/* init { }           */	{ std::cout<< "REDUCE: init -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| events	/* event assertions   */  	{ std::cout << "The 'events' construct is currently not supported."; }
+		| events	/* event assertions   */  	{ assert(false); std::cout << "The 'events' construct is currently not supported."; }
 		| one_decl	/* variables, chans   */	{ 
 													std::cout << "REDUCE: one_decl -> unit\n";
 													stmnt* decl = nullptr;
@@ -166,29 +170,27 @@ unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *p
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-		| utypedef		/* user defined types */	{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| mtypedef									{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| utypedef		/* user defined types */{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| mtypedef								{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
-		| ns		/* named sequence     */  	{ std::cout << "The 'named sequence' construct is currently not supported."; }
+		| ns		/* named sequence     */  	{ std::cout << "REDUCE: ns -> unit\n"; *program = stmnt::merge(*program, $1); }
 		| SEMI		/* optional separator */	/* ignored */			
 	/*	| error									 ?! undefined non-terminal */
 		;
 
 proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the number of initially active procs; */
 		  proctype NAME							
-		  { nameSpace = $3; }
-		  '(' decl ')'							
+		  { nameSpace = $3; savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); }
+		  '(' decl ')'
+		  { currentSymTab = savedSymTab; }							
 		  Opt_priority							/* Ignore */
 		  Opt_enabler							/* Ignore */
 		  body									{	
 		  											std::cout<< "REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n";
-		  											procSymNode* proc = new procSymNode($3, $1, declSyms, $10, nbrLines);
-		  											symTable* local = proc->getBlock()->getLocalSymTab();
-		  											if(local)
-		  												for(auto s : declSyms)
-		  													local->insert(s);
+													auto procNbLine = $11->getLineNb();
+		  											procSymNode* proc = new procSymNode($3, $1, declSyms, $11, procNbLine);
 		  											declSyms.clear();
-		  											$$ = new procDecl(proc, nbrLines);
+		  											$$ = new procDecl(proc, procNbLine);
 		  											(*globalSymTab)->insert(proc);
 		  											nameSpace = "global";
 		  											free($3);
@@ -264,7 +266,22 @@ nm		: NAME									/* Unreachable */
 		| INAME									/* Unreachable */
 		;
 
-ns		: INLINE nm '(' args ')'				/* Unreachable */
+ns		: INLINE { inInline = true; } 
+		  NAME { nameSpace = $3; savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); } 
+		  '(' param_list ')'
+		  { for(std::string it : params) 
+		  		currentSymTab->insert(varSymNode::createSymbol(symbol::T_NA, nbrLines, it));
+		    currentSymTab = savedSymTab;
+		  }
+		  body									{
+													std::cout<< "REDUCE: INLINE nm ( param_list ) body -> ns\n";
+													auto sym = new inlineSymNode($3, params, $9, nbrLines);
+													params.clear();
+		  											$$ = new inlineDecl(sym, nbrLines);
+													(*globalSymTab)->insert(sym);
+													inInline = false;
+													free($3);
+												}
 		;
 
 c_fcts	: ccode									/* Unreachable */
@@ -284,17 +301,23 @@ ccode	: C_CODE								/* Unreachable */
 cexpr	: C_EXPR								/* Unreachable */
 		;
 
-body	: '{' 									{ savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); nameSpace = ""; } 
+body	: '{' 									{ 
+													savedSymTab = currentSymTab; 
+													if(!(currentSymTab = (*globalSymTab)->getSubSymTab(nameSpace)))
+														currentSymTab = savedSymTab->createSubTable(nameSpace); 
+													nameSpace = "";
+												} 
 				sequence OS 
 		  '}'									{ std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab->setBlock($3); currentSymTab = savedSymTab; }
 		;
 
 sequence: step									{ std::cout << "REDUCE: step -> sequence\n"; $$ = $1;  }
 		| sequence MS step						{ std::cout << "REDUCE: sequence MS step -> sequence\n"; $$ = stmnt::merge($1, $3); }
+		| sequence step							{ std::cout << "REDUCE: sequence step -> sequence\n"; $$ = stmnt::merge($1, $2); }
 		;
 		
 step    : one_decl								{ 
-													assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF && declSyms.front()->getType() != symbol::T_CHAN); 
+													assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF); 
 												 	$$ = new varDecl(static_cast<std::list<varSymNode*>>(declSyms), nbrLines);
 												 	declSyms.clear();
 												}
@@ -343,10 +366,26 @@ var_list: ivar									{ std::cout << "REDUCE: ivar -> var_list\n"; currentSymTa
 		| ivar ',' var_list						{ std::cout << "REDUCE: ivar , var_list -> var_list\n"; currentSymTab->insert($1); declSyms.push_front($1); }
 		;
 
-ivar    : vardcl								{ std::cout << "REDUCE: var_decl -> ivar\n"; $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal); if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); } }
-		| vardcl ASGN expr						{ std::cout << "REDUCE: var_decl ASGN expr -> ivar\n"; $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal, $3); if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); } }
-		| vardcl ASGN ch_init					{ std::cout << "REDUCE: var_decl ASGN ch_init -> ivar\n"; $$ = new chanSymNode(nbrLines, $1.sVal, $1.iVal, $3.iVal, typeLst); typeLst.clear(); }
+ivar    : vardcl								{ 
+												  std::cout << "REDUCE: var_decl -> ivar\n"; $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal); 
+												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); }
+												  if($1.sVal) free($1.sVal);
+												}
+		| vardcl ASGN expr						{ std::cout << "REDUCE: var_decl ASGN expr -> ivar\n"; 
+												  $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal, $3); 
+												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); }
+												  if($1.sVal) free($1.sVal);
+												}
+		| vardcl ASGN ch_init					{ std::cout << "REDUCE: var_decl ASGN ch_init -> ivar\n"; $$ = new chanSymNode(nbrLines, $1.sVal, $1.iVal, $3.iVal, typeLst);	
+												  typeLst.clear(); if($1.sVal) free($1.sVal); //double free???if($3.sVal) free($3.sVal); 
+												}
 		;
+
+param_list	: 									{ }
+			| NAME								{ params.push_front(std::string($1)); free($1); }
+			| NAME ',' param_list	            { params.push_front(std::string($1)); free($1); }
+			;
+
 
 ch_init : '[' CONST ']' OF '{' typ_list '}'		{ std::cout << "REDUCE: [ CONST ] OF { typ_list } -> ch_init\n"; $$.iVal = $2; } 
 		;
@@ -361,14 +400,31 @@ typ_list: basetype								{	std::cout << "REDUCE: basetype -> typ_list\n";
 													if($1.iType != symbol::T_UTYPE && $1.iType != symbol::T_NA) {
 														typ = varSymNode::createSymbol($1.iType, nbrLines);
 													} else {
-														tdefSymNode* pType = *globalSymTab ? static_cast<tdefSymNode*>((*globalSymTab)->lookup($1.sVal)) : nullptr;
+														tdefSymNode* pType = *globalSymTab ? dynamic_cast<tdefSymNode*>((*globalSymTab)->lookup($1.sVal)) : nullptr;
 														typ = new utypeSymNode(pType, nbrLines);
-														if(typ == nullptr) 
+														if(typ == nullptr) {
 															std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
+															assert(false);
+														}
+													}
+													typeLst.push_back(typ);
+													if($1.sVal) free($1.sVal);
+												}		
+		| basetype ',' typ_list					{	std::cout << "REDUCE: basetype , typ_list -> typ_list\n";
+													varSymNode* typ = nullptr;
+													if($1.iType != symbol::T_UTYPE && $1.iType != symbol::T_NA) {
+														typ = varSymNode::createSymbol($1.iType, nbrLines);
+													} else {
+														tdefSymNode* pType = *globalSymTab ? dynamic_cast<tdefSymNode*>((*globalSymTab)->lookup($1.sVal)) : nullptr;
+														typ = new utypeSymNode(pType, nbrLines);
+														if(typ == nullptr) {
+															std::cout << "The type "<<$1.sVal<<" was not declared in a typedef.\n";
+															assert(false);
+														}
 													}
 													typeLst.push_front(typ);
-												}		
-		| basetype ',' typ_list					{	std::cout << "REDUCE: basetype , typ_list -> typ_list\n"; }
+													if($1.sVal) free($1.sVal);
+												}
 		;
 
 vardcl  : NAME  								{ std::cout << "REDUCE: NAME -> vardcl\n"; $$.sVal = $1; $$.iVal = 1; }
@@ -376,7 +432,7 @@ vardcl  : NAME  								{ std::cout << "REDUCE: NAME -> vardcl\n"; $$.sVal = $1;
 		| NAME '[' CONST ']'					{ std::cout << "REDUCE: NAME [ CONST ] -> vardcl\n"; $$.sVal = $1; $$.iVal = $3; }
 		;
 
-varref	: cmpnd									{ std::cout << "REDUCE: cmpnd -> varref\n"; $$ = $1; $$->resolve(currentSymTab); }
+varref	: cmpnd									{ std::cout << "REDUCE: cmpnd -> varref\n"; $$ = $1; auto sym = $$->resolve(currentSymTab); assert(sym || inInline); }
 		;
 
 pfld	: NAME									{ std::cout << "REDUCE: NAME -> pfld\n"; $$ = new exprVarRefName($1, nbrLines); free($1); }
@@ -402,7 +458,7 @@ Special : varref RCV rargs						{ $$ = new stmntChanRecv($1, $3, nbrLines); }
 		| DO options OD							{ $$ = new stmntDo($2, $1); }
 		| BREAK									{ $$ = new stmntBreak(nbrLines); }
 		| GOTO NAME								{ $$ = new stmntGoto($2, nbrLines); free($2); }
-		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>($3)->getLabelledStmnt()->getType() == astNode::E_STMNT_LABEL) 
+		| NAME ':' stmnt						{ if($3->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>($3)->getLabelled()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
 												  $$ = new stmntLabel($1, $3, nbrLines); free($1); }
 
@@ -421,9 +477,18 @@ Stmnt	: varref ASGN full_expr					{ $$ = new stmntAsgn($1, $3, nbrLines); }
 		| full_expr								{ $$ = new stmntExpr($1, nbrLines); }
 		| ELSE									{ $$ = new stmntElse(nbrLines); }
 		| ATOMIC '{' sequence OS '}'			{ $$ = new stmntAtomic($3, nbrLines); }
-		| D_STEP '{' sequence OS '}'			{ std::cout << "Deterministic steps are not yet supported."; }
+		| D_STEP '{' sequence OS '}'			{ $$ = new stmntDStep($3, nbrLines); }
 		| '{' sequence OS '}'					{ $$ = new stmntSeq($2, nbrLines); }
-		| INAME '(' args ')' Stmnt				{ std::cout << "Inline calls are not yet supported."; }
+		| INAME '(' args ')' 					{ 
+													$$ = new stmntCall($1, $3, nbrLines); 
+													auto fctSym = (*globalSymTab)->lookup($1);
+													std::cout << "Inline call "<< $1 <<" at line "<< nbrLines <<"\n";
+													assert(fctSym->getType() == symbol::T_INLINE);
+													assert(dynamic_cast<inlineSymNode*>(fctSym) != nullptr);
+													if($3)
+														assert(dynamic_cast<inlineSymNode*>(fctSym)->getParams().size() == $3->getSize());
+													free($1); 
+												}
 		;
 
 options : option								{ $$ = new stmntOpt($1, nbrLines); }
@@ -486,9 +551,9 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 												} 
 		| SND expr %prec NEG					{ $$ = new exprNeg	($2, nbrLines); }
 		| '(' expr SEMI expr ':' expr ')'		{ $$ = new exprCond	($2, $4, $6, nbrLines); }
-		| RUN aname '(' args ')' Opt_priority	{ $$ = new exprRun	($2, $4, nbrLines); }
+		| RUN aname '(' args ')' Opt_priority	{ $$ = new exprRun	($2, $4, nbrLines); free($2); }
 		| RUN aname '[' varref ']' '(' args ')' Opt_priority
-						     					{ $$ = new exprRun	($2, $7, $4, nbrLines); }
+						     					{ $$ = new exprRun	($2, $7, $4, nbrLines); free($2); }
 		| LEN '(' varref ')'					{ $$ = new exprLen	($3, nbrLines); }
 		| ENABLED '(' expr ')'					{ std::cout << "The enabled keyword is not supported."; }
 		| varref RCV '[' rargs ']'				{ std::cout << "Construct not supported."; /* Unclear */ }
@@ -508,7 +573,7 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 		;
 		
 Opt_priority:	/* none */
-		| PRIORITY CONST						{ std::cout << "The 'priority' construct is related to simulation and not supported."; }
+		| PRIORITY CONST						{ assert(false); std::cout << "The 'priority' construct is related to simulation and not supported."; }
 		;
 
 full_expr:	expr								{ $$ = $1; }
@@ -516,7 +581,7 @@ full_expr:	expr								{ $$ = $1; }
 		;
 
 Opt_enabler:	/* none */
-		| PROVIDED '(' full_expr ')'			{ std::cout << "The 'provided' construct is currently not supported."; }
+		| PROVIDED '(' full_expr ')'			{ assert(false); std::cout << "The 'provided' construct is currently not supported."; }
 	/*	| PROVIDED error						{ std::cout << "The 'provided' construct is currently not supported."; } */
 		;
 
@@ -550,11 +615,11 @@ prargs  : /* empty */							{ $$ = nullptr; }
 
 /* Send arguments */
 margs   : arg									{ $$ = $1; }
-		| expr '(' arg ')'						{ $$ = new exprArgList(static_cast<exprRArg*>($1), static_cast<exprArgList*>($3), nbrLines); }
+		| expr '(' arg ')'						{ assert(false); }//$$ = new exprArgList(static_cast<exprRArg*>($1), static_cast<exprArgList*>($3), nbrLines); }
 		;
 
-arg     : expr									{ $$ = new exprArgList(static_cast<exprRArg*>($1), nbrLines); }
-		| expr ',' arg							{ $$ = new exprArgList(static_cast<exprRArg*>($1), static_cast<exprArgList*>($3), nbrLines); }
+arg     : expr									{ $$ = new exprArgList(new exprArg($1, nbrLines), nbrLines); }
+		| expr ',' arg							{ $$ = new exprArgList(new exprArg($1, nbrLines), $3, nbrLines); }
 		;
 
 rarg	: varref								{ $$ = new exprRArgVar($1, nbrLines); }
@@ -564,9 +629,9 @@ rarg	: varref								{ $$ = new exprRArgVar($1, nbrLines); }
 		;
 
 /* Receive arguments */
-rargs	: rarg									{ $$ = new exprArgList($1, nbrLines); }
-		| rarg ',' rargs						{ $$ = new exprArgList($1, $3, nbrLines); }
-		| rarg '(' rargs ')'					{ $$ = new exprArgList($1, $3, nbrLines); }
+rargs	: rarg									{ $$ = new exprRArgList($1, nbrLines); }
+		| rarg ',' rargs						{ $$ = new exprRArgList($1, $3, nbrLines); }
+		| rarg '(' rargs ')'					{ $$ = new exprRArgList($1, $3, nbrLines); }
 		| '(' rargs ')'							{ $$ = $2; }
 		;
 

@@ -1,12 +1,14 @@
-#include "symTable.h"
-#include "tdefSymNode.h"
-#include "varSymNode.h"
-#include "symTabVisitor.h"
+#include "symTable.hpp"
+#include "tdefSymNode.hpp"
+#include "varSymNode.hpp"
+#include "symTabVisitor.hpp"
 
-tdefSymNode::tdefSymNode(const std::string& name,  std::list<varSymNode*> fields, int lineNb)
+tdefSymNode::tdefSymNode(const std::string& name,  const std::list<varSymNode*>& fields, int lineNb)
 	: symbol(symbol::T_TDEF, name, lineNb)
 {
-	this->fields = fields;
+	for(auto field : fields)
+		this->fields.insert(field);
+
 	symTab = new symTable(name);
 	for(auto f : this->fields)
 		symTab->insert(f);
@@ -15,6 +17,22 @@ tdefSymNode::tdefSymNode(const std::string& name,  std::list<varSymNode*> fields
 tdefSymNode::~tdefSymNode(void) {
 	for(auto f: fields)
 		delete f;
+}
+
+std::string tdefSymNode::getTypeName(void) const {
+	return "typedef";
+}
+
+int tdefSymNode::getTypeSize(void) const {
+	return 0;
+}
+
+const std::set<varSymNode*>& tdefSymNode::getFields(void) const {
+	return fields;
+}
+
+symTable* tdefSymNode::getSymTable(void) const {
+	return symTab;
 }
 
 void tdefSymNode::acceptVisitor(symTabConstVisitor *visitor) const{

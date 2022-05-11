@@ -6,24 +6,24 @@
 #include <limits>
 
 
-#include "symbol.h"
+#include "symbol.hpp"
 
-#include "naSymNode.h"
-#include "bitSymNode.h"
-#include "boolSymNode.h"
-#include "byteSymNode.h"
-#include "shortSymNode.h"
-#include "intSymNode.h"
-#include "unsgnSymNode.h"
-#include "mtypedefSymNode.h"
-#include "utypeSymNode.h"
-#include "pidSymNode.h"
-#include "cidSymNode.h"
-#include "tdefSymNode.h"
-#include "chanSymNode.h"
-#include "procSymNode.h"
+#include "naSymNode.hpp"
+#include "bitSymNode.hpp"
+#include "boolSymNode.hpp"
+#include "byteSymNode.hpp"
+#include "shortSymNode.hpp"
+#include "intSymNode.hpp"
+#include "unsgnSymNode.hpp"
+#include "mtypedefSymNode.hpp"
+#include "utypeSymNode.hpp"
+#include "pidSymNode.hpp"
+#include "cidSymNode.hpp"
+#include "tdefSymNode.hpp"
+#include "chanSymNode.hpp"
+#include "procSymNode.hpp"
 
-#include "symTable.h"
+#include "symTable.hpp"
 
 int symbol::getUpperBound(Type type) {
 	switch(type) {
@@ -38,6 +38,8 @@ int symbol::getUpperBound(Type type) {
 			return std::numeric_limits<unsigned int>::max();
 		case symbol::T_INT:
 			return std::numeric_limits<int>::max();
+		case symbol::T_MTYPE:
+			return 8;
 		default:
 			assert(false);
 			return 0;
@@ -57,6 +59,8 @@ int symbol::getLowerBound(Type type) {
 			return std::numeric_limits<unsigned int>::min();
 		case symbol::T_INT:
 			return std::numeric_limits<int>::min();
+		case symbol::T_MTYPE:
+			return 0;
 		default:
 			assert(false);
 			return 0;
@@ -75,10 +79,9 @@ symbol::symbol(Type type, const std::string &name, int lineNb)
 	this->parent = nullptr;
 	this->type = type;
 	this->name = name;
-	this->global = false;
 	this->lineNb = lineNb;
-	this->memOffset = 0;
-	this->memSize = 0;
+	//this->memOffset = 0;
+	//this->memSize = 0;
 	this->mask = READ_ACCESS | WRITE_ACCESS;
 }
 
@@ -119,17 +122,49 @@ std::string symbol::getName(void) const
 
 bool symbol::isGlobal(void) const
 {
-	return global;
+	return parent->isGlobal();
 }
 
-void symbol::setGlobal(bool global)
+unsigned int symbol::getSizeOf(void) const
 {
-	this->global = global;
+	return 0;
 }
 
-unsigned int symbol::getMemorySize(void) const
-{
-	return memSize;
+bool symbol::operator < (const symbol* other) {
+	return other->getLineNb() < getLineNb();
+}
+
+unsigned long symbol::getID(void) const {
+	return (unsigned long)this;
+}
+
+symTable* symbol::getSymTable(void) const {
+	return parent;
+}
+
+void symbol::setSymTable(symTable* parent) {
+	this->parent = parent;
+}
+
+void symbol::addToMask(unsigned int mask) {
+	this->mask |= mask; 
+}
+
+void symbol::setMask(unsigned int mask) {
+	this->mask = mask;
+}
+
+void symbol::removeToMask(unsigned int mask) {
+	this->mask -= mask;
+}
+
+unsigned int symbol::getMask(void) const {
+	return mask;
+}
+
+bool symbol::castTo(const symbol* sym) const {
+	sym = sym;
+	return false;
 }
 
 symbol::operator std::string(void) const
@@ -138,6 +173,9 @@ symbol::operator std::string(void) const
 	return res;
 }
 
+void symbol::printGraphViz(std::ofstream& file) const {
+	file << "{ <" << getID() << "> " << getTypeName() << "|" << getName() << "| " << getSizeOf() << " "<< ((getTypeSize() > 1)? "bytes" : "byte") <<" | "<< (getLineNb()!=0 ? "line " + std::to_string(getLineNb()) : "predef.") << " }";
+}
 
 
 

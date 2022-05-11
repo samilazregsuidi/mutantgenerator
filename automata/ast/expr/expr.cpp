@@ -1,56 +1,226 @@
 #include <assert.h>
 #include <string>
 
-#include "expr.h"
-#include "argExpr.h"
-#include "varExpr.h"
+#include "expr.hpp"
+#include "argExpr.hpp"
+#include "varExpr.hpp"
 
-#include "procSymNode.h"
+#include "procSymNode.hpp"
+
+#include "astVisitor.hpp"
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+expr::expr(Type type, int lineNb)
+	: astNode(type, lineNb)
+{
+	exprType = symbol::T_NA;
+}
+
+symbol::Type expr::getExprType(void) const {
+	return exprType;
+}
+
+void expr::setExprType(symbol::Type exprType) {
+	this->exprType = exprType;
+}
+
+bool expr::castToExprType(symbol::Type type) const {
+	type = type;//keep compiler happy
+	return false;
+}
+
+symbol::Type expr::getExprType(expr* left, expr* right) {
+	if(left->getExprType() == right->getExprType())
+		return left->getExprType();
+	else if(left->castToExprType(right->getExprType()))
+		return right->getExprType();
+	else if(right->castToExprType(left->getExprType()))
+		return left->getExprType();
+
+	return symbol::T_NA;
+}
+
+void expr::acceptVisitor(ASTConstVisitor* visitor) const {
+	visitor->visit(this);
+}
+
+void expr::acceptVisitor(ASTVisitor* visitor) {
+	visitor->visit(this);
+}
+
+int expr::acceptVisitor(ASTConstVisitorInt* visitor) const {
+	return visitor->visit(this);
+}
+
+int expr::acceptVisitor(ASTVisitorInt* visitor) {
+	return visitor->visit(this);
+}
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+exprCond::exprCond(expr *pcond, expr *pthen, expr *pelsE, int lineNb)
+	: expr(astNode::E_EXPR_COND, lineNb)
+{
+	assert(pcond);
+	assert(pthen);
+	assert(pelsE);
+	addChild("cond_expr", pcond);
+	addChild("then_expr", pthen);
+	addChild("else_expr", pelsE);
+}
+
+void exprCond::setCond(expr* cond) {
+	eraseChild("cond_expr", cond);
+}
+
+void exprCond::setThen(expr* then) {
+	eraseChild("then_expr", then);
+}
+
+void exprCond::setElse(expr* elsE) {
+	eraseChild("else_expr", elsE);
+}
+
+expr* exprCond::getCond(void) const {
+	return dynamic_cast<expr*>(getChild("cond_expr"));
+}
+
+expr* exprCond::getThen(void) const {
+	return dynamic_cast<expr*>(getChild("then_expr"));
+}
+
+expr* exprCond::getElse(void) const {
+	return dynamic_cast<expr*>(getChild("else_expr"));
+}
+
+exprCond::operator std::string() const {
+	assert(getCond() && getThen() && getElse());
+	return "(" + std::string(*getCond()) + "-> " + std::string(*getThen()) + ": " + std::string(*getElse())+ ")";
+}
+
+std::string exprCond::getTypeDescr(void) const {
+	return "Conditional expression (E_EXPR_COND)";
+}
+
+symbol::Type exprCond::getExprType(void) const {
+	return expr::getExprType(getThen(), getElse());
+}
+
+expr* exprCond::deepCopy(void) const {
+	exprCond* copy = new exprCond(*this);
+	copy->copyChildren(*this);
+	return copy;
+}
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
 
 exprRun::exprRun(const std::string& procName, exprArgList *argList, exprVarRef *card, int lineNb)
 	: expr(astNode::E_EXPR_RUN, lineNb)
+	, procName(procName)
 {
-	this->procName = procName;
-	this->procSym = nullptr;
-
-	setArgList(argList);
-	setCard(card);
+	//assert(argList);
+	assert(card);
+	addChild("arg_list", argList);
+	addChild("card", card);
 }
 
 exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 	: expr(astNode::E_EXPR_RUN, lineNb)
+	, procName(procName)
 {
-	this->procName = procName;
-	this->procSym = nullptr;
-
-	setArgList(argList);
-	setCard(nullptr);
-}
-
-exprRun::~exprRun() {
-	delete argList;
-	delete card;
+	//assert(argList);
+	addChild("arg_list", argList);
 }
 
 void exprRun::setCard(exprVarRef* card) {
-	rmChild(this->card);
-	addChild(card);
-	this->card = card;
+	eraseChild("card", card);
+}
+
+exprVarRef* exprRun::getCard(void) const {
+	return dynamic_cast<exprVarRef*>(getChild("card"));
 }
 
 void exprRun::setArgList(exprArgList* argList) {
-	rmChild(this->argList);
-	addChild(argList);
-	this->argList = argList;
+	eraseChild("arg_list", argList);
+}
+
+exprArgList* exprRun::getArgList(void) const {
+	return dynamic_cast<exprArgList*>(getChild("arg_list"));
 }
 
 exprRun::operator std::string() const {
-	return "run " + procName + (card ? "[" + std::string(*card) + "]" : "") + "(" + std::string(*argList) + ")";
+	return "run " + procName + (getCard() ? "[" + std::string(*getCard()) + "]" : "") + "(" + ( getArgList()? std::string(*getArgList()) : "" ) + ")";
+}
+
+std::string exprRun::getTypeDescr(void) const {
+	return "Run (E_EXPR_RUN)";
+}
+
+symbol::Type exprRun::getExprType(void) const {
+	return symbol::T_BYTE;
 }
 
 expr* exprRun::deepCopy(void) const {
 	exprRun* copy = new exprRun(*this);
-	copy->setArgList(dynamic_cast<exprArgList*>(argList->deepCopy()));
-	copy->setCard(dynamic_cast<exprVarRef*>(card->deepCopy()));
+	copy->copyChildren(*this);
+	return copy;
+}
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+exprTimeout::exprTimeout(int lineNb)
+	: expr(astNode::E_EXPR_TIMEOUT, lineNb)
+{
+}
+
+exprTimeout::operator std::string() const {
+	return "timeout";
+}
+
+std::string exprTimeout::getTypeDescr(void) const {
+	return "Timeout (E_EXPR_TIMEOUT)";
+}
+
+symbol::Type exprTimeout::getExprType(void) const {
+	return symbol::T_BOOL;
+}
+
+expr* exprTimeout::deepCopy(void) const {
+	exprTimeout* copy = new exprTimeout(*this);
+	return copy;
+}
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+exprSkip::exprSkip(int lineNb)
+	: expr(astNode::E_EXPR_SKIP, lineNb)
+{
+}
+
+exprSkip::operator std::string() const {
+	return "skip";
+}
+
+std::string exprSkip::getTypeDescr(void) const {
+	return "Skip (E_EXPR_SKIP)";
+}
+
+symbol::Type exprSkip::getExprType(void) const {
+	return symbol::T_BOOL;
+}
+
+expr* exprSkip::deepCopy(void) const {
+	exprSkip* copy = new exprSkip(*this);
 	return copy;
 }

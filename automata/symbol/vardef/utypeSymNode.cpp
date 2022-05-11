@@ -1,12 +1,41 @@
-#include "utypeSymNode.h"
-#include "symTabVisitor.h"
-#include "tdefSymNode.h"
+#include "utypeSymNode.hpp"
+#include "symTabVisitor.hpp"
+#include "tdefSymNode.hpp"
 
 utypeSymNode::utypeSymNode(tdefSymNode* utype, int lineNb)
 	: varSymNode(symbol::T_UTYPE, lineNb, std::string())
 {
 	assert(utype != nullptr && utype->getType() == symbol::T_TDEF);
 	this->utype = utype;
+}
+
+utypeSymNode::utypeSymNode(int lineNb, const std::string& name, int bound, expr* init)
+		: varSymNode(symbol::T_UTYPE, lineNb, name, bound, init)
+		, utype(nullptr)
+{}
+
+//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override ;
+
+tdefSymNode* utypeSymNode::getUType(void) const {
+	return utype;
+}
+
+void utypeSymNode::setUType(tdefSymNode* utype) {
+	assert(utype);
+	this->utype = utype;
+}
+
+int utypeSymNode::getTypeSize(void) const {
+	assert(utype);
+	unsigned int res = 0;
+	for(auto field : utype->getFields()) {
+		res += field->getSizeOf();
+	}
+	return res;
+}
+
+std::string utypeSymNode::getTypeName(void) const {
+	return utype->getName()+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
 }
 
 void utypeSymNode::acceptVisitor(symTabVisitor *visitor) {

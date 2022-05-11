@@ -89,6 +89,10 @@
         "procsymnode.h": "c",
         "compare": "cpp",
         "concepts": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "binaryexpr.h": "c",
+        "std_abs.h": "c",
+        "*.p": "cpp",
+        "symtable.hpp": "c"
     }
 }

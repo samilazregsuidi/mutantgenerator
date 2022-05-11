@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(mutantgenerator LANGUAGES CXX)
 
-set(ASAN -fsanitize=address -fno-omit-frame-pointer -static-libasan)
+#set(ASAN -fsanitize=address -fno-omit-frame-pointer -static-libasan)
 
 set(Parser "y.tab.cpp")
 set(Lexer "lex.yy.cpp")
@@ -38,6 +38,7 @@ add_executable(mutantgenerator
 	./automata/symbol/typedef/procSymNode.cpp
 	./automata/symbol/typedef/tdefSymNode.cpp
 	./automata/symbol/typedef/mtypedefSymNode.cpp
+	./automata/symbol/typedef/inlineSymNode.cpp
 	./automata/symbol/vardef/bitSymNode.cpp
 	./automata/symbol/vardef/boolSymNode.cpp
 	./automata/symbol/vardef/byteSymNode.cpp
@@ -65,6 +66,15 @@ add_executable(mutantgenerator
 	./automata/ast/expr/varExpr.cpp
 	./automata/ast/expr/constExpr.cpp
 	./automata/ast/expr/argExpr.cpp
+	
+	
+	./automata/fsm/ASTtoFSM.cpp
+	./automata/fsm/fsm.cpp
+	./automata/fsm/fsmNode.cpp
+	./automata/fsm/fsmEdge.cpp
+	
+	./semantic/state.cpp
+	
 
     ${Parser}
     ${Lexer}
@@ -77,9 +87,17 @@ target_include_directories(mutantgenerator
     ./automata/symbol/typedef
     ./automata/symbol/vardef
     ./automata/symbol/visitor
+    
     ./automata/ast
     ./automata/ast/stmnt
     ./automata/ast/expr
+    ./automata/ast/visitor
+    
+    ./automata/fsm
+    
+    ./semantic
+    
+    ./parser
     ${CMAKE_CURRENT_BINARY_DIR}
     )
 

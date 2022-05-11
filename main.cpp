@@ -7,11 +7,15 @@
 #include <fstream>
 #include <time.h>
 
-#include "symbols.h"
-#include "ast.h"
+#include "symbols.hpp"
+#include "ast.hpp"
+#include "automata.hpp"
 #include "y.tab.h"
 #include "lexer.h"
 
+#include "ASTtoFSM.hpp"
+
+#include "state.hpp"
 
 extern FILE* yyin;
 extern int yyparse(symTable** symTable, stmnt** program);
@@ -74,23 +78,41 @@ int main(int argc, char *argv[]) {
 	std::cout << "NUMBER OF MUTABLE NODE " << index << "\n";
 
 	std::ofstream output;
-	output.open("test/original.pml");
+	output.open("mutants/original.pml");
+	output << "#include \"./Theory.prp\"\n";
 	output << stmnt::string(program);
 	output.close();
 
-	for(int j = 1; j <= 1; j++)
-	for(unsigned int i = 1; i <= index; i++) {
+	ASTtoFSM converter;
+	fsm* automata = converter.astToFsm(program);
+	std::ofstream graph;
+	graph.open("fsm_graphvis");
+	automata->printGraphVis(graph);
+	graph.close();
+
+	/*for(unsigned int i = 1; i <= index; i++) {
 		auto copy = program->deepCopy();
 		astNode::mutate(copy, i);
-		output.open("test/mutant_"+ std::to_string(i*j) + ".pml");
+		output.open("mutants/mutant_"+ std::to_string(i) + ".pml");
+		output << "#include \"./Theory.prp\"\n";
 		output << stmnt::string(copy);
 		output.close();
 		delete copy;
-	}
+	}*/
 
-	output.open("test/original_.pml");
-	output << stmnt::string(program);
-	output.close();
+	std::ofstream symtable;
+	symtable.open("sym_table_graphviz");
+	globalSymTab->printGraphViz(symtable);
+	symtable.close();
+
+	//output.open("mutants/original_.pml");
+	//output << stmnt::string(program);
+	//output.close();
+
+	
+	state* init = new state(globalSymTab, automata);
+
+	delete globalSymTab;
 
 	delete program;
 

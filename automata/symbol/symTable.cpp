@@ -3,22 +3,27 @@
 #include <iostream>
 #include <string>
 #include <assert.h>
+#include <algorithm>
+#include <vector>
 
-#include "symTable.h"
-#include "symbol.h"
-#include "symTabVisitor.h"
-#include "intSymNode.h"
-#include "pidSymNode.h"
-#include "boolSymNode.h"
+#include "symTable.hpp"
+#include "symbol.hpp"
+#include "symTabVisitor.hpp"
+#include "intSymNode.hpp"
+#include "pidSymNode.hpp"
+#include "boolSymNode.hpp"
 
-symTable::symTable(const std::string& name, symTable* prev) {
+#include "tdefSymNode.hpp"
+
+symTable::symTable(const std::string& name, symTable* prev)
+{
 	this->name = name;
 	this->prev = prev;
 }
 
 symTable* symTable::createSubTable(const std::string& name) {
 	symTable* neww = new symTable(name, this);
-	next.push_back(neww);
+	nexts.push_back(neww);
 	//neww->parentNameSpace = this->parentNameSpace + this->name;
 	return neww;
 }
@@ -27,7 +32,7 @@ symTable::~symTable() {
 	for(const auto& s : syms) {
 		delete s.second;
 	}
-	for(auto& n : next)
+	for(auto& n : nexts)
 		delete n;
 }
 
@@ -39,15 +44,31 @@ symTable* symTable::prevSymTab(void) const {
 	return prev;
 }
 
+symTable* symTable::getSubSymTab(const std::string& name) const {
+	symTable* res = nullptr;
+	for(auto tab : nexts) {
+		if(tab->name == name)  
+			return tab;
+		res = tab->getSubSymTab(name);
+		if(res) return res;
+	}
+	return nullptr;
+}
+
+bool symTable::isGlobal(void) const {
+	return !prev;
+}
+
 void symTable::print(int tab) const {
 	
+	std::cout<<name<<" table\n";
 	for(const auto& s : syms) {
 		for(int i = 0; i < tab; ++i)
 			std::cout << "\t";
 		std::cout << "[\t" << s.second->getName() << "\t;\t" << s.second->getTypeName() << "\t]\n";
 	}
 
-	for(const auto& n : next) {
+	for(const auto& n : nexts) {
 		n->print(tab+1);
 	}
 }
@@ -57,13 +78,32 @@ symbol* symTable::lookup(const std::string& name) const {
 	return res == syms.cend()? nullptr : res->second;
 }
 
-std::list<symbol*> symTable::getSymbols(symbol::Type type, unsigned int mask) const {
+/*std!::list<symbol*> symTable::getSymbols(symbol::Type type, unsigned int mask) const {
 	
 	auto res = prev? prev->getSymbols(type, mask): std::list<symbol*>();
 
 	for(auto& s : syms)
 		if(s.second->getType() == type && s.second->getMask() == mask)
 			res.push_back(s.second);
+
+	return res;
+}*/
+
+std::set<symbol*> symTable::getSymbols(void) const {
+	std::set<symbol*> res;
+	for(auto& s : syms)
+		res.insert(s.second);
+
+	return res;
+}
+
+std::set<symbol*> symTable::getSymbols(const symbol* left) const {
+	
+	auto res = prev? prev->getSymbols(left): std::set<symbol*>();
+
+	for(auto& s : syms)
+		if(left->castTo(s.second) && left->getMask() == s.second->getMask())
+			res.insert(s.second);
 
 	return res;
 }
@@ -110,4 +150,51 @@ void symTable::acceptVisitor(symTabVisitor* visitor){
 
 void symTable::acceptVisitor(symTabConstVisitor* visitor) const {
 	visitor->visitTab(this);
+}
+
+void symTable::printGraphViz(std::ofstream& file) const {
+
+	if(syms.empty())
+		return;
+
+	if(!prev){
+		file << "digraph symbol_table {\n";
+		file << "\t rankdir = LR\n";
+	}
+
+	file << "\t" << getNameSpace() << "[ shape = record, label = \"<f0> "<< getNameSpace();
+	for(auto s : getSymbols()) {
+		file << " | ";
+		s->printGraphViz(file);
+	}
+
+	file << "\"]\n\n";
+
+	for(auto n : nexts) {
+		if(n->getSymbols().empty())
+			continue;
+		n->printGraphViz(file);
+		file << "\t" << getNameSpace() << ":f0 -> " << n->getNameSpace() << ":f0\n\n";
+	}
+
+	for(auto s : getSymbols<tdefSymNode*>()) {
+		file << "\t" << s->getName() << "[ shape = record, label = \"";
+		unsigned int i = 0;
+		for(auto f : s->getFields()) {
+			f->printGraphViz(file);
+			if (++i < s->getFields().size()) 
+				file << " | " ;
+		}
+		file << "\"]\n\n";
+
+		file << "\t" << getNameSpace() << ":"<<s->getID() << " -> " << s->getName() << "\n\n";
+	}
+
+	file << "\n";
+
+	if(!prev) {
+		file << "}\n";
+	}
+
+
 }

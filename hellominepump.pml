@@ -1,3 +1,6 @@
+bool pumpOn = true;
+bool methane = false;
+
 active proctype controller() {
 
 	do  

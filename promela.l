@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "symbols.h"
-#include "ast.h"
+#include "symbols.hpp"
+#include "ast.hpp"
 
 #include "y.tab.h"
 
@@ -179,7 +179,8 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 
 <CODE>{symbol}	 	{ DBUG_CHAR(yytext[0]); return yytext[0]; } 
 
-<CODE>{id}       	{ yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
+<CODE>{id}       	{
+					  yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
  
 					  // The grammar differentiates between UNAME -> user type, PNAME -> proctype, INAME -> inline, NAME -> everything else

@@ -1,22 +1,60 @@
-#include "varSymNode.h"
-#include "symTabVisitor.h"
-#include "expr.h"
+#include "varSymNode.hpp"
+#include "symTabVisitor.hpp"
+#include "expr.hpp"
 
-#include "naSymNode.h"
-#include "bitSymNode.h"
-#include "boolSymNode.h"
-#include "byteSymNode.h"
-#include "shortSymNode.h"
-#include "intSymNode.h"
-#include "cidSymNode.h"
-#include "pidSymNode.h"
-#include "utypeSymNode.h"
-#include "unsgnSymNode.h"
-#include "mtypedefSymNode.h"
+#include "naSymNode.hpp"
+#include "bitSymNode.hpp"
+#include "boolSymNode.hpp"
+#include "byteSymNode.hpp"
+#include "shortSymNode.hpp"
+#include "intSymNode.hpp"
+#include "cidSymNode.hpp"
+#include "pidSymNode.hpp"
+#include "utypeSymNode.hpp"
+#include "unsgnSymNode.hpp"
+#include "mtypedefSymNode.hpp"
+
+varSymNode::varSymNode(Type type, int lineNb, const std::string& name, unsigned int bound, expr* init)
+	: symbol(type, lineNb, name)
+{
+	this->init = init;
+	this->bound = bound;
+}
 
 varSymNode::~varSymNode(void) {
 	if(init)
 		delete init;
+}
+
+void varSymNode::setInitExpr(expr* newInit) {
+	delete init;
+	init = newInit;
+}
+
+expr* varSymNode::getInitExpr(void) const {
+	return init;
+}
+
+unsigned int varSymNode::getBound(void) const {
+	return bound;
+}
+
+bool varSymNode::castTo(const symbol* sym) const {
+	//if(type == sym->getType() && bound == dynamic_cast<const varSymNode*>(sym)->getBound()){
+	if(type == sym->getType()){
+		//assert(dynamic_cast<const varSymNode*>(sym));
+		assert(static_cast<const varSymNode*>(sym));
+		return true;
+	}
+	return false;
+}
+
+unsigned int varSymNode::getSizeOf(void) const {
+	return getTypeSize() * bound;
+}
+
+void varSymNode::printGraphViz(std::ofstream& file) const {
+	file << "{ <" << getID() << "> " << getTypeName() << "|" << getName() + (init? " : " + std::string(*init) : "")  << "| " << getSizeOf() << " "<< ((getTypeSize() > 1)? "bytes" : "byte") <<" | "<< (getLineNb()!=0 ? "line " + std::to_string(getLineNb()) : "predef.") << " }";
 }
 
 /**
@@ -90,6 +128,10 @@ template<> varSymNode* varSymNode::createSymbol<symbol::T_MTYPE>(int lineNb, con
 	return new mtypeSymNode(lineNb, name, bound, init);
 }
 
+template<> varSymNode* varSymNode::createSymbol<symbol::T_CHAN>(int lineNb, const std::string& name, unsigned int bound, expr* init) {
+	return new chanSymNode(lineNb, name, bound, init);
+}
+
 varSymNode *varSymNode::createSymbol(Type type, int lineNb, const std::string& name, unsigned int bound, expr* init) {
 
 	switch (type)
@@ -116,6 +158,8 @@ varSymNode *varSymNode::createSymbol(Type type, int lineNb, const std::string& n
 		return createSymbol<T_PID>(lineNb, name, bound, init);
 	case T_UTYPE: // Type of variable is a user type (basically, a T_TDEF record is being used as the type): utype points to the type record
 		return createSymbol<T_UTYPE>(lineNb, name, bound, init);
+	case T_CHAN:
+		return createSymbol<T_CHAN>(lineNb, name, bound, init);
 	default:
 		assert(false);
 	}

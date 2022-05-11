@@ -15,6 +15,7 @@
                 "${workspaceFolder}/automata/symbol/vardef",
                 "${workspaceFolder}/automata/symbol/typedef",
                 "${workspaceFolder}/automata/symbol/visitor",
+                "${workspaceFolder}/semantic",
                 "${workspaceFolder}/parser/**",
                 "/usr/include/**",
                 "/usr/include"

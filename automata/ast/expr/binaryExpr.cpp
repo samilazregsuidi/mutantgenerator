@@ -1,205 +1,265 @@
-#include "binaryExpr.h"
+#include "binaryExpr.hpp"
 
-std::vector<expr*> exprPlus::getMutations(void) const {
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+exprBinary::exprBinary(Type type, expr* left, expr* right, int lineNb)
+		: expr(type, lineNb)
+{
+    assert(left);
+    assert(right);
+    addChild("left_expr", left);
+    addChild("right_expr", right);
+}
+
+void exprBinary::setLeftExpr(expr* left) {
+    eraseChild("left_expr", left);
+}
+
+void exprBinary::setRightExpr(expr* right) {
+    eraseChild("right_expr", right);
+}
+
+expr* exprBinary::getLeftExpr(void) const {
+    return dynamic_cast<expr*>(getChild("left_expr"));
+}
+
+expr* exprBinary::getRightExpr(void) const {
+    return dynamic_cast<expr*>(getChild("right_expr"));
+}
+
+symbol::Type exprBinary::getExprType(void) const {
+    return expr::getExprType(getLeftExpr(), getRightExpr());
+}
+
+unsigned int exprBinary::assignMutables(const Mask& mask, unsigned int id) {
+    if(mask.isPresent(type)) {
+        id = getLeftExpr()->assignMutables(mask, id);
+        mId = ++id;//operator Id;
+        id = getRightExpr()->assignMutables(mask, id);
+    }
+    return id; 
+}
+
+/****************************************************************
+ * **************************************************************
+ * *************************************************************/
+
+std::vector<astNode*> exprPlus::getMutations(void) const {
     
     return { 
-        new exprMinus(left, right, lineNb), 
-        new exprTimes(left, right, lineNb),
-        new exprDiv(left, right, lineNb),
-        new exprMod(left, right, lineNb)
+        new exprMinus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprTimes(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprDiv(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprMod(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 
 }
 
-std::vector<expr*> exprMinus::getMutations(void) const {
+std::vector<astNode*> exprMinus::getMutations(void) const {
+    
     return { 
-        new exprPlus(new exprPlus(left, right, lineNb)), 
-        new exprTimes(new exprTimes(left, right, lineNb)),
-        new exprDiv(new exprDiv(left, right, lineNb)),
-        new exprMod(new exprMod(left, right, lineNb))
+        new exprPlus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprTimes(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprDiv(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprMod(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprTimes::getMutations(void) const {
+std::vector<astNode*> exprTimes::getMutations(void) const {
+    
     return { 
-        new exprPlus(new exprPlus(left, right, lineNb)), 
-        new exprMinus(new exprMinus(left, right, lineNb)),
-        new exprDiv(new exprDiv(left, right, lineNb)),
-        new exprMod(new exprMod(left, right, lineNb))
+        new exprPlus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprMinus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprDiv(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprMod(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprDiv::getMutations(void) const {
+std::vector<astNode*> exprDiv::getMutations(void) const {
+    
     return { 
-        new exprPlus(new exprPlus(left, right, lineNb)), 
-        new exprMinus(new exprMinus(left, right, lineNb)),
-        new exprTimes(new exprTimes(left, right, lineNb)),
-        new exprMod(new exprMod(left, right, lineNb))
+        new exprPlus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprMinus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprTimes(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprMod(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprMod::getMutations(void) const {
+std::vector<astNode*> exprMod::getMutations(void) const {
+    
     return { 
-        new exprPlus(new exprPlus(left, right, lineNb)), 
-        new exprMinus(new exprMinus(left, right, lineNb)),
-        new exprTimes(new exprTimes(left, right, lineNb)),
-        new exprDiv(new exprDiv(left, right, lineNb))
+        new exprPlus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprMinus(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprTimes(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprDiv(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprGT::getMutations(void) const {
+std::vector<astNode*> exprGT::getMutations(void) const {
     
     return {
-        //new exprGT(left, right, lineNb),
-        new exprLT(new exprLT(left, right, lineNb)), 
-        new exprGE(new exprGE(left, right, lineNb)),
-        new exprLE(new exprLE(left, right, lineNb)),
-        new exprEQ(new exprEQ(left, right, lineNb)),
-        new exprNE(new exprNE(left, right, lineNb))
+        //new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprLT::getMutations(void) const {
+std::vector<astNode*> exprLT::getMutations(void) const {
+    
     return { 
-        new exprGT(new exprGT(left, right, lineNb)),
-        //new exprLT(left, right, lineNb), 
-        new exprGE(new exprGE(left, right, lineNb)),
-        new exprLE(new exprLE(left, right, lineNb)),
-        new exprEQ(new exprEQ(left, right, lineNb)),
-        new exprNE(new exprNE(left, right, lineNb))
+        new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        //new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprGE::getMutations(void) const {
+std::vector<astNode*> exprGE::getMutations(void) const {
+    
     return { 
-        new exprLT(new exprLT(left, right, lineNb)), 
-        new exprGT(new exprGT(left, right, lineNb)),
-        //new exprGE(left, right, lineNb),
-        new exprLE(new exprLE(left, right, lineNb)),
-        new exprEQ(new exprEQ(left, right, lineNb)),
-        new exprNE(new exprNE(left, right, lineNb))
+        new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        //new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprLE::getMutations(void) const {
+std::vector<astNode*> exprLE::getMutations(void) const {
+    
     return { 
-        new exprLT(new exprLT(left, right, lineNb)), 
-        new exprGT(new exprGT(left, right, lineNb)),
-        new exprGE(new exprGE(left, right, lineNb)),
-        //new exprLE(left, right, lineNb),
-        new exprEQ(new exprEQ(left, right, lineNb)),
-        new exprNE(new exprNE(left, right, lineNb))
+        new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        //new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprEQ::getMutations(void) const {
+std::vector<astNode*> exprEQ::getMutations(void) const {
     
     symbol::Type type = getExprType();
 
     if(type != symbol::T_BOOL && type != symbol::T_MTYPE)
 
         return { 
-            new exprLT(new exprLT(left, right, lineNb)), 
-            new exprGT(new exprGT(left, right, lineNb)),
-            new exprGE(new exprGE(left, right, lineNb)),
-            new exprLE(new exprLE(left, right, lineNb)),
-            //new exprEQ(left, right, lineNb),
-            new exprNE(new exprNE(left, right, lineNb))
+            new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+            new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            //new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
             };
 
     else
 
         return { 
-            //new exprEQ(left, right, lineNb)
-            new exprNE(new exprNE(left, right, lineNb))
+            //new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
+            new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprNE::getMutations(void) const {
+std::vector<astNode*> exprNE::getMutations(void) const {
     
     symbol::Type type = getExprType();
 
     if(type != symbol::T_BOOL && type != symbol::T_MTYPE)
     
         return { 
-            new exprLT(new exprLT(left, right, lineNb)), 
-            new exprGT(new exprGT(left, right, lineNb)),
-            new exprGE(new exprGE(left, right, lineNb)),
-            new exprLE(new exprLE(left, right, lineNb)),
-            new exprEQ(new exprEQ(left, right, lineNb))
-            //new exprNE(left, right, lineNb)
+            new exprLT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprGT(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprGE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprLE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+            new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
+            //new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
             };
 
     else
 
         return { 
-            new exprEQ(new exprEQ(left, right, lineNb))
-            //new exprNE(left, right, lineNb)
+            new exprEQ(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
+            //new exprNE(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
             };
 
     
 }
 
-std::vector<expr*> exprAnd::getMutations(void) const {
+std::vector<astNode*> exprAnd::getMutations(void) const {
+    
     return { 
-        //new exprAnd(left, right, lineNb), 
-        new exprOr(new exprOr(left, right, lineNb))
+        //new exprAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprOr::getMutations(void) const {
+std::vector<astNode*> exprOr::getMutations(void) const {
+    
     return { 
-        new exprAnd(new exprAnd(left, right, lineNb)) 
-        //new exprOr(left, right, lineNb)
+        new exprAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
+        //new exprOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprBitwAnd::getMutations(void) const {
+std::vector<astNode*> exprBitwAnd::getMutations(void) const {
+    
     return { 
-        //new exprBitwAnd(left, right, lineNb), 
-        new exprBitwOr(new exprBitwOr(left, right, lineNb)),
-        new exprBitwXor(new exprBitwXor(left, right, lineNb)), 
-        new exprLShift(new exprLShift(left, right, lineNb)),
-        new exprRShift(new exprRShift(left, right, lineNb))
+        //new exprBitwAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprBitwOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprBitwXor(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprLShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprRShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprBitwOr::getMutations(void) const {
+std::vector<astNode*> exprBitwOr::getMutations(void) const {
+    
     return { 
-        new exprBitwAnd(new exprBitwAnd(left, right, lineNb)), 
-        //new exprBitwOr(left, right, lineNb),
-        new exprBitwXor(new exprBitwXor(left, right, lineNb)), 
-        new exprLShift(new exprLShift(left, right, lineNb)),
-        new exprRShift(new exprRShift(left, right, lineNb))
+        new exprBitwAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        //new exprBitwOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprBitwXor(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprLShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprRShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprBitwXor::getMutations(void) const {
+std::vector<astNode*> exprBitwXor::getMutations(void) const {
+    
     return { 
-        new exprBitwAnd(new exprBitwAnd(left, right, lineNb)), 
-        new exprBitwOr(new exprBitwOr(left, right, lineNb)),
-        //new exprBitwXor(left, right, lineNb), 
-        new exprLShift(new exprLShift(left, right, lineNb)),
-        new exprRShift(new exprRShift(left, right, lineNb))
+        new exprBitwAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprBitwOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        //new exprBitwXor(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprLShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprRShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprLShift::getMutations(void) const {
+std::vector<astNode*> exprLShift::getMutations(void) const {
+    
     return { 
-        new exprBitwAnd(new exprBitwAnd(left, right, lineNb)), 
-        new exprBitwOr(new exprBitwOr(left, right, lineNb)),
-        new exprBitwXor(new exprBitwXor(left, right, lineNb)), 
-        //new exprLShift(left, right, lineNb),
-        new exprRShift(new exprRShift(left, right, lineNb))
+        new exprBitwAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprBitwOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprBitwXor(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        //new exprLShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprRShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }
 
-std::vector<expr*> exprRShift::getMutations(void) const {
+std::vector<astNode*> exprRShift::getMutations(void) const {
+    
     return { 
-        new exprBitwAnd(new exprBitwAnd(left, right, lineNb)), 
-        new exprBitwOr(new exprBitwOr(left, right, lineNb)),
-        new exprBitwXor(new exprBitwXor(left, right, lineNb)), 
-        new exprLShift(new exprLShift(left, right, lineNb))
-        //new exprRShift(left, right, lineNb)
+        new exprBitwAnd(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprBitwOr(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb),
+        new exprBitwXor(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb), 
+        new exprLShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
+        //new exprRShift(dynamic_cast<expr*>(getLeftExpr()->deepCopy()), dynamic_cast<expr*>(getRightExpr()->deepCopy()), lineNb)
         };
 }

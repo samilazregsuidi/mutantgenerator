@@ -10,8 +10,8 @@ active proctype controller() {
 
 	do  
 	
-	:: atomic { cAlarm?_;
-	   pumpOn = false; };
+	:: cAlarm?_;
+	   pumpOn = false;
 	   
 	:: pumpOn = true;
 			
@@ -22,8 +22,8 @@ active proctype methanealarm() {
 
 	do	
 	
-	:: 	atomic { methane = false;
-		cAlarm!alarm; };
+	:: 	methane = false;
+		cAlarm!alarm;
 			
 	::	methane = true;
 		

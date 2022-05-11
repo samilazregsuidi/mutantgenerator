@@ -3,51 +3,64 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "varExpr.h"
-#include "constExpr.h"
+#include "varExpr.hpp"
+#include "constExpr.hpp"
 
-#include "symTable.h"
-#include "varSymNode.h"
-#include "utypeSymNode.h"
-#include "tdefSymNode.h"
-#include "mtypedefSymNode.h"
+#include "symTable.hpp"
+#include "varSymNode.hpp"
+#include "utypeSymNode.hpp"
+#include "tdefSymNode.hpp"
+#include "mtypedefSymNode.hpp"
 
 exprVarRefName::exprVarRefName(const std::string& symName, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
 	, symName(symName)
 	, sym(nullptr)
-	, index(nullptr)
 {
-
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, expr *index, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
 	, symName(symName)
 	, sym(nullptr)
-	, index(nullptr)
 {
-	setIndex(index);
+	assert(index);
+	addChild("index", index);
 }
 
 exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
 	, symName(symName)
 	, sym(sym)
-	, index(nullptr)
 {
-
 }
 
 std::string exprVarRefName::getName(void) const {
-	return sym->getName();
+	assert(!sym || (symName == sym->getName()));
+	return symName;
+}
+
+void exprVarRefName::setIndex(expr* index) {
+	eraseChild("index", index);
 }
 
 exprVarRefName::operator std::string() const {
-	return sym->getName() + (index ? "[" + std::string(*index) + "]" : "");
+	return symName + (getIndex() ? "[" + std::string(*getIndex()) + "]" : "");
 }
 
-void exprVarRefName::resolve(symTable *global, symTable *subField) {
+std::string exprVarRefName::getTypeDescr(void) const {
+	return "Variable or field name (E_VARREF_NAME)";
+}
+
+symbol* exprVarRefName::exprVarRefName::getSymbol(void) const {
+	return sym;
+}
+
+expr* exprVarRefName::getIndex(void) const {
+	return dynamic_cast<expr*>(getChild("index"));
+}
+
+symbol* exprVarRefName::resolve(symTable *global, symTable *subField) {
 
 	if (subField)
 		sym = subField->lookup(symName);
@@ -59,9 +72,11 @@ void exprVarRefName::resolve(symTable *global, symTable *subField) {
 	} 
 	
 	if(!sym) {
-		std::cout<< "unknown symbol : "<< symName << "\n";
-		assert(false);
+		std::cout<< "unknown symbol : "<< symName << " at line "<<lineNb<<"\n";
+		//assert(false);
 	}
+
+	return sym;
 }
 
 symbol::Type exprVarRefName::getExprType(void) const {
@@ -70,7 +85,7 @@ symbol::Type exprVarRefName::getExprType(void) const {
 
 expr* exprVarRefName::deepCopy(void) const {
 	exprVarRefName* copy = new exprVarRefName(*this);
-	copy->setIndex(index ? index->deepCopy() : nullptr);
+	copy->copyChildren(*this);
 	return copy;
 }
 
@@ -78,29 +93,83 @@ expr* exprVarRefName::deepCopy(void) const {
 
 exprVarRef::exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar = nullptr)
 	: expr(astNode::E_VARREF, lineNb)
-	, varRefName(nullptr)
-	, subfieldsVar(nullptr)
 {
-	setVarRefName(symRef);
-	setSubField(subfieldsVar);
+	assert(symRef);
+	//assert(subfieldsVar);
+	addChild("field", symRef);
+	addChild("sub_field", subfieldsVar);
 }
 
-void exprVarRef::resolve(symTable *global, symTable* subField) {
+void exprVarRef::setVarRefName(exprVarRefName* varRefName) {
+	eraseChild("field", varRefName);
+}
 
-	varRefName->resolve(global, subField);
+exprVarRefName* exprVarRef::getVarRefName(void) const {
+	return dynamic_cast<exprVarRefName*>(getChild("field"));
+}
 
-	auto sym = varRefName->getSymbol();
-	assert(sym);
+void exprVarRef::setSubField(exprVarRef* subField) {
+	eraseChild("sub_field", subField);
+}
+
+bool exprVarRef::hasSubField(void) const {
+	return getSubField() != nullptr;
+}
+
+const exprVarRef *exprVarRef::getSubField(void) const {
+	return dynamic_cast<exprVarRef*>(getChild("sub_field"));
+}
+
+const exprVarRefName *exprVarRef::getField() const {
+	return dynamic_cast<exprVarRefName*>(getChild("field"));;
+}
+
+symbol* exprVarRef::getFinalSymbol(void) const {
+	return getSubField()? getSubField()->getFinalSymbol() : getField()->getSymbol();
+}
+
+symbol* exprVarRef::getFirstSymbol(void) const {
+	return getField()->getSymbol();
+}
+
+exprVarRef::operator std::string() const {
+	auto varRefName = getVarRefName();
+	auto subfieldsVar = getSubField();
+	assert(getVarRefName() /*&& getSubField()*/);
+	return std::string(*varRefName) + (subfieldsVar ? "." + std::string(*subfieldsVar) : "");
+}
+
+unsigned int exprVarRef::assignMutables(const Mask& mask, unsigned int id) {
+	if(mask.isPresent(type) && hasMutations()) 
+		mId = ++id;
+	return id;
+}
+
+
+std::string exprVarRef::getTypeDescr(void) const {
+	return "Variable reference (E_VARREF)";
+}
+
+symbol* exprVarRef::resolve(symTable *global, symTable* subField) const {
+
+	auto varRefName = getVarRefName();
+	auto sym = varRefName->resolve(global, subField);
+
+	//assert(sym);
 	// Resolve subfields, but with the symbol table of the type
-	if (subfieldsVar) {
+	if (sym && getSubField()) {
 		auto uSymbol = dynamic_cast<utypeSymNode*>(sym);
 		assert(uSymbol->getUType());
-		subfieldsVar->resolve(global, uSymbol->getUType()->getSymTable());
+		getSubField()->resolve(global, uSymbol->getUType()->getSymTable());
 	}
+
+	return sym;
 }
 
 symbol::Type exprVarRef::getExprType(void) const {
-	return subfieldsVar? subfieldsVar->getExprType() : varRefName->getExprType();
+	if(!getVarRefName()->getSymbol())
+		return symbol::T_NA;
+	return getSubField()? getSubField()->getExprType() : getVarRefName()->getExprType();
 }
 
 bool exprVarRef::castToExprType(symbol::Type type) const {
@@ -128,19 +197,28 @@ bool exprVarRef::castToExprType(symbol::Type type) const {
 	return false;
 }
 
-std::vector<expr*> exprVarRef::getMutations(void) const {
-	std::list<symbol*> symList = varRefName->getSymbol()->getSymTable()->getSymbols(getExprType(), varRefName->getSymbol()->getMask());
-	if(symList.size() > 1)
-		symList.remove(varRefName->getSymbol());
-	std::vector<expr*> mutations;
-	for(auto& s: symList) {
-		auto sCast = dynamic_cast<varSymNode*>(s);
+std::vector<astNode*> exprVarRef::getMutations(void) const {
+	auto sym = static_cast<varSymNode*>(getFinalSymbol());
+	
+	//std::cout << "expr var ref name : " << getVarRefName()->getName() << "\n";
+
+	if(!sym || (!sym->getInitExpr() && sym->getMask() & symbol::WRITE_ACCESS))
+		return std::vector<astNode*>();
+
+	auto symList = getVarRefName()->getSymbol()->getSymTable()->getSymbols(getFinalSymbol());
+	symList.erase(getVarRefName()->getSymbol());
+	std::vector<astNode*> mutations;
+	for(symbol* s: symList) {
+		
+		varSymNode* sCast = static_cast<varSymNode*>(s);
+		//CAST BUG
+		//varSymNode* sCast = dynamic_cast<varSymNode*>(s);
 		//TODO : actual fix
 		//assert(sCast);
 		
 		if(sCast) {
 			if(sCast->getBound() > 1)
-				for(int i = 0; i < sCast->getBound(); i++) {
+				for(unsigned int i = 0; i < sCast->getBound(); i++) {
 					exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
 					exprVarRef* newVar = new exprVarRef(lineNb, symRef);
 					symRef->setIndex(new exprConst(i, lineNb));
@@ -155,8 +233,7 @@ std::vector<expr*> exprVarRef::getMutations(void) const {
 
 expr* exprVarRef::deepCopy(void) const {
 	exprVarRef* copy = new exprVarRef(*this);
-	copy->setVarRefName(dynamic_cast<exprVarRefName*>(varRefName->deepCopy()));
-	copy->setSubField(subfieldsVar? dynamic_cast<exprVarRef*>(subfieldsVar->deepCopy()) : nullptr);
+	copy->copyChildren(*this);
 	return copy;
 }
 
@@ -164,13 +241,45 @@ expr* exprVarRef::deepCopy(void) const {
 
 exprVar::exprVar(exprVarRef *varRef, int lineNb)
 		: expr(astNode::E_EXPR_VAR, lineNb)
-		, varRef(nullptr)
 {
-	setVarRef(varRef);
+	assert(varRef);
+	addChild("var_ref", varRef);
+}
+
+const exprVarRef *exprVar::getVarRef(void) const {
+	return dynamic_cast<exprVarRef*>(getChild("var_ref"));
+}
+
+const exprVarRefName *exprVar::getVarRefName(void) const {
+	return dynamic_cast<exprVarRef*>(getChild("var_ref"))->getVarRefName();
+}
+
+exprVar::operator std::string() const {
+	return *dynamic_cast<exprVarRef*>(getChild("var_ref"));
+}
+
+std::string exprVar::getTypeDescr(void) const {
+	return "Variable reference wrapper (E_EXPR_VAR)";
+}
+
+symbol::Type exprVar::getExprType(void) const {
+	return getVarRef()->getExprType();
+}
+
+bool exprVar::castToExprType(symbol::Type type) const {
+	return getVarRef()->castToExprType(type);
+}
+
+symbol* exprVar::getFinalSymbol(void) const {
+	return getVarRef()->getFinalSymbol();
+}
+
+symbol* exprVar::getFirstSymbol(void) const {
+	return getVarRef()->getFirstSymbol();
 }
 
 expr* exprVar::deepCopy(void) const {
 	exprVar* copy = new exprVar(*this);
-	copy->setVarRef(dynamic_cast<exprVarRef*>(varRef->deepCopy()));
+	copy->copyChildren(*this);
 	return copy;
 }
