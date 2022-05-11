@@ -1,0 +1,1 @@
+[]((states[1] == ABORTED || states[2] == ABORTED) -> ([]<>(states[0] == PAUSED) || <>(states[0] == STOPPED)))

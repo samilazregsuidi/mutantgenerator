@@ -1,0 +1,1 @@
+(([]<> (progress || waiting)) && ([]<> ((floor_button[0].pushed) || (floor_button[1].pushed) || (floor_button[2].pushed) || (floor_button[3].pushed)))) -> (!<>[] (door == open))

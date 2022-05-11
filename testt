@@ -1,0 +1,9 @@
+digraph finite_state_machine {
+		rankdir=LR
+	size="8,5"	node [shape = doublecircle]; 4;
+	node [shape = point]; s;	node [shape="circle", style="bold, filled", fillcolor="#dddddd"]; 3;
+	node [shape = circle];
+	s -> 4
+	2 -> 3 [label = "bool _bool = false;
+"];
+}

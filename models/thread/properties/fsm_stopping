@@ -1,0 +1,1 @@
+[](([](states[0] == STOPPING -> (states[0] == STOPPING U (states[0] == STOPPED || states[0] == ABORTING)))) && ([](states[1] == STOPPING -> (states[1] == STOPPING U (states[1] == STOPPED || states[1] == ABORTING)))) && ([](states[2] == STOPPING -> (states[2] == STOPPING U (states[2] == STOPPED || states[2] == ABORTING)))))

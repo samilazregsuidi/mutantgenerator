@@ -1,0 +1,1 @@
+[]<> progress -> (!<>[] ((person[0].to_floor == 3) && (door == closed)))

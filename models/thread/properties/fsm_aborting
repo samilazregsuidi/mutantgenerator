@@ -1,0 +1,1 @@
+[](([](states[0] == ABORTING -> (states[0] == ABORTING U (states[0] == ABORTED)))) && ([](states[1] == ABORTING -> (states[1] == ABORTING U (states[1] == ABORTED)))) && ([](states[2] == ABORTING -> (states[2] == ABORTING U (states[2] == ABORTED)))))

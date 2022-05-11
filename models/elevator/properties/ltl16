@@ -1,0 +1,1 @@
+!<> ((person[0].in_elevator) && (person[1].in_elevator) && (door == closed))

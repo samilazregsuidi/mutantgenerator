@@ -1,0 +1,1 @@
+!<> (((cabin_button[0].pushed) || (cabin_button[1].pushed) || (cabin_button[2].pushed) || (cabin_button[3].pushed)) && !((person[0].in_elevator) || (person[1].in_elevator)) && (door == closed))

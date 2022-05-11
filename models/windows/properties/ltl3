@@ -1,0 +1,1 @@
+(![]((sent == red) -> <> (rcvd == red))) || (!(rcvd == red) U (rcvd == blue))

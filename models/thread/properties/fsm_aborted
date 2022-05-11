@@ -1,0 +1,1 @@
+[](((states[0] == ABORTED) -> ((states[0] == ABORTED) W [](states[0] == 0))) && ((states[1] == ABORTED) -> ((states[1] == ABORTED) W [](states[1] == 0))) && ((states[2] == ABORTED) -> ((states[2] == ABORTED) W [](states[2] == 0))))

@@ -1,0 +1,1 @@
+[]<> progress -> ([] ((floor_button[2].pushed) -> (<> (floor == 2) && (door == open))))

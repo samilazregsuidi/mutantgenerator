@@ -1,0 +1,1 @@
+[]((states[0] == STOPPING || states[0] == ABORTING) -> <>((states[1] == STOPPED || states[1] == ABORTED || states[1] == 0) && (states[2] == STOPPED || states[2] == ABORTED || states[2] == 0)))

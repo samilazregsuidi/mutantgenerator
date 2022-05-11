@@ -1,0 +1,1602 @@
+never fsm_ready {    /* !(((((states[0]==0)) U (([] ((states[0]==READY))) || (((states[0]==READY)) U ((states[0]==STARTING))))) && (((states[1]==0)) U (([] ((states[1]==READY))) || (((states[1]==READY)) U ((states[1]==STARTING)))))) && (((states[2]==0)) U (([] ((states[2]==READY))) || (((states[2]==READY)) U ((states[2]==STARTING)))))) */
+T0_init:
+	do
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S52
+	:: (! (((states[2]==STARTING)))) -> goto T0_S52
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: atomic { (((! (((states[0]==0))) && (! (((states[0]==READY))) && ! (((states[0]==STARTING))))) || ((! (((states[1]==0))) && (! (((states[1]==READY))) && ! (((states[1]==STARTING))))) || (! (((states[2]==0))) && (! (((states[2]==READY))) && ! (((states[2]==STARTING)))))))) -> assert(!(((! (((states[0]==0))) && (! (((states[0]==READY))) && ! (((states[0]==STARTING))))) || ((! (((states[1]==0))) && (! (((states[1]==READY))) && ! (((states[1]==STARTING))))) || (! (((states[2]==0))) && (! (((states[2]==READY))) && ! (((states[2]==STARTING))))))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S61
+	:: (! (((states[2]==0))) && ! (((states[2]==STARTING)))) -> goto T0_S72
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S187
+	:: (! (((states[1]==STARTING)))) -> goto T0_S187
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S196
+	:: (! (((states[1]==0))) && ! (((states[1]==STARTING)))) -> goto T0_S207
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S322
+	:: (! (((states[0]==STARTING)))) -> goto T0_S322
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S331
+	:: (! (((states[0]==0))) && ! (((states[0]==STARTING)))) -> goto T0_S342
+	od;
+accept_S35:
+	do
+	:: (! (((states[2]==STARTING)))) -> goto accept_S35
+	:: atomic { (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	od;
+accept_S52:
+	do
+	:: (! (((states[2]==STARTING)))) -> goto T0_S52
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: (! (((states[2]==0))) && ! (((states[2]==STARTING)))) -> goto T0_S72
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto T0_S47
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto T0_S61
+	od;
+accept_S61:
+	do
+	:: atomic { (! (((states[2]==READY)))) -> assert(!(! (((states[2]==READY))))) }
+	:: (1) -> goto T0_S61
+	od;
+accept_S72:
+	do
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: atomic { (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	:: (! (((states[2]==STARTING)))) -> goto T0_S72
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto T0_S61
+	od;
+accept_S170:
+	do
+	:: (! (((states[1]==STARTING)))) -> goto accept_S170
+	:: atomic { (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	od;
+accept_S187:
+	do
+	:: (! (((states[1]==STARTING)))) -> goto T0_S187
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: (! (((states[1]==0))) && ! (((states[1]==STARTING)))) -> goto T0_S207
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto T0_S182
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto T0_S196
+	od;
+accept_S196:
+	do
+	:: atomic { (! (((states[1]==READY)))) -> assert(!(! (((states[1]==READY))))) }
+	:: (1) -> goto T0_S196
+	od;
+accept_S207:
+	do
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: atomic { (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	:: (! (((states[1]==STARTING)))) -> goto T0_S207
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto T0_S196
+	od;
+accept_S305:
+	do
+	:: (! (((states[0]==STARTING)))) -> goto accept_S305
+	:: atomic { (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	od;
+accept_S322:
+	do
+	:: (! (((states[0]==STARTING)))) -> goto T0_S322
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: (! (((states[0]==0))) && ! (((states[0]==STARTING)))) -> goto T0_S342
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto T0_S317
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto T0_S331
+	od;
+accept_S331:
+	do
+	:: atomic { (! (((states[0]==READY)))) -> assert(!(! (((states[0]==READY))))) }
+	:: (1) -> goto T0_S331
+	od;
+accept_S342:
+	do
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: atomic { (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	:: (! (((states[0]==STARTING)))) -> goto T0_S342
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto T0_S331
+	od;
+T0_S47:
+	do
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S52
+	:: (! (((states[2]==STARTING)))) -> goto T0_S52
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S61
+	:: (! (((states[2]==0))) && ! (((states[2]==STARTING)))) -> goto T0_S72
+	od;
+T0_S52:
+	do
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S52
+	:: (! (((states[2]==STARTING)))) -> goto T0_S52
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S72
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S61
+	:: (! (((states[2]==0))) && ! (((states[2]==STARTING)))) -> goto T0_S72
+	od;
+T0_S61:
+	do
+	:: atomic { (! (((states[2]==READY)))) -> assert(!(! (((states[2]==READY))))) }
+	:: (1) -> goto T0_S61
+	od;
+T0_S72:
+	do
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S35
+	:: atomic { (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> assert(!(! (((states[2]==READY))) && ! (((states[2]==STARTING))))) }
+	:: (! (((states[2]==STARTING)))) -> goto T0_S72
+	:: (! (((states[2]==READY))) && ! (((states[2]==STARTING)))) -> goto accept_S61
+	od;
+T0_S182:
+	do
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S187
+	:: (! (((states[1]==STARTING)))) -> goto T0_S187
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S196
+	:: (! (((states[1]==0))) && ! (((states[1]==STARTING)))) -> goto T0_S207
+	od;
+T0_S187:
+	do
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S187
+	:: (! (((states[1]==STARTING)))) -> goto T0_S187
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S207
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	:: (! (((states[1]==0))) && ! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S196
+	:: (! (((states[1]==0))) && ! (((states[1]==STARTING)))) -> goto T0_S207
+	od;
+T0_S196:
+	do
+	:: atomic { (! (((states[1]==READY)))) -> assert(!(! (((states[1]==READY))))) }
+	:: (1) -> goto T0_S196
+	od;
+T0_S207:
+	do
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S170
+	:: atomic { (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> assert(!(! (((states[1]==READY))) && ! (((states[1]==STARTING))))) }
+	:: (! (((states[1]==STARTING)))) -> goto T0_S207
+	:: (! (((states[1]==READY))) && ! (((states[1]==STARTING)))) -> goto accept_S196
+	od;
+T0_S317:
+	do
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S322
+	:: (! (((states[0]==STARTING)))) -> goto T0_S322
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S331
+	:: (! (((states[0]==0))) && ! (((states[0]==STARTING)))) -> goto T0_S342
+	od;
+T0_S322:
+	do
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S322
+	:: (! (((states[0]==STARTING)))) -> goto T0_S322
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S342
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	:: (! (((states[0]==0))) && ! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S331
+	:: (! (((states[0]==0))) && ! (((states[0]==STARTING)))) -> goto T0_S342
+	od;
+T0_S331:
+	do
+	:: atomic { (! (((states[0]==READY)))) -> assert(!(! (((states[0]==READY))))) }
+	:: (1) -> goto T0_S331
+	od;
+T0_S342:
+	do
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S305
+	:: atomic { (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> assert(!(! (((states[0]==READY))) && ! (((states[0]==STARTING))))) }
+	:: (! (((states[0]==STARTING)))) -> goto T0_S342
+	:: (! (((states[0]==READY))) && ! (((states[0]==STARTING)))) -> goto accept_S331
+	od;
+accept_all:
+	skip
+}
+never fsm_starting {    /* !([] ((((! ((states[0]==STARTING))) || (((states[0]==STARTING)) U (((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) && ((! ((states[1]==STARTING))) || (((states[1]==STARTING)) U (((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))))) && ((! ((states[2]==STARTING))) || (((states[2]==STARTING)) U (((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==STARTING)))) && ! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))) -> goto accept_S6
+	:: atomic { (((! ((! ((states[0]==STARTING)))) && (! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==STARTING))))) || ((! ((! ((states[1]==STARTING)))) && (! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==STARTING))))) || (! ((! ((states[2]==STARTING)))) && (! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==STARTING)))))))) -> assert(!(((! ((! ((states[0]==STARTING)))) && (! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==STARTING))))) || ((! ((! ((states[1]==STARTING)))) && (! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==STARTING))))) || (! ((! ((states[2]==STARTING)))) && (! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==STARTING))))))))) }
+	:: (! ((! ((states[1]==STARTING)))) && ! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))) -> goto accept_S11
+	:: (! ((! ((states[0]==STARTING)))) && ! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) -> goto accept_S16
+	:: (1) -> goto T0_init
+	od;
+accept_S6:
+	do
+	:: (! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))) -> goto accept_S6
+	:: atomic { (! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==STARTING)))) -> assert(!(! ((((((states[2]==RUNNING)) || ((states[2]==PAUSED))) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==STARTING))))) }
+	od;
+accept_S11:
+	do
+	:: (! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))) -> goto accept_S11
+	:: atomic { (! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==STARTING)))) -> assert(!(! ((((((states[1]==RUNNING)) || ((states[1]==PAUSED))) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==STARTING))))) }
+	od;
+accept_S16:
+	do
+	:: (! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) -> goto accept_S16
+	:: atomic { (! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==STARTING)))) -> assert(!(! ((((((states[0]==RUNNING)) || ((states[0]==PAUSED))) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==STARTING))))) }
+	od;
+accept_all:
+	skip
+}
+never fsm_running {    /* !([] ((((! ((states[0]==RUNNING))) || (([] ((states[0]==RUNNING))) || (((states[0]==RUNNING)) U ((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))))) && ((! ((states[1]==RUNNING))) || (([] ((states[1]==RUNNING))) || (((states[1]==RUNNING)) U ((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))))) && ((! ((states[2]==RUNNING))) || (([] ((states[2]==RUNNING))) || (((states[2]==RUNNING)) U ((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==RUNNING)))) && ! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> goto accept_S13
+	:: atomic { (((! ((! ((states[0]==RUNNING)))) && (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING))))) || ((! ((! ((states[1]==RUNNING)))) && (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING))))) || (! ((! ((states[2]==RUNNING)))) && (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))))))) -> assert(!(((! ((! ((states[0]==RUNNING)))) && (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING))))) || ((! ((! ((states[1]==RUNNING)))) && (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING))))) || (! ((! ((states[2]==RUNNING)))) && (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING))))))))) }
+	:: (! ((! ((states[2]==RUNNING)))) && ! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))) -> goto T0_S16
+	:: (! ((! ((states[2]==RUNNING)))) && ! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> goto accept_S4
+	:: (! ((! ((states[1]==RUNNING)))) && ! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> goto accept_S36
+	:: (! ((! ((states[1]==RUNNING)))) && ! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))) -> goto T0_S39
+	:: (! ((! ((states[1]==RUNNING)))) && ! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> goto accept_S27
+	:: (! ((! ((states[0]==RUNNING)))) && ! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> goto accept_S59
+	:: (! ((! ((states[0]==RUNNING)))) && ! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) -> goto T0_S62
+	:: (! ((! ((states[0]==RUNNING)))) && ! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> goto accept_S50
+	:: (1) -> goto T0_init
+	od;
+accept_S13:
+	do
+	:: (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))) -> goto accept_S13
+	:: atomic { (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> assert(!(! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING))))) }
+	od;
+accept_S4:
+	do
+	:: atomic { (! (((states[2]==RUNNING)))) -> assert(!(! (((states[2]==RUNNING))))) }
+	:: (1) -> goto T0_S4
+	od;
+accept_S36:
+	do
+	:: (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))) -> goto accept_S36
+	:: atomic { (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> assert(!(! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING))))) }
+	od;
+accept_S27:
+	do
+	:: atomic { (! (((states[1]==RUNNING)))) -> assert(!(! (((states[1]==RUNNING))))) }
+	:: (1) -> goto T0_S27
+	od;
+accept_S59:
+	do
+	:: (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) -> goto accept_S59
+	:: atomic { (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> assert(!(! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING))))) }
+	od;
+accept_S50:
+	do
+	:: atomic { (! (((states[0]==RUNNING)))) -> assert(!(! (((states[0]==RUNNING))))) }
+	:: (1) -> goto T0_S50
+	od;
+T0_S16:
+	do
+	:: (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> goto accept_S13
+	:: atomic { (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> assert(!(! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING))))) }
+	:: (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING))))) -> goto T0_S16
+	:: (! (((((states[2]==PAUSED)) || ((states[2]==STOPPING))) || ((states[2]==ABORTING)))) && ! (((states[2]==RUNNING)))) -> goto accept_S4
+	od;
+T0_S4:
+	do
+	:: atomic { (! (((states[2]==RUNNING)))) -> assert(!(! (((states[2]==RUNNING))))) }
+	:: (1) -> goto T0_S4
+	od;
+T0_S39:
+	do
+	:: (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> goto accept_S36
+	:: atomic { (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> assert(!(! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING))))) }
+	:: (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING))))) -> goto T0_S39
+	:: (! (((((states[1]==PAUSED)) || ((states[1]==STOPPING))) || ((states[1]==ABORTING)))) && ! (((states[1]==RUNNING)))) -> goto accept_S27
+	od;
+T0_S27:
+	do
+	:: atomic { (! (((states[1]==RUNNING)))) -> assert(!(! (((states[1]==RUNNING))))) }
+	:: (1) -> goto T0_S27
+	od;
+T0_S62:
+	do
+	:: (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> goto accept_S59
+	:: atomic { (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> assert(!(! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING))))) }
+	:: (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING))))) -> goto T0_S62
+	:: (! (((((states[0]==PAUSED)) || ((states[0]==STOPPING))) || ((states[0]==ABORTING)))) && ! (((states[0]==RUNNING)))) -> goto accept_S50
+	od;
+T0_S50:
+	do
+	:: atomic { (! (((states[0]==RUNNING)))) -> assert(!(! (((states[0]==RUNNING))))) }
+	:: (1) -> goto T0_S50
+	od;
+accept_all:
+	skip
+}
+never fsm_paused {    /* !([] ((((! ((states[0]==PAUSED))) || (([] ((states[0]==PAUSED))) || (((states[0]==PAUSED)) U (((states[0]==RUNNING)) || ((states[0]==STOPPING)))))) && ((! ((states[1]==PAUSED))) || (([] ((states[1]==PAUSED))) || (((states[1]==PAUSED)) U (((states[1]==RUNNING)) || ((states[1]==STOPPING))))))) && ((! ((states[2]==PAUSED))) || (([] ((states[2]==PAUSED))) || (((states[2]==PAUSED)) U (((states[2]==RUNNING)) || ((states[2]==STOPPING)))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==PAUSED)))) && ! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> goto accept_S13
+	:: atomic { (((! ((! ((states[0]==PAUSED)))) && (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED))))) || ((! ((! ((states[1]==PAUSED)))) && (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED))))) || (! ((! ((states[2]==PAUSED)))) && (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))))))) -> assert(!(((! ((! ((states[0]==PAUSED)))) && (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED))))) || ((! ((! ((states[1]==PAUSED)))) && (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED))))) || (! ((! ((states[2]==PAUSED)))) && (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED))))))))) }
+	:: (! ((! ((states[2]==PAUSED)))) && ! ((((states[2]==RUNNING)) || ((states[2]==STOPPING))))) -> goto T0_S16
+	:: (! ((! ((states[2]==PAUSED)))) && ! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> goto accept_S4
+	:: (! ((! ((states[1]==PAUSED)))) && ! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> goto accept_S36
+	:: (! ((! ((states[1]==PAUSED)))) && ! ((((states[1]==RUNNING)) || ((states[1]==STOPPING))))) -> goto T0_S39
+	:: (! ((! ((states[1]==PAUSED)))) && ! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> goto accept_S27
+	:: (! ((! ((states[0]==PAUSED)))) && ! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> goto accept_S59
+	:: (! ((! ((states[0]==PAUSED)))) && ! ((((states[0]==RUNNING)) || ((states[0]==STOPPING))))) -> goto T0_S62
+	:: (! ((! ((states[0]==PAUSED)))) && ! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> goto accept_S50
+	:: (1) -> goto T0_init
+	od;
+accept_S13:
+	do
+	:: (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING))))) -> goto accept_S13
+	:: atomic { (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> assert(!(! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED))))) }
+	od;
+accept_S4:
+	do
+	:: atomic { (! (((states[2]==PAUSED)))) -> assert(!(! (((states[2]==PAUSED))))) }
+	:: (1) -> goto T0_S4
+	od;
+accept_S36:
+	do
+	:: (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING))))) -> goto accept_S36
+	:: atomic { (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> assert(!(! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED))))) }
+	od;
+accept_S27:
+	do
+	:: atomic { (! (((states[1]==PAUSED)))) -> assert(!(! (((states[1]==PAUSED))))) }
+	:: (1) -> goto T0_S27
+	od;
+accept_S59:
+	do
+	:: (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING))))) -> goto accept_S59
+	:: atomic { (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> assert(!(! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED))))) }
+	od;
+accept_S50:
+	do
+	:: atomic { (! (((states[0]==PAUSED)))) -> assert(!(! (((states[0]==PAUSED))))) }
+	:: (1) -> goto T0_S50
+	od;
+T0_S16:
+	do
+	:: (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> goto accept_S13
+	:: atomic { (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> assert(!(! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED))))) }
+	:: (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING))))) -> goto T0_S16
+	:: (! ((((states[2]==RUNNING)) || ((states[2]==STOPPING)))) && ! (((states[2]==PAUSED)))) -> goto accept_S4
+	od;
+T0_S4:
+	do
+	:: atomic { (! (((states[2]==PAUSED)))) -> assert(!(! (((states[2]==PAUSED))))) }
+	:: (1) -> goto T0_S4
+	od;
+T0_S39:
+	do
+	:: (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> goto accept_S36
+	:: atomic { (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> assert(!(! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED))))) }
+	:: (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING))))) -> goto T0_S39
+	:: (! ((((states[1]==RUNNING)) || ((states[1]==STOPPING)))) && ! (((states[1]==PAUSED)))) -> goto accept_S27
+	od;
+T0_S27:
+	do
+	:: atomic { (! (((states[1]==PAUSED)))) -> assert(!(! (((states[1]==PAUSED))))) }
+	:: (1) -> goto T0_S27
+	od;
+T0_S62:
+	do
+	:: (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> goto accept_S59
+	:: atomic { (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> assert(!(! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED))))) }
+	:: (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING))))) -> goto T0_S62
+	:: (! ((((states[0]==RUNNING)) || ((states[0]==STOPPING)))) && ! (((states[0]==PAUSED)))) -> goto accept_S50
+	od;
+T0_S50:
+	do
+	:: atomic { (! (((states[0]==PAUSED)))) -> assert(!(! (((states[0]==PAUSED))))) }
+	:: (1) -> goto T0_S50
+	od;
+accept_all:
+	skip
+}
+never fsm_stopping {    /* !([] ((([] ((! ((states[0]==STOPPING))) || (((states[0]==STOPPING)) U (((states[0]==STOPPED)) || ((states[0]==ABORTING)))))) && ([] ((! ((states[1]==STOPPING))) || (((states[1]==STOPPING)) U (((states[1]==STOPPED)) || ((states[1]==ABORTING))))))) && ([] ((! ((states[2]==STOPPING))) || (((states[2]==STOPPING)) U (((states[2]==STOPPED)) || ((states[2]==ABORTING)))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==STOPPING)))) && ! ((((states[2]==STOPPED)) || ((states[2]==ABORTING))))) -> goto accept_S6
+	:: atomic { (((! ((! ((states[0]==STOPPING)))) && (! ((((states[0]==STOPPED)) || ((states[0]==ABORTING)))) && ! (((states[0]==STOPPING))))) || ((! ((! ((states[1]==STOPPING)))) && (! ((((states[1]==STOPPED)) || ((states[1]==ABORTING)))) && ! (((states[1]==STOPPING))))) || (! ((! ((states[2]==STOPPING)))) && (! ((((states[2]==STOPPED)) || ((states[2]==ABORTING)))) && ! (((states[2]==STOPPING)))))))) -> assert(!(((! ((! ((states[0]==STOPPING)))) && (! ((((states[0]==STOPPED)) || ((states[0]==ABORTING)))) && ! (((states[0]==STOPPING))))) || ((! ((! ((states[1]==STOPPING)))) && (! ((((states[1]==STOPPED)) || ((states[1]==ABORTING)))) && ! (((states[1]==STOPPING))))) || (! ((! ((states[2]==STOPPING)))) && (! ((((states[2]==STOPPED)) || ((states[2]==ABORTING)))) && ! (((states[2]==STOPPING))))))))) }
+	:: (! ((! ((states[1]==STOPPING)))) && ! ((((states[1]==STOPPED)) || ((states[1]==ABORTING))))) -> goto accept_S11
+	:: (! ((! ((states[0]==STOPPING)))) && ! ((((states[0]==STOPPED)) || ((states[0]==ABORTING))))) -> goto accept_S16
+	:: (1) -> goto T0_init
+	od;
+accept_S6:
+	do
+	:: (! ((((states[2]==STOPPED)) || ((states[2]==ABORTING))))) -> goto accept_S6
+	:: atomic { (! ((((states[2]==STOPPED)) || ((states[2]==ABORTING)))) && ! (((states[2]==STOPPING)))) -> assert(!(! ((((states[2]==STOPPED)) || ((states[2]==ABORTING)))) && ! (((states[2]==STOPPING))))) }
+	od;
+accept_S11:
+	do
+	:: (! ((((states[1]==STOPPED)) || ((states[1]==ABORTING))))) -> goto accept_S11
+	:: atomic { (! ((((states[1]==STOPPED)) || ((states[1]==ABORTING)))) && ! (((states[1]==STOPPING)))) -> assert(!(! ((((states[1]==STOPPED)) || ((states[1]==ABORTING)))) && ! (((states[1]==STOPPING))))) }
+	od;
+accept_S16:
+	do
+	:: (! ((((states[0]==STOPPED)) || ((states[0]==ABORTING))))) -> goto accept_S16
+	:: atomic { (! ((((states[0]==STOPPED)) || ((states[0]==ABORTING)))) && ! (((states[0]==STOPPING)))) -> assert(!(! ((((states[0]==STOPPED)) || ((states[0]==ABORTING)))) && ! (((states[0]==STOPPING))))) }
+	od;
+accept_all:
+	skip
+}
+never fsm_stopped {    /* !([] ((((! ((states[0]==STOPPED))) || (([] ((states[0]==STOPPED))) || (((states[0]==STOPPED)) U ([] ((states[0]==0)))))) && ((! ((states[1]==STOPPED))) || (([] ((states[1]==STOPPED))) || (((states[1]==STOPPED)) U ([] ((states[1]==0))))))) && ((! ((states[2]==STOPPED))) || (([] ((states[2]==STOPPED))) || (((states[2]==STOPPED)) U ([] ((states[2]==0)))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S82
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==STOPPED)))) -> goto T0_S82
+	:: atomic { (((! ((! ((states[0]==STOPPED)))) && (! (((states[0]==0))) && ! (((states[0]==STOPPED))))) || ((! ((! ((states[1]==STOPPED)))) && (! (((states[1]==0))) && ! (((states[1]==STOPPED))))) || (! ((! ((states[2]==STOPPED)))) && (! (((states[2]==0))) && ! (((states[2]==STOPPED)))))))) -> assert(!(((! ((! ((states[0]==STOPPED)))) && (! (((states[0]==0))) && ! (((states[0]==STOPPED))))) || ((! ((! ((states[1]==STOPPED)))) && (! (((states[1]==0))) && ! (((states[1]==STOPPED))))) || (! ((! ((states[2]==STOPPED)))) && (! (((states[2]==0))) && ! (((states[2]==STOPPED))))))))) }
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==0)))) -> goto T0_S69
+	:: (! ((! ((states[2]==STOPPED))))) -> goto T0_S49
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S4
+	:: (! ((! ((states[2]==STOPPED)))) && ! (((states[2]==STOPPED)))) -> goto T6_S158
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S243
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==STOPPED)))) -> goto T0_S243
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==0)))) -> goto T0_S230
+	:: (! ((! ((states[1]==STOPPED))))) -> goto T0_S210
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S165
+	:: (! ((! ((states[1]==STOPPED)))) && ! (((states[1]==STOPPED)))) -> goto T4_S319
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S404
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==STOPPED)))) -> goto T0_S404
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==0)))) -> goto T0_S391
+	:: (! ((! ((states[0]==STOPPED))))) -> goto T0_S371
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S326
+	:: (! ((! ((states[0]==STOPPED)))) && ! (((states[0]==STOPPED)))) -> goto T2_S480
+	:: (1) -> goto T0_init
+	od;
+accept_S82:
+	do
+	:: (! (((states[2]==0)))) -> goto T0_S52
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	od;
+accept_S110:
+	do
+	:: atomic { (! (((states[2]==0)))) -> assert(!(! (((states[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+accept_S4:
+	do
+	:: atomic { (! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==STOPPED))))) }
+	:: (1) -> goto T0_S4
+	od;
+accept_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==0)))) -> goto T0_S4
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+accept_S243:
+	do
+	:: (! (((states[1]==0)))) -> goto T0_S213
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	od;
+accept_S271:
+	do
+	:: atomic { (! (((states[1]==0)))) -> assert(!(! (((states[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+accept_S165:
+	do
+	:: atomic { (! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==STOPPED))))) }
+	:: (1) -> goto T0_S165
+	od;
+accept_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==0)))) -> goto T0_S165
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+accept_S404:
+	do
+	:: (! (((states[0]==0)))) -> goto T0_S374
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	od;
+accept_S432:
+	do
+	:: atomic { (! (((states[0]==0)))) -> assert(!(! (((states[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+accept_S326:
+	do
+	:: atomic { (! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==STOPPED))))) }
+	:: (1) -> goto T0_S326
+	od;
+accept_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==0)))) -> goto T0_S326
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+T6_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==0)))) -> goto accept_S4
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (1) -> goto T6_S158
+	od;
+T4_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==0)))) -> goto accept_S165
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (1) -> goto T4_S319
+	od;
+T2_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==0)))) -> goto accept_S326
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (1) -> goto T2_S480
+	od;
+T0_S52:
+	do
+	:: (! (((states[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	od;
+T0_S69:
+	do
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S82
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (! (((states[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S4
+	:: (! (((states[2]==STOPPED)))) -> goto T6_S158
+	od;
+T0_S82:
+	do
+	:: (! (((states[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S110
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	od;
+T0_S110:
+	do
+	:: atomic { (! (((states[2]==0)))) -> assert(!(! (((states[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+T0_S49:
+	do
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S82
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (! (((states[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S110
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S4
+	:: (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> goto accept_S158
+	:: (! (((states[2]==STOPPED)))) -> goto T6_S158
+	od;
+T0_S4:
+	do
+	:: atomic { (! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==STOPPED))))) }
+	:: (1) -> goto T0_S4
+	od;
+T0_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==STOPPED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==STOPPED))))) }
+	:: (! (((states[2]==0)))) -> goto T0_S4
+	:: (! (((states[2]==STOPPED)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+T0_S213:
+	do
+	:: (! (((states[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	od;
+T0_S230:
+	do
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S243
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (! (((states[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S165
+	:: (! (((states[1]==STOPPED)))) -> goto T4_S319
+	od;
+T0_S243:
+	do
+	:: (! (((states[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S271
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	od;
+T0_S271:
+	do
+	:: atomic { (! (((states[1]==0)))) -> assert(!(! (((states[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+T0_S210:
+	do
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S243
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (! (((states[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S271
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S165
+	:: (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> goto accept_S319
+	:: (! (((states[1]==STOPPED)))) -> goto T4_S319
+	od;
+T0_S165:
+	do
+	:: atomic { (! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==STOPPED))))) }
+	:: (1) -> goto T0_S165
+	od;
+T0_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==STOPPED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==STOPPED))))) }
+	:: (! (((states[1]==0)))) -> goto T0_S165
+	:: (! (((states[1]==STOPPED)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+T0_S374:
+	do
+	:: (! (((states[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	od;
+T0_S391:
+	do
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S404
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (! (((states[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S326
+	:: (! (((states[0]==STOPPED)))) -> goto T2_S480
+	od;
+T0_S404:
+	do
+	:: (! (((states[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S432
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	od;
+T0_S432:
+	do
+	:: atomic { (! (((states[0]==0)))) -> assert(!(! (((states[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+T0_S371:
+	do
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S404
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (! (((states[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S432
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S326
+	:: (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> goto accept_S480
+	:: (! (((states[0]==STOPPED)))) -> goto T2_S480
+	od;
+T0_S326:
+	do
+	:: atomic { (! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==STOPPED))))) }
+	:: (1) -> goto T0_S326
+	od;
+T0_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==STOPPED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==STOPPED))))) }
+	:: (! (((states[0]==0)))) -> goto T0_S326
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+accept_all:
+	skip
+}
+never fsm_aborting {    /* !([] ((([] ((! ((states[0]==ABORTING))) || (((states[0]==ABORTING)) U ((states[0]==ABORTED))))) && ([] ((! ((states[1]==ABORTING))) || (((states[1]==ABORTING)) U ((states[1]==ABORTED)))))) && ([] ((! ((states[2]==ABORTING))) || (((states[2]==ABORTING)) U ((states[2]==ABORTED))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==ABORTING)))) && ! (((states[2]==ABORTED)))) -> goto accept_S6
+	:: atomic { (((! ((! ((states[0]==ABORTING)))) && (! (((states[0]==ABORTED))) && ! (((states[0]==ABORTING))))) || ((! ((! ((states[1]==ABORTING)))) && (! (((states[1]==ABORTED))) && ! (((states[1]==ABORTING))))) || (! ((! ((states[2]==ABORTING)))) && (! (((states[2]==ABORTED))) && ! (((states[2]==ABORTING)))))))) -> assert(!(((! ((! ((states[0]==ABORTING)))) && (! (((states[0]==ABORTED))) && ! (((states[0]==ABORTING))))) || ((! ((! ((states[1]==ABORTING)))) && (! (((states[1]==ABORTED))) && ! (((states[1]==ABORTING))))) || (! ((! ((states[2]==ABORTING)))) && (! (((states[2]==ABORTED))) && ! (((states[2]==ABORTING))))))))) }
+	:: (! ((! ((states[1]==ABORTING)))) && ! (((states[1]==ABORTED)))) -> goto accept_S11
+	:: (! ((! ((states[0]==ABORTING)))) && ! (((states[0]==ABORTED)))) -> goto accept_S16
+	:: (1) -> goto T0_init
+	od;
+accept_S6:
+	do
+	:: (! (((states[2]==ABORTED)))) -> goto accept_S6
+	:: atomic { (! (((states[2]==ABORTED))) && ! (((states[2]==ABORTING)))) -> assert(!(! (((states[2]==ABORTED))) && ! (((states[2]==ABORTING))))) }
+	od;
+accept_S11:
+	do
+	:: (! (((states[1]==ABORTED)))) -> goto accept_S11
+	:: atomic { (! (((states[1]==ABORTED))) && ! (((states[1]==ABORTING)))) -> assert(!(! (((states[1]==ABORTED))) && ! (((states[1]==ABORTING))))) }
+	od;
+accept_S16:
+	do
+	:: (! (((states[0]==ABORTED)))) -> goto accept_S16
+	:: atomic { (! (((states[0]==ABORTED))) && ! (((states[0]==ABORTING)))) -> assert(!(! (((states[0]==ABORTED))) && ! (((states[0]==ABORTING))))) }
+	od;
+accept_all:
+	skip
+}
+never fsm_aborted {    /* !([] ((((! ((states[0]==ABORTED))) || (([] ((states[0]==ABORTED))) || (((states[0]==ABORTED)) U ([] ((states[0]==0)))))) && ((! ((states[1]==ABORTED))) || (([] ((states[1]==ABORTED))) || (((states[1]==ABORTED)) U ([] ((states[1]==0))))))) && ((! ((states[2]==ABORTED))) || (([] ((states[2]==ABORTED))) || (((states[2]==ABORTED)) U ([] ((states[2]==0)))))))) */
+T0_init:
+	do
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S82
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==ABORTED)))) -> goto T0_S82
+	:: atomic { (((! ((! ((states[0]==ABORTED)))) && (! (((states[0]==0))) && ! (((states[0]==ABORTED))))) || ((! ((! ((states[1]==ABORTED)))) && (! (((states[1]==0))) && ! (((states[1]==ABORTED))))) || (! ((! ((states[2]==ABORTED)))) && (! (((states[2]==0))) && ! (((states[2]==ABORTED)))))))) -> assert(!(((! ((! ((states[0]==ABORTED)))) && (! (((states[0]==0))) && ! (((states[0]==ABORTED))))) || ((! ((! ((states[1]==ABORTED)))) && (! (((states[1]==0))) && ! (((states[1]==ABORTED))))) || (! ((! ((states[2]==ABORTED)))) && (! (((states[2]==0))) && ! (((states[2]==ABORTED))))))))) }
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==0)))) -> goto T0_S69
+	:: (! ((! ((states[2]==ABORTED))))) -> goto T0_S49
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S4
+	:: (! ((! ((states[2]==ABORTED)))) && ! (((states[2]==ABORTED)))) -> goto T6_S158
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S243
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==ABORTED)))) -> goto T0_S243
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==0)))) -> goto T0_S230
+	:: (! ((! ((states[1]==ABORTED))))) -> goto T0_S210
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S165
+	:: (! ((! ((states[1]==ABORTED)))) && ! (((states[1]==ABORTED)))) -> goto T4_S319
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S404
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==ABORTED)))) -> goto T0_S404
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==0)))) -> goto T0_S391
+	:: (! ((! ((states[0]==ABORTED))))) -> goto T0_S371
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S326
+	:: (! ((! ((states[0]==ABORTED)))) && ! (((states[0]==ABORTED)))) -> goto T2_S480
+	:: (1) -> goto T0_init
+	od;
+accept_S82:
+	do
+	:: (! (((states[2]==0)))) -> goto T0_S52
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	od;
+accept_S110:
+	do
+	:: atomic { (! (((states[2]==0)))) -> assert(!(! (((states[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+accept_S4:
+	do
+	:: atomic { (! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==ABORTED))))) }
+	:: (1) -> goto T0_S4
+	od;
+accept_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==0)))) -> goto T0_S4
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+accept_S243:
+	do
+	:: (! (((states[1]==0)))) -> goto T0_S213
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	od;
+accept_S271:
+	do
+	:: atomic { (! (((states[1]==0)))) -> assert(!(! (((states[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+accept_S165:
+	do
+	:: atomic { (! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==ABORTED))))) }
+	:: (1) -> goto T0_S165
+	od;
+accept_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==0)))) -> goto T0_S165
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+accept_S404:
+	do
+	:: (! (((states[0]==0)))) -> goto T0_S374
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	od;
+accept_S432:
+	do
+	:: atomic { (! (((states[0]==0)))) -> assert(!(! (((states[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+accept_S326:
+	do
+	:: atomic { (! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==ABORTED))))) }
+	:: (1) -> goto T0_S326
+	od;
+accept_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==0)))) -> goto T0_S326
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+T6_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==0)))) -> goto accept_S4
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (1) -> goto T6_S158
+	od;
+T4_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==0)))) -> goto accept_S165
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (1) -> goto T4_S319
+	od;
+T2_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==0)))) -> goto accept_S326
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (1) -> goto T2_S480
+	od;
+T0_S52:
+	do
+	:: (! (((states[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	od;
+T0_S69:
+	do
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S82
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (! (((states[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S4
+	:: (! (((states[2]==ABORTED)))) -> goto T6_S158
+	od;
+T0_S82:
+	do
+	:: (! (((states[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S110
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	od;
+T0_S110:
+	do
+	:: atomic { (! (((states[2]==0)))) -> assert(!(! (((states[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+T0_S49:
+	do
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S82
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S82
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (! (((states[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S110
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S4
+	:: (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> goto accept_S158
+	:: (! (((states[2]==ABORTED)))) -> goto T6_S158
+	od;
+T0_S4:
+	do
+	:: atomic { (! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==ABORTED))))) }
+	:: (1) -> goto T0_S4
+	od;
+T0_S158:
+	do
+	:: atomic { (! (((states[2]==0))) && ! (((states[2]==ABORTED)))) -> assert(!(! (((states[2]==0))) && ! (((states[2]==ABORTED))))) }
+	:: (! (((states[2]==0)))) -> goto T0_S4
+	:: (! (((states[2]==ABORTED)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+T0_S213:
+	do
+	:: (! (((states[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	od;
+T0_S230:
+	do
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S243
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (! (((states[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S165
+	:: (! (((states[1]==ABORTED)))) -> goto T4_S319
+	od;
+T0_S243:
+	do
+	:: (! (((states[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S271
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	od;
+T0_S271:
+	do
+	:: atomic { (! (((states[1]==0)))) -> assert(!(! (((states[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+T0_S210:
+	do
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S243
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S243
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (! (((states[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S271
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S165
+	:: (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> goto accept_S319
+	:: (! (((states[1]==ABORTED)))) -> goto T4_S319
+	od;
+T0_S165:
+	do
+	:: atomic { (! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==ABORTED))))) }
+	:: (1) -> goto T0_S165
+	od;
+T0_S319:
+	do
+	:: atomic { (! (((states[1]==0))) && ! (((states[1]==ABORTED)))) -> assert(!(! (((states[1]==0))) && ! (((states[1]==ABORTED))))) }
+	:: (! (((states[1]==0)))) -> goto T0_S165
+	:: (! (((states[1]==ABORTED)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+T0_S374:
+	do
+	:: (! (((states[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	od;
+T0_S391:
+	do
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S404
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (! (((states[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S326
+	:: (! (((states[0]==ABORTED)))) -> goto T2_S480
+	od;
+T0_S404:
+	do
+	:: (! (((states[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S432
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	od;
+T0_S432:
+	do
+	:: atomic { (! (((states[0]==0)))) -> assert(!(! (((states[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+T0_S371:
+	do
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S404
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S404
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (! (((states[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S432
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S326
+	:: (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> goto accept_S480
+	:: (! (((states[0]==ABORTED)))) -> goto T2_S480
+	od;
+T0_S326:
+	do
+	:: atomic { (! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==ABORTED))))) }
+	:: (1) -> goto T0_S326
+	od;
+T0_S480:
+	do
+	:: atomic { (! (((states[0]==0))) && ! (((states[0]==ABORTED)))) -> assert(!(! (((states[0]==0))) && ! (((states[0]==ABORTED))))) }
+	:: (! (((states[0]==0)))) -> goto T0_S326
+	:: (! (((states[0]==ABORTED)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+accept_all:
+	skip
+}
+never abort_is_undoable {    /* !([] ((((! ((commands[0]==ABORT))) || (([] ((commands[0]==ABORT))) || (((commands[0]==ABORT)) U ([] ((commands[0]==0)))))) && ((! ((commands[1]==ABORT))) || (([] ((commands[1]==ABORT))) || (((commands[1]==ABORT)) U ([] ((commands[1]==0))))))) && ((! ((commands[2]==ABORT))) || (([] ((commands[2]==ABORT))) || (((commands[2]==ABORT)) U ([] ((commands[2]==0)))))))) */
+T0_init:
+	do
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S82
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==ABORT)))) -> goto T0_S82
+	:: atomic { (((! ((! ((commands[0]==ABORT)))) && (! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) || ((! ((! ((commands[1]==ABORT)))) && (! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) || (! ((! ((commands[2]==ABORT)))) && (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))))))) -> assert(!(((! ((! ((commands[0]==ABORT)))) && (! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) || ((! ((! ((commands[1]==ABORT)))) && (! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) || (! ((! ((commands[2]==ABORT)))) && (! (((commands[2]==0))) && ! (((commands[2]==ABORT))))))))) }
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==0)))) -> goto T0_S69
+	:: (! ((! ((commands[2]==ABORT))))) -> goto T0_S49
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S4
+	:: (! ((! ((commands[2]==ABORT)))) && ! (((commands[2]==ABORT)))) -> goto T6_S158
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S243
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==ABORT)))) -> goto T0_S243
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==0)))) -> goto T0_S230
+	:: (! ((! ((commands[1]==ABORT))))) -> goto T0_S210
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S165
+	:: (! ((! ((commands[1]==ABORT)))) && ! (((commands[1]==ABORT)))) -> goto T4_S319
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S404
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==ABORT)))) -> goto T0_S404
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==0)))) -> goto T0_S391
+	:: (! ((! ((commands[0]==ABORT))))) -> goto T0_S371
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S326
+	:: (! ((! ((commands[0]==ABORT)))) && ! (((commands[0]==ABORT)))) -> goto T2_S480
+	:: (1) -> goto T0_init
+	od;
+accept_S82:
+	do
+	:: (! (((commands[2]==0)))) -> goto T0_S52
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	od;
+accept_S110:
+	do
+	:: atomic { (! (((commands[2]==0)))) -> assert(!(! (((commands[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+accept_S4:
+	do
+	:: atomic { (! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==ABORT))))) }
+	:: (1) -> goto T0_S4
+	od;
+accept_S158:
+	do
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==0)))) -> goto T0_S4
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+accept_S243:
+	do
+	:: (! (((commands[1]==0)))) -> goto T0_S213
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	od;
+accept_S271:
+	do
+	:: atomic { (! (((commands[1]==0)))) -> assert(!(! (((commands[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+accept_S165:
+	do
+	:: atomic { (! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==ABORT))))) }
+	:: (1) -> goto T0_S165
+	od;
+accept_S319:
+	do
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==0)))) -> goto T0_S165
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+accept_S404:
+	do
+	:: (! (((commands[0]==0)))) -> goto T0_S374
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	od;
+accept_S432:
+	do
+	:: atomic { (! (((commands[0]==0)))) -> assert(!(! (((commands[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+accept_S326:
+	do
+	:: atomic { (! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==ABORT))))) }
+	:: (1) -> goto T0_S326
+	od;
+accept_S480:
+	do
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==0)))) -> goto T0_S326
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+T6_S158:
+	do
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==0)))) -> goto accept_S4
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (1) -> goto T6_S158
+	od;
+T4_S319:
+	do
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==0)))) -> goto accept_S165
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (1) -> goto T4_S319
+	od;
+T2_S480:
+	do
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==0)))) -> goto accept_S326
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (1) -> goto T2_S480
+	od;
+T0_S52:
+	do
+	:: (! (((commands[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	od;
+T0_S69:
+	do
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S82
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S82
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (! (((commands[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S4
+	:: (! (((commands[2]==ABORT)))) -> goto T6_S158
+	od;
+T0_S82:
+	do
+	:: (! (((commands[2]==0)))) -> goto accept_S82
+	:: (1) -> goto T0_S82
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S110
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	od;
+T0_S110:
+	do
+	:: atomic { (! (((commands[2]==0)))) -> assert(!(! (((commands[2]==0))))) }
+	:: (1) -> goto T0_S110
+	od;
+T0_S49:
+	do
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S82
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S82
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (! (((commands[2]==0)))) -> goto T0_S69
+	:: (1) -> goto T0_S49
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S110
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S4
+	:: (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> goto accept_S158
+	:: (! (((commands[2]==ABORT)))) -> goto T6_S158
+	od;
+T0_S4:
+	do
+	:: atomic { (! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==ABORT))))) }
+	:: (1) -> goto T0_S4
+	od;
+T0_S158:
+	do
+	:: atomic { (! (((commands[2]==0))) && ! (((commands[2]==ABORT)))) -> assert(!(! (((commands[2]==0))) && ! (((commands[2]==ABORT))))) }
+	:: (! (((commands[2]==0)))) -> goto T0_S4
+	:: (! (((commands[2]==ABORT)))) -> goto T0_S110
+	:: (1) -> goto T0_S158
+	od;
+T0_S213:
+	do
+	:: (! (((commands[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	od;
+T0_S230:
+	do
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S243
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S243
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (! (((commands[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S165
+	:: (! (((commands[1]==ABORT)))) -> goto T4_S319
+	od;
+T0_S243:
+	do
+	:: (! (((commands[1]==0)))) -> goto accept_S243
+	:: (1) -> goto T0_S243
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S271
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	od;
+T0_S271:
+	do
+	:: atomic { (! (((commands[1]==0)))) -> assert(!(! (((commands[1]==0))))) }
+	:: (1) -> goto T0_S271
+	od;
+T0_S210:
+	do
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S243
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S243
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (! (((commands[1]==0)))) -> goto T0_S230
+	:: (1) -> goto T0_S210
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S271
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S165
+	:: (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> goto accept_S319
+	:: (! (((commands[1]==ABORT)))) -> goto T4_S319
+	od;
+T0_S165:
+	do
+	:: atomic { (! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==ABORT))))) }
+	:: (1) -> goto T0_S165
+	od;
+T0_S319:
+	do
+	:: atomic { (! (((commands[1]==0))) && ! (((commands[1]==ABORT)))) -> assert(!(! (((commands[1]==0))) && ! (((commands[1]==ABORT))))) }
+	:: (! (((commands[1]==0)))) -> goto T0_S165
+	:: (! (((commands[1]==ABORT)))) -> goto T0_S271
+	:: (1) -> goto T0_S319
+	od;
+T0_S374:
+	do
+	:: (! (((commands[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	od;
+T0_S391:
+	do
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S404
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S404
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (! (((commands[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S326
+	:: (! (((commands[0]==ABORT)))) -> goto T2_S480
+	od;
+T0_S404:
+	do
+	:: (! (((commands[0]==0)))) -> goto accept_S404
+	:: (1) -> goto T0_S404
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S432
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	od;
+T0_S432:
+	do
+	:: atomic { (! (((commands[0]==0)))) -> assert(!(! (((commands[0]==0))))) }
+	:: (1) -> goto T0_S432
+	od;
+T0_S371:
+	do
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S404
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S404
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (! (((commands[0]==0)))) -> goto T0_S391
+	:: (1) -> goto T0_S371
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S432
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S326
+	:: (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> goto accept_S480
+	:: (! (((commands[0]==ABORT)))) -> goto T2_S480
+	od;
+T0_S326:
+	do
+	:: atomic { (! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==ABORT))))) }
+	:: (1) -> goto T0_S326
+	od;
+T0_S480:
+	do
+	:: atomic { (! (((commands[0]==0))) && ! (((commands[0]==ABORT)))) -> assert(!(! (((commands[0]==0))) && ! (((commands[0]==ABORT))))) }
+	:: (! (((commands[0]==0)))) -> goto T0_S326
+	:: (! (((commands[0]==ABORT)))) -> goto T0_S432
+	:: (1) -> goto T0_S480
+	od;
+accept_all:
+	skip
+}
+never supervisor_is_the_first_thread {    /* !([] ((! ((states[0]==0))) || (((states[1]==0)) && ((states[2]==0))))) */
+T0_init:
+	do
+	:: atomic { (! (((! ((states[0]==0))) || (((states[1]==0)) && ((states[2]==0)))))) -> assert(!(! (((! ((states[0]==0))) || (((states[1]==0)) && ((states[2]==0))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never supervisor_constructs_workers {    /* !([] ((! (((states[1]==READY)) || ((states[2]==READY)))) || (! ((states[0]==0))))) */
+T0_init:
+	do
+	:: atomic { (! (((! (((states[1]==READY)) || ((states[2]==READY)))) || (! ((states[0]==0)))))) -> assert(!(! (((! (((states[1]==READY)) || ((states[2]==READY)))) || (! ((states[0]==0))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never supervisor_stops_after_all_workers_stop {    /* !([] ((! (((states[1]==STOPPED)) && ((states[2]==STOPPED)))) || (([] (<> ((states[0]==PAUSED)))) || (<> ((states[0]==STOPPED)))))) */
+T0_init:
+	do
+	:: (! ((! (((states[1]==STOPPED)) && ((states[2]==STOPPED))))) && ! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	:: (! ((! (((states[1]==STOPPED)) && ((states[2]==STOPPED))))) && ! (((states[0]==STOPPED)))) -> goto T0_S23
+	:: (1) -> goto T0_init
+	od;
+accept_S19:
+	do
+	:: (! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	od;
+T0_S23:
+	do
+	:: (! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S23
+	od;
+}
+never supervisor_stops_after_some_workers_abort {    /* !([] ((! (((states[1]==ABORTED)) || ((states[2]==ABORTED)))) || (([] (<> ((states[0]==PAUSED)))) || (<> ((states[0]==STOPPED)))))) */
+T0_init:
+	do
+	:: (! ((! (((states[1]==ABORTED)) || ((states[2]==ABORTED))))) && ! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	:: (! ((! (((states[1]==ABORTED)) || ((states[2]==ABORTED))))) && ! (((states[0]==STOPPED)))) -> goto T0_S23
+	:: (1) -> goto T0_init
+	od;
+accept_S19:
+	do
+	:: (! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	od;
+T0_S23:
+	do
+	:: (! (((states[0]==PAUSED))) && ! (((states[0]==STOPPED)))) -> goto accept_S19
+	:: (! (((states[0]==STOPPED)))) -> goto T0_S23
+	od;
+}
+never supervisor_never_aborts {    /* !(! (<> (((states[0]==ABORTED)) || ((commands[0]==ABORT))))) */
+T0_init:
+	do
+	:: atomic { ((((states[0]==ABORTED)) || ((commands[0]==ABORT)))) -> assert(!((((states[0]==ABORTED)) || ((commands[0]==ABORT))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never supervisor_halts_last {    /* !([] ((! (((states[0]==STOPPING)) || ((states[0]==ABORTING)))) || (<> (((((states[1]==STOPPED)) || ((states[1]==ABORTED))) || ((states[1]==0))) && ((((states[2]==STOPPED)) || ((states[2]==ABORTED))) || ((states[2]==0))))))) */
+T0_init:
+	do
+	:: (! ((! (((states[0]==STOPPING)) || ((states[0]==ABORTING))))) && ! ((((((states[1]==STOPPED)) || ((states[1]==ABORTED))) || ((states[1]==0))) && ((((states[2]==STOPPED)) || ((states[2]==ABORTED))) || ((states[2]==0)))))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((((((states[1]==STOPPED)) || ((states[1]==ABORTED))) || ((states[1]==0))) && ((((states[2]==STOPPED)) || ((states[2]==ABORTED))) || ((states[2]==0)))))) -> goto accept_S4
+	od;
+}
+never liveness {    /* !(([] ((([] (<> ((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) && ([] (<> ((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))))) && ([] (<> ((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))))) || (((([] (<> ((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) && ([] (<> ((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))))) && ([] (<> ((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))))) U (((states[0]==STOPPING)) || ((states[0]==ABORTING))))) */
+T0_init:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S8
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S87
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S132
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S93
+	:: (! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S84
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S112
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S149
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S181
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S186
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S191
+	:: (! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_init
+	od;
+accept_S8:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S8
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S87
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S25
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S36
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S181
+	od;
+accept_S25:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S25
+	od;
+accept_S36:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S36
+	od;
+accept_S87:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S87
+	od;
+accept_S93:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto accept_S93
+	od;
+accept_S112:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S25
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S112
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S132
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S126
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S186
+	od;
+accept_S126:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S126
+	od;
+accept_S132:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S132
+	od;
+accept_S149:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S36
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S93
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S126
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S149
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto T0_S191
+	od;
+accept_S181:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S87
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto T0_S181
+	od;
+accept_S186:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S132
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto T0_S186
+	od;
+accept_S191:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto accept_S93
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto T0_S191
+	od;
+T0_S8:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S8
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S87
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S25
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S36
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S181
+	od;
+T0_S84:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S87
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S132
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto accept_S93
+	:: (1) -> goto T0_S84
+	od;
+T0_S112:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S25
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S112
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S132
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S126
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S186
+	od;
+T0_S149:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S36
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S93
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S126
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S149
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0]))) && ! ((((states[0]==STOPPING)) || ((states[0]==ABORTING))))) -> goto accept_S191
+	od;
+T0_S181:
+	do
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S87
+	:: (! (((! (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) || (executing[2])))) -> goto accept_S181
+	od;
+T0_S186:
+	do
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S132
+	:: (! (((! (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) || (executing[1])))) -> goto accept_S186
+	od;
+T0_S191:
+	do
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto accept_S93
+	:: (! (((! (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) || (executing[0])))) -> goto accept_S191
+	od;
+}
+never fairness {    /* !((((! ([] (<> (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))))) || ([] (<> (executing[0])))) && ((! ([] (<> (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))))) || ([] (<> (executing[1]))))) && ((! ([] (<> (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))))) || ([] (<> (executing[2]))))) */
+T0_init:
+	do
+	:: (! ((executing[2])) && (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) -> goto accept_S9
+	:: (! ((executing[2]))) -> goto T0_S94
+	:: (1) -> goto T0_S62
+	:: (! ((executing[1])) && (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) -> goto accept_S178
+	:: (! ((executing[1]))) -> goto T0_S263
+	:: (1) -> goto T0_S231
+	:: (! ((executing[0])) && (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) -> goto accept_S347
+	:: (! ((executing[0]))) -> goto T0_S432
+	:: (1) -> goto T0_S400
+	od;
+accept_S9:
+	do
+	:: (! ((executing[2])) && (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) -> goto T0_S9
+	:: (! ((executing[2]))) -> goto T0_S94
+	od;
+accept_S94:
+	do
+	:: (! ((executing[2]))) -> goto T0_S94
+	od;
+accept_S178:
+	do
+	:: (! ((executing[1])) && (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) -> goto T0_S178
+	:: (! ((executing[1]))) -> goto T0_S263
+	od;
+accept_S263:
+	do
+	:: (! ((executing[1]))) -> goto T0_S263
+	od;
+accept_S347:
+	do
+	:: (! ((executing[0])) && (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) -> goto T0_S347
+	:: (! ((executing[0]))) -> goto T0_S432
+	od;
+accept_S432:
+	do
+	:: (! ((executing[0]))) -> goto T0_S432
+	od;
+T0_S9:
+	do
+	:: (! ((executing[2])) && (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) -> goto accept_S9
+	:: (! ((executing[2]))) -> goto T0_S94
+	od;
+T0_S94:
+	do
+	:: (! ((executing[2]))) -> goto T0_S94
+	:: (! ((executing[2])) && (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) -> goto accept_S94
+	od;
+T0_S62:
+	do
+	:: (! ((executing[2]))) -> goto T0_S94
+	:: (1) -> goto T0_S62
+	:: (! ((executing[2])) && (((states[2]==RUNNING)) && ((commands[2]==CONTINUE)))) -> goto accept_S94
+	od;
+T0_S178:
+	do
+	:: (! ((executing[1])) && (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) -> goto accept_S178
+	:: (! ((executing[1]))) -> goto T0_S263
+	od;
+T0_S263:
+	do
+	:: (! ((executing[1]))) -> goto T0_S263
+	:: (! ((executing[1])) && (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) -> goto accept_S263
+	od;
+T0_S231:
+	do
+	:: (! ((executing[1]))) -> goto T0_S263
+	:: (1) -> goto T0_S231
+	:: (! ((executing[1])) && (((states[1]==RUNNING)) && ((commands[1]==CONTINUE)))) -> goto accept_S263
+	od;
+T0_S347:
+	do
+	:: (! ((executing[0])) && (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) -> goto accept_S347
+	:: (! ((executing[0]))) -> goto T0_S432
+	od;
+T0_S432:
+	do
+	:: (! ((executing[0]))) -> goto T0_S432
+	:: (! ((executing[0])) && (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) -> goto accept_S432
+	od;
+T0_S400:
+	do
+	:: (! ((executing[0]))) -> goto T0_S432
+	:: (1) -> goto T0_S400
+	:: (! ((executing[0])) && (((states[0]==RUNNING)) && ((commands[0]==CONTINUE)))) -> goto accept_S432
+	od;
+}

@@ -1,0 +1,1 @@
+!(<> (sent == red) -> <> ((rcvd == red) && !(rcvd == blue)))

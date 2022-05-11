@@ -1,0 +1,1 @@
+(((states[0] == 0) U ((states[0] == READY) W (states[0] == STARTING))) && ((states[1] == 0) U ((states[1] == READY) W (states[1] == STARTING))) && ((states[2] == 0) U ((states[2] == READY) W (states[2] == STARTING))))
