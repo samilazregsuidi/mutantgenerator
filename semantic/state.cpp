@@ -44,15 +44,7 @@ state::state(const symTable* globalSymTab, const fsm* stateMachine)
 	//this->features = getTrue();
 
 	for (auto sym : globalSymTab->getSymbols<const varSymNode*>()) {
-		
-		setSymOffset(sym, this->payloadSize);
-		
-		if (sym->getType() == symbol::T_CHAN) {
-			addChannel(dynamic_cast<const chanSymNode*>(sym));
-		}
-		else {
-			addVariable(sym);
-		}
+		addVariable(sym);
 	}
 	// if(verbosity == VERBOSITY_HIGH) printf("Total memory used by global variables (in bytes): %d.\n", this->payloadSize);
 	this->payload = calloc(1, this->payloadSize);
@@ -62,27 +54,22 @@ state::state(const symTable* globalSymTab, const fsm* stateMachine)
 	 * Cardinalities are taken into account.
 	 * Also, links the "never claim" FSM, if it exists, with the state.
 	 */
-	for (const auto sym : globalSymTab->getSymbols()) {
-		if(sym->getType() == symbol::T_PROC) {
-			auto procSym = dynamic_cast<const procSymNode*>(sym);
-			expr* inst = procSym->getActiveExpr();
-			if(!inst)
-				this->addProctype(procSym);
-			else if(inst->getType() == astNode::astNode::E_EXPR_CONST) {
-				auto cstExpr = dynamic_cast<const exprConst*>(inst);
-				assert(cstExpr);
-				int bound = cstExpr->getCstValue();
-				for (int i = 0; i < bound; i++) {
-					this->addProctype(procSym);
-				}
-			} else {
-				assert(false);
+	for (const auto procSym : globalSymTab->getSymbols<const procSymNode*>()) {
+		expr* inst = procSym->getActiveExpr();
+		if(!inst)
+			this->addProctype(procSym);
+		else if(inst->getType() == astNode::astNode::E_EXPR_CONST) {
+			auto cstExpr = dynamic_cast<const exprConst*>(inst);
+			assert(cstExpr);
+			int bound = cstExpr->getCstValue();
+			for (int i = 0; i < bound; i++) {
+				this->addProctype(procSym, i);
 			}
-		} else if(sym->getType() == symbol::T_NEVER) {
-			auto neverSym = dynamic_cast<const neverSymNode*>(sym);
-			assert(neverSym);
-			this->addNever(neverSym);
-		}
+		} else assert(false);
+	}
+	
+	for (const auto neverSym : globalSymTab->getSymbols<const neverSymNode*>()) {
+		this->addNever(neverSym);
 	}
 
 	// No process is executing something atomic
@@ -106,6 +93,7 @@ state::state(const symTable* globalSymTab, const fsm* stateMachine)
 
 process::process(void) 
 	: sym(nullptr)
+	, index(0)
 	, pid(-1)
 	, varOffset(0)
 	, next(nullptr)
@@ -114,6 +102,7 @@ process::process(void)
 
 process::process(const process& p) 
 	: sym(p.sym)
+	, index(p.index)
 	, pid(p.pid)
 	, varOffset(p.varOffset)
 	, next(nullptr)
@@ -569,46 +558,42 @@ void state::storeNodePointer(process* proc, const fsmNode* pointer) {
  * On first call, preOffset must have the same value as the offset of its environment (i.e. global or process).
  * /!\ process is the environment in which the variable is ANALYZED, NOT in the one the variable is DEFINED.
  */
-unsigned int state::getVarOffset(const symbol* sym, unsigned int preOffset, const expr* expr) const {
-	if(expr->getType() == astNode::E_RARG_VAR) {
-		auto var = dynamic_cast<const exprVar*>(expr);
-		assert(var);
-		return this->getVarOffset(sym, preOffset, var);
-
-	} else if(expr->getType() == astNode::astNode::E_EXPR_VAR) {
-		auto var = dynamic_cast<const exprVar*>(expr);
-		assert(var);
-		return this->getVarOffset(sym, preOffset, var);
+unsigned int state::getVarOffset(const process* varProc, const expr* varExpr) const {
 	
-	} else if(expr->getType() == astNode::E_VARREF) {
-		auto varRef = dynamic_cast<const exprVarRef*>(expr);
-		assert(varRef);
-		unsigned int highOffset = this->getVarOffset(sym, preOffset, varRef->getField());
-		if(!varRef->getSubField())
+	assert(varExpr->getType() == astNode::E_RARG_VAR || varExpr->getType() == astNode::E_EXPR_VAR
+	|| varExpr->getType() == astNode::E_VARREF || varExpr->getType() == astNode::E_VARREF_NAME);
+
+	if(varExpr->getType() == astNode::E_RARG_VAR) {
+		auto var = dynamic_cast<const exprRArgVar*>(varExpr);
+		assert(var);
+		return this->getVarOffset(varProc, var->getVarRef());
+
+	} else if(varExpr->getType() == astNode::astNode::E_EXPR_VAR) {
+		auto var = dynamic_cast<const exprVar*>(varExpr);
+		assert(var);
+		return this->getVarOffset(varProc, var->getVarRef());
+	
+	} else if(varExpr->getType() == astNode::E_VARREF) {
+		auto var = dynamic_cast<const exprVarRef*>(varExpr);
+		assert(var);
+		unsigned int highOffset = this->getVarOffset(varProc, var->getField());
+		if(!var->getSubField())
 			return highOffset;
 		else
-			return this->getVarOffset(sym, highOffset, varRef->getSubField());
+			return this->getVarOffset(varProc, var->getSubField());
 
-	} else if (expr->getType() == astNode::E_VARREF_NAME) {
-		auto varRefName = dynamic_cast<const exprVarRefName*>(expr);
-		sym = varRefName->getSymbol();
+	} else if (varExpr->getType() == astNode::E_VARREF_NAME) {
+		auto varRefName = dynamic_cast<const exprVarRefName*>(varExpr);
+		auto sym = varRefName->getSymbol();
 		int index = 0;
 		
 		if(varRefName->getIndex())
-			index = this->eval(preOffset, varRefName->getIndex(), EVAL_EXPRESSION);
+			index = this->eval(varProc, varRefName->getIndex(), EVAL_EXPRESSION);
 		
-		if(sym->getType() == symbol::T_CHAN) {
-			auto chanSym = dynamic_cast<const chanSymNode*>(varRefName->getSymbol());
-			assert(chanSym);
-			if(chanSym->getCapacity() != 0) 
-				return preOffset + offset.at(chanSym) + (chanSym->getTypeSize() + 1) * index;
-			else
-				return preOffset + offset.at(chanSym) + index;
-		}
-		else
-			return preOffset + offset.at(sym) + sym->getTypeSize() * index;
-	}
-	assert(false);
+		return varOffset.at(std::make_tuple<>(varProc, sym, index));
+	
+	} else assert(false);
+	
 	return 0; // only to please compiler
 }
 
@@ -699,25 +684,6 @@ unsigned int padding(const varSymNode* varSym){
 			return -1;
 	}
 	return -1;
-}
-
-void state::setSymOffset(const varSymNode* varSym, unsigned int preOffset) {
-	//assert(payloadSize >= preOffset);
-
-	if(offset.find(varSym) != offset.end())
-		return;
-
-	unsigned int pad = preOffset % padding(varSym);
-	offset[varSym] = preOffset + pad;
-	payloadSize += pad;
-	
-
-	if(varSym->getType() == symbol::T_UTYPE){
-		for(auto field : dynamic_cast<const utypeSymNode*>(varSym)->getUType()->getFields()){
-			setSymOffset(field, preOffset);
-			preOffset += pad + field->getSizeOf();
-		}
-	}
 }
 
 /*
@@ -812,10 +778,10 @@ void state::addChannel(const chanSymNode* chanSym, const process* chanProc){
 		
 		varOffset[std::make_tuple<>(chanProc, chanSym, i)] = this->payloadSize++;
 		
-		if (chanSym->getCapacity() != 0) {
-			for(int j = 0; j < chanSym->getCapacity(); ++j){
-				for(auto varSym: chanSym->getTypeList())
-					addVariable(varSym, chanProc);
+		for(int j = 0; j < chanSym->getCapacity(); ++j){
+			for(auto typeSym: chanSym->getTypeList()){
+				unsigned int pad = payloadSize % padding(typeSym);
+				payloadSize += pad + typeSym->getSizeOf();
 			}
 		}
 	}
@@ -824,6 +790,9 @@ void state::addChannel(const chanSymNode* chanSym, const process* chanProc){
 void state::addVariable(const varSymNode* varSym, const process* varProc){
 	assert(varSym);
 	
+	if(varSym->getType() == symbol::T_CHAN)
+		return addChannel(dynamic_cast<const chanSymNode*>(varSym), varProc);
+
 	unsigned int pad = payloadSize % padding(varSym);
 	payloadSize += pad;
 
@@ -847,7 +816,7 @@ void state::addVariable(const varSymNode* varSym, const process* varProc){
  *
  * Does not change the payloadHash.
  */
-int state::addProctype(const procSymNode* procType){
+int state::addProctype(const procSymNode* procType, int i){
 	
 	process* newProc = new process();
 	newProc->sym = procType;
@@ -864,6 +833,9 @@ int state::addProctype(const procSymNode* procType){
 
 	payloadSize += sizeof(fsmNode*);
 	newProc->varOffset = payloadSize;
+	newProc->index = i;
+
+	procOffset[std::make_tuple<>(procType, i)] = payloadSize;
 
 	auto oldSize = payloadSize;
 

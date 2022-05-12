@@ -18,17 +18,17 @@ public:
 
 	exprVarRefName(const std::string& symName, expr *index, int lineNb);
 
-	exprVarRefName(const std::string& symName, symbol *sym, int lineNb);
+	exprVarRefName(const std::string& symName, varSymNode *sym, int lineNb);
 
 	void setIndex(expr* index);
 
 	expr* getIndex(void) const;
 
-	symbol* resolve(symTable *global);
+	varSymNode* resolve(symTable *global);
 
-	symbol* resolve(symTable *global, symTable* subField);
+	varSymNode* resolve(symTable *global, symTable* subField);
 
-	symbol* getSymbol(void) const;
+	varSymNode* getSymbol(void) const;
 
 	std::string getName(void) const;
 
@@ -42,7 +42,7 @@ public:
 
 private:
 	std::string symName;
-	symbol* sym;
+	varSymNode* sym;
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)
@@ -57,7 +57,7 @@ public:
 
 	void setSubField(exprVarRef* subField);
 
-	symbol* resolve(symTable *global, symTable* subField = nullptr) const;
+	varSymNode* resolve(symTable *global, symTable* subField = nullptr) const;
 
 	bool hasSubField(void) const;
 
@@ -65,9 +65,9 @@ public:
 
 	const exprVarRefName *getField() const;
 
-	symbol* getFinalSymbol(void) const;
+	varSymNode* getFinalSymbol(void) const;
 
-	symbol* getFirstSymbol(void) const;
+	varSymNode* getFirstSymbol(void) const;
 
 	operator std::string() const override;
 
@@ -103,9 +103,9 @@ public:
 
 	bool castToExprType(symbol::Type type) const override;
 
-	symbol* getFinalSymbol(void) const;
+	varSymNode* getFinalSymbol(void) const;
 
-	symbol* getFirstSymbol(void) const;
+	varSymNode* getFirstSymbol(void) const;
 
 	expr* deepCopy(void) const override;
 };

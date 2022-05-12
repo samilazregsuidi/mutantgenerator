@@ -75,6 +75,7 @@ public:
 
 public:
 	const seqSymNode* sym;
+	int index;
 	int pid;					// List of processes and their offset in the state
 	unsigned int varOffset; 		// Offset of the process in the chunk of memory.
 								// The address of the process current node can be found in the payload at offset 'offset - sizeof(void *)'.
@@ -129,7 +130,7 @@ public:
 #define EVAL_EXPRESSION 1
 
 	//trans or state, signature can be optimized!
-	int eval(unsigned int procOffset, const astNode* node, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
+	int eval(const process* proc, const astNode* node, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
 
 	// Applying statements
 	state* apply(const transition* procTrans, byte preserve, byte* assertViolation); // Execute a transition on a given process.
@@ -150,7 +151,7 @@ public:
 	*    - process is the environment in which the variable is ANALYZED, NOT in the one the variable is DEFINED.
 	*    - On first call, preOffset must have the same value as the offset of its environment (i.e. global or process).
 	*/
-	unsigned int getVarOffset(const symbol* sym, unsigned int preOffset, const expr* expression) const;
+	unsigned int getVarOffset(const process* varProc, const expr* varExpr) const;
 
 	/*
 	* Reads 'nb' bytes in a memory chunk of the state, at offset 'offset', puts them in an array of byte and returns it.
@@ -256,8 +257,6 @@ public:
 	
 	process* getProc(int pid) const; // Returns the stateMask with pid 'pid'.
 
-	void setSymOffset(const varSymNode* varSym, unsigned int preOffset);
-
 	void initSym(unsigned int preOffset, const varSymNode* sym);
 
 	void initSymTab(unsigned int preOffset, const symTable* symTab);
@@ -280,7 +279,7 @@ public:
 	* Reserves some memory for the proctype variables in the memory chunk and initializes the value of these variables.
 	* Does not change the payloadHash.
 	*/
-	int addProctype(const procSymNode* proctype);
+	int addProctype(const procSymNode* proctype, int i);
 
 	/*
 	* Defines the never claim of the execution.
@@ -331,9 +330,9 @@ public:
 	int nbProcesses; 			// Number of running processes.
 	int lastStepPid; 			// pid of the process that fired transition that got us into this state. (NOT part of the actual state of the system, just a helper)
 	void* payload; 				// Chunk of memory containing the data.
-	std::map<std::tuple<const process*, const symbol*, unsigned int>, unsigned int> varOffset;
 	unsigned int payloadSize;	// Number of bytes currently allocated to payload.
 	unsigned int payloadHash;	// Hash of the state, used to avoid memcmp() when comparing states on the stack.  This hash is NOT maintained by
-								// by the functions that change states, it is only updated in checking.c.
+	std::map<std::tuple<const process*, const varSymNode*, unsigned int>, unsigned int> varOffset;
+	std::map<std::tuple<const seqSymNode*, unsigned int>, unsigned int> procOffset;
 };
 

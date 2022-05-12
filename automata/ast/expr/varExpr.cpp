@@ -28,7 +28,7 @@ exprVarRefName::exprVarRefName(const std::string& symName, expr *index, int line
 	addChild("index", index);
 }
 
-exprVarRefName::exprVarRefName(const std::string& symName, symbol *sym, int lineNb)
+exprVarRefName::exprVarRefName(const std::string& symName, varSymNode *sym, int lineNb)
 	: expr(astNode::E_VARREF_NAME, lineNb)
 	, symName(symName)
 	, sym(sym)
@@ -52,7 +52,7 @@ std::string exprVarRefName::getTypeDescr(void) const {
 	return "Variable or field name (E_VARREF_NAME)";
 }
 
-symbol* exprVarRefName::exprVarRefName::getSymbol(void) const {
+varSymNode* exprVarRefName::exprVarRefName::getSymbol(void) const {
 	return sym;
 }
 
@@ -60,13 +60,16 @@ expr* exprVarRefName::getIndex(void) const {
 	return dynamic_cast<expr*>(getChild("index"));
 }
 
-symbol* exprVarRefName::resolve(symTable *global, symTable *subField) {
+varSymNode* exprVarRefName::resolve(symTable *global, symTable *subField) {
 
-	if (subField)
-		sym = subField->lookup(symName);
-	else if (global) {
+	if (subField) {
+		sym = dynamic_cast<varSymNode*>(subField->lookup(symName));
+		assert(sym);
+	} else if (global) {
 		do {
-			sym = global->lookup(symName);
+			auto ret = global->lookup(symName);
+			sym = dynamic_cast<varSymNode*>(global->lookup(symName));
+			if(ret) assert(sym);
 			global = global->prevSymTab();
 		} while(!sym && global);
 	} 
@@ -124,11 +127,11 @@ const exprVarRefName *exprVarRef::getField() const {
 	return dynamic_cast<exprVarRefName*>(getChild("field"));;
 }
 
-symbol* exprVarRef::getFinalSymbol(void) const {
+varSymNode* exprVarRef::getFinalSymbol(void) const {
 	return getSubField()? getSubField()->getFinalSymbol() : getField()->getSymbol();
 }
 
-symbol* exprVarRef::getFirstSymbol(void) const {
+varSymNode* exprVarRef::getFirstSymbol(void) const {
 	return getField()->getSymbol();
 }
 
@@ -150,7 +153,7 @@ std::string exprVarRef::getTypeDescr(void) const {
 	return "Variable reference (E_VARREF)";
 }
 
-symbol* exprVarRef::resolve(symTable *global, symTable* subField) const {
+varSymNode* exprVarRef::resolve(symTable *global, symTable* subField) const {
 
 	auto varRefName = getVarRefName();
 	auto sym = varRefName->resolve(global, subField);
@@ -219,13 +222,13 @@ std::vector<astNode*> exprVarRef::getMutations(void) const {
 		if(sCast) {
 			if(sCast->getBound() > 1)
 				for(unsigned int i = 0; i < sCast->getBound(); i++) {
-					exprVarRefName* symRef = new exprVarRefName(s->getName(), s, lineNb);
+					exprVarRefName* symRef = new exprVarRefName(s->getName(), sCast, lineNb);
 					exprVarRef* newVar = new exprVarRef(lineNb, symRef);
 					symRef->setIndex(new exprConst(i, lineNb));
 					mutations.push_back(newVar);
 				}
 			else
-				mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), s, lineNb)));
+				mutations.push_back(new exprVarRef(lineNb, new exprVarRefName(s->getName(), sCast, lineNb)));
 		}
 	}
 	return mutations;
@@ -270,11 +273,11 @@ bool exprVar::castToExprType(symbol::Type type) const {
 	return getVarRef()->castToExprType(type);
 }
 
-symbol* exprVar::getFinalSymbol(void) const {
+varSymNode* exprVar::getFinalSymbol(void) const {
 	return getVarRef()->getFinalSymbol();
 }
 
-symbol* exprVar::getFirstSymbol(void) const {
+varSymNode* exprVar::getFirstSymbol(void) const {
 	return getVarRef()->getFirstSymbol();
 }
 
