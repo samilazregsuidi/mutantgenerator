@@ -47,14 +47,7 @@ typedef unsigned char byte;
 
 class transition;
 
-class symTable;
-class symbol;
-class chanSymNode;
-class seqSymNode;
-class procSymNode;
-class neverSymNode;
-class varSymNode;
-class chanSymNode;
+#include "symbols.hpp"
 
 class astNode;
 class expr;
@@ -63,42 +56,17 @@ class fsm;
 class fsmNode;
 class fsmEdge;
 
-// A state mask gives for every process the pid, a pointer to its symtab node
-// and its offset in the payload
-class process {
-public:
-	process(void);
+class payload;
+class process;
 
-	process(const process& p);
-
-	~process();
-
-public:
-	const seqSymNode* sym;
-	int index;
-	int pid;					// List of processes and their offset in the state
-	unsigned int varOffset; 		// Offset of the process in the chunk of memory.
-								// The address of the process current node can be found in the payload at offset 'offset - sizeof(void *)'.
-	process* next;
-};
-
-// A channel ref gives for every channel the offset.
-class channelRef {
-public:
-	channelRef(void);
-
-	channelRef(const channelRef& c);
-
-	~channelRef();
-public:
-	unsigned int channelOffset;
-	const chanSymNode* chanSym;
-	channelRef* next;
-};
+#include "variable.hpp"
 
 // State
 class state {
 public:
+
+	friend class process;
+
 	state(const symTable* globalSymTab, const fsm* stateMachine); // Creates the initial state by setting all variables' value in the payload. Does not set the payloadHash.
 
 	state(const state& s);
@@ -126,8 +94,8 @@ public:
 	std::list<transition*> executablesNever(void) const;
 
 		// Expression evaluation (flag)
-#define EVAL_EXECUTABILITY 0
-#define EVAL_EXPRESSION 1
+	#define EVAL_EXECUTABILITY 0
+	#define EVAL_EXPRESSION 1
 
 	//trans or state, signature can be optimized!
 	int eval(const process* proc, const astNode* node, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
@@ -139,123 +107,11 @@ public:
 	
 	state* applyNever(const fsmEdge* transition);
 
-	// Access and modification of variables
-	const fsmNode* getNodePointer(const process* mask) const; // Returns the current FSM node of process 'mask' in 'state'.
-	
-	void storeNodePointer(process* mask, const fsmNode* pointer); // Set the current FSM node of process 'mask' in 'state' as 'pointer'.
-
-	/*
-	* Returns the offset of the variable referenced by 'expression' in 'process' and 'state'.
-	* Parameters:
-	*    - 'state' is necessary to evaluate the index of an array expression.
-	*    - process is the environment in which the variable is ANALYZED, NOT in the one the variable is DEFINED.
-	*    - On first call, preOffset must have the same value as the offset of its environment (i.e. global or process).
-	*/
-	unsigned int getVarOffset(const process* varProc, const expr* varExpr) const;
-
-	/*
-	* Reads 'nb' bytes in a memory chunk of the state, at offset 'offset', puts them in an array of byte and returns it.
-	*/
-	const byte* readValues(unsigned int offset, int nb) const;
-
-	/*
-	* Stores 'nb' bytes in a memory chunk, at offset 'offset'.
-	* Those bytes are read from the byte array 'values'.
-	* The array is not freed afterward.
-	*
-	* Does not change the payloadHash.
-	*/
-	void storeValues(unsigned int offset, int nb, const byte* values);
-
-	// Returns the value stored in 'chunk' at offset 'offset'. The number of read bytes depends on 'type'.
-	/*
-	* Gets the value of ONE cells in a memory chunk of the state.
-	*/
-	template <typename T> T& getValue(unsigned int offset) const {
-		byte* bytePtr = reinterpret_cast<byte*>(payload);
-		assert(bytePtr);
-		bytePtr += offset;
-
-		T* tPtr = (reinterpret_cast<T*>(bytePtr));
-		assert(tPtr);
-		return *tPtr;
-	}
-	
-	// Set the value stored in 'chunk' at offset 'offset' to 'value'. The number of read bytes depends on 'type'.
-	
-	
-	/**
-	 * Sets the value of ONE cells in the memory chunk.
-	 *
-	 * Does not change the payloadHash.
-	 */
-	template <typename T> void setValue(unsigned int offset, const T& value) {
-		byte* bytePtr = reinterpret_cast<byte*>(payload);
-		assert(bytePtr);
-		bytePtr += offset;
-
-		T* tPtr = (reinterpret_cast<T*>(bytePtr));
-		assert(tPtr);
-		*tPtr = value;
-	}
-
-	/**
-	 * Returns a given channel 'len' (i.e. the number of messages stored in the channel).
-	 * EFFECTS: None.
-	 */
-	byte channelLen(unsigned int procOffset, expr* channelVar) const;
-
-	/**
-	 * Gets the first message in the channel.
-	 *
-	 * EFFECTS:
-	 * 	- Modifies the payload by changing the value of some variable passed as argument for the reception.
-	 * WARNING:
-	 * 	This function does NOT check if there really is a message stored in the channel
-	 * 	and if the arguments of the polling respects the size and type of the parameters.
-	 */
-	void channelPoll(unsigned int procOffset, expr* expression);
-
-	/**
-	 * Stores a message in a given channel.
-	 *
-	 * EFFECTS:
-	 * 	- Modifies the state payload OR _handshake_transit by storing the message field.
-	 * 	- Modifies the state payload by incrementing the 'len' value of the concerned channel (EVEN in the
-	 * 	handshake case).
-	 * WARNING:
-	 * 	The message is supposed to fit the type and capacity constraints.
-	 * 	channelVar must refer to an ExpNode of type E_VARREF or E_VAR_NAME that
-	 * 	itself refers to a channel.
-	 */
-	void channelSend(unsigned int procOffset, expr* expression);
-
-	/**
-	 * Gets AND removes the first message of the channel.
-	 *
-	 * EFFECTS:
-	 * 	- Modifies the payload by changing the value of some variable passed as argument for the reception.
-	 * 	- Modifies the payload by decrementing the 'len' value of the channel (EVEN in the handshake case).
-	 * WARNING:
-	 * 	This function does NOT check if there really is a message stored in the channel.
-	 * 	channelVar must refer to an ExpNode of type E_VARREF or E_VAR_NAME that
-	 * 	itself refers to a channel.
-	 */
-	void channelReceive(unsigned int procOffset, expr* expression);
-
-	/**
-	 * Returns 0 iff a given channel has no message stored.
-	 * EFFECTS: None.
-	 */
-	byte channelIsEmpty(unsigned int procOffset, expr* channel) const;
-
-	/**
-	 * Returns 0 iff a given channel has its buffer full.
-	 * EFFECTS: None.
-	 */
-	byte channelIsFull(unsigned int procOffset, expr* channelVar) const;
-	
 	process* getProc(int pid) const; // Returns the stateMask with pid 'pid'.
+
+	std::string getVarName(const expr* varExpr, const process* varProc) const;
+
+	variable* getVar(const expr* varExpr, const process* proc) const;
 
 	void initSym(unsigned int preOffset, const varSymNode* sym);
 
@@ -273,13 +129,20 @@ public:
 
 	void removeChannelRefs(unsigned int infBound, unsigned int supBound);
 
-	// Access and modification of large state chunks
+	void addVar(variable* subVar);
+	
+	variable* addVariable(const varSymNode* varSym);
+
+	variable* addChannel(const chanSymNode* chanSym);
+
+	void addVar(variable* var);
+
 	/*
 	* Creates a new process and returns its pid.
 	* Reserves some memory for the proctype variables in the memory chunk and initializes the value of these variables.
 	* Does not change the payloadHash.
 	*/
-	int addProctype(const procSymNode* proctype, int i);
+	int addProctype(const procSymNode* proctype, int i = 0);
 
 	/*
 	* Defines the never claim of the execution.
@@ -308,31 +171,28 @@ public:
 	#define STATES_DIFF 0				// if s1 and s2 are totally different states, meaning s1 is fresh.
 	#define STATES_SAME_S1_VISITED 1	// if s1 and s2 are identical but s2 is reachable by more products; hence, s1 adds nothing new
 	#define STATES_SAME_S1_FRESH 2		// if s1 and s2 are identical but s1 has products that were not explored with s2; hence, s1 is fresh
-	byte compare(const void* s2Payload) const;
-	#endif
 	
-private:
-	void addChannel(const chanSymNode* chan, const process* proc = nullptr);
-	void addVariable(const varSymNode* var, const process* proc = nullptr);
+	byte compare(const state& s2) const;
+
+	void printState(void) const;
 
 public:
 	const symTable* globalSymTab;
 	const fsm* stateMachine;
 
-	process* first; 	// Points to the global (first) stateMask.
-	process* last; 	// Points to the last stateMask.
+	std::list<process*> procs;
 	process* never; 	// If f is an LTL formula to be checked, never is the stateMask conversion of ~f.
 								//	Furthermore, never->node returns the current node in this FSM. Note that pid and offset have no importance here.
 								//	Also, never->next is supposed to be NULL.
 
-	channelRef* chanRefs;		// References of the channel declared in a process or as a global variable.
-
+	unsigned int pid;
 	int nbProcesses; 			// Number of running processes.
+	int nbNeverClaim;			// Number of neverClaim
 	int lastStepPid; 			// pid of the process that fired transition that got us into this state. (NOT part of the actual state of the system, just a helper)
-	void* payload; 				// Chunk of memory containing the data.
-	unsigned int payloadSize;	// Number of bytes currently allocated to payload.
-	unsigned int payloadHash;	// Hash of the state, used to avoid memcmp() when comparing states on the stack.  This hash is NOT maintained by
-	std::map<std::tuple<const process*, const varSymNode*, unsigned int>, unsigned int> varOffset;
-	std::map<std::tuple<const seqSymNode*, unsigned int>, unsigned int> procOffset;
+	payload* payLoad; 
+	
+	std::map<std::string, variable*> varMap;
+	std::list<variable*> varList;
 };
 
+#endif

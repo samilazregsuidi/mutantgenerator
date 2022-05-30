@@ -5,16 +5,13 @@
 #include "error.h"
 
 #include "state.hpp"
-#include "symbols.hpp"
+#include "process.hpp"
+
 #include "ast.hpp"
 #include "automata.hpp"
 
-
-#ifdef PROFILE_STATE
-	PROFILER_REGISTER(pr_stateOnStack, "stateOnStack", 200);
-	PROFILER_REGISTER(pr_pr_stateDuplicate, "pr_stateDuplicate", 10);
-#endif
-
+#include "variable.hpp"
+#include "payload.hpp"
 /**
  * Adds the global variables in the memory chunk.
  *
@@ -23,61 +20,49 @@
 state::state(const symTable* globalSymTab, const fsm* stateMachine) 
 	: globalSymTab(globalSymTab)
 	, stateMachine (stateMachine)
-	, first(nullptr)
-	, last(nullptr)
 	, never(nullptr)
-	, chanRefs(nullptr)
 	, nbProcesses(0)
 	, lastStepPid(0)
-	, payload(nullptr)
-	, payloadSize(SYS_VARS_SIZE)
-	, payloadHash(0)
+	, payLoad(new payload(SYS_VARS_SIZE))
 {
 
-	/*this->first = new process();
-	this->first->sym = globalSymTab;
-	this->first->pid = -1;
-	this->first->offset = 0;
-	this->first->next = nullptr;
-	this->last = this->first;
-	this->lastStepPid = 0;*/
-	//this->features = getTrue();
+	for (const auto neverSym : globalSymTab->getSymbols<const neverSymNode*>()) {
+		this->addNever(neverSym);
+	}
 
 	for (auto sym : globalSymTab->getSymbols<const varSymNode*>()) {
 		addVariable(sym);
 	}
-	// if(verbosity == VERBOSITY_HIGH) printf("Total memory used by global variables (in bytes): %d.\n", this->payloadSize);
-	this->payload = calloc(1, this->payloadSize);
 
 	/**
 	 * Runs every process with the attribute "active".
 	 * Cardinalities are taken into account.
 	 * Also, links the "never claim" FSM, if it exists, with the state.
 	 */
-	for (const auto procSym : globalSymTab->getSymbols<const procSymNode*>()) {
-		expr* inst = procSym->getActiveExpr();
-		if(!inst)
-			this->addProctype(procSym);
-		else if(inst->getType() == astNode::astNode::E_EXPR_CONST) {
-			auto cstExpr = dynamic_cast<const exprConst*>(inst);
-			assert(cstExpr);
-			int bound = cstExpr->getCstValue();
-			for (int i = 0; i < bound; i++) {
-				this->addProctype(procSym, i);
-			}
-		} else assert(false);
-	}
 	
-	for (const auto neverSym : globalSymTab->getSymbols<const neverSymNode*>()) {
-		this->addNever(neverSym);
+	for (const auto procSym : globalSymTab->getSymbols<const procSymNode*>()) {
+		
+		assert(procSym->getActiveExpr());
+
+		for(int i = 0; i < procSym->getActiveExpr()->getCstValue(); ++i){
+			this->addProctype(procSym, i);
+		}
 	}
 
+	payLoad->alloc();
 	// No process is executing something atomic
-	this->setValue(OFFSET_EXCLUSIVE, NO_PROCESS);
+	payLoad->setValue(OFFSET_EXCLUSIVE, NO_PROCESS);
 	// No rendezvous has been requested.
-	this->setValue(OFFSET_HANDSHAKE, NO_HANDSHAKE);
-	this->initGlobalVariables();
+	payLoad->setValue(OFFSET_HANDSHAKE, NO_HANDSHAKE);
 
+	never->init();
+
+	for (auto var : varList)
+		var->init();
+
+	for (auto proc : procs)
+		proc->init();
+		
 	/*for(auto e : symPtr){
 		std::cout << "symbol " << std::string(*e.first) << " at : "<<e.second<<"\n";
 	}*/
@@ -88,61 +73,6 @@ state::state(const symTable* globalSymTab, const fsm* stateMachine)
  * * * * * * * * * * * * * * * * * * * * * * * */
 
 /**
- * Duplicates a list of stateMasks.
- */
-
-process::process(void) 
-	: sym(nullptr)
-	, index(0)
-	, pid(-1)
-	, varOffset(0)
-	, next(nullptr)
-{}
-
-
-process::process(const process& p) 
-	: sym(p.sym)
-	, index(p.index)
-	, pid(p.pid)
-	, varOffset(p.varOffset)
-	, next(nullptr)
-{
-	if(p.next)
-		next = new process(*p.next);
-}
-
-process::~process() {
-	if(next)
-		delete next;
-}
-
-
-
-channelRef::channelRef(void)
-	: channelOffset(0)
-	, chanSym(nullptr)
-	, next(nullptr)
-{
-}
-
-/**
- * Duplicates a list of chanRefs.
- */
-channelRef::channelRef(const channelRef& c)
-	: channelOffset(c.channelOffset)
-	, chanSym(c.chanSym)
-	, next(nullptr)
-{
-	if(c.next)
-		next = new channelRef(*c.next);
-}
-
-channelRef::~channelRef(){
-	if(next)
-		delete next;
-}
-
-/**
  * Duplicates a state.
  *
  * This function does NOT duplicate the boolean formula of the state.  This is because it is only
@@ -150,26 +80,18 @@ channelRef::~channelRef(){
  */
 state::state(const state& s) 
 	: nbProcesses(s.nbProcesses)
-	, payloadSize(s.payloadSize)
-	, payloadHash(s.payloadHash)
+	, payLoad(new payload(*s.payLoad))
 {
-	
-	this->payload = nullptr;
-	if(this->payloadSize > 0) {
-		this->payload = malloc(this->payloadSize);
-		memcpy(this->payload, s.payload, this->payloadSize);
-	}
-
 	this->lastStepPid = s.lastStepPid;
 	//this->features = nullptr; // see function description
 	this->never = new process(*s.never);
-	this->chanRefs = new channelRef(*s.chanRefs);
+	
+	for(const auto& var : s.varList)
+		addVar(var->deepCopy());
 
 	// Copying processes information
-	this->first = new process(*s.first);
-	this->last = this->first;
-	if(this->last) {
-		while(this->last->next) this->last = this->last->next;
+	for(const auto& proc : s.procs) {
+		procs.push_back(proc->deepCopy());
 	}
 }
 
@@ -191,22 +113,23 @@ state::state(const state& s)
 
 state::~state() {
 
-	if(first)
-		delete first;
-
-	if(chanRefs)
-		delete chanRefs;
+	for(auto proc : procs)
+		delete proc;
 
 	if(this->never) 
 		delete this->never; 
 
-	free(this->payload);
+	for(auto var: varList)
+		delete var;
+
+	if(payLoad) 
+		delete(payLoad);
 }
 
 static byte _timeout = 0;
 static byte _else = 0;
 
-int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
+int state::eval(const process* proc, const astNode* node, byte flag) const {
 
 	assert(node);
 	if(!node)	
@@ -217,7 +140,7 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 	int returnValue = -1;
 	chanSymNode* channel;
 	symbol* sym;
-	unsigned int handshake = getValue<unsigned int>(OFFSET_HANDSHAKE);
+	unsigned int handshake = payLoad->getValue<unsigned int>(OFFSET_HANDSHAKE);
 
 	if(flag == EVAL_EXECUTABILITY && handshake != NO_HANDSHAKE && node->getType() != astNode::E_STMNT_CHAN_RCV) 
 		returnValue = 0;
@@ -270,7 +193,7 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 					assert(false);
 
 				//these types have only one node...
-				returnValue = eval(procOffset, *node->getChildren().cbegin(), flag);
+				returnValue = eval(proc, *node->getChildren().cbegin(), flag);
 				break;
 			}
 /*
@@ -369,7 +292,7 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 				if(flag == EVAL_EXECUTABILITY) 
 					returnValue = 1;
 				else 
-					returnValue = eval(procOffset, *node->getChildren().cbegin(), flag);
+					returnValue = eval(proc, *node->getChildren().cbegin(), flag);
 				break;
 
 			case(astNode::E_STMNT_ELSE):
@@ -377,105 +300,115 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 				break;
 			
 			case(astNode::E_EXPR_PLUS):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) + eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) + eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_MINUS):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) - eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) - eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_TIMES):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) * eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) * eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_DIV):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) / eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) / eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_MOD):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) % eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) % eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_GT):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) > eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) > eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_LT):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) < eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) < eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_GE):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) >= eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) >= eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_LE):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) <= eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) <= eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_EQ):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) == eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) == eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_NE):
-				returnValue = (eval(procOffset, binaryExpr->getLeftExpr(), flag) != eval(procOffset, binaryExpr->getRightExpr(), flag));
+				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) != eval(proc, binaryExpr->getRightExpr(), flag));
 				break;
 
 			case(astNode::E_EXPR_AND):
 				returnValue = 0;
-				if(eval(procOffset, binaryExpr->getLeftExpr(), flag)) 
-					returnValue = eval(procOffset, binaryExpr->getRightExpr(), flag);
+				if(eval(proc, binaryExpr->getLeftExpr(), flag)) 
+					returnValue = eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_OR):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag);
-				if(returnValue == 0) returnValue = eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag);
+				if(returnValue == 0) returnValue = eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_UMIN):
-				returnValue = - eval(procOffset, unaryExpr->getExpr(), flag);
+				returnValue = - eval(proc, unaryExpr->getExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_NEG):
-				returnValue = !eval(procOffset, unaryExpr->getExpr(), flag);
+				returnValue = !eval(proc, unaryExpr->getExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_LSHIFT):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) << eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) << eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_RSHIFT):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) >> eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) >> eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_BITWAND):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) & eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) & eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_BITWOR):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) | eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) | eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_BITWXOR):
-				returnValue = eval(procOffset, binaryExpr->getLeftExpr(), flag) ^ eval(procOffset, binaryExpr->getRightExpr(), flag);
+				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) ^ eval(proc, binaryExpr->getRightExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_BITWNEG):
-				returnValue = ~eval(procOffset, unaryExpr->getExpr(), flag);
+				returnValue = ~eval(proc, unaryExpr->getExpr(), flag);
 				break;
 
 			case(astNode::E_EXPR_COND):
 			{
 				auto cond = dynamic_cast<const exprCond*>(node);
-				if(eval(procOffset, cond->getCond(), EVAL_EXPRESSION) > 0)
-					returnValue = eval(procOffset, cond->getThen(), flag);
+				if(eval(proc, cond->getCond(), EVAL_EXPRESSION) > 0)
+					returnValue = eval(proc, cond->getThen(), flag);
 				else
-					returnValue = eval(procOffset, cond->getElse(), flag);
+					returnValue = eval(proc, cond->getElse(), flag);
 				break;
 			}
 
 			case(astNode::E_EXPR_LEN):
-				returnValue = channelLen(procOffset, dynamic_cast<const exprLen*>(node)->getExpr());
+			{
+				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+				auto var = proc->getVar(varRef);
+				if(!var) {
+					var = getVar(varRef, proc);
+				}
+				assert(var);
+				auto chanVar = dynamic_cast<channel*>(var);
+				assert(chanVar);
+				returnValue = chanVar->len();
 				break;
+			}
 
 			case(astNode::E_EXPR_CONST):
 				returnValue = dynamic_cast<const exprConst*>(node)->getCstValue();
@@ -486,36 +419,46 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 				break;
 
 			case(astNode::E_EXPR_FULL):
-				returnValue = channelIsFull(procOffset, dynamic_cast<const exprLen*>(node)->getExpr());
-				break;
-
 			case(astNode::E_EXPR_NFULL):
-				returnValue = !channelIsFull(procOffset, dynamic_cast<const exprNFull*>(node)->getExpr());
+			{
+				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+				auto var = proc->getVar(varRef);
+				if(!var) {
+					var = getVar(varRef, proc);
+				}
+				assert(var);
+				auto chanVar = dynamic_cast<channel*>(var);
+				assert(chanVar);
+				returnValue = node->getType() == astNode::E_EXPR_FULL? chanVar->isFull() : !chanVar->isFull();
 				break;
+			}
 
 			case(astNode::E_EXPR_EMPTY):
-				returnValue = channelIsEmpty(procOffset, dynamic_cast<const exprEmpty*>(node)->getExpr());
-				break;
-
 			case(astNode::E_EXPR_NEMPTY):
-				returnValue = !channelIsEmpty(procOffset, dynamic_cast<const exprNEmpty*>(node)->getExpr());
+			{
+				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+				auto var = proc->getVar(varRef);
+				if(!var) {
+					var = getVar(varRef, proc);
+				}
+				assert(var);
+				auto chanVar = dynamic_cast<channel*>(var);
+				assert(chanVar);
+				returnValue = node->getType() == astNode::E_EXPR_EMPTY? chanVar->isEmpty() : !chanVar->isEmpty();
 				break;
-
+			}
 
 			case(astNode::E_VARREF):
-			{
-				auto varRef = dynamic_cast<const exprVarRef*>(node);
-				auto sym = varRef->getFinalSymbol();
-				returnValue = getValue<int>(getVarOffset(sym, (sym->isGlobal()? 0 : procOffset + this->offset.at(sym)), varRef));
-			}
 			case(astNode::E_VARREF_NAME):
 			{
-				auto varRef = dynamic_cast<const exprVarRefName*>(node);
-				auto sym = varRef->getSymbol();
-				returnValue = getValue<int>(getVarOffset(sym, (sym->isGlobal()? 0 : procOffset + this->offset.at(sym)), varRef));
-				break;
+				auto varRef = dynamic_cast<const exprVarRef*>(node);
+				auto var = proc->getVar(varRef);
+				if(!var) {
+					var = getVar(varRef, proc);
+				}
+				assert(var);
+				returnValue = var->getValue();
 			}
-
 			
 			case(astNode::E_RARG_CONST):
 			{
@@ -533,24 +476,6 @@ int state::eval(unsigned int procOffset, const astNode* node, byte flag) const {
 	}
 	return returnValue;
 }
-/*
- * ACCESS AND MODIFICATION OF VARIABLES
- * * * * * * * * * * * * * * * * * * * * * * * */
-
-const fsmNode* state::getNodePointer(const process* proc) const {
-	const fsmNode** nodePtr = reinterpret_cast<const fsmNode**>((((byte*)this->payload) + proc->varOffset - sizeof(fsmNode*)));
-	assert(nodePtr);
-	return *nodePtr;
-}
-
-void state::storeNodePointer(process* proc, const fsmNode* pointer) {
-	assert(proc);
-	assert(pointer);
-
-	const fsmNode** nodePtr = reinterpret_cast<const fsmNode**>((((byte*)this->payload) + proc->varOffset - sizeof(fsmNode*)));
-	assert(nodePtr);
-	*nodePtr = pointer;
-}
 
 /**
  * state is necessary to evaluate the index of an array expression.
@@ -558,6 +483,8 @@ void state::storeNodePointer(process* proc, const fsmNode* pointer) {
  * On first call, preOffset must have the same value as the offset of its environment (i.e. global or process).
  * /!\ process is the environment in which the variable is ANALYZED, NOT in the one the variable is DEFINED.
  */
+
+/*
 unsigned int state::getVarOffset(const process* varProc, const expr* varExpr) const {
 	
 	assert(varExpr->getType() == astNode::E_RARG_VAR || varExpr->getType() == astNode::E_EXPR_VAR
@@ -595,50 +522,54 @@ unsigned int state::getVarOffset(const process* varProc, const expr* varExpr) co
 	} else assert(false);
 	
 	return 0; // only to please compiler
-}
+}*/
 
-
-/**
- * Stores 'nb' bytes in a memory chunk, at offset 'offset'.
- * Those bytes are read from the byte array 'values'.
- * The array is not freed afterward.
- *
- * Does not change the payloadHash.
- */
-void state::storeValues(unsigned int offset, int nb, const byte * values) {
-	byte* bytePtr = reinterpret_cast<byte*>(this->payload);
-	assert(bytePtr);
-	bytePtr += offset;
+std::string state::getVarName(const expr* varExpr, const process* proc) const {
 	
-	for(int i = 0; i < nb; i++) 
-		*(bytePtr + i) = values[i];
+	assert(varExpr->getType() == astNode::E_RARG_VAR || varExpr->getType() == astNode::E_EXPR_VAR
+	|| varExpr->getType() == astNode::E_VARREF || varExpr->getType() == astNode::E_VARREF_NAME);
+
+	std::string varName;
+
+	if(varExpr->getType() == astNode::E_RARG_VAR) {
+		auto var = dynamic_cast<const exprRArgVar*>(varExpr);
+		assert(var);
+		return this->getVarName(var->getVarRef(), proc);
+
+	} else if(varExpr->getType() == astNode::astNode::E_EXPR_VAR) {
+		auto var = dynamic_cast<const exprVar*>(varExpr);
+		assert(var);
+		return this->getVarName(var->getVarRef(), proc);
+	
+	} else if(varExpr->getType() == astNode::E_VARREF) {
+		auto var = dynamic_cast<const exprVarRef*>(varExpr);
+		assert(var);
+		varName = this->getVarName(var->getField(), proc);
+		return !var->getSubField()? varName : varName + "." + this->getVarName(var->getSubField(), proc);
+
+	} else if (varExpr->getType() == astNode::E_VARREF_NAME) {
+		auto varRefName = dynamic_cast<const exprVarRefName*>(varExpr);
+		varName = varRefName->getName();
+		int index = varRefName->getIndex() ? this->eval(proc, varRefName->getIndex(), EVAL_EXPRESSION) : 0;
+		return index? varName : varName+"["+std::to_string(index)+"]";
+	
+	} else assert(false);
+	
+	return varName; // only to please compiler
 }
 
-/**
- * Reads 'nb' bytes in a memory chunk of the state, at offset 'offset', puts them in an array of byte and returns it.
- */
-const byte* state::readValues(unsigned int offset, int nb) const {
-	byte* bytePtr = reinterpret_cast<byte*>(this->payload);
-	assert(bytePtr);
-	bytePtr += offset;
-
-	byte* values = (byte*) calloc(nb, sizeof(byte));
-	for(int i = 0; i < nb; i++)
-		values[i] = *(bytePtr + i);
-	return values;
+variable* state::getVar(const expr* varExpr, const process* proc) const {
+	return varMap.at(getVarName(varExpr, proc));
 }
 
 /**
  * Returns the stateMask of a given pid.
  */
 process* state::getProc(int pid) const {
-	process* proc = this->first;
-	while (proc->pid != pid) {
-		proc = proc->next;
-		if(!proc)
-			return nullptr;
-	}
-	return proc;
+	for(auto proc : procs)
+		if(proc->getPid() == pid)
+			return proc;
+	return nullptr;
 }
 
 /**
@@ -646,7 +577,7 @@ process* state::getProc(int pid) const {
  * The structure contained in this->chanRefs is used to get the table.
  * If no channel exists at the given offset, returns nullptr.
  */
-const chanSymNode* state::getChannelSymTab(unsigned int chanOffset) const {
+/*const chanSymNode* state::getChannelSymTab(unsigned int chanOffset) const {
 	channelRef* currentRef = this->chanRefs;
 	while(currentRef) {
 		for(unsigned int i = 0; i < currentRef->chanSym->getBound(); i++) {
@@ -657,34 +588,7 @@ const chanSymNode* state::getChannelSymTab(unsigned int chanOffset) const {
 		currentRef = currentRef->next;
 	}
 	return nullptr;
-}
-
-unsigned int padding(const varSymNode* varSym){
-	switch(varSym->getType()){
-		case symbol::T_BIT:
-		case symbol::T_BOOL:
-		case symbol::T_BYTE:
-		case symbol::T_CID:
-		case symbol::T_CHAN:
-		case symbol::T_MTYPE:
-		case symbol::T_PID:
-			return 1;
-		
-		case symbol::T_SHORT:
-			return 2;
-
-		case symbol::T_INT:
-			return 4;
-		
-		case symbol::T_UTYPE:
-			return padding(*dynamic_cast<const utypeSymNode*>(varSym)->getUType()->getFields().cbegin());
-
-		default:
-			assert(false);
-			return -1;
-	}
-	return -1;
-}
+}*/
 
 /*
  * ACCESS AND MODIFICATION OF LARGE STATE CHUNKS
@@ -696,6 +600,7 @@ unsigned int padding(const varSymNode* varSym){
  * Helper for killProctype and and initVariables
  */
 
+/*
 void state::initSym(unsigned int preOffset, const varSymNode* varSym) {
 	if(varSym->getType() == symbol::T_UTYPE) {
 		for(auto field : dynamic_cast<const utypeSymNode*>(varSym)->getUType()->getFields()){
@@ -712,6 +617,7 @@ void state::initSymTab(unsigned int preOffset, const symTable* symTab) {
 		initSym(preOffset, varSym);
 	}
 }
+*/
 
 /**
  * Helper for stateCreateInitial and addProctype
@@ -721,30 +627,14 @@ void state::initSymTab(unsigned int preOffset, const symTable* symTab) {
  * Does not change the payloadHash.
  */
 
-void state::initGlobalVariables(void) {
-	this->initSymTab(0, globalSymTab);
-}
 
-void state::initVariables(const process* proc) {
-	this->initSymTab(proc->varOffset, proc->sym->getSymTable());
-}
-
-/**
- * Helper for addProctype
- *
- * Initiate the bytes stored in a given chunk of memory.
- * Offset must be counted in bytes.
- */
-void initValues(void* startPtr, unsigned int offset, int bytesNbr, byte value) {
-	memset(reinterpret_cast<byte*>(startPtr) + offset, value, bytesNbr);
-}
 
 /**
  * Helper for killProctype
  *
  * Removes the channels references whose offset is between infBound and supBound (both included).
  */
-void state::removeChannelRefs(unsigned int infBound, unsigned int supBound) {
+/*void state::removeChannelRefs(unsigned int infBound, unsigned int supBound) {
 	channelRef* freePtr = this->chanRefs;
 	channelRef* currentRef = this->chanRefs;
 	while(currentRef->channelOffset >= infBound && currentRef->channelOffset <= supBound) {
@@ -761,53 +651,36 @@ void state::removeChannelRefs(unsigned int infBound, unsigned int supBound) {
 		else	
 			currentRef = currentRef->next;
 	}
+}*/
+
+void state::addVar(variable* var) {
+	varMap[var->getName()] = var;
+	varList.push_back(var);
 }
 
-
-void state::addChannel(const chanSymNode* chanSym, const process* chanProc){
-	assert(chanSym);
-	channelRef* oldRef = this->chanRefs;
-	this->chanRefs = new channelRef();
-	this->chanRefs->channelOffset = this->payloadSize;
-	this->chanRefs->chanSym = chanSym;
-	this->chanRefs->next = oldRef;
-
-	
-	//this->payloadSize += (1 + chanSym->getTypeSize()) * chanSym->getBound();
-	for(int i = 0; i < chanSym->getBound(); ++i){
-		
-		varOffset[std::make_tuple<>(chanProc, chanSym, i)] = this->payloadSize++;
-		
-		for(int j = 0; j < chanSym->getCapacity(); ++j){
-			for(auto typeSym: chanSym->getTypeList()){
-				unsigned int pad = payloadSize % padding(typeSym);
-				payloadSize += pad + typeSym->getSizeOf();
-			}
-		}
-	}
-}
-
-void state::addVariable(const varSymNode* varSym, const process* varProc){
+variable* state::addVariable(const varSymNode* varSym){
 	assert(varSym);
-	
-	if(varSym->getType() == symbol::T_CHAN)
-		return addChannel(dynamic_cast<const chanSymNode*>(varSym), varProc);
 
-	unsigned int pad = payloadSize % padding(varSym);
-	payloadSize += pad;
+	if(varSym->getType() == symbol::T_CHAN)
+		return addChannel(dynamic_cast<const chanSymNode*>(varSym));
 
 	for(int i = 0; i < varSym->getBound(); ++i){
-		
-		varOffset[std::make_tuple<>(varProc, varSym, i)] = payloadSize;
-		
-		if(varSym->getType() == symbol::T_UTYPE){
-			auto utype = dynamic_cast<const utypeSymNode*>(varSym)->getUType();
-			for(auto field : utype->getFields())
-				addVariable(field, varProc);
-		
-		} else
-			payloadSize += varSym->getTypeSize();
+		addVar(new variable(payLoad, payLoad->getSize(), varSym, i));
+		payLoad->addSize(varSym->getSizeOf());
 	}
+}
+
+variable* state::addChannel(const chanSymNode* chanSym){
+	assert(chanSym);
+	
+	for(int i = 0; i < chanSym->getBound(); ++i){
+
+		auto chanVar = new channel(payLoad, payLoad->getSize(), chanSym, i);
+		addVar(chanVar);
+		payLoad->addSize(chanVar->getSizeOf());
+	}
+
+	return nullptr;
 }
 
 /**
@@ -818,41 +691,12 @@ void state::addVariable(const varSymNode* varSym, const process* varProc){
  */
 int state::addProctype(const procSymNode* procType, int i){
 	
-	process* newProc = new process();
-	newProc->sym = procType;
+	process* newProc = new process(this, payLoad->getSize(), procType, stateMachine->getFsmWithName(procType->getName()), pid++, i);
 
-	if(!this->first)
-		this->first = newProc;
-
-	if(this->last) {
-		newProc->pid = this->last->pid+1;
-		this->last->next = newProc;
-	}
-	
-	this->last = newProc;
-
-	payloadSize += sizeof(fsmNode*);
-	newProc->varOffset = payloadSize;
-	newProc->index = i;
-
-	procOffset[std::make_tuple<>(procType, i)] = payloadSize;
-
-	auto oldSize = payloadSize;
-
-	for(auto varSym : procType->getSymTable()->getSymbols<const varSymNode*>()) {
-		if(varSym->getType() == symbol::T_CHAN)
-			addChannel(dynamic_cast<const chanSymNode*>(varSym), newProc);
-		else
-			addVariable(varSym, newProc);
-	}
-
-	this->payload = realloc(this->payload, this->payloadSize);
-	this->storeNodePointer(newProc, stateMachine->getFsmWithName(procType->getName()));
-	initValues(this->payload, oldSize, this->payloadSize, 0);
+	payLoad->addSize(newProc->getSizeOf());
 
 	this->nbProcesses++;
-	
-	this->initVariables(newProc);
+
 	return newProc->pid;
 }
 
@@ -862,12 +706,10 @@ int state::addProctype(const procSymNode* procType, int i){
  * Does not change the payloadHash.
  */
 void state::addNever(const neverSymNode* neverSym) {
-	this->never = new process();
-	this->never->pid = -2;
-	this->never->varOffset = SYS_VARS_SIZE;
-	this->never->next = nullptr;
-	this->never->sym = neverSym;
-	this->storeNodePointer(this->never, stateMachine->getFsmWithName(neverSym->getName()));
+	
+	this->never = new process(this, payLoad->getSize(), neverSym, stateMachine->getFsmWithName(neverSym->getName()), -2);
+
+	this->nbNeverClaim++;
 }
 
 /**
@@ -880,23 +722,20 @@ void state::addNever(const neverSymNode* neverSym) {
  * Does not change the payloadHash.
  */
 void state::killProctype(int pid) {
-	process* previous = this->first;
-	process* searchStateMask = this->last;
-	if(searchStateMask->pid == pid) {
-		/* Destroying the references of the channels that were declared in the killed process. */
-		this->removeChannelRefs(searchStateMask->varOffset, this->payloadSize);
-		while(previous->pid != searchStateMask->pid) {
-			this->last = previous;
-			previous = previous->next;
+	
+	process* proc = nullptr;
+
+	for(auto _ : procs) {
+		if(_->getPid() == pid) {
+			proc = _;
+			break;
 		}
-		this->last->next = nullptr;
-		this->nbProcesses--;
-		this->payloadSize = searchStateMask->varOffset - sizeof(fsmNode*);
-		this->payload = realloc(this->payload, this->payloadSize * sizeof(byte));
-		searchStateMask->sym = nullptr;
-		searchStateMask->next = nullptr;
-		delete searchStateMask;
 	}
+
+	procs.remove(proc);
+	//TODO : modify payload...
+	assert(false);
+	nbProcesses--;
 }
 
 
@@ -916,10 +755,9 @@ void state::killProctype(int pid) {
  * 	- STATES_SAME_S1_VISITED if s1 and s2 are identical but s2 is reachable by more products; hence, s1 adds nothing new
  *  - STATES_SAME_S1_FRESH	 if s1 and s2 are identical but s1 has products that were not explored with s2; hence, s1 is fresh
  */
-byte state::compare(const void* s2Payload) const {
-	if(!s2Payload)
-		return STATES_DIFF;
-	if(memcmp(payload, s2Payload, payloadSize) != 0)	
+byte state::compare(const state& s2) const {
+
+	if(!(*payLoad == *s2.payLoad))	
 		return STATES_DIFF;
 
 	// Now that we know both states are identical, we check whether:
@@ -946,8 +784,9 @@ byte state::compare(const void* s2Payload) const {
  * Tries to remove every terminated process. (See "killProctype" for exact effect).
  */
 void state::clean(void) {
-	while(this->last->pid >= 0 && !getNodePointer(this->last))
-		this->killProctype(this->last->pid);
+	assert(false);
+	/*while(this->last->pid >= 0 && !getNodePointer(this->last))
+		this->killProctype(this->last->pid);*/
 }
 
 /*
@@ -987,44 +826,20 @@ void printfTypedefState(ptMTypeNode mtypes, char varNameParent[200], byte* print
 	}
 }
 
-/**
- * Function for printing variables of type 'channel'.
- */
-/*void printChanState(ptMTypeNode mtypes, char varNameParent[200], byte* printedSomething, state* state, state* diffState, process* stateMask, ptSymTabNode channel, int varIndex, int processOffset) {
-	char varName[200];
-	char varNameBase[200];
-	int i, j, value, fieldNumber, realOffset;
 
-	int channelOffset;
-	if (channel->capacity != 0) channelOffset = channel->memOffset + (1 + channel->memSize * channel-> capacity) * varIndex;
-	else						channelOffset = channel->memOffset + varIndex;
 
-	ptSymTabNode symbol;
-	for (i = 0; i < channel->capacity; i++) {
-		fieldNumber = 0;
-		symbol = channel->child;
-		while(symbol) {
-			sprintf(varNameBase, "%s.s%02d.f%02d", varNameParent, i, fieldNumber);
+*/
 
-			for (j = 0; j < symbol->bound; j++) {
-				if(symbol->bound > 1) sprintf(varName, "%s[%02d]", varNameBase, j);
-				else sprintf(varName, "%s", varNameBase);
+void state::printState(void) const {
+	
+	for(auto var : varList)
+		var->print();
 
-				realOffset = channel->memOffset + 1 + channel->memSize * varIndex * channel->capacity + varIndex + channel->memSize * i + symbol->memOffset + getTypeSize(symbol->type)* j;
-				if (symbol->type == T_UTYPE) printfTypedefState(mtypes, varName, printedSomething, state, diffState, stateMask, symbol->utype->child, symbol, j, processOffset, realOffset);
-				else {
-					value = stateGetValue(this->payload, realOffset, symbol->type);
-					if(!diffState || value != stateGetValue(diffState->payload, realOffset, symbol->type)) {
-						*printedSomething = 1;
-						if(symbol->type == T_MTYPE) printf("   %-35s = %s\n", varName, getMTypeName(mtypes, value));
-						else 						printf("   %-35s = %d\n", varName, value);
-					}
-				}
-			}
-			fieldNumber++;
-			symbol = symbol->next;
-		}
-	}
+	if(this->never)
+		never->print();
+	
+	for(auto proc : procs)
+		proc->print();
 }
 
 /**

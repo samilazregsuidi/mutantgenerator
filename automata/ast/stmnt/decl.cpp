@@ -204,7 +204,7 @@ tdefDecl::tdefDecl(tdefSymNode *tdefSym, int lineNb)
 tdefDecl::operator std::string() const {
 	std::string res = "typedef " + tdefSym->getName() + " {\n";
 	for(auto& f : tdefSym->getFields())
-		res += "\t" + f->getTypeName() + " " + f->getName() + ";\n";
+		res += "\t" + f->getTypeName() + " " + f->getName() + (f->getInitExpr()? " = " + std::string(*f->getInitExpr()) : "") + ";\n";
 	return res + "}\n\n";
 }
 

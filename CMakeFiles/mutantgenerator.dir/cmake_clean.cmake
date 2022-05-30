@@ -37,7 +37,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o"
   "CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o"
   "CMakeFiles/mutantgenerator.dir/main.cpp.o"
-  "CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o"
   "CMakeFiles/mutantgenerator.dir/y.tab.cpp.o"
   "lex.yy.cpp"
   "mutantgenerator"

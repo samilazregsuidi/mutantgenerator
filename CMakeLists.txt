@@ -73,11 +73,8 @@ add_executable(mutantgenerator
 	./automata/fsm/fsmNode.cpp
 	./automata/fsm/fsmEdge.cpp
 	
-	./semantic/state.cpp
-	
-
-    ${Parser}
-    ${Lexer}
+    	${Parser}
+    	${Lexer}
     )
 
 #target_link_libraries(mutantgenerator ${FLEX_LIBRARIES})

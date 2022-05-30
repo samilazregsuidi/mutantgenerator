@@ -1,3 +1,15 @@
+#include "./ltl.inc"
+typedef features {
+	bool Start = 1;
+	bool Stop = 1;
+	bool MethaneAlarm = 1;
+	bool MethaneQuery = 1;
+	bool Low = 1;
+	bool Normal = 1;
+	bool High = 1;
+}
+
+features f;
 mtype = {levelMsg, stop, methanestop, alarm, running, commandMsg, start, alarmMsg, high, low, stopped, medium, ready, lowstop}
 chan cCmd = [0] of {mtype};
 chan cAlarm = [0] of {mtype};
@@ -9,7 +21,6 @@ bool pumpOn = false;
 bool methane = false;
 mtype waterLevel = medium;
 mtype uwants = stop;
-
 active proctype controller(){
 	mtype pcommand = start;
 	mtype level = medium;
@@ -21,23 +32,35 @@ active proctype controller(){
 		if
 		::	pcommand == stop;
 			if
-			::	atomic {
-					pstate == running;
-					pumpOn = false;
-					pstate = stopped;
-				};
-			::	else ->
+			::	f.Stop;
+				if
+				::	atomic {
+						pstate == running;
+						pumpOn = false;
+					};
+				::	else;
+					skip;
+				fi;
+				pstate = stopped;
+			::	else;
 				skip;
 			fi;
 		::	pcommand == start;
 			if
-			::	atomic {
-					pstate != running;
-					pstate = ready;
-				};
-			::	else ->
+			::	f.Start;
+				if
+				::	atomic {
+						pstate != running;
+						pstate = ready;
+					};
+				::	else;
+					skip;
+				fi;
+			::	else;
 				skip;
 			fi;
+		::	else;
+			assert((false));
 		fi;
 		cCmd!pstate;
 	::	atomic {
@@ -45,12 +68,17 @@ active proctype controller(){
 			readMsg = alarmMsg;
 		};
 		if
-		::	atomic {
-				pstate == running;
-				pumpOn = false;
-				pstate = methanestop;
-			};
-		::	else ->
+		::	f.MethaneAlarm;
+			if
+			::	atomic {
+					pstate == running;
+					pumpOn = false;
+				};
+			::	else;
+				skip;
+			fi;
+			pstate = methanestop;
+		::	else;
 			skip;
 		fi;
 	::	atomic {
@@ -60,63 +88,56 @@ active proctype controller(){
 		if
 		::	level == high;
 			if
-			::	pstate == ready || pstate == lowstop;
+			::	f.High;
 				if
-				::	atomic {
-						cMethane!pstate;
-						cMethane?pstate;
-						if
-						::	pstate == ready;
+				::	pstate == ready || pstate == lowstop;
+					if
+					::	f.MethaneQuery;
+						skip;
+						atomic {
+							cMethane!pstate;
+							cMethane?pstate;
+							if
+							::	pstate == ready;
+								pstate = running;
+								pumpOn = true;
+							::	else;
+								skip;
+							fi;
+						};
+					::	else;
+						skip;
+						atomic {
 							pstate = running;
 							pumpOn = true;
-						::	else ->
-							skip;
-						fi;
-					};
-				::	else ->
+						};
+					fi;
+				::	else;
 					skip;
 				fi;
-			::	else ->
+			::	else;
 				skip;
 			fi;
 		::	level == low;
 			if
-			::	atomic {
-					pstate == running;
-					pumpOn = false;
-					pstate = lowstop;
-				};
-			::	else ->
+			::	f.Low;
+				if
+				::	atomic {
+						pstate == running;
+						pumpOn = false;
+						pstate = lowstop;
+					};
+				::	else;
+					skip;
+				fi;
+			::	else;
 				skip;
 			fi;
 		::	level == medium;
 			skip;
 		fi;
 	od;
-};
-
-active proctype methanealarm(){
-	do
-	::	methane = true;
-		cAlarm!alarm;
-	::	methane = false;
-	od;
-};
-
-active proctype methanesensor(){
-	do
-	::	atomic {
-			cMethane?_;
-			if
-			::	methane;
-				cMethane!methanestop;
-			::	(methane);
-				cMethane!ready;
-			fi;
-		};
-	od;
-};
-
+}
 active proctype user(){
 	do
 	::	if
@@ -126,8 +147,27 @@ active proctype user(){
 		cCmd!uwants;
 		cCmd?_;
 	od;
-};
-
+}
+active proctype methanealarm(){
+	do
+	::	methane = false;
+		cAlarm!alarm;
+	::	methane = false;
+	od;
+}
+active proctype methanesensor(){
+	do
+	::	atomic {
+			cMethane?_;
+			if
+			::	methane;
+				cMethane!methanestop;
+			::	!methane;
+				cMethane!ready;
+			fi;
+		};
+	od;
+}
 active proctype watersensor(){
 	do
 	::	atomic {
@@ -152,4 +192,4 @@ active proctype watersensor(){
 			cLevel!waterLevel;
 		};
 	od;
-};
+}

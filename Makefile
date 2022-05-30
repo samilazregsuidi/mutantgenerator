@@ -1149,33 +1149,6 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-semantic/state.o: semantic/state.cpp.o
-
-.PHONY : semantic/state.o
-
-# target to build an object file
-semantic/state.cpp.o:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
-.PHONY : semantic/state.cpp.o
-
-semantic/state.i: semantic/state.cpp.i
-
-.PHONY : semantic/state.i
-
-# target to preprocess a source file
-semantic/state.cpp.i:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i
-.PHONY : semantic/state.cpp.i
-
-semantic/state.s: semantic/state.cpp.s
-
-.PHONY : semantic/state.s
-
-# target to generate assembly for a file
-semantic/state.cpp.s:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s
-.PHONY : semantic/state.cpp.s
-
 y.tab.o: y.tab.cpp.o
 
 .PHONY : y.tab.o
@@ -1326,9 +1299,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... semantic/state.o"
-	@echo "... semantic/state.i"
-	@echo "... semantic/state.s"
 	@echo "... y.tab.o"
 	@echo "... y.tab.i"
 	@echo "... y.tab.s"

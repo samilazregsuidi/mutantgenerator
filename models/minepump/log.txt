@@ -1,0 +1,506 @@
+pump_effectiveness		minepump.pml		 satisfied
+pan: ltl formula pump_effectiveness
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_effectiveness)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 12185, errors: 0
+    23183 states, stored (25065 visited)
+   165000 states, matched
+   190065 transitions (= visited+matched)
+    60467 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    3.184	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.916	actual memory usage for states (compression: 91.60%)
+         	state-vector as stored = 104 byte + 28 byte overhead
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8200.173	total actual memory usage
+
+
+
+pan: elapsed time 0.13 seconds
+pan: rate 192807.69 states/second
+
+=====================================================
+
+pump_strong_synch_off		minepump.pml		 satisfied
+pan: ltl formula pump_strong_synch_off
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_strong_synch_off)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.03 seconds
+pan: rate    273700 states/second
+
+=====================================================
+
+low_medium_evolution_consistency		minepump.pml		 satisfied
+pan: error: cannot find claim 'low_medium_evolution_consistency'
+
+=====================================================
+
+read_msg_consistency		minepump.pml		 satisfied
+pan: ltl formula read_msg_consistency
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (read_msg_consistency)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.02 seconds
+pan: rate    410550 states/second
+
+=====================================================
+
+pump_safe_methane_starting		minepump.pml		 satisfied
+pan: ltl formula pump_safe_methane_starting
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_safe_methane_starting)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+    15395 states, stored
+    58460 states, matched
+    73855 transitions (= stored+matched)
+    24322 atomic steps
+hash conflicts:        23 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.114	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.232	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.489	total actual memory usage
+
+
+
+pan: elapsed time 0.05 seconds
+pan: rate    307900 states/second
+
+=====================================================
+
+pump_stopped		minepump.pml		 satisfied
+pan: ltl formula pump_stopped
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_stopped)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 12185, errors: 0
+    19057 states, stored
+   147704 states, matched
+   166761 transitions (= stored+matched)
+    54221 atomic steps
+hash conflicts:        20 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.617	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.526	actual memory usage for states (compression: 96.51%)
+         	state-vector as stored = 111 byte + 28 byte overhead
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.782	total actual memory usage
+
+
+
+pan: elapsed time 0.12 seconds
+pan: rate 158808.33 states/second
+
+=====================================================
+
+pump_methane_safetyness_light		minepump.pml		 satisfied
+pan: error: cannot find claim 'pump_methane_safetyness_light'
+
+=====================================================
+
+pump_stopping		minepump.pml		 satisfied
+pan: ltl formula pump_stopping
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_stopping)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 9253, errors: 0
+    19379 states, stored
+   145935 states, matched
+   165314 transitions (= stored+matched)
+    53784 atomic steps
+hash conflicts:        16 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.661	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.526	actual memory usage for states (compression: 94.90%)
+         	state-vector as stored = 109 byte + 28 byte overhead
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.782	total actual memory usage
+
+
+
+pan: elapsed time 0.12 seconds
+pan: rate 161491.67 states/second
+
+=====================================================
+
+user_cmd_consistency		minepump.pml		 satisfied
+pan: ltl formula user_cmd_consistency
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (user_cmd_consistency)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:         7 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.02 seconds
+pan: rate    410550 states/second
+
+=====================================================
+
+methane_sensor_liveness		minepump.pml		 satisfied
+pan: ltl formula methane_sensor_liveness
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (methane_sensor_liveness)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 9253, errors: 0
+    19253 states, stored
+   149484 states, matched
+   168737 transitions (= stored+matched)
+    55536 atomic steps
+hash conflicts:        74 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.644	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.526	actual memory usage for states (compression: 95.52%)
+         	state-vector as stored = 110 byte + 28 byte overhead
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.782	total actual memory usage
+
+
+
+pan: elapsed time 0.12 seconds
+pan: rate 160441.67 states/second
+
+=====================================================
+
+methane_sensor_liveness_light		minepump.pml		 satisfied
+pan: ltl formula methane_sensor_liveness_light
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (methane_sensor_liveness_light)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4783, errors: 0
+    13651 states, stored (15700 visited)
+    87851 states, matched
+   103551 transitions (= visited+matched)
+    32814 atomic steps
+hash conflicts:         7 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.875	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.037	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.294	total actual memory usage
+
+
+
+pan: elapsed time 0.08 seconds
+pan: rate    196250 states/second
+
+=====================================================
+
+pump_synch_on		minepump.pml		 satisfied
+pan: ltl formula pump_synch_on
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_synch_on)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.02 seconds
+pan: rate    410550 states/second
+
+=====================================================
+
+pump_activation		minepump.pml		 satisfied
+pan: ltl formula pump_activation
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_activation)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+    12850 states, stored
+    48998 states, matched
+    61848 transitions (= stored+matched)
+    19395 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.765	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.037	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.294	total actual memory usage
+
+
+
+pan: elapsed time 0.06 seconds
+pan: rate 214166.67 states/second
+
+=====================================================
+
+pump_methane_safetyness		minepump.pml		 satisfied
+pan: ltl formula pump_methane_safetyness
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_methane_safetyness)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 12185, errors: 0
+    19401 states, stored
+   151217 states, matched
+   170618 transitions (= stored+matched)
+    56068 atomic steps
+hash conflicts:        28 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.664	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.526	actual memory usage for states (compression: 94.79%)
+         	state-vector as stored = 108 byte + 28 byte overhead
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8199.782	total actual memory usage
+
+
+
+pan: elapsed time 0.12 seconds
+pan: rate    161675 states/second
+
+=====================================================
+
+low_high_evolution_consistency		minepump.pml		 satisfied
+pan: error: cannot find claim 'low_high_evolution_consistency'
+
+=====================================================
+
+pump_state_consistency		minepump.pml		 satisfied
+pan: ltl formula pump_state_consistency
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_state_consistency)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.03 seconds
+pan: rate    273700 states/second
+
+=====================================================
+
+water_level_consistency		minepump.pml		 satisfied
+pan: ltl formula water_level_consistency
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (water_level_consistency)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8211 states, stored
+    27090 states, matched
+    35301 transitions (= stored+matched)
+    11196 atomic steps
+hash conflicts:        16 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.128	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.02 seconds
+pan: rate    410550 states/second
+
+=====================================================
+
+pump_weak_synch_off		minepump.pml		 satisfied
+pan: ltl formula pump_weak_synch_off
+
+(Spin Version 6.4.9 -- 17 December 2018)
+
+Full statespace search for:
+	never claim         	+ (pump_weak_synch_off)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness enabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 116 byte, depth reached 4142, errors: 0
+     8472 states, stored (8631 visited)
+    28036 states, matched
+    36667 transitions (= visited+matched)
+    11626 atomic steps
+hash conflicts:         8 (resolved)
+
+Stats on memory usage (in Megabytes):
+    1.163	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.646	actual memory usage for states
+ 8192.000	memory used for hash table (-w30)
+    5.341	memory used for DFS stack (-m100000)
+ 8198.903	total actual memory usage
+
+
+
+pan: elapsed time 0.03 seconds
+pan: rate    287700 states/second
+
+=====================================================
+
+********** MUTATION SCORE : 0.0% **********
+
+SURVIVORS : 
+{
+	minepump.pml
+}

@@ -6,26 +6,7 @@
 
 #include "symbol.hpp"
 
-//T_CMTYPE
-class cmtypeSymNode : public symbol{
-public:
-	cmtypeSymNode(int lineNb, const std::string& name, int value);
-
-	std::string getTypeName(void) const override;
-
-	int getTypeSize(void) const override;
-
-	bool castTo(const symbol* sym) const override;
-
-	void acceptVisitor(symTabVisitor* visitor) override;
-
-	void acceptVisitor(symTabConstVisitor* visitor) const override;
-
-	//void printGraphViz(std::ofstream& file) const;
-
-private:
-	int value;
-};
+class cmtypeSymNode;
 
 class mtypedefSymNode : public symbol {
 public:
@@ -40,6 +21,8 @@ public:
 	void acceptVisitor(symTabVisitor* visitor) override;
 
 	void acceptVisitor(symTabConstVisitor* visitor) const override;
+
+	std::string getCmtypeSymNodeName(int value) const;
 
 	//void printGraphViz(std::ofstream& file) const;
 

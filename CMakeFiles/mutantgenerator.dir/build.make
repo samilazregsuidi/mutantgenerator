@@ -546,22 +546,9 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmEdge.cpp -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s
 
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: semantic/state.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp > CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp -o CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s
-
 CMakeFiles/mutantgenerator.dir/y.tab.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
 CMakeFiles/mutantgenerator.dir/y.tab.cpp.o: y.tab.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/mutantgenerator.dir/y.tab.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/mutantgenerator.dir/y.tab.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mutantgenerator.dir/y.tab.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/y.tab.cpp
 
 CMakeFiles/mutantgenerator.dir/y.tab.cpp.i: cmake_force
@@ -574,7 +561,7 @@ CMakeFiles/mutantgenerator.dir/y.tab.cpp.s: cmake_force
 
 CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
 CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o: lex.yy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/lex.yy.cpp
 
 CMakeFiles/mutantgenerator.dir/lex.yy.cpp.i: cmake_force
@@ -624,7 +611,6 @@ mutantgenerator_OBJECTS = \
 "CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/y.tab.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o"
 
@@ -668,12 +654,11 @@ mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/y.tab.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/build.make
 mutantgenerator: CMakeFiles/mutantgenerator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Linking CXX executable mutantgenerator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking CXX executable mutantgenerator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mutantgenerator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

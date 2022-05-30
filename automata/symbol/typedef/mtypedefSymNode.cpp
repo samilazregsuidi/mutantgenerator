@@ -1,35 +1,9 @@
 #include "mtypedefSymNode.hpp"
+#include "mtypeSymNode.hpp"
 
 #include <cassert>
 
 #include "symTabVisitor.hpp"
-
-bool cmtypeSymNode::castTo(const symbol* sym) const {
-	return sym->getType() == T_MTYPE;
-}
-
-cmtypeSymNode::cmtypeSymNode(int lineNb, const std::string& name, int value)
-	: symbol(symbol::T_MTYPE, lineNb, name)
-{
-	this->value = value;
-	this->mask = READ_ACCESS;
-}
-
-std::string cmtypeSymNode::getTypeName(void) const {
-	return "cmtype";
-}
-
-int cmtypeSymNode::getTypeSize(void) const {
-	return 0;
-}
-
-void cmtypeSymNode::acceptVisitor(symTabVisitor* visitor) {
-	visitor->visitCmtype(this);
-}
-
-void cmtypeSymNode::acceptVisitor(symTabConstVisitor* visitor) const {
-	visitor->visitCmtype(this);
-}
 
 /***********************************************************************************************/
 
@@ -45,6 +19,8 @@ mtypedefSymNode::mtypedefSymNode(std::unordered_map<std::string, cmtypeSymNode*>
 	: symbol(symbol::T_MTYPE_DEF, "mtype", lineNb)
 {
 	this->mtypes = mtypes;
+	for(auto mtype : mtypes)
+		mtype.second->def = this;
 }
 
 std::string mtypedefSymNode::getTypeName(void) const {
@@ -57,4 +33,11 @@ int mtypedefSymNode::getTypeSize(void) const {
 
 const std::unordered_map<std::string, cmtypeSymNode*>& mtypedefSymNode::getMTypeList(void) const {
 	return mtypes;
+}
+
+std::string mtypedefSymNode::getCmtypeSymNodeName(int value) const {
+	for(auto cmtype : mtypes) {
+		if(cmtype.second->getIntValue() == value)
+			return cmtype.second->getName();
+	}
 }

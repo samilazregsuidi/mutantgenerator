@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 
 	std::ofstream output;
 	output.open("mutants/original.pml");
-	output << "#include \"./Theory.prp\"\n";
+	output << "#include \"./ltl.inc\"\n";
 	output << stmnt::string(program);
 	output.close();
 
@@ -90,27 +90,27 @@ int main(int argc, char *argv[]) {
 	automata->printGraphVis(graph);
 	graph.close();
 
-	/*for(unsigned int i = 1; i <= index; i++) {
+	for(unsigned int i = 1; i <= index; i++) {
 		auto copy = program->deepCopy();
 		astNode::mutate(copy, i);
 		output.open("mutants/mutant_"+ std::to_string(i) + ".pml");
-		output << "#include \"./Theory.prp\"\n";
+		output << "#include \"./ltl.inc\"\n";
 		output << stmnt::string(copy);
 		output.close();
 		delete copy;
-	}*/
+	}
 
-	std::ofstream symtable;
-	symtable.open("sym_table_graphviz");
-	globalSymTab->printGraphViz(symtable);
-	symtable.close();
+	//std::ofstream symtable;
+	//symtable.open("sym_table_graphviz");
+	//globalSymTab->printGraphViz(symtable);
+	//symtable.close();
 
 	//output.open("mutants/original_.pml");
 	//output << stmnt::string(program);
 	//output.close();
 
 	
-	state* init = new state(globalSymTab, automata);
+	//state* init = new state(globalSymTab, automata);
 
 	delete globalSymTab;
 

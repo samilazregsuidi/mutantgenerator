@@ -112,7 +112,7 @@ symTable* currentSymTab = nullptr;
 symTable* savedSymTab = nullptr;
 
 std::list<varSymNode*> declSyms;
-std::list<symbol*> typeLst;
+std::list<varSymNode*> typeLst;
 std::unordered_map<std::string, cmtypeSymNode*> mtypes; 
 std::list<std::string> params;
 

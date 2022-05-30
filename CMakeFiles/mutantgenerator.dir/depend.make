@@ -588,6 +588,8 @@ CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o: auto
 CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/typedef/mtypedefSymNode.cpp
 CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/typedef/mtypedefSymNode.hpp
 CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/symbol.hpp
+CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/vardef/mtypeSymNode.hpp
+CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/vardef/varSymNode.hpp
 CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
 
 CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o: automata/symbol/typedef/procSymNode.cpp
@@ -807,48 +809,6 @@ CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/vardef/varSymNode.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: parser/y.tab.h
 CMakeFiles/mutantgenerator.dir/main.cpp.o: semantic/state.hpp
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: semantic/state.cpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: semantic/state.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/ast.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/astNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/argExpr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/binaryExpr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/constExpr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/expr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/unaryExpr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/expr/varExpr.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/chanStmnt.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/clockStmnt.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/decl.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/flowStmnt.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/stdlibStmnt.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/ast/stmnt/stmnt.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/fsm/automata.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/fsm/fsm.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/fsm/fsmEdge.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/fsm/fsmNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/symTable.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/symbol.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/symbols.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/typedef/inlineSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/typedef/mtypedefSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/typedef/procSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/typedef/tdefSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/bitSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/boolSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/byteSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/chanSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/cidSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/intSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/mtypeSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/naSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/pidSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/shortSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/unsgnSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/utypeSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/vardef/varSymNode.hpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
 
 CMakeFiles/mutantgenerator.dir/y.tab.cpp.o: y.tab.cpp
 CMakeFiles/mutantgenerator.dir/y.tab.cpp.o: automata/ast/ast.hpp

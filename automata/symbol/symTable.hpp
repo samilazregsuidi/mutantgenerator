@@ -44,8 +44,6 @@ public:
 
 	symbol* lookup(const std::string& name) const;
 
-	//std::list<symbol*> getSymbols(symbol::Type type, unsigned int mask) const;
-
 	std::set<symbol*> getSymbols(const symbol* left) const;
 
 	std::set<symbol*> getSymbols(void) const;
