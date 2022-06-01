@@ -17,6 +17,8 @@
 varSymNode::varSymNode(Type type, int lineNb, const std::string& name, unsigned int bound, expr* init)
 	: symbol(type, lineNb, name)
 {
+	assert(init->getType() == astNode::E_EXPR_CONST);
+
 	this->init = init;
 	this->bound = bound;
 }
@@ -27,7 +29,12 @@ varSymNode::~varSymNode(void) {
 }
 
 void varSymNode::setInitExpr(expr* newInit) {
-	delete init;
+	
+	assert(newInit->getType() == astNode::E_EXPR_CONST);
+
+	if (init)
+		delete init;
+		
 	init = newInit;
 }
 

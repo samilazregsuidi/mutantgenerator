@@ -43,7 +43,7 @@
 #include <tuple>
 #include <cassert>
 
-typedef unsigned char byte;
+typedef char byte;
 
 class transition;
 
@@ -113,6 +113,12 @@ public:
 
 	variable* getVar(const expr* varExpr, const process* proc) const;
 
+	channel* getChannelVar(const expr* varExpr, const process* proc) const;
+
+	template <typename T> T* getVar(const expr* varExpr, const process* proc) const {
+		return dynamic_cast<T*>(getVar(expr));
+	}
+
 	void initSym(unsigned int preOffset, const varSymNode* sym);
 
 	void initSymTab(unsigned int preOffset, const symTable* symTab);
@@ -120,6 +126,13 @@ public:
 	void initGlobalVariables(void);
 
 	void initVariables(const process* mask);
+
+	bool requestHandShake(const channel* chan);
+
+	channel* handShakeRequest(void) const;
+
+	bool hasHandShakeRequest(void) const;
+
 	/*
 	* Gets the symbol table of a channel by giving its offset in the memory chunk.
 	* The structure contained in state->chanRefs is used to get the table.

@@ -28,11 +28,6 @@ public:
 
 	void alloc(size_t size);
 
-// Access and modification of variables
-	const fsmNode* getNodePointer(const process* mask) const; // Returns the current FSM node of process 'mask' in 'state'.
-	
-	void storeNodePointer(process* mask, const fsmNode* pointer); // Set the current FSM node of process 'mask' in 'state' as 'pointer'.
-
 	/*
 	* Returns the offset of the variable referenced by 'expression' in 'process' and 'state'.
 	* Parameters:
@@ -69,6 +64,18 @@ public:
 		assert(tPtr);
 		return *tPtr;
 	}
+
+	template <typename T> T& getValue(unsigned int offset) {
+		byte* bytePtr = reinterpret_cast<byte*>(ptr);
+		assert(bytePtr);
+		bytePtr += offset;
+
+		T* tPtr = (reinterpret_cast<T*>(bytePtr));
+		assert(tPtr);
+		return *tPtr;
+	}
+
+	//int& getValue(unsigned int offset, symbol::Type type);
 
 	int getValue(unsigned int offset, symbol::Type type) const;
 	

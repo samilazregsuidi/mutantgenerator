@@ -12,7 +12,7 @@
 #include "state.hpp"
 #include "variable.hpp"
 
-process::process(state* s, size_t _offset, const seqSymNode* sym, const fsmNode* start, int pid, unsigned int index)
+process::process(state* s, size_t _offset, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index)
 	: payLoad(s->payLoad)
 	, offset(_offset)
 	, symType(sym)

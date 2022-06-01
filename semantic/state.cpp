@@ -135,346 +135,241 @@ int state::eval(const process* proc, const astNode* node, byte flag) const {
 	if(!node)	
 		return 0;
 
-	byte foundFeature = 0;
-	unsigned int offset, chanOffset;
-	int returnValue = -1;
-	chanSymNode* channel;
-	symbol* sym;
-	unsigned int handshake = payLoad->getValue<unsigned int>(OFFSET_HANDSHAKE);
+	//HANDSHAKE REQUEST TO MEET
+	if(flag == EVAL_EXECUTABILITY && handShakeRequest() != nullptr && node->getType() != astNode::E_STMNT_CHAN_RCV)
+		return 0;
 
-	if(flag == EVAL_EXECUTABILITY && handshake != NO_HANDSHAKE && node->getType() != astNode::E_STMNT_CHAN_RCV) 
-		returnValue = 0;
 
-	else {
+	auto binaryExpr = dynamic_cast<const exprBinary*>(node);
+	auto unaryExpr = dynamic_cast<const exprUnary*>(node);
 
-		auto binaryExpr = dynamic_cast<const exprBinary*>(node);
-		auto unaryExpr = dynamic_cast<const exprUnary*>(node);
+	switch(node->getType()) {
 
-		switch(node->getType()) {
+		case(astNode::E_VAR_DECL):
+		case(astNode::E_PROC_DECL):
+		case(astNode::E_CHAN_DECL):
+		case(astNode::E_INIT_DECL):
+		case(astNode::E_INLINE_DECL):
+		case(astNode::E_TDEF_DECL):
+		case(astNode::E_MTYPE_DECL):
 
-			case(astNode::E_VAR_DECL):
-			case(astNode::E_PROC_DECL):
-			case(astNode::E_CHAN_DECL):
-			case(astNode::E_INIT_DECL):
-			case(astNode::E_INLINE_DECL):
-			case(astNode::E_TDEF_DECL):
-			case(astNode::E_MTYPE_DECL):
+		case(astNode::E_STMNT_IF):
+		case(astNode::E_STMNT_DO):
+		case(astNode::E_STMNT_OPT):
+		case(astNode::E_STMNT_SEQ):
+		case(astNode::E_STMNT_BREAK):
+		case(astNode::E_STMNT_GOTO):
+		case(astNode::E_STMNT_LABEL):
+		case(astNode::E_STMNT_ASGN):
+		case(astNode::E_STMNT_PRINT):
+		case(astNode::E_STMNT_PRINTM):
+		case(astNode::E_STMNT_ASSERT):
 
-			case(astNode::E_STMNT_IF):
-			case(astNode::E_STMNT_DO):
-			case(astNode::E_STMNT_OPT):
-			case(astNode::E_STMNT_SEQ):
-			case(astNode::E_STMNT_BREAK):
-			case(astNode::E_STMNT_GOTO):
-			case(astNode::E_STMNT_LABEL):
-			case(astNode::E_STMNT_ASGN):
-			case(astNode::E_STMNT_PRINT):
-			case(astNode::E_STMNT_PRINTM):
-			case(astNode::E_STMNT_ASSERT):
+		case(astNode::E_EXPR_RUN):
+		case(astNode::E_EXPR_TRUE):
+		case(astNode::E_EXPR_SKIP):
+		
+			return 1;
 
-			case(astNode::E_EXPR_RUN):
-			case(astNode::E_EXPR_TRUE):
-			case(astNode::E_EXPR_SKIP):
-			
-				returnValue = 1;
-				break;
+		case(astNode::E_STMNT):
+		case(astNode::E_STMNT_EXPR):
+		
+		case(astNode::E_EXPR_PAR):
+		case(astNode::E_EXPR_VAR):
+		
+		case(astNode::E_ARGLIST):
+		case(astNode::E_RARG_VAR):
+		case(astNode::E_RARG_EVAL):
 
-			case(astNode::E_STMNT):
-			case(astNode::E_STMNT_EXPR):
-			
-			case(astNode::E_EXPR_PAR):
-			case(astNode::E_EXPR_VAR):
-			
-			case(astNode::E_ARGLIST):
-			case(astNode::E_RARG_VAR):
-			case(astNode::E_RARG_EVAL):
-			{
-				if(node->getType() == astNode::E_ARGLIST)
-					assert(false);
-
-				//these types have only one node...
-				returnValue = eval(proc, *node->getChildren().cbegin(), flag);
-				break;
-			}
-/*
-			case(astNode::E_STMNT_CHAN_RCV):
-				sym = nodeSymbolLookUpLeft(node->children[0]);
-				channel = nodeSymbolLookUpRight(node->children[0]);
-				if(symbol->global == 0)
-					chanOffset = getVarOffset(globalSymTab, mtypes, state, process, process->offset, node->children[0]);
-				else
-					chanOffset = getVarOffset(globalSymTab, mtypes, state, process, 0, node->children[0]);
-				if(channel->type == T_CID) {
-						chanOffset = stateGetValue(state->payload, chanOffset, T_CID);
-						channel = getChannelSymTab(state, chanOffset);
-				}
-				if(!channel) {
-					printState(mtypes, state, NULL);
-					failure("ERROR (eval (astNode::E_STMNT_CHAN_RCV, line %02d)): chanOffset (%d) does not reference any existing channel.\n", node->lineNb, chanOffset);
-				}
-				if (channel->capacity == 0) {
-					if(handshake != chanOffset)
-						// Handshake request does not concern the channel.
-						return 0;
-				}
-				if (channelIsEmpty(globalSymTab, mtypes, state, process, node->children[0]))
-					return 0;
-				else {
-					// Either a rendezvous concerns the channel, either the channel has a non null capacity and is not empty.
-					ptExpNode currentArg = node->children[1];
-					ptSymTabNode param = channel->child;
-					int varOffset;
-					int sendValue;
-					byte stop = 0;
-					while(currentArg && !stop) {
-						if(!param) failure("[eval] channelReceive: Argument numbers does not match with the parameters number.\n");
-						if(currentArg->children[0]->type != E_RARG_VAR) {
-							if(channel->capacity == 0) {
-								varOffset = param->memOffset;//chanOffset + param->memOffset + 1;
-								sendValue = stateGetValue(_handshake_transit, varOffset, param->type);
-							} else {
-								varOffset = chanOffset + param->memOffset + 1;
-								sendValue = stateGetValue(state->payload, varOffset, param->type);
-							}
-
-							if (eval(procOffset, currentArg->children[0], flag) != sendValue) {
-								returnValue = 0;
-								stop = 1;
-							}
-						} else {
-							symbol = nodeSymbolLookUpLeft(currentArg->children[0]);
-							if (!symbol) {
-								if(channel->capacity == 0) {
-									varOffset = param->memOffset;//chanOffset + param->memOffset + 1;
-									sendValue = stateGetValue(_handshake_transit, varOffset, param->type);
-								} else {
-									varOffset = chanOffset + param->memOffset + 1;
-									sendValue = stateGetValue(state->payload, varOffset, param->type);
-								}
-
-								returnValue = eval(procOffset, currentArg->children[0], EVAL_EXPRESSION, ADD());
-								if (returnValue != -1 && returnValue != sendValue) {
-									returnValue = 0;
-									stop = 1;
-								}
-							}
-						}
-						param = param->next;
-						currentArg = currentArg->children[1];
-					}
-					if(!stop) returnValue = 1;
-				}
-				break;
-
-			case(astNode::E_STMNT_CHAN_SND):
-				symbol = nodeSymbolLookUpLeft(node->children[0]);
-				channel = nodeSymbolLookUpRight(node->children[0]);
-				if(symbol->global == 0)	offset = getVarOffset(globalSymTab, mtypes, state, process, process->offset, node->children[0]);
-				else	offset = getVarOffset(globalSymTab, mtypes, state, process, 0, node->children[0]);
-				// If the symbol represents a reference to a channel, it is replaced by the true channel's symbol.
-				if(channel->type == T_CID) {
-					offset = stateGetValue(state->payload, offset, T_CID);
-					channel = getChannelSymTab(state, offset);
-				}
-				if (channel->capacity == 0) {
-					// We check if the rendezvous can be completed.
-					if(stateGetValue(state->payload, OFFSET_HANDSHAKE, T_INT) != NO_HANDSHAKE) returnValue =  0;
-					else {
-
-						stateSetValue(state->payload, OFFSET_HANDSHAKE, T_INT, offset);
-						returnValue = 1;
-					}
-				} else returnValue = (!channelIsFull(globalSymTab, mtypes, state, process, node->children[0]));
-				break;
-*/
-			case(astNode::E_STMNT_INCR):
-			case(astNode::E_STMNT_DECR):
-				if(flag == EVAL_EXECUTABILITY) 
-					returnValue = 1;
-				else 
-					returnValue = eval(proc, *node->getChildren().cbegin(), flag);
-				break;
-
-			case(astNode::E_STMNT_ELSE):
-				returnValue = (_else == 1);
-				break;
-			
-			case(astNode::E_EXPR_PLUS):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) + eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_MINUS):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) - eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_TIMES):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) * eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_DIV):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) / eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_MOD):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) % eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_GT):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) > eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_LT):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) < eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_GE):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) >= eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_LE):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) <= eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_EQ):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) == eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_NE):
-				returnValue = (eval(proc, binaryExpr->getLeftExpr(), flag) != eval(proc, binaryExpr->getRightExpr(), flag));
-				break;
-
-			case(astNode::E_EXPR_AND):
-				returnValue = 0;
-				if(eval(proc, binaryExpr->getLeftExpr(), flag)) 
-					returnValue = eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_OR):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag);
-				if(returnValue == 0) returnValue = eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_UMIN):
-				returnValue = - eval(proc, unaryExpr->getExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_NEG):
-				returnValue = !eval(proc, unaryExpr->getExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_LSHIFT):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) << eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_RSHIFT):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) >> eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_BITWAND):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) & eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_BITWOR):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) | eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_BITWXOR):
-				returnValue = eval(proc, binaryExpr->getLeftExpr(), flag) ^ eval(proc, binaryExpr->getRightExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_BITWNEG):
-				returnValue = ~eval(proc, unaryExpr->getExpr(), flag);
-				break;
-
-			case(astNode::E_EXPR_COND):
-			{
-				auto cond = dynamic_cast<const exprCond*>(node);
-				if(eval(proc, cond->getCond(), EVAL_EXPRESSION) > 0)
-					returnValue = eval(proc, cond->getThen(), flag);
-				else
-					returnValue = eval(proc, cond->getElse(), flag);
-				break;
-			}
-
-			case(astNode::E_EXPR_LEN):
-			{
-				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
-				auto var = proc->getVar(varRef);
-				if(!var) {
-					var = getVar(varRef, proc);
-				}
-				assert(var);
-				auto chanVar = dynamic_cast<channel*>(var);
-				assert(chanVar);
-				returnValue = chanVar->len();
-				break;
-			}
-
-			case(astNode::E_EXPR_CONST):
-				returnValue = dynamic_cast<const exprConst*>(node)->getCstValue();
-				break;
-
-			case(astNode::E_EXPR_TIMEOUT):
-				returnValue = _timeout;
-				break;
-
-			case(astNode::E_EXPR_FULL):
-			case(astNode::E_EXPR_NFULL):
-			{
-				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
-				auto var = proc->getVar(varRef);
-				if(!var) {
-					var = getVar(varRef, proc);
-				}
-				assert(var);
-				auto chanVar = dynamic_cast<channel*>(var);
-				assert(chanVar);
-				returnValue = node->getType() == astNode::E_EXPR_FULL? chanVar->isFull() : !chanVar->isFull();
-				break;
-			}
-
-			case(astNode::E_EXPR_EMPTY):
-			case(astNode::E_EXPR_NEMPTY):
-			{
-				auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
-				auto var = proc->getVar(varRef);
-				if(!var) {
-					var = getVar(varRef, proc);
-				}
-				assert(var);
-				auto chanVar = dynamic_cast<channel*>(var);
-				assert(chanVar);
-				returnValue = node->getType() == astNode::E_EXPR_EMPTY? chanVar->isEmpty() : !chanVar->isEmpty();
-				break;
-			}
-
-			case(astNode::E_VARREF):
-			case(astNode::E_VARREF_NAME):
-			{
-				auto varRef = dynamic_cast<const exprVarRef*>(node);
-				auto var = proc->getVar(varRef);
-				if(!var) {
-					var = getVar(varRef, proc);
-				}
-				assert(var);
-				returnValue = var->getValue();
-			}
-			
-			case(astNode::E_RARG_CONST):
-			{
-				returnValue = dynamic_cast<const exprRArgConst*>(node)->getCstValue();
-				break;
-			}
-			case(astNode::E_EXPR_FALSE):
-			{
-				returnValue = 0;
-				break;
-			}
-			default:
+			if(node->getType() == astNode::E_ARGLIST)
 				assert(false);
+
+			//these types have only one node...
+			return eval(proc, *node->getChildren().cbegin(), flag);
+
+		case(astNode::E_STMNT_CHAN_RCV):
+		{				
+			channel* chan = getChannelVar(dynamic_cast<const stmntChanRecv*>(node)->getChan(), proc);
+
+			assert(hasHandShakeRequest());
+			if (chan->isRendezVous() && chan != handShakeRequest()) {
+					// Handshake request does not concern the channel.
+					return 0;
+			
+			} else if (chan->isEmpty()) {
+				return 0;
+
+			} else {
+				// Either a rendezvous concerns the channel, either the channel has a non null capacity and is not empty.
+				
+				unsigned int index = 0;
+				auto rargList = dynamic_cast<const exprRArgList*>(node);
+				while(auto arg = rargList->getExprRArg()){
+
+					
+					if(arg->getType() == astNode::E_RARG_EVAL || arg->getType() == astNode::E_RARG_CONST) {
+						
+						int sendedValue = chan->getField(index)->getValue();
+						int requestedValue = eval(proc, arg, flag);
+						if(sendedValue != requestedValue) {
+							return 0;
+						}
+					}
+
+					++index;
+					rargList = rargList->getRArgList();
+				}
+
+				return 1;
+			}
 		}
+
+		case(astNode::E_STMNT_CHAN_SND):
+		{
+			channel* chan = getChannelVar(dynamic_cast<const stmntChanSnd*>(node)->getChan(), proc);
+
+			if (chan->isRendezVous()) {
+				// We check if the rendezvous can be completed.
+				return hasHandShakeRequest();
+
+			} else 
+				return !chan->isFull();
+			
+		}
+
+		case(astNode::E_STMNT_INCR):
+		case(astNode::E_STMNT_DECR):
+			if(flag == EVAL_EXECUTABILITY) 
+				return 1;
+			else 
+				return eval(proc, *node->getChildren().cbegin(), flag);
+
+		case(astNode::E_STMNT_ELSE):
+			return (_else == 1);
+		
+		case(astNode::E_EXPR_PLUS):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) + eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_MINUS):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) - eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_TIMES):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) * eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_DIV):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) / eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_MOD):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) % eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_GT):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) > eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_LT):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) < eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_GE):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) >= eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_LE):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) <= eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_EQ):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) == eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_NE):
+			return (eval(proc, binaryExpr->getLeftExpr(), flag) != eval(proc, binaryExpr->getRightExpr(), flag));
+
+		case(astNode::E_EXPR_AND):
+			if(eval(proc, binaryExpr->getLeftExpr(), flag)) 
+				return eval(proc, binaryExpr->getRightExpr(), flag);
+			return 0;
+
+		case(astNode::E_EXPR_OR):
+			if(!eval(proc, binaryExpr->getLeftExpr(), flag))
+				return eval(proc, binaryExpr->getRightExpr(), flag);
+			return 0;
+
+		case(astNode::E_EXPR_UMIN):
+			return - eval(proc, unaryExpr->getExpr(), flag);
+
+		case(astNode::E_EXPR_NEG):
+			return !eval(proc, unaryExpr->getExpr(), flag);
+
+		case(astNode::E_EXPR_LSHIFT):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) << eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_RSHIFT):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) >> eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_BITWAND):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) & eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_BITWOR):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) | eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_BITWXOR):
+			return eval(proc, binaryExpr->getLeftExpr(), flag) ^ eval(proc, binaryExpr->getRightExpr(), flag);
+
+		case(astNode::E_EXPR_BITWNEG):
+			return ~eval(proc, unaryExpr->getExpr(), flag);
+
+		case(astNode::E_EXPR_COND):
+		{
+			auto cond = dynamic_cast<const exprCond*>(node);
+			if(eval(proc, cond->getCond(), EVAL_EXPRESSION) > 0)
+				return eval(proc, cond->getThen(), flag);
+			else
+				return eval(proc, cond->getElse(), flag);
+		}
+
+		case(astNode::E_EXPR_LEN):
+		{
+			auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+			return getChannelVar(varRef, proc)->len();
+		}
+
+		case(astNode::E_EXPR_CONST):
+			return dynamic_cast<const exprConst*>(node)->getCstValue();
+
+		case(astNode::E_EXPR_TIMEOUT):
+			return _timeout;
+
+		case(astNode::E_EXPR_FULL):
+		case(astNode::E_EXPR_NFULL):
+		{
+			auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+			auto chanVar = dynamic_cast<channel*>(varRef);
+			return node->getType() == astNode::E_EXPR_FULL? chanVar->isFull() : !chanVar->isFull();
+		}
+
+		case(astNode::E_EXPR_EMPTY):
+		case(astNode::E_EXPR_NEMPTY):
+		{
+			auto varRef = dynamic_cast<const exprUnary*>(node)->getExpr();
+			auto chanVar = getChannelVar(varRef, proc);
+			return node->getType() == astNode::E_EXPR_EMPTY? chanVar->isEmpty() : !chanVar->isEmpty();
+		}
+
+		case(astNode::E_VARREF):
+		case(astNode::E_VARREF_NAME):
+		{
+			auto varRef = dynamic_cast<const exprVarRef*>(node);
+			auto var = getVar(varRef, proc);
+			return var->getValue();
+		}
+		
+		case(astNode::E_RARG_CONST):
+			return dynamic_cast<const exprRArgConst*>(node)->getCstValue();
+
+		case(astNode::E_EXPR_FALSE):
+			return 0;
+
+		default:
+			assert(false);
 	}
-	return returnValue;
+	assert(false);
+	return 0;
 }
 
 /**
@@ -559,7 +454,27 @@ std::string state::getVarName(const expr* varExpr, const process* proc) const {
 }
 
 variable* state::getVar(const expr* varExpr, const process* proc) const {
-	return varMap.at(getVarName(varExpr, proc));
+	auto var = proc->getVar(varExpr);
+	if(!var) 
+		var = varMap.at(getVarName(varExpr, proc));
+	assert(var);
+	return var;
+}
+
+channel* state::getChannelVar(const expr* varExpr, const process* proc) const {
+	auto chan = proc->getChannelVar(varExpr);
+	if(!chan) {
+		auto var = varMap.at(getVarName(varExpr, proc));
+		if(var->getType() == symbol::T_CID){
+			chan = dynamic_cast<CIDVariable*>(var)->getRefChannel();
+			assert(chan);
+		} else {
+			assert(var->getType() == symbol::T_CHAN);
+			chan = dynamic_cast<channel*>(var);
+		}
+	}
+	assert(chan);
+	return chan;
 }
 
 /**

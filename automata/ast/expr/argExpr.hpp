@@ -80,6 +80,8 @@ public:
 
 	exprRArgList* getRArgList(void) const;
 
+	std::list<exprRArg*> getRArgStdList(void) const;
+
 	unsigned int getSize(void) const;
 
 	operator std::string() const override;
@@ -121,6 +123,8 @@ public:
 	exprArg* getExprArg(void) const;
 
 	exprArgList* getArgList(void) const;
+
+	std::list<exprRArg*> getArgStdList(void) const;
 
 	unsigned int getSize(void) const;
 

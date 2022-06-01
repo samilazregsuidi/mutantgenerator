@@ -38,7 +38,7 @@ class state;
 // and its offset in the payload
 class process {
 public:
-	process(state* s, size_t offset, const seqSymNode* sym, const fsmNode* start, int pid, unsigned int index = 0);
+	process(state* s, size_t offset, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index = 0);
 
 	process(const process& p);
 
@@ -58,7 +58,7 @@ public:
 
 	void init(void);
 
-	int getPid(void) const;
+	byte getPid(void) const;
 
 	size_t getSizeOf(void) const;
 
@@ -84,6 +84,8 @@ public:
 
 	variable* getVar(const expr* varExpr) const;
 
+	channel* getChannelVar(const expr* varExpr) const;
+
 	void addVar(const std::string& name, variable* var);
 
 	void addVar(variable* subVar);
@@ -104,7 +106,7 @@ public:
 	size_t sizeOf;
 
 	state* s;
-	int pid;
+	byte pid;
 	const fsmNode* start;
 };
 

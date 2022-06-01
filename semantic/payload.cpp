@@ -53,7 +53,6 @@ int payload::getValue(unsigned int offset, symbol::Type type) const {
 		case symbol::T_BYTE:
 		case symbol::T_PID:
 		case symbol::T_CID:
-		case symbol::T_CMTYPE:
 		case symbol::T_MTYPE:
 			return getValue<byte>(offset);
 		case symbol::T_BOOL:
@@ -64,9 +63,10 @@ int payload::getValue(unsigned int offset, symbol::Type type) const {
 			return getValue<int>(offset);
 		default:
 			assert(false);
+			return -1;
 	}
 	assert(false);
-	return 0;
+	return -1;
 }
 
 void payload::setValue(unsigned int offset, int value, symbol::Type type) {
@@ -75,7 +75,6 @@ void payload::setValue(unsigned int offset, int value, symbol::Type type) {
 		case symbol::T_BYTE:
 		case symbol::T_PID:
 		case symbol::T_CID:
-		case symbol::T_CMTYPE:
 		case symbol::T_MTYPE:
 			setValue<byte>(offset, value);
 			return;

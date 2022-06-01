@@ -142,7 +142,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
 							return TYPE; */ }
-<CODE>"chan"		{ DBUG(TYPE); yylval->iType = symbol::T_CHAN;
+<CODE>"chan"		{ DBUG(TYPE); yylval->iType = symbol::T_CID;
 					  return TYPE; }
 <CODE>"mtype"		{ DBUG(TYPE); yylval->iType = symbol::T_MTYPE;
 					  return TYPE; }
