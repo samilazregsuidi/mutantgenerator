@@ -1,25 +1,14 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-// Bytes needed to record the system variables: exclusive and handshake.
-#define OFFSET_EXCLUSIVE (char)0 // T_BYTE
-#define OFFSET_HANDSHAKE (int)1 // T_INT
-
-#define SYS_VARS_SIZE sizeof(OFFSET_EXCLUSIVE) + sizeof(OFFSET_HANDSHAKE)
-
-// For any channel, its offset is positive. Thus, we use the value -1 to specify the absence of rendezvous request.
-#define NO_HANDSHAKE (int)0
-
-// For any process, its pid is between 0 and 254. Thus, we use the value 255 to specify absence of a process
-#define NO_PROCESS (char)255 // T_BYTE
-#define MAX_PROCESS (char)254 // T_BYTE
-
 #include <list>
 #include <map>
 #include <tuple>
 #include <cassert>
 
-typedef unsigned char byte;
+#include "scope.hpp"
+
+typedef char byte;
 
 class transition;
 
@@ -33,81 +22,89 @@ class fsmNode;
 class fsmEdge;
 
 class state;
+class payload;
+
+class variable;
+class channel;
+
+class exprArgList;
+class exprRArgList;
+
 
 // A state mask gives for every process the pid, a pointer to its symtab node
 // and its offset in the payload
-class process {
+class process : public scope {
 public:
-	process(state* s, size_t offset, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index = 0);
+	process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index = 0);
 
-	process(const process& p);
+	process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, const std::list<const variable*>& args);
 
-	process* deepCopy(void) const;
+	//process(const process& p);
 
-	~process();
+	//process* deepCopy(void) const;
 
 	std::string getName(void) const;
 
 	symbol::Type getType(void) const;
 
-	void setPayload(payload* payLoad) const;
-	
-	payload* getPayload(void) const;
-
-	void* getPayloadPtr(void) const;
-
-	void init(void);
+	void init(void) override;
 
 	byte getPid(void) const;
 
-	size_t getSizeOf(void) const;
+	void print(void) const override;
 
-	void print(void) const;
+	std::list<transition*> transitions(void) const;
 
-	const fsmNode* getNodePointer(void) const;
+	const fsmNode* getFsmNodePointer(void) const;
 
-	void storeNodePointer(const fsmNode* pointer);
+	void setFsmNodePointer(const fsmNode* pointer);
+
+	bool nullstate(void) const;
+
+	bool endstate(void) const;
+
+	std::list<transition*> executables(void) const;
+
+	//trans or state, signature can be optimized!
+	int eval(const fsmEdge* edge, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
+
+	int eval(const astNode* exp, byte flag) const;
+
+	state* apply(const transition* trans);
 
 	bool isAccepting(void) const;
 
 	bool isAtomic(void) const;
-
-	variable* addVariable(const varSymNode* varSym);
-
-	variable* addChannel(const chanSymNode* chanSym);
-
-	const std::list<variable*>& getVars(void) const;
-
+	
 	std::string getVarName(const expr* varExpr) const;
 
-	variable* getVar(const std::string& name) const;
+	variable* getVariable(const expr* varExpr) const;
 
-	variable* getVar(const expr* varExpr) const;
+	std::list<variable*> getVariables(const exprArgList* args) const;
 
-	channel* getChannelVar(const expr* varExpr) const;
+	std::list<const variable*> getConstVariables(const exprArgList* args) const;
 
-	void addVar(const std::string& name, variable* var);
+	std::list<variable*> getVariables(const exprRArgList* rargs) const;
 
-	void addVar(variable* subVar);
+	std::list<const variable*> getConstVariables(const exprRArgList* rargs) const;
 
-public:
-	std::string name;
+	channel* getChannel(const expr* varExpr) const;
+
+	template <typename T> T* getTVar(const expr* varExpr, const process* proc) const {
+		return dynamic_cast<T*>(getVariable(varExpr));
+	}
+
+	void setState(state* newS);
+
+private:
 	const seqSymNode* symType;
 	unsigned int index;
-
-	const variable* parent;
-
-	size_t offset;
-	payload* payLoad;
-
-	std::map<std::string, variable*> varMap;
-	std::list<variable*> varList;
-
-	size_t sizeOf;
 
 	state* s;
 	byte pid;
 	const fsmNode* start;
+
+	mutable bool _else;
 };
 
 #endif

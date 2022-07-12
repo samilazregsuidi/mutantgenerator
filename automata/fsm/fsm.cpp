@@ -17,12 +17,20 @@
  * FINITE STATE MACHINES (FSMs)
  * * * * * * * * * * * * * * * * * * * * * * * */
 
+fsm::fsm(const symTable* globalSymTab)
+	: globalSymTab(globalSymTab)
+{}
+
 /**
  * Destroys an FSM and all that's linked to it.
  */
 fsm::~fsm(){
 	for(fsmNode* node : nodes) delete node;
 	for(fsmEdge* trans : trans) delete trans;
+}
+
+const symTable* fsm::getGlobalSymTab(void) const {
+	return globalSymTab;
 }
 
 /**
@@ -64,9 +72,9 @@ void fsm::deleteTransition(fsmEdge* edge) {
 void fsm::deleteNode(fsmNode* node) {
 	assert(std::find(this->nodes.begin(), this->nodes.end(), node) != this->nodes.end());
 	
-	for(auto t : node->getTransitions())
+	for(auto t : node->getEdges())
 		deleteTransition(t);
-	for(auto t : node->getInputTransitions())
+	for(auto t : node->getInputEdges())
 		deleteTransition(t);
 	
 	nodes.remove(node);
@@ -86,7 +94,7 @@ void fsm::connect(fsmNode* begin, fsmNode* end) {
 		auto n = beginNodes.top();
 		beginNodes.pop();
 
-		for(auto t : n->getTransitions()){
+		for(auto t : n->getEdges()){
 			if(t->getTargetNode() == nullptr)
 				endEdges.push_back(t);
 			else
@@ -136,7 +144,7 @@ void fsm::printGraphVis(std::ofstream& file) const {
 		file << "\te" << end->getSourceNode()->getID() << " [shape = doublecircle, fixedsize = true, style = filled, fillcolor = black, fontcolor = white, label = end];\n";
 	
 	for(auto node : nodes) {
-		if(!node->getInputTransitions().empty())
+		if(!node->getInputEdges().empty())
 			file << "\t "<< node->getID() <<" [label = "<< node->getLineNb() <<", shape = circle, fixedsize = true "<< ((node->getFlags() & fsmNode::N_ATOMIC)? ", style = dotted" : "") << "];\n";
 	}
 

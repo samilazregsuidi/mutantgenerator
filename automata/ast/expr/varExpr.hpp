@@ -36,8 +36,6 @@ public:
 
 	std::string getTypeDescr(void) const override;
 
-	symbol::Type getExprType(void) const;
-
 	expr* deepCopy(void) const override;
 
 private:

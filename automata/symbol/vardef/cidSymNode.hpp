@@ -6,11 +6,15 @@
 //T_CID
 class cidSymNode : public varSymNode{
 public:
-	cidSymNode(int lineNb, const std::string& name, int bound = 1, expr* init = nullptr);
+	cidSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
 	
 	std::string getTypeName(void) const override;
 
 	int getTypeSize(void) const override;
+
+	int getUpperBound(void) const override;
+	
+	int getLowerBound(void) const override;
 
 	void acceptVisitor(symTabVisitor* visitor) override;
 

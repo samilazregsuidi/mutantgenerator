@@ -31,23 +31,37 @@ private:
 
 public:
 	~fsmNode(void);
+	
 	fsmEdge *createfsmEdge(int lineNb, const astNode *expression = nullptr, fsmNode *target = nullptr);
+	
 	fsmEdge *copyfsmEdge(const fsmEdge *trans);
+
 	void addTransition(fsmEdge *trans);
+	
 	void removeTransition(fsmEdge *trans);
+	
 	void addInputTransition(fsmEdge *trans);
+	
 	void removeInputTransition(fsmEdge *trans);
+	
 	void addFlags(unsigned int flags);
 
 	fsm* getParent(void) const;
+	
 	void detachTransitions(void);
 
 	void printFsmNode(const std::list<const fsmNode *> &printed, int level) const;
+	
 	unsigned int getFlags(void) const;
+	
 	void setLineNb(int lineNb);
+	
 	int getLineNb(void) const;
-	std::list<fsmEdge *> getTransitions(void) const;
-	std::list<fsmEdge *> getInputTransitions(void) const;
+	
+	std::list<fsmEdge *> getEdges(void) const;
+	
+	std::list<fsmEdge *> getInputEdges(void) const;
+	
 	void orderAcceptTransitions(void);
 
 	operator std::string(void) const;

@@ -7,25 +7,36 @@ class expr;
 
 class varSymNode : public symbol{
 public:
-	varSymNode(Type type, int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
-
-	//TODO: deep copy required for decl mutations
-
-	~varSymNode() override ;
-
 	static varSymNode *createSymbol(Type type, int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
 	
 	static varSymNode *createSymbol(Type type, const varSymNode &old);
 	
 	template<Type type> static varSymNode* createSymbol(int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
 
-	//unsigned int processVariables(symbol* global, const mTypeList* mTypes, unsigned int offset, bool isGlobal) override;
+	static int getLowerBound(Type type);
+
+	static int getUpperBound(Type type);
+	
+	template<Type type> static int getLowerBound(void);
+
+	template<Type type> static int getUpperBound(void);
+	
+public:
+	varSymNode(Type type, int lineNb, const std::string& name = std::string(), unsigned int bound = 1, expr* init = nullptr);
+
+	//TODO: deep copy required for decl mutations
+
+	~varSymNode() override ;
 
 	expr* getInitExpr(void) const;
 
 	void setInitExpr(expr* newInit);
 	
 	unsigned int getBound(void) const;
+
+	virtual int getUpperBound(void) const;
+	
+	virtual int getLowerBound(void) const;
 
 	unsigned int getSizeOf(void) const override; 
 

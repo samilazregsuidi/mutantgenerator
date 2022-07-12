@@ -8,15 +8,23 @@ exprConst::exprConst(int constant, int lineNb)
     : expr(astNode::E_EXPR_CONST, lineNb)
     , constant(constant)
 {
+    setExprType(symbol::T_INT);
+}
+
+exprConst::exprConst(astNode::Type type, int constant, int lineNb) 
+    : expr(type, lineNb)
+    , constant(constant)
+{
+    setExprType(symbol::T_INT);
 }
 
 int exprConst::getCstValue(void) const {
     return constant;
 }
 
-void exprConst::setCstValue(int constant) {
+/*void exprConst::setCstValue(int constant) {
     this->constant = constant;
-}
+}*/
 
 exprConst::operator std::string() const {
     return std::to_string(constant);
@@ -69,8 +77,8 @@ astNode* exprConst::deepCopy(void) const {
 }
 
 bool exprConst::exceed_limits(int add) const {
-    return (constant + add > symbol::getUpperBound(getExprType()) 
-    || constant + add < symbol::getLowerBound(getExprType()));
+    return (constant + add > varSymNode::getUpperBound(getExprType()) 
+    || constant + add < varSymNode::getLowerBound(getExprType()));
 }
 
 std::vector<astNode*> exprConst::getMutations(void) const {
@@ -89,7 +97,7 @@ std::vector<astNode*> exprConst::getMutations(void) const {
  * *************************************************************/
 
 exprTrue::exprTrue(int lineNb)
-    : expr(astNode::E_EXPR_TRUE, lineNb)
+    : exprConst(astNode::E_EXPR_TRUE, 1, lineNb)
 {
     setExprType(symbol::T_BOOL);
 }
@@ -119,7 +127,7 @@ std::vector<astNode*> exprTrue::getMutations(void) const {
  * *************************************************************/
 
 exprFalse::exprFalse(int lineNb)
-    : expr(astNode::E_EXPR_FALSE, lineNb)
+    : exprConst(astNode::E_EXPR_FALSE, 0, lineNb)
 {
     setExprType(symbol::T_BOOL);
 }

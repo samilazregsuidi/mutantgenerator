@@ -33,6 +33,8 @@ exprVarRefName::exprVarRefName(const std::string& symName, varSymNode *sym, int 
 	, symName(symName)
 	, sym(sym)
 {
+	assert(getExprType() == symbol::T_NA);
+	setExprType(sym->getType());
 }
 
 std::string exprVarRefName::getName(void) const {
@@ -79,11 +81,10 @@ varSymNode* exprVarRefName::resolve(symTable *global, symTable *subField) {
 		//assert(false);
 	}
 
-	return sym;
-}
+	assert(getExprType() == symbol::T_NA);
+	setExprType(sym->getType());
 
-symbol::Type exprVarRefName::getExprType(void) const {
-	return sym->getType();
+	return sym;
 }
 
 expr* exprVarRefName::deepCopy(void) const {
@@ -163,7 +164,7 @@ varSymNode* exprVarRef::resolve(symTable *global, symTable* subField) const {
 	if (sym && getSubField()) {
 		auto uSymbol = dynamic_cast<utypeSymNode*>(sym);
 		assert(uSymbol->getUType());
-		getSubField()->resolve(global, uSymbol->getUType()->getSymTable());
+		getSubField()->resolve(global, uSymbol->getUType());
 	}
 
 	return sym;

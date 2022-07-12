@@ -8,6 +8,9 @@
 #include <string>
 #include <unordered_map>
 
+typedef char byte;
+typedef unsigned char ubyte;
+
 class astNode;
 class stmnt;
 class expr;
@@ -56,10 +59,6 @@ public:
 		T_UTYPE,	// Type of variable is a user type (basically, a T_TDEF record is being used as the type): utype points to the type record
 		T_NEVER,	// Never claim
 	};
-
-	static int getUpperBound(Type type);
-	
-	static int getLowerBound(Type type);
 
 	static const unsigned int READ_ACCESS = 0x1;
 	static const unsigned int WRITE_ACCESS = 0x2;
@@ -111,7 +110,7 @@ public:
 
 	symTable* getSymTable(void) const;
 
-	void setSymTable(symTable* parent);
+	virtual void setSymTable(symTable* parent);
 
 	void addToMask(unsigned int mask);
 

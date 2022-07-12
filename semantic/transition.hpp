@@ -17,12 +17,12 @@ class expr;
 #define processTrans 0
 #define directTrans 1
 
-typedef unsigned char byte;
+typedef char byte;
 
 // ProcessTransitions are returned by the executables() function
 class transition {
 public:
-	static transition* selectTransition(std::list<transition*> transList); // Choose a transition and returns it.
+	static transition* sample(const std::list<transition*>& transList); // Choose a transition and returns it.
 	
 	static void destroyProcTransList(std::list<transition*> transList, byte process_or_direct);
 	
@@ -30,25 +30,32 @@ public:
 	
 	static byte isProbabilisticTransList(std::list<transition*> list);
 
-	
-	transition(process* proc, fsmEdge* trans, transition* response);
+	transition(process* proc, const fsmEdge* trans, transition* response = nullptr);
 	
 	~transition();
 	
-	transition* copyProcessTransition(void) const;
+	transition* deepCopy(void) const;
+
+	process* getProc(void) const;
+
+	const fsmEdge* getEdge(void) const;
+
+	transition* getResponse(void) const;
+
+
 
 	// Expression evaluation (flag)
-#define EVAL_EXECUTABILITY 0
-#define EVAL_EXPRESSION 1
+//#define EVAL_EXECUTABILITY 0
+//#define EVAL_EXPRESSION 1
 
 	//trans or state, signature can be optimized!
-	int eval(state* state, process* mask, expr* expression, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
+//	int eval(state* state, process* mask, expr* expression, byte flag) const; // Return true <=> transition 'trans' is executable on process 'mask'.
 
 
 public:		//
-	fsmEdge* trans;			//  - The transition that can be fired
-	transition* response;		// 	- In case of a rendezvous request, this is the response transition.
 	process* proc;		//	- The mask of the process to which the transition belongs (from the state that was given to executables())
+	const fsmEdge* edge;			//  - The transition that can be fired
+	transition* response;		// 	- In case of a rendezvous request, this is the response transition.
 	double prob;
 };
 
@@ -56,7 +63,7 @@ public:		//
 // The (synchronous) product between the E_never and E transitions is calculated by iterating through the E list for
 // each E_never element.  This means that if E_never is NULL, then the whole thing is done; if E is NULL, then the
 // E_never list has to be advanced, and the E list reset to the beginning (E_save).
-class stackElt {
+/*class stackElt {
 public:
 	stackElt(state* state, int nbErrors);
 	~stackElt();
@@ -76,7 +83,7 @@ public:
 	void printStackElementStack(symTable* globalSymTab, std::stack<stackElt*>& stack, state* loopBegin, stackElt* prevTopElt) const;
 	~execution();
 };
-
+*/
 /*
  * API
  * * * * * * * * * * * * * * * * * * * * * * * */

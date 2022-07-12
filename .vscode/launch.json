@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/mutantgenerator",
-            "args": ["helloworld7.pml"],
+            "args": ["helloworld.pml"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

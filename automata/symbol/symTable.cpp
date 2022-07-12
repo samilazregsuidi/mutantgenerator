@@ -40,6 +40,11 @@ std::string symTable::getNameSpace(void) const {
 	return name;
 }
 
+void symTable::setPrevSymTab(symTable* symTab) {
+	assert(prev != nullptr);
+	prev = symTab;
+}
+
 symTable* symTable::prevSymTab(void) const {
 	return prev;
 }

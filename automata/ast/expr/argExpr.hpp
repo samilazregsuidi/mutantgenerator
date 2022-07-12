@@ -3,11 +3,11 @@
 
 #include "expr.hpp"
 
-class exprRArg : public astNode
+class exprRArg : public expr
 {
 protected:
 	exprRArg(Type type, int lineNb)
-		: astNode(type, lineNb)
+		: expr(type, lineNb)
 	{}
 };
 
@@ -49,7 +49,9 @@ public:
 class exprRArgConst : public exprRArg
 {
 public:
-	exprRArgConst(int constant, int lineNb);
+	exprRArgConst(exprConst* cst, int lineNb);
+
+	exprConst* getCst(void) const;
 
 	operator std::string() const override;
 
@@ -58,9 +60,6 @@ public:
 	int getCstValue(void) const;
 
 	astNode* deepCopy(void) const override;
-
-private:
-	int constant;
 };
 
 //E_RARGLIST,			// child[0] = E_EXPR_* or E_RARG_VAR or E_RARG_EVAL or E_RARG_CONST,

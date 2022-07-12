@@ -9,6 +9,8 @@
 
 #include <fstream>
 
+class symTable;
+
 class fsmEdge;
 class fsmNode;
 class stmnt;
@@ -17,6 +19,7 @@ class fsm
 {
 
 public:
+	fsm(const symTable* globalSymTab);
 	virtual ~fsm();
 	void destroySkeleton();
 	fsmNode *createFsmNode(int flags, int lineNb);
@@ -34,6 +37,8 @@ public:
 	//symTabNode *getSymTab(void) const;
 	//fsmNode *getInitNode(void) const;
 	//void setInitNode(fsmNode *init);
+
+	const symTable* getGlobalSymTab(void) const;
 
 	void addTransition(fsmEdge* edge);
 	void deleteTransition(fsmEdge* edge);
@@ -58,6 +63,8 @@ private:
 	std::list<fsmNode*> ends;
 	std::list<fsmNode *> nodes;								 // List of ptFsmNode	- This list contains all nodes of the FSM in an arbitrary order.
 	std::list<fsmEdge *> trans;							 // List of fsmEdge	- This list contains all transitions of the FSM in an arbitrary order.
+
+	const symTable* globalSymTab;
 };
 
 #endif

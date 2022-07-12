@@ -3,6 +3,9 @@ bool methane = false;
 
 active proctype controller() {
 
+	int test = 21;
+	bool b = true;
+
 	do  
 	
 	:: pumpOn -> 

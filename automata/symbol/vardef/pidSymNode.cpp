@@ -13,6 +13,14 @@ int pidSymNode::getTypeSize(void) const {
 	return 1;
 }
 
+int pidSymNode::getUpperBound(void) const {
+	return 255;
+}
+	
+int pidSymNode::getLowerBound(void) const {
+	return 0;
+}
+
 bool pidSymNode::castTo(const symbol* sym) const {
  	switch(sym->getType()){
 		 case T_PID:

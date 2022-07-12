@@ -13,6 +13,14 @@ int bitSymNode::getTypeSize(void) const {
 	return 1;
 }
 
+int bitSymNode::getUpperBound(void) const {
+	return 1;
+}
+	
+int bitSymNode::getLowerBound(void) const {
+	return 0;
+}
+
 void bitSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitBit(this);
 }

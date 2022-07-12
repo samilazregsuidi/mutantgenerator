@@ -3,6 +3,7 @@
 
 #include "argExpr.hpp"
 #include "varExpr.hpp"
+#include "constExpr.hpp"
 
 /****************************************************************
  * **************************************************************
@@ -16,6 +17,8 @@
 exprRArgVar::exprRArgVar(exprVarRef *varRef, int lineNb)
 	: exprRArg(astNode::E_RARG_VAR, lineNb)
 {
+	setExprType(varRef->getExprType());
+
 	assert(varRef);
 	addChild("var_ref", varRef);
 }
@@ -49,6 +52,8 @@ astNode* exprRArgVar::deepCopy(void) const {
 exprRArgEval::exprRArgEval(expr *toEval, int lineNb)
 	: exprRArg(astNode::E_RARG_EVAL, lineNb)
 {
+	setExprType(toEval->getExprType());
+
 	assert(toEval);
 	addChild("to_eval", toEval);
 }
@@ -80,13 +85,21 @@ astNode* exprRArgEval::deepCopy(void) const {
  * **************************************************************
  * *************************************************************/
 
-exprRArgConst::exprRArgConst(int constant, int lineNb)
+exprRArgConst::exprRArgConst(exprConst* cst, int lineNb)
 	: exprRArg(astNode::E_RARG_EVAL, lineNb)
-	, constant(constant)
-{}
+{
+	setExprType(cst->getExprType());
+
+	assert(cst);
+	addChild("cst", cst);
+}
+
+exprConst* exprRArgConst::getCst(void) const {
+	return dynamic_cast<exprConst*>(getChild("cst"));
+}
 
 exprRArgConst::operator std::string() const {
-	return std::to_string(constant);
+	return *getCst();
 }
 
 std::string exprRArgConst::getTypeDescr(void) const {
@@ -94,7 +107,7 @@ std::string exprRArgConst::getTypeDescr(void) const {
 }
 
 int exprRArgConst::getCstValue(void) const {
-	return constant;
+	return getCst()->getCstValue();
 }
 
 astNode* exprRArgConst::deepCopy(void) const {

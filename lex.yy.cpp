@@ -1422,7 +1422,7 @@ YY_RULE_SETUP
 case 87:
 YY_RULE_SETUP
 #line 145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_CHAN;
+{ DBUG(TYPE); yylval->iType = symbol::T_CID;
 					  return TYPE; }
 	YY_BREAK
 case 88:

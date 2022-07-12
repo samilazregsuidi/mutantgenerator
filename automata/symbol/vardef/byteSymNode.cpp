@@ -13,6 +13,14 @@ int byteSymNode::getTypeSize(void) const {
 	return 1;
 }
 
+int byteSymNode::getUpperBound(void) const {
+	return std::numeric_limits<unsigned char>::max();
+}
+	
+int byteSymNode::getLowerBound(void) const {
+	return std::numeric_limits<unsigned char>::min();
+}
+
 void byteSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitByte(this);
 }

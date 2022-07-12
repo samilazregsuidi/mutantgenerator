@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <algorithm>
 
 #include "symbols.hpp"
 #include "ast.hpp"
@@ -15,7 +16,7 @@
 
 #include "ASTtoFSM.hpp"
 
-#include "state.hpp"
+#include "semantic.hpp"
 
 extern FILE* yyin;
 extern int yyparse(symTable** symTable, stmnt** program);
@@ -53,6 +54,18 @@ int copyFile(const std::string& source, const std::string& target) {
 	return 0;
 }
 
+void launchExecution(const fsm* automata) {
+	state* current = new state(automata);
+	printf("**********************************\n");
+	current->print();
+	while(transition* trans = transition::sample(current->executables())){
+		current->apply(trans);
+		printf("--------------------------------------\n");
+		current->print();
+		//add error status
+	}
+}
+
 int main(int argc, char *argv[]) {
 
 	if(sizeof(int)   != 4)	{ std::cout << "Bad architecture: int type must be four bytes long.\n"; exit(1); }
@@ -84,13 +97,13 @@ int main(int argc, char *argv[]) {
 	output.close();
 
 	ASTtoFSM converter;
-	fsm* automata = converter.astToFsm(program);
+	fsm* automata = converter.astToFsm(globalSymTab, program);
 	std::ofstream graph;
 	graph.open("fsm_graphvis");
 	automata->printGraphVis(graph);
 	graph.close();
 
-	for(unsigned int i = 1; i <= index; i++) {
+	/*for(unsigned int i = 1; i <= index; i++) {
 		auto copy = program->deepCopy();
 		astNode::mutate(copy, i);
 		output.open("mutants/mutant_"+ std::to_string(i) + ".pml");
@@ -98,7 +111,9 @@ int main(int argc, char *argv[]) {
 		output << stmnt::string(copy);
 		output.close();
 		delete copy;
-	}
+	}*/
+
+	launchExecution(automata);
 
 	//std::ofstream symtable;
 	//symtable.open("sym_table_graphviz");

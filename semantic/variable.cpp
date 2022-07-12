@@ -1,8 +1,14 @@
 #include "variable.hpp"
 
+#include <iterator>
+
+#include "scope.hpp"
 #include "payload.hpp"
 #include "process.hpp"
+
 #include "argExpr.hpp"
+#include "constExpr.hpp"
+#include "varExpr.hpp"
 
 unsigned int padding(const varSymNode* varSym){
 	switch(varSym->getType()){
@@ -34,39 +40,61 @@ unsigned int padding(const varSymNode* varSym){
 
 unsigned int variable::vidCounter = 0;
 
-variable::variable(payload* payLoad, size_t _offset, const varSymNode* varSym, unsigned int index)
-	: symType(varSym)
+variable::variable(scope* sc, size_t _offset, const varSymNode* varSym, unsigned int index)
+	: variable(sc, nullptr, _offset, varSym, index)
+{}
+
+variable::variable(scope* sc, variable* parent, size_t _offset, const varSymNode* varSym, unsigned int index)
+	: sc(sc)
+	, symType(varSym)
 	, index(index)
-	, parent(nullptr)
+	, parent(parent)
 	, offset(_offset)
-	, payLoad(payLoad)
 	, vid(++vidCounter)
 	, sizeOf(0)
 {
 	assert(varSym);
+
+	//assert(varSym->getType() == symbol::T_INT || varSym->getType() == symbol::T_BIT || varSym->getType() == symbol::T_BYTE || varSym->getType() == symbol::T_SHORT);
 
 	name = varSym->getName();
 
 	if(varSym->getBound() > 1)
 		name += "["+std::to_string(index)+"]";
 
-	unsigned int pad = _offset % padding(varSym);
-	offset = _offset + pad;
-	sizeOf += pad;
-		
-	if(varSym->getType() == symbol::T_UTYPE){
-		auto utype = dynamic_cast<const utypeSymNode*>(varSym)->getUType();
-		for(auto field : utype->getFields()) {
-			for(int i = 0; i < field->getBound(); ++i) {
-				auto sub_var = new variable(payLoad, _offset, field, i);
-				_offset += sub_var->getSizeOf();
-				this->addVar(sub_var);
-				sizeOf += sub_var->getSizeOf();
-			}
-		}
-		
-	} else 
-		sizeOf += varSym->getTypeSize();
+	sizeOf += varSym->getTypeSize();
+}
+
+variable::variable(const variable& other) 
+	: name(other.name)
+	, sc(other.sc)
+	, symType(other.symType)
+	, index(other.index)
+	, parent(other.parent)
+	, offset(other.offset)
+	, vid(other.vid)
+	, sizeOf(other.sizeOf)
+{
+}
+
+variable* variable::deepCopy(void) const {
+	variable* copy = new variable(sc, offset, symType, index);
+	return copy;
+}
+
+variable::~variable() {
+}
+
+symbol::Type variable::getType(void) const {
+	return symType->getType();
+}
+
+void variable::assign(scope* sc) {
+	this->sc = sc;
+}
+
+scope* variable::getScope(void) const {
+	return sc;
 }
 
 void variable::init(void) {
@@ -74,183 +102,362 @@ void variable::init(void) {
 	auto initExpr = symType->getInitExpr();
 
 	if(initExpr)
-		payLoad->setValue(offset, dynamic_cast<exprConst*>(initExpr)->getCstValue, symType->getType());
+		setValue(dynamic_cast<exprConst*>(initExpr)->getCstValue());
+}
 
-	for(auto var : varList)
-		var->init();
+int variable::operator = (const variable& rvalue) {
+	int res = rvalue.getValue(); 
+	setValue(res);
+	return res;
+}
 
+int variable::operator ++ (void) {
+	setValue(getValue()+1);
+	return getValue();
+}
+
+int variable::operator -- (void) {
+	setValue(getValue()-1);
+	return getValue();
+}
+
+int variable::operator ++ (int) {
+	auto temp = getValue();
+	setValue(getValue()+1);
+	return temp;
+}
+
+int variable::operator -- (int) {
+	auto temp = getValue();
+	setValue(getValue()-1);
+	return temp;
+}
+
+bool variable::operator == (const variable& other) const {
+	return getValue() == other.getValue();
+}
+
+bool variable::operator != (const variable& other) const {
+	return getValue() == other.getValue();
+}
+
+void variable::setParent(const variable* parent) {
+	this->parent = parent;
 }
 
 std::string variable::getName(void) const {
 	return parent? parent->getName() + "." + name : name;
 }
 
-void variable::addVar(variable* field) {
+unsigned int variable::getVariableId(void) const {
+	return vid;
+}
+
+void variable::addField(variable* field) {
 	field->setParent(this);
-	varMap[field->getName()] = field;
+	sc->_addVariable(field);
 	varList.push_back(field);
+	sizeOf += field->getSizeOf();
+}
+
+size_t variable::getSizeOf(void) const {
+	return sizeOf;
+}
+
+size_t variable::_getSizeOf(void) const {
+	return sizeOf;
+}
+
+void variable::setValue(int value) {
+	assert(value >= varSymNode::getLowerBound(symType->getType()) && value <= varSymNode::getUpperBound(symType->getType()));
+	sc->getPayload()->setValue(offset, value, symType->getType());
+}
+	
+int variable::getValue(void) const {
+	auto value = sc->getPayload()->getValue(offset, symType->getType());
+	assert(value >= varSymNode::getLowerBound(symType->getType()) && value <= varSymNode::getUpperBound(symType->getType()));
+	return value;
 }
 
 void variable::print(void) const {
-		
-	if(symType->getType() != symbol::T_UTYPE){
-		auto value = payLoad->getValue(offset, symType->getType());
-
-		if(symType->getType() == symbol::T_MTYPE) 
-			printf("   %-35s = %d(mtype)\n", getName(), value);
-		else 	
-			printf("   %-35s = %d\n", getName(), value);
-	}
-
-	for(auto var : varList)
-		var->print();
+	auto value = sc->getPayload()->getValue(offset, symType->getType());
+	printf("0x%-4lx:   %-23s = %d\n", offset, getName().c_str(), value);
 }
 
 /*************************************************************************************************/
 
-channel::channel(payload* payLoad, size_t _offset, const chanSymNode* chanSym, unsigned int index)
-	: variable(payLoad, _offset, chanSym, index)
+utypeVar::utypeVar(scope* sc, variable* parent, size_t offset, const utypeSymNode* sym, unsigned int index)
+	: variable(sc, parent, offset, sym, index)
 {
-	if(chanSym->getBound() > 1)
-		name += "["+std::to_string(index)+"]";
-
-	if(chanSym->getCapacity() != 0) {
-		sizeOf += 1;
-		_offset += 1;
-	} else {
-		payLoad = new payload();
-	}
-
-	for(int i = 0; i < chanSym->getCapacity(); ++i){
-		unsigned int fieldIndex = 0;
-		for(auto typeSym: chanSym->getTypeList()){
-			for(auto j = 0; j < typeSym->getBound(); ++j){
-				auto msgField = new messageField(payLoad, _offset, typeSym, fieldIndex++, i, j);
-				addVar(msgField);
-				_offset += msgField->getSizeOf();
-			}
+	for(auto field : sym->getUType()->getFields()) {
+		for(auto var : sc->createVariables(field)) {
+			addField(var);
 		}
 	}
-
-	if(chanSym->getCapacity() > 0)
-		for(auto msgField : varList)
-			sizeOf += msgField->getSizeOf();
 }
 
-channel::channel(payload* playLoad, size_t offset, const chanSymNode* chanSym, unsigned int bound)
-	: variable(payLoad, offset, chanSym, bound ) 
+utypeVar::utypeVar(scope* sc, size_t offset, const utypeSymNode* sym, unsigned int index)
+	: utypeVar(sc, nullptr, offset, sym, index)
 {}
 
-channel::~channel() {
-	if(isRendezVous())
-		delete payLoad;
+int utypeVar::operator = (const variable& rvalue) {
+	assert(false);
 }
 
-
-
-void channel::send(const std::list<const variable*>& args) {
-	
-	auto argIt = args.cbegin();
-
-	for(auto field : varList) {
-
-		field->setValue((*argIt)->getValue());
-		
-		argIt++;
-	}
-
-	len(len()+1);
+int utypeVar::operator ++ (void) {
+	assert(false);
 }
 
-void channel::receive(const std::list<variable*>& args) {
-
-	auto argIt = args.begin();
-
-	for(auto field : varList) {
-
-		(*argIt)->setValue(field->getValue());
-		
-		argIt++;
-	}
-
-	len(len()-1);
+int utypeVar::operator -- (void) {
+	assert(false);
 }
 
-variable* channel::getField(unsigned int index) const {
-	assert(0 < index && index < varList.size());
-	return std::advance(varList.begin(), index);
+int utypeVar::operator ++ (int) {
+	assert(false);
 }
 
-bool channel::isRendezVous(void) const {
-	getCapacity() == 0;
+int utypeVar::operator -- (int) {
+	assert(false);
 }
 
-bool channel::isFull(void) const {
-	return len() == getCapacity();
+bool utypeVar::operator == (const variable& other) const {
+	assert(false);
 }
 
-bool channel::isEmpty(void) const {
-	return len() == 0;
+bool utypeVar::operator != (const variable& other) const {
+	assert(false);
 }
 
-byte channel::len(void) const {
-	if(isRendezVous())
-		return 0;
-	return payLoad->getValue<byte>(offset);
+variable* utypeVar::deepCopy(void) const {
+	utypeVar* copy = new utypeVar(*this);
+	//warning shared payload! 
+	return copy;
 }
 
-void channel::len(byte newLen) const {
-	if(!isRendezVous()) {
-		assert(newLen < getCapacity());
-		payLoad->setValue<byte>(offset, newLen);
-	}
+void utypeVar::print(void) const {
+
 }
 
-byte channel::getCapacity(void) const {
-	return dynamic_cast<const chanSymNode*>(symType)->getCapacity());
-}
+/*************************************************************************************************/
 
-void channel::print(void) const {
-	
-	for(auto msgField : varList)
-		msgField->print();
-}
-
-/**************************************************************************************************/
-
-messageField::messageField(payload* playLoad, size_t offset, const varSymNode* sym, unsigned int fieldNumber, unsigned int messageIndex, unsigned int index)
-	: variable(payLoad, offset, sym, index)
-{
-	name = ".("+sym->getTypeName()+")m" + std::to_string(messageIndex) + ".f" + std::to_string(fieldNumber) + name;
-}
-
-/**************************************************************************************************/
-
-CIDVariable::CIDVariable(payload* playLoad, size_t offset, const varSymNode* sym, unsigned int bound =  0) 
-	: variable(payLoad, offset, sym, bound)
+boolVar::boolVar(scope* sc, size_t offset, const boolSymNode* sym, unsigned int index)
+	: boolVar(sc, nullptr, offset, sym, index)
 {}
 
-channel* CIDVariable::getRefChannel(void) const {
-	return ref;
+boolVar::boolVar(scope* sc, variable* parent, size_t offset, const boolSymNode* sym, unsigned int index)
+	: variable(sc, parent, offset, sym, index)
+{}
+
+variable* boolVar::deepCopy(void) const {
+	return new boolVar(*this);
 }
+
+int boolVar::operator ++ (void) {
+	assert(false);
+}
+
+int boolVar::operator -- (void) {
+	assert(false);
+}
+
+int boolVar::operator ++ (int) {
+	assert(false);
+}
+
+int boolVar::operator -- (int) {
+	assert(false);
+}
+
+void boolVar::print(void) const {
 	
-void CIDVariable::setRefChannel(channel* newRef) const {
-	ref = newRef;
-	payload->setValue<channel*>(offset, newRef);
+	if(getValue() == 1)
+		printf("0x%-4lx:   %-23s = true\n", offset, getName().c_str());
+	else
+		printf("0x%-4lx:   %-23s = false\n", offset, getName().c_str());
+}
+
+/************************************************************************************************/
+
+constVar::constVar(int value, symbol::Type type, int lineNb)
+	: variable(nullptr, 0, nullptr)
+	, value(value)
+	, type(type)
+	, lineNb(lineNb)
+{}
+
+constVar::constVar(const constVar& other) 
+	: variable(other)
+	, value(other.value)
+	, type(other.type)
+	, lineNb(other.lineNb)
+{}
+
+symbol::Type constVar::getType(void) const {
+	return type;
+}
+
+void constVar::setValue(int value) {
+	assert(false);
+}
+
+int constVar::getValue(void) const {
+	return value;
+}
+
+int constVar::operator = (const variable& rvalue) {
+	assert(false);
+}
+
+int constVar::operator ++ (void) {
+	assert(false);
+}
+
+int constVar::operator -- (void) {
+	assert(false);
+}
+
+int constVar::operator ++ (int) {
+	assert(false);
+}
+
+int constVar::operator -- (int) {
+	assert(false);
+}
+
+variable* constVar::deepCopy(void) const {
+	constVar* copy = new constVar(*this);
+	//warning shared payload! 
+	return copy;
 }
 
 /******************************************************************************************************/
 
-PIDVariable::PIDVariable(payload* playLoad, size_t offset, const varSymNode* sym, unsigned int bound =  0) 
-	: variable(payLoad, offset, sym, bound)
+mtypeVar::mtypeVar(scope* sc, variable* parent, size_t offset, const mtypeSymNode* sym, unsigned int index)
+	: variable(sc, parent, offset, sym, index)
 {}
 
-process* PIDVariable::getRefProcess(void) const {
+mtypeVar::mtypeVar(scope* sc, size_t offset, const mtypeSymNode* sym, unsigned int index) 
+	: mtypeVar(sc, nullptr, offset, sym, index)
+{}
+
+
+void mtypeVar::init(void) {
+
+	auto initExpr = symType->getInitExpr();
+
+	if(initExpr) {
+		
+		//its a cmtype value...
+		assert(initExpr->getType() == astNode::E_EXPR_VAR);
+
+		auto sym = dynamic_cast<exprVar*>(initExpr)->getFinalSymbol();
+		assert(sym && sym->getType() == symbol::T_CMTYPE);
+
+		setValue(dynamic_cast<const cmtypeSymNode*>(sym)->getIntValue());
+	}
+}
+
+
+int mtypeVar::operator ++ (void) {
+	assert(false);
+}
+
+int mtypeVar::operator -- (void) {
+	assert(false);
+}
+
+int mtypeVar::operator ++ (int) {
+	assert(false);
+}
+
+int mtypeVar::operator -- (int) {
+	assert(false);
+}
+
+variable* mtypeVar::deepCopy(void) const {
+	mtypeVar* copy = new mtypeVar(*this);
+	//warning shared payload! 
+	return copy;
+}
+
+void mtypeVar::print(void) const {
+	auto value = getValue();
+	if(value) {
+		auto def = dynamic_cast<const mtypeSymNode*>(symType)->getMTypeDef();
+		auto mtypestr = def->getCmtypeSymNodeName(value);
+		printf("0x%-4lx:   %-23s = %s\n", offset, getName().c_str(), mtypestr.c_str());
+	} else {
+		printf("0x%-4lx:   %-23s = nil\n", offset, getName().c_str());
+	}
+}
+
+/******************************************************************************************************/
+
+cmtypeVar::cmtypeVar(scope* sc, const cmtypeSymNode* sym) 
+	: variable(sc, 0, sym)
+{}
+
+void cmtypeVar::setValue(int value) {
+	assert(false);
+}
+	
+int cmtypeVar::getValue(void) const {
+	return dynamic_cast<const cmtypeSymNode*>(symType)->getIntValue();
+}
+
+variable* cmtypeVar::deepCopy(void) const {
+	cmtypeVar* copy = new cmtypeVar(*this);
+	//warning shared payload! 
+	return copy;
+}
+
+int cmtypeVar::operator = (const variable& rvalue) {
+	assert(false);
+}
+
+int cmtypeVar::operator ++ (void) {
+	assert(false);
+}
+
+int cmtypeVar::operator -- (void) {
+	assert(false);
+}
+
+int cmtypeVar::operator ++ (int) {
+	assert(false);
+}
+
+int cmtypeVar::operator -- (int) {
+	assert(false);
+}
+
+void cmtypeVar::print(void) const {
+	//assert(false);
+}
+
+/******************************************************************************************************/
+
+PIDVar::PIDVar(scope* sc, size_t offset, const pidSymNode* sym, unsigned int bound) 
+	: variable(sc, offset, sym, bound)
+	, ref(nullptr)
+{}
+
+PIDVar::PIDVar(const PIDVar& other) 
+	: variable(other)
+	, ref(other.ref)
+{}
+
+variable* PIDVar::deepCopy(void) const{
+	variable* copy = new PIDVar(*this);
+	return copy;
+}
+
+process* PIDVar::getRefProcess(void) const {
 	return ref;
 }
 	
-void PIDVariable::setRefProcess(process* newRef) const {
+void PIDVar::setRefProcess(process* newRef) {
 	ref = newRef;
-	payload->setValue(offset, newRef->getPid(), sym->getType());
+	sc->getPayload()->setValue<byte>(offset, newRef->getPid());
 }
 

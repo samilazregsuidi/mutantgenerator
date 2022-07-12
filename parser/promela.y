@@ -38,13 +38,13 @@ int yyerror (symTable** globalSymTab, stmnt** program, const char* msg){
 std::string nameSpace = "global";
 symbol::Type declType = symbol::T_NA;
 tdefSymNode* typeDef = nullptr;
+mtypedefSymNode* mtypeDef = nullptr;
 
 symTable* currentSymTab = nullptr;
 symTable* savedSymTab = nullptr;
 
 std::list<varSymNode*> declSyms;
 std::list<varSymNode*> typeLst;
-std::unordered_map<std::string, cmtypeSymNode*> mtypes; 
 std::list<std::string> params;
 
 int mtypeId = 0;
@@ -238,7 +238,7 @@ events	: TRACE body							{ std::cout << "Event sequences (traces) are not suppo
 
 utypedef: TYPEDEF NAME '{' decl_lst '}'			{	
 													std::cout << "REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n";
-													tdefSymNode* tdef = new tdefSymNode($2, declSyms, nbrLines);
+													tdefSymNode* tdef = new tdefSymNode($2, *globalSymTab, declSyms, nbrLines);
 													$$ = new tdefDecl(tdef, nbrLines);
 													(*globalSymTab)->insert(tdef);
 													for(auto declSym : declSyms)
@@ -248,15 +248,16 @@ utypedef: TYPEDEF NAME '{' decl_lst '}'			{
 												}
 		;
 		
-mtypedef: vis TYPE asgn '{' nlst '}'			{	
+mtypedef: vis TYPE  asgn 						{	mtypeDef = new mtypedefSymNode(nbrLines);	} 
+							'{' nlst '}' 		{
+													assert(mtypeDef->getMTypeList().size() != 0);
+													(*globalSymTab)->insert(mtypeDef);
+
 													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
 													if($2 != symbol::T_MTYPE) {
 														std::cout <<  "This syntax only works for MTYPEs definition.";
 														exit(1);
 													}
-													mtypedefSymNode* mtypeDef = new mtypedefSymNode(mtypes, nbrLines);
-													mtypes.clear();
-													(*globalSymTab)->insert(mtypeDef);
 													$$ = new mtypeDecl(mtypeDef, nbrLines);
 													// The mtype values are added in the nlst rule.
 												}
@@ -544,16 +545,18 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 		| '-' expr %prec UMIN					{ 	if($2->getType() != astNode::E_EXPR_CONST) 
 														$$ = new exprUMin($2, nbrLines);
 													else {
-														exprConst* tmp = static_cast<exprConst*>($2);
-														tmp->setCstValue(- tmp->getCstValue());
-														$$ = tmp;
+														exprConst* tmp = dynamic_cast<exprConst*>($2);
+														$$ = new exprConst(- tmp->getCstValue(), nbrLines);
+														delete tmp;
 													}
 												} 
 		| SND expr %prec NEG					{ $$ = new exprNeg	($2, nbrLines); }
 		| '(' expr SEMI expr ':' expr ')'		{ $$ = new exprCond	($2, $4, $6, nbrLines); }
-		| RUN aname '(' args ')' Opt_priority	{ $$ = new exprRun	($2, $4, nbrLines); free($2); }
-		| RUN aname '[' varref ']' '(' args ')' Opt_priority
-						     					{ $$ = new exprRun	($2, $7, $4, nbrLines); free($2); }
+		| RUN aname '(' args ')' Opt_priority	{ auto run = new exprRun ($2, $4, nbrLines);
+												  $$ = run;
+												  auto procSym = run->resolve(*globalSymTab); 
+												  assert(procSym); free($2); 
+												}
 		| LEN '(' varref ')'					{ $$ = new exprLen	($3, nbrLines); }
 		| ENABLED '(' expr ')'					{ std::cout << "The enabled keyword is not supported."; }
 		| varref RCV '[' rargs ']'				{ std::cout << "Construct not supported."; /* Unclear */ }
@@ -624,8 +627,8 @@ arg     : expr									{ $$ = new exprArgList(new exprArg($1, nbrLines), nbrLine
 
 rarg	: varref								{ $$ = new exprRArgVar($1, nbrLines); }
 		| EVAL '(' expr ')'						{ $$ = new exprRArgEval($3, nbrLines); } /*  the received parameter must be equal to the mtype of expr */
-		| CONST									{ $$ = new exprRArgConst($1, nbrLines); }
-		| '-' CONST %prec UMIN					{ $$ = new exprRArgConst(-$2, nbrLines); }
+		| CONST									{ $$ = new exprRArgConst(new exprConst($1, nbrLines), nbrLines); }
+		| '-' CONST %prec UMIN					{ $$ = new exprRArgConst(new exprConst(-$2, nbrLines), nbrLines); }
 		;
 
 /* Receive arguments */
@@ -635,8 +638,8 @@ rargs	: rarg									{ $$ = new exprRArgList($1, nbrLines); }
 		| '(' rargs ')'							{ $$ = $2; }
 		;
 
-nlst	: NAME									{ std::cout << "REDUCE: NAME -> nlst\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, $1, mtypeId++); mtypes[$1] = sym; (*globalSymTab)->insert(sym); free($1); }
-		| nlst NAME								{ std::cout << "REDUCE: nlst NAME -> NAME\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, $2, mtypeId++); mtypes[$2] = sym; (*globalSymTab)->insert(sym); free($2); }
+nlst	: NAME									{ std::cout << "REDUCE: NAME -> nlst\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $1, mtypeId++); (*globalSymTab)->insert(sym); free($1); }
+		| nlst NAME								{ std::cout << "REDUCE: nlst NAME -> NAME\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $2, mtypeId++); (*globalSymTab)->insert(sym); free($2); }
 		| nlst ',' /* commas optional */		{ std::cout << "REDUCE: nlst , -> nlst\n"; }
 		;
 %%

@@ -1149,6 +1149,195 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+semantic/channel.o: semantic/channel.cpp.o
+
+.PHONY : semantic/channel.o
+
+# target to build an object file
+semantic/channel.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o
+.PHONY : semantic/channel.cpp.o
+
+semantic/channel.i: semantic/channel.cpp.i
+
+.PHONY : semantic/channel.i
+
+# target to preprocess a source file
+semantic/channel.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.i
+.PHONY : semantic/channel.cpp.i
+
+semantic/channel.s: semantic/channel.cpp.s
+
+.PHONY : semantic/channel.s
+
+# target to generate assembly for a file
+semantic/channel.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s
+.PHONY : semantic/channel.cpp.s
+
+semantic/payload.o: semantic/payload.cpp.o
+
+.PHONY : semantic/payload.o
+
+# target to build an object file
+semantic/payload.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o
+.PHONY : semantic/payload.cpp.o
+
+semantic/payload.i: semantic/payload.cpp.i
+
+.PHONY : semantic/payload.i
+
+# target to preprocess a source file
+semantic/payload.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.i
+.PHONY : semantic/payload.cpp.i
+
+semantic/payload.s: semantic/payload.cpp.s
+
+.PHONY : semantic/payload.s
+
+# target to generate assembly for a file
+semantic/payload.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.s
+.PHONY : semantic/payload.cpp.s
+
+semantic/process.o: semantic/process.cpp.o
+
+.PHONY : semantic/process.o
+
+# target to build an object file
+semantic/process.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o
+.PHONY : semantic/process.cpp.o
+
+semantic/process.i: semantic/process.cpp.i
+
+.PHONY : semantic/process.i
+
+# target to preprocess a source file
+semantic/process.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.i
+.PHONY : semantic/process.cpp.i
+
+semantic/process.s: semantic/process.cpp.s
+
+.PHONY : semantic/process.s
+
+# target to generate assembly for a file
+semantic/process.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s
+.PHONY : semantic/process.cpp.s
+
+semantic/scope.o: semantic/scope.cpp.o
+
+.PHONY : semantic/scope.o
+
+# target to build an object file
+semantic/scope.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o
+.PHONY : semantic/scope.cpp.o
+
+semantic/scope.i: semantic/scope.cpp.i
+
+.PHONY : semantic/scope.i
+
+# target to preprocess a source file
+semantic/scope.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.i
+.PHONY : semantic/scope.cpp.i
+
+semantic/scope.s: semantic/scope.cpp.s
+
+.PHONY : semantic/scope.s
+
+# target to generate assembly for a file
+semantic/scope.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.s
+.PHONY : semantic/scope.cpp.s
+
+semantic/state.o: semantic/state.cpp.o
+
+.PHONY : semantic/state.o
+
+# target to build an object file
+semantic/state.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
+.PHONY : semantic/state.cpp.o
+
+semantic/state.i: semantic/state.cpp.i
+
+.PHONY : semantic/state.i
+
+# target to preprocess a source file
+semantic/state.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i
+.PHONY : semantic/state.cpp.i
+
+semantic/state.s: semantic/state.cpp.s
+
+.PHONY : semantic/state.s
+
+# target to generate assembly for a file
+semantic/state.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s
+.PHONY : semantic/state.cpp.s
+
+semantic/transition.o: semantic/transition.cpp.o
+
+.PHONY : semantic/transition.o
+
+# target to build an object file
+semantic/transition.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o
+.PHONY : semantic/transition.cpp.o
+
+semantic/transition.i: semantic/transition.cpp.i
+
+.PHONY : semantic/transition.i
+
+# target to preprocess a source file
+semantic/transition.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.i
+.PHONY : semantic/transition.cpp.i
+
+semantic/transition.s: semantic/transition.cpp.s
+
+.PHONY : semantic/transition.s
+
+# target to generate assembly for a file
+semantic/transition.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.s
+.PHONY : semantic/transition.cpp.s
+
+semantic/variable.o: semantic/variable.cpp.o
+
+.PHONY : semantic/variable.o
+
+# target to build an object file
+semantic/variable.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o
+.PHONY : semantic/variable.cpp.o
+
+semantic/variable.i: semantic/variable.cpp.i
+
+.PHONY : semantic/variable.i
+
+# target to preprocess a source file
+semantic/variable.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.i
+.PHONY : semantic/variable.cpp.i
+
+semantic/variable.s: semantic/variable.cpp.s
+
+.PHONY : semantic/variable.s
+
+# target to generate assembly for a file
+semantic/variable.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s
+.PHONY : semantic/variable.cpp.s
+
 y.tab.o: y.tab.cpp.o
 
 .PHONY : y.tab.o
@@ -1299,6 +1488,27 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... semantic/channel.o"
+	@echo "... semantic/channel.i"
+	@echo "... semantic/channel.s"
+	@echo "... semantic/payload.o"
+	@echo "... semantic/payload.i"
+	@echo "... semantic/payload.s"
+	@echo "... semantic/process.o"
+	@echo "... semantic/process.i"
+	@echo "... semantic/process.s"
+	@echo "... semantic/scope.o"
+	@echo "... semantic/scope.i"
+	@echo "... semantic/scope.s"
+	@echo "... semantic/state.o"
+	@echo "... semantic/state.i"
+	@echo "... semantic/state.s"
+	@echo "... semantic/transition.o"
+	@echo "... semantic/transition.i"
+	@echo "... semantic/transition.s"
+	@echo "... semantic/variable.o"
+	@echo "... semantic/variable.i"
+	@echo "... semantic/variable.s"
 	@echo "... y.tab.o"
 	@echo "... y.tab.i"
 	@echo "... y.tab.s"

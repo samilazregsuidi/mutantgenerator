@@ -65,11 +65,11 @@ void fsmNode::removeInputTransition(fsmEdge* trans_in) {
 	this->trans_in.remove(trans_in);
 }
 
-std::list<fsmEdge *> fsmNode::getTransitions(void) const {
+std::list<fsmEdge *> fsmNode::getEdges(void) const {
 	return trans;
 }
 
-std::list<fsmEdge *> fsmNode::getInputTransitions(void) const {
+std::list<fsmEdge *> fsmNode::getInputEdges(void) const {
 	return trans_in;
 }
 

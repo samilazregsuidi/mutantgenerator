@@ -10,11 +10,19 @@ class cmtypeSymNode;
 
 class mtypedefSymNode : public symbol {
 public:
-	mtypedefSymNode(std::unordered_map<std::string, cmtypeSymNode*> mtypes, int lineNb);
+	mtypedefSymNode(const std::unordered_map<std::string, cmtypeSymNode*>& mtypes, int lineNb);
+
+	mtypedefSymNode(int lineNb);
 
 	std::string getTypeName(void) const override;
 
 	int getTypeSize(void) const override;
+
+	int getUpperBound(void) const;
+	
+	int getLowerBound(void) const;
+
+	void addCMType(cmtypeSymNode* mtype);
 
 	const std::unordered_map<std::string, cmtypeSymNode*>& getMTypeList(void) const;
 

@@ -28,7 +28,7 @@ class varSymNode;
 class symTabVisitor;
 class symTabConstVisitor;
 
-
+//symbolTable?
 class symTable {
 public:
 
@@ -48,12 +48,23 @@ public:
 
 	std::set<symbol*> getSymbols(void) const;
 
-	template <typename T> std::set<T> getSymbols() const {
+	template <typename T> std::set<T> getSymbols(void) const {
 		std::set<T> res;
 		for(auto sym : syms) {
 			if(dynamic_cast<T>(sym.second) != nullptr)
 				res.insert(dynamic_cast<T>(sym.second));
 		}
+		return res;
+	}
+
+	template <typename T> std::set<T> getGlobalSymbols(void) const {
+		std::set<T> res = prev? prev->getGlobalSymbols<T>() : std::set<T>();
+
+		for(auto sym : syms) {
+			if(dynamic_cast<T>(sym.second) != nullptr)
+				res.insert(dynamic_cast<T>(sym.second));
+		}
+
 		return res;
 	}
 
@@ -65,6 +76,8 @@ public:
 
 	stmnt* getBlock(void) const;
 
+	void setPrevSymTab(symTable* symTab);
+	
 	symTable* prevSymTab(void) const;
 
 	symTable* getSubSymTab(const std::string& name) const;

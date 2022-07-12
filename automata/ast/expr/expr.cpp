@@ -121,30 +121,12 @@ expr* exprCond::deepCopy(void) const {
  * **************************************************************
  * *************************************************************/
 
-exprRun::exprRun(const std::string& procName, exprArgList *argList, exprVarRef *card, int lineNb)
-	: expr(astNode::E_EXPR_RUN, lineNb)
-	, procName(procName)
-{
-	//assert(argList);
-	assert(card);
-	addChild("arg_list", argList);
-	addChild("card", card);
-}
-
 exprRun::exprRun(const std::string& procName, exprArgList *argList, int lineNb)
 	: expr(astNode::E_EXPR_RUN, lineNb)
 	, procName(procName)
 {
 	//assert(argList);
 	addChild("arg_list", argList);
-}
-
-void exprRun::setCard(exprVarRef* card) {
-	eraseChild("card", card);
-}
-
-exprVarRef* exprRun::getCard(void) const {
-	return dynamic_cast<exprVarRef*>(getChild("card"));
 }
 
 void exprRun::setArgList(exprArgList* argList) {
@@ -155,8 +137,22 @@ exprArgList* exprRun::getArgList(void) const {
 	return dynamic_cast<exprArgList*>(getChild("arg_list"));
 }
 
+std::string exprRun::getProcName(void) const {
+	return procName;
+}
+
+procSymNode* exprRun::resolve(const symTable* symTab) {
+	procSym = dynamic_cast<procSymNode*>(symTab->lookup(procName));
+	assert(procSym);
+	return procSym;
+}
+
+const procSymNode* exprRun::getProcType(void) const {
+	return procSym;
+}
+
 exprRun::operator std::string() const {
-	return "run " + procName + (getCard() ? "[" + std::string(*getCard()) + "]" : "") + "(" + ( getArgList()? std::string(*getArgList()) : "" ) + ")";
+	return "run " + procName + "(" + ( getArgList()? std::string(*getArgList()) : "" ) + ")";
 }
 
 std::string exprRun::getTypeDescr(void) const {

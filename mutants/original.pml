@@ -1,12 +1,10 @@
 #include "./ltl.inc"
-typedef data {
-	int a;
-	int b;
-	bool c;
-}
-
-proctype test(){
-	data d;
-	d.a = 0;
-	d.b = d.b;
+active proctype test(){
+	int i = 0;
+	if
+	::	i == 0;
+		i = 1;
+	::	else;
+		i = 0;
+	fi;
 }

@@ -1,4 +1,6 @@
 #include "ASTtoFSM.hpp"
+
+#include "symbols.hpp"
 #include "ast.hpp"
 #include "automata.hpp"
 
@@ -6,9 +8,9 @@ ASTtoFSM::ASTtoFSM()
     : skip(false)
 {}
 
-fsm* ASTtoFSM::astToFsm(const stmnt* program){
+fsm* ASTtoFSM::astToFsm(const symTable* symTab, const stmnt* program) {
     
-    res = new fsm();
+    res = new fsm(symTab);
     
     program->acceptVisitor(this);
     //assert(current.size() == 1);
@@ -89,7 +91,7 @@ void ASTtoFSM::visit(const stmntIf* node)  {
         opt->acceptVisitor(this);
 
         assert(trans->getTargetNode());
-        for(auto t : trans->getTargetNode()->getTransitions()) {
+        for(auto t : trans->getTargetNode()->getEdges()) {
             t->setSourceNode(start);
         }
         res->deleteNode(trans->getTargetNode());
@@ -133,7 +135,7 @@ void ASTtoFSM::visit(const stmntDo* node)  {
         opt->acceptVisitor(this);
 
         assert(trans->getTargetNode());
-        for(auto t : trans->getTargetNode()->getTransitions()) {
+        for(auto t : trans->getTargetNode()->getEdges()) {
             t->setSourceNode(start);
         }
         res->deleteNode(trans->getTargetNode());

@@ -13,6 +13,14 @@ int boolSymNode::getTypeSize(void) const {
 	return 1;
 }
 
+int boolSymNode::getUpperBound(void) const {
+	return std::numeric_limits<bool>::max();
+}
+	
+int boolSymNode::getLowerBound(void) const {
+	return std::numeric_limits<bool>::min();
+}
+
 void boolSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitBool(this);
 }

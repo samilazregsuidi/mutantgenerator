@@ -114,10 +114,12 @@ public:
 
 	void setVarRef(exprVarRef* varRef);
 
+	//getRValue?
 	exprVarRef* getVarRef() const;
 
 	void setAssign(expr* assign);
 
+	//getLeftValue?
 	expr* getAssign() const;
 
 	operator std::string() const override;

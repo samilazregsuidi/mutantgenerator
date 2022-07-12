@@ -27,6 +27,7 @@ public:
 	//void setFeatures(const ADD& features);
 	//byte getFeaturesValue(void) const;
 	bool project(void);
+	//getExpr?
 	const astNode *getExpression(void) const;
 	double getProbability(void) const;
 	void setExpression(const astNode *expression);

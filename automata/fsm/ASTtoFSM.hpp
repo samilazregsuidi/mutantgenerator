@@ -7,6 +7,8 @@
 #include <list>
 #include <map>
 
+class symTable;
+
 class fsm;
 class fsmNode;
 class fsmEdge;
@@ -14,7 +16,7 @@ class fsmEdge;
 class ASTtoFSM : public ASTConstVisitor {
 public:
 	ASTtoFSM();
-	fsm* astToFsm(const stmnt* program);
+	fsm* astToFsm(const symTable* symTab, const stmnt* program);
 
 	void visit(const stmnt* node) override;
 	void visit(const stmntChanRecv* node) override;

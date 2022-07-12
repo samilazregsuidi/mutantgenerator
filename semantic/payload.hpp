@@ -14,7 +14,7 @@ public:
 
 	payload(size_t size);
 
-	payload(const payload& other);
+	//payload(const payload& other);
 
 	~payload();
 
@@ -28,6 +28,10 @@ public:
 
 	void alloc(size_t size);
 
+	void reset(size_t offset = 0, size_t end = 0);
+
+	unsigned long hash(void) const;
+
 	/*
 	* Returns the offset of the variable referenced by 'expression' in 'process' and 'state'.
 	* Parameters:
@@ -35,12 +39,12 @@ public:
 	*    - process is the environment in which the variable is ANALYZED, NOT in the one the variable is DEFINED.
 	*    - On first call, preOffset must have the same value as the offset of its environment (i.e. global or process).
 	*/
-	unsigned int getVarOffset(const process* varProc, const expr* varExpr) const;
+	//size_t getVarOffset(const process* varProc, const expr* varExpr) const;
 
 	/*
 	* Reads 'nb' bytes in a memory chunk of the state, at offset 'offset', puts them in an array of byte and returns it.
 	*/
-	const byte* readValues(unsigned int offset, int nb) const;
+	//const byte* readValues(unsigned int offset, int nb) const;
 
 	/*
 	* Stores 'nb' bytes in a memory chunk, at offset 'offset'.
@@ -49,35 +53,27 @@ public:
 	*
 	* Does not change the payloadHash.
 	*/
-	void storeValues(unsigned int offset, int nb, const byte* values);
+	//void storeValues(unsigned int offset, int nb, const byte* values);
 
 	// Returns the value stored in 'chunk' at offset 'offset'. The number of read bytes depends on 'type'.
 	/*
 	* Gets the value of ONE cells in a memory chunk of the state.
 	*/
-	template <typename T> T getValue(unsigned int offset) const {
-		byte* bytePtr = reinterpret_cast<byte*>(ptr);
-		assert(bytePtr);
-		bytePtr += offset;
-
-		T* tPtr = (reinterpret_cast<T*>(bytePtr));
+	template <typename T> T getValue(size_t offset) const {
+		T* tPtr = (reinterpret_cast<T*>(ptr + offset));
 		assert(tPtr);
 		return *tPtr;
 	}
 
-	template <typename T> T& getValue(unsigned int offset) {
-		byte* bytePtr = reinterpret_cast<byte*>(ptr);
-		assert(bytePtr);
-		bytePtr += offset;
-
-		T* tPtr = (reinterpret_cast<T*>(bytePtr));
+	template <typename T> T& getValue(size_t offset) {
+		T* tPtr = (reinterpret_cast<T*>(ptr + offset));
 		assert(tPtr);
 		return *tPtr;
 	}
 
 	//int& getValue(unsigned int offset, symbol::Type type);
 
-	int getValue(unsigned int offset, symbol::Type type) const;
+	int getValue(size_t offset, symbol::Type type) const;
 	
 	// Set the value stored in 'chunk' at offset 'offset' to 'value'. The number of read bytes depends on 'type'.
 	
@@ -87,26 +83,21 @@ public:
 	 *
 	 * Does not change the payloadHash.
 	 */
-	template <typename T> void setValue(unsigned int offset, const T& value) {
-		byte* bytePtr = reinterpret_cast<byte*>(ptr);
-		assert(bytePtr);
-		bytePtr += offset;
-
-		T* tPtr = (reinterpret_cast<T*>(bytePtr));
+	template <typename T> void setValue(size_t offset, const T& value) {
+		T* tPtr = (reinterpret_cast<T*>(ptr + offset));
 		assert(tPtr);
 		*tPtr = value;
 	}
 
-	void setValue(unsigned int offset, int value, symbol::Type type);
+	void setValue(size_t offset, int value, symbol::Type type);
 
-	void initValues(unsigned int offset, int bytesNbr, byte value);
+	//void initValues(unsigned int offset, int bytesNbr, byte value);
 
 	bool operator == (const payload& other) const;
 
 private:
-	void* ptr;
+	byte* ptr;
 	size_t size;
-	unsigned int hash;
 };
 
 #endif

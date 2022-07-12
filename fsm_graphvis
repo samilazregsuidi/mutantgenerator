@@ -1,11 +1,15 @@
 digraph finite_state_machine {
 	rankdir=LR
 	size="8,5"
-	93824992978480 [label = 10, shape = doublecircle, fixedsize = true]; 
-	s93824992978480 [shape = point];
-	e93824992978880 [shape = doublecircle, fixedsize = true, style = filled, fillcolor = black, fontcolor = white, label = end];
-	 93824992978880 [label = 11, shape = circle, fixedsize = true ];
-	s93824992978480 -> 93824992978480;
-	93824992978480 -> 93824992978880 [label = "d.a = 0; "];
-	93824992978880 -> e93824992978880 [label = "d.b = d.b; "];
+	93824993124832 [label = 3, shape = doublecircle, fixedsize = true]; 
+	s93824993124832 [shape = point];
+	e93824993125520 [shape = doublecircle, fixedsize = true, style = filled, fillcolor = black, fontcolor = white, label = end];
+	e93824993126224 [shape = doublecircle, fixedsize = true, style = filled, fillcolor = black, fontcolor = white, label = end];
+	 93824993125520 [label = 4, shape = circle, fixedsize = true ];
+	 93824993126224 [label = 5, shape = circle, fixedsize = true ];
+	s93824993124832 -> 93824993124832;
+	93824993124832 -> 93824993125520 [label = "i == 0; "];
+	93824993125520 -> e93824993125520 [label = "i = 1; "];
+	93824993124832 -> 93824993126224 [label = "else; "];
+	93824993126224 -> e93824993126224 [label = "i = 0; "];
 }

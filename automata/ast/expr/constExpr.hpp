@@ -10,10 +10,10 @@ class exprConst : public expr
 {
 public:
 	exprConst(int constant, int lineNb);
-	
+
 	int getCstValue(void) const;
 	
-	void setCstValue(int constant);
+	//void setCstValue(int constant);
 
 	operator std::string() const override;
 
@@ -27,6 +27,9 @@ public:
 
 	astNode* deepCopy(void) const override;
 
+protected:
+	exprConst(astNode::Type type, int constant, int lineNb);
+
 private:
 	bool exceed_limits(int add) const;
 
@@ -35,7 +38,7 @@ private:
 };
 
 //E_EXPR_TRUE,		// iVal = 1
-class exprTrue : public expr
+class exprTrue : public exprConst
 {
 public:
 	exprTrue(int lineNb);
@@ -53,7 +56,7 @@ public:
 };
 
 //E_EXPR_FALSE,		// iVal = 0
-class exprFalse : public expr
+class exprFalse : public exprConst
 {
 public:
 	exprFalse(int lineNb);

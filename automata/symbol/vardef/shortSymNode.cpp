@@ -13,6 +13,14 @@ int shortSymNode::getTypeSize(void) const {
 	return 2;
 }
 
+int shortSymNode::getUpperBound(void) const {
+	return std::numeric_limits<short>::max();
+}
+	
+int shortSymNode::getLowerBound(void) const {
+	return std::numeric_limits<short>::min();
+}
+
 void shortSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitShort(this);
 }

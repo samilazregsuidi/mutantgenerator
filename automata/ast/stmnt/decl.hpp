@@ -148,7 +148,7 @@ public:
 
 private:
 	std::string name;
-	std::list<varSymNode*> args;
+	std::list<varSymNode*> args;//?
 	exprConst* active;
 	procSymNode* procSym;
 };

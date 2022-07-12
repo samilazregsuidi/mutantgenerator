@@ -3,20 +3,12 @@
 #include "varSymNode.hpp"
 #include "symTabVisitor.hpp"
 
-tdefSymNode::tdefSymNode(const std::string& name,  const std::list<varSymNode*>& fields, int lineNb)
+tdefSymNode::tdefSymNode(const std::string& name, symTable* st, const std::list<varSymNode*>& fields, int lineNb)
 	: symbol(symbol::T_TDEF, name, lineNb)
+	, symTable(name, st)
 {
 	for(auto field : fields)
-		this->fields.insert(field);
-
-	symTab = new symTable(name);
-	for(auto f : this->fields)
-		symTab->insert(f);
-}
-
-tdefSymNode::~tdefSymNode(void) {
-	for(auto f: fields)
-		delete f;
+		insert(field);
 }
 
 std::string tdefSymNode::getTypeName(void) const {
@@ -27,12 +19,19 @@ int tdefSymNode::getTypeSize(void) const {
 	return 0;
 }
 
-const std::set<varSymNode*>& tdefSymNode::getFields(void) const {
-	return fields;
+std::set<varSymNode*> tdefSymNode::getFields(void) const {
+	std::set<varSymNode*> res;
+	for(auto sym : getSymbols()){
+		auto varSym = dynamic_cast<varSymNode*>(sym);
+		assert(varSym);
+		res.insert(varSym);
+	}
+	return res;
 }
 
-symTable* tdefSymNode::getSymTable(void) const {
-	return symTab;
+void tdefSymNode::setSymTable(symTable* symTab) {
+	parent = symTab;
+	setPrevSymTab(symTab);
 }
 
 void tdefSymNode::acceptVisitor(symTabConstVisitor *visitor) const{
@@ -49,7 +48,8 @@ void tdefSymNode::acceptVisitor(symTabVisitor *visitor) {
 }*/
 
 tdefSymNode::operator std::string(void) const {
-	std::string res = getTypeName() + " " + name + "{\n";
+	std::string res = getTypeName() + " " + symbol::name + "{\n";
+	auto fields = getFields();
 	for(auto it = fields.begin(); it != fields.end();){
 		res += "\t" + std::string(*(*it)) + (++it != fields.end() ? ";" : "") + "\n";
 	}

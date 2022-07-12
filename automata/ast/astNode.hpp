@@ -19,6 +19,8 @@ class fsmTrans;
 
 class stmnt;
 
+//THE AST ARCHITECTURE CAN BE OPTIMIZED
+
 class astNode
 {
 

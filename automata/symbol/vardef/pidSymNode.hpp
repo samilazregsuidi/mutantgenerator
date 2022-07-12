@@ -6,11 +6,15 @@
 //T_PID
 class pidSymNode : public varSymNode{
 public:
-	pidSymNode(int lineNb, const std::string& name, int bound = 1, expr* init = nullptr);
+	pidSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
 	
 	std::string getTypeName(void) const override;
 
 	int getTypeSize(void) const override;
+
+	int getUpperBound(void) const override;
+	
+	int getLowerBound(void) const override;
 
 	bool castTo(const symbol* sym) const override;
 

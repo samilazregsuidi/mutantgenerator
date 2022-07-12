@@ -62,19 +62,20 @@ public:
 	expr* deepCopy(void) const override;
 };
 
+class symTable;
 class procSymNode;
 
 //E_EXPR_RUN,			// child[0] = E_ARGLIST, sVal = the procType name, and after processing: symTab = node in symbol table that represents the proctype
 class exprRun : public expr
 {
 public:
-	exprRun(const std::string& procName, exprArgList *argList, exprVarRef *card, int lineNb);
-
 	exprRun(const std::string& procName, exprArgList *argList, int lineNb);
 
-	void setCard(exprVarRef* card);
+	std::string getProcName(void) const;
 
-	exprVarRef* getCard(void) const;
+	const procSymNode* getProcType(void) const;
+
+	procSymNode* resolve(const symTable* symTab);
 
 	void setArgList(exprArgList* argList);
 

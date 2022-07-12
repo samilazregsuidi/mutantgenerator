@@ -13,6 +13,14 @@ int intSymNode::getTypeSize(void) const {
 	return 4;
 }
 
+int intSymNode::getUpperBound(void) const {
+	return std::numeric_limits<int>::max();
+}
+	
+int intSymNode::getLowerBound(void) const {
+	return std::numeric_limits<int>::min();
+}
+
 void intSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitInt(this);
 }

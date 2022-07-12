@@ -7,15 +7,15 @@
                 "${workspaceFolder}/**/**",
                 "${workspaceFolder}/**/**/**",
                 "${workspaceFolder}/automata/**",
-                "${workspaceFolder}/automata/ast",
-                "${workspaceFolder}/automata/ast/stmnt",
-                "${workspaceFolder}/automata/ast/expr",
-                "${workspaceFolder}/automata/symbol/visitor",
-                "${workspaceFolder}/automata/symbol",
-                "${workspaceFolder}/automata/symbol/vardef",
-                "${workspaceFolder}/automata/symbol/typedef",
-                "${workspaceFolder}/automata/symbol/visitor",
-                "${workspaceFolder}/semantic",
+                "${workspaceFolder}/automata/ast/**",
+                "${workspaceFolder}/automata/ast/stmnt/**",
+                "${workspaceFolder}/automata/ast/expr/**",
+                "${workspaceFolder}/automata/symbol/visitor/**",
+                "${workspaceFolder}/automata/symbol/**",
+                "${workspaceFolder}/automata/symbol/vardef/**",
+                "${workspaceFolder}/automata/symbol/typedef/**",
+                "${workspaceFolder}/automata/symbol/visitor/**",
+                "${workspaceFolder}/semantic/**",
                 "${workspaceFolder}/parser/**",
                 "/usr/include/**",
                 "/usr/include"
@@ -23,8 +23,9 @@
             "defines": [],
             "compilerPath": "/bin/g++",
             "cStandard": "gnu17",
-            "cppStandard": "gnu++14",
-            "intelliSenseMode": "linux-gcc-x64"
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

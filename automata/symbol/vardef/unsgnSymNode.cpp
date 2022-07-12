@@ -13,6 +13,14 @@ int unsgnSymNode::getTypeSize(void) const {
 	return 2;
 }
 
+int unsgnSymNode::getUpperBound(void) const {
+	assert(false);
+}
+	
+int unsgnSymNode::getLowerBound(void) const {
+	assert(false);
+}
+
 void unsgnSymNode::acceptVisitor(symTabVisitor *visitor) {
 	visitor->visitUnsgn(this);
 }

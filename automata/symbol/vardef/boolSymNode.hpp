@@ -12,6 +12,10 @@ public:
 
 	int getTypeSize(void) const override;
 
+	int getUpperBound(void) const override;
+	
+	int getLowerBound(void) const override;
+
 	void acceptVisitor(symTabVisitor* visitor) override;
 
 	void acceptVisitor(symTabConstVisitor* visitor) const override;

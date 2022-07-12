@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(mutantgenerator LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
 
 #set(ASAN -fsanitize=address -fno-omit-frame-pointer -static-libasan)
 
@@ -67,11 +68,18 @@ add_executable(mutantgenerator
 	./automata/ast/expr/constExpr.cpp
 	./automata/ast/expr/argExpr.cpp
 	
-	
 	./automata/fsm/ASTtoFSM.cpp
 	./automata/fsm/fsm.cpp
 	./automata/fsm/fsmNode.cpp
 	./automata/fsm/fsmEdge.cpp
+	
+	./semantic/state.cpp
+	./semantic/scope.cpp
+	./semantic/process.cpp
+	./semantic/variable.cpp
+	./semantic/channel.cpp
+	./semantic/payload.cpp
+	./semantic/transition.cpp
 	
     	${Parser}
     	${Lexer}
