@@ -19,13 +19,14 @@
 #include "symbols.hpp"
 #include "ast.hpp"
 
-#include "y.tab.h"
+#include "y.tab.hpp"
 
 #define YYDEBUG 1
 
 #ifdef CPP
 extern "C" 
 #endif
+
 int yylex(YYSTYPE * yylval_param, symTable** globalSymTab);
 
 extern int nbrLines;
@@ -47,7 +48,7 @@ std::list<varSymNode*> declSyms;
 std::list<varSymNode*> typeLst;
 std::list<std::string> params;
 
-int mtypeId = 0;
+int mtypeId = 1;
 bool inInline = false;
 
 %}
@@ -103,7 +104,7 @@ bool inInline = false;
 %token	XU							/* val */
 %token	CLAIM TRACE INIT		/* sym */
 %token  WHILE WHEN WAIT RESET /* time */
-%token  SPEC EVENTUALLY ALWAYS GLOBALLY FINALLY /* TCTL */
+%token  SPEC EVENTUALLY ALWAYS GLOBALLY FINALLY UNTIL LTL/* TCTL */
 
 %right	ASGN
 %left	SND O_SND RCV R_RCV /* SND doubles as boolean negation */
@@ -142,7 +143,7 @@ bool inInline = false;
 
 %%
 
-start_parsing	: { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; } program;
+start_parsing	: { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; } program props
 				
 /** PROMELA Grammar Rules **/
 
@@ -180,7 +181,13 @@ unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *p
 
 proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the number of initially active procs; */
 		  proctype NAME							
-		  { nameSpace = $3; savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); }
+		  										{ 
+													nameSpace = $3; savedSymTab = currentSymTab; 
+													currentSymTab = currentSymTab->createSubTable(nameSpace); 
+													auto predef = new pidSymNode(0, "_pid");
+													predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); 
+													currentSymTab->insert(predef);
+												}
 		  '(' decl ')'
 		  { currentSymTab = savedSymTab; }							
 		  Opt_priority							/* Ignore */
@@ -642,4 +649,47 @@ nlst	: NAME									{ std::cout << "REDUCE: NAME -> nlst\n"; cmtypeSymNode* sym 
 		| nlst NAME								{ std::cout << "REDUCE: nlst NAME -> NAME\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $2, mtypeId++); (*globalSymTab)->insert(sym); free($2); }
 		| nlst ',' /* commas optional */		{ std::cout << "REDUCE: nlst , -> nlst\n"; }
 		;
+		
+		
+props	: /* empty */
+		| prop
+		| prop props
+	;
+	
+prop	: LTL NAME '{' prop_expr '}'
+		;
+
+
+prop_expr	: '(' prop_expr ')'
+		| quants prop_expr							
+		| prop_expr '+' prop_expr
+		| prop_expr '-' prop_expr
+		| prop_expr '*' prop_expr
+		| prop_expr '/' prop_expr
+		| prop_expr '%' prop_expr
+		| prop_expr '&' prop_expr
+		| prop_expr '^' prop_expr
+		| prop_expr '|' prop_expr
+		| prop_expr GT prop_expr
+		| prop_expr LT prop_expr
+		| prop_expr GE prop_expr
+		| prop_expr LE prop_expr
+		| prop_expr EQ prop_expr
+		| prop_expr NE prop_expr
+		| prop_expr AND prop_expr
+		| prop_expr OR prop_expr
+		| prop_expr SEMI prop_expr
+		| prop_expr UNTIL prop_expr
+		| SND prop_expr %prec NEG
+		| varref
+		| CONST
+		;
+	
+quants	: quant
+	| quant quants
+	;
+	
+quant	: ALWAYS 
+	| EVENTUALLY
+	;
 %%

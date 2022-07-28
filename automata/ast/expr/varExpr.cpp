@@ -78,7 +78,7 @@ varSymNode* exprVarRefName::resolve(symTable *global, symTable *subField) {
 	
 	if(!sym) {
 		std::cout<< "unknown symbol : "<< symName << " at line "<<lineNb<<"\n";
-		//assert(false);
+		assert(false);
 	}
 
 	assert(getExprType() == symbol::T_NA);
@@ -254,6 +254,7 @@ const exprVarRef *exprVar::getVarRef(void) const {
 	return dynamic_cast<exprVarRef*>(getChild("var_ref"));
 }
 
+//weird
 const exprVarRefName *exprVar::getVarRefName(void) const {
 	return dynamic_cast<exprVarRef*>(getChild("var_ref"))->getVarRefName();
 }

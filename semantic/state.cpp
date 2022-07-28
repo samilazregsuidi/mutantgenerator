@@ -32,6 +32,7 @@ state::state(const fsm* stateMachine)
 	, exclusiveProc(nullptr)
 	, timeout(false)
 	, prob(1.0)
+	, trans(nullptr)
 {
 
 	global = new scope("global");
@@ -206,6 +207,28 @@ void state::print(void) const {
 	global->print();
 }
 
+void state::printGraphViz(unsigned long i) const {
+	std::ofstream stateFile;
+	//stateFile.open("trace/" + std::to_string(hash()));
+	stateFile.open("trace/" + std::to_string(i) + ".dot");
+	
+	std::list<const fsmNode*> locs;
+	for(auto p : procs)
+		locs.push_back(p->getFsmNodePointer());
+	
+	std::list<const fsmEdge*> edges;
+	if(trans) {
+		edges.push_back(trans->getEdge());
+		auto t = trans;
+		while ((t = t->getResponse())){
+			edges.push_back(t->getEdge());
+		}
+	}
+
+	stateMachine->printGraphVisWithLocations(stateFile, locs, edges);
+	stateFile.close();
+}
+
 /**
  * Returns the stateMask of a given pid.
  */
@@ -348,10 +371,10 @@ bool state::getTimeoutStatus(void) const {
  */
 std::list<transition*> state::executables(void) const {
 
+	std::list<transition*> execs;
+
 	const process* exclusivity = getExclusiveProc();
 	auto handShake = getHandShakeRequest();
-
-	std::list<transition*> execs;
 
 	for(auto proc : procs)
 		if (hasHandShakeRequest() || !hasExclusivity() || getExclusiveProcId() == proc->getPid())
@@ -359,20 +382,20 @@ std::list<transition*> state::executables(void) const {
 
 	
 	if (execs.size() == 0) {
+
 		if(hasExclusivity()) {
 			resetExclusivity();
-			return executables();
+			execs = executables();	
 
 		} else if (timeout == false) {
 			timeout = true;
-			return executables();
+			execs = executables();
+			timeout = false;
 		}
-		return execs;
 	}
 
 	setExclusivity(exclusivity);
 	setHandShake(handShake);
-	timeout = false;
 
 	return execs;
 }
@@ -395,6 +418,8 @@ state* state::apply(const transition* trans) {
 	proc->apply(trans);
 
 	assert(!getProc(lastStepPid)->isAtomic() || getExclusiveProcId() == lastStepPid);
+
+	this->trans = trans;
 
 	return this;
 }

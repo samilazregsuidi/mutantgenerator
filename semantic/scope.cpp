@@ -18,7 +18,7 @@ scope::scope(const std::string& name, scope* parent)
 	, sizeOf(0)
 {
 	if(parent) {
-		offset = parent->offset + parent->sizeOf;
+		offset = parent->getEndOffset();
 		payLoad = parent->getPayload();
 		parent->addSubScope(this);
 	}
@@ -61,7 +61,10 @@ size_t scope::getOffset(void) const {
 }
 
 size_t scope::getEndOffset(void) const {
-	return offset + sizeOf;
+	auto subSize = 0;
+	for(auto sc : subScopes)
+		subSize += sc->getSizeOf();
+	return offset + sizeOf + subSize;
 }
 
 void scope::init(void) {
@@ -310,6 +313,11 @@ channel* scope::getChannel(const std::string& name) const {
 std::list<variable*> scope::getVariablesList(void) const {
 	return varList;
 }
+
+std::map<std::string, variable*> scope::getVariablesMap(void) const {
+	return varMap;
+}
+
 
 size_t scope::_getSizeOf(void) const {
 	size_t size = rawBytes;

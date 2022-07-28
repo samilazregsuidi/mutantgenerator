@@ -167,6 +167,42 @@ void fsm::printGraphVis(std::ofstream& file) const {
 	file << "}";
 }
 
+void fsm::printGraphVisWithLocations(std::ofstream& file, const std::list<const fsmNode*>& locs, const std::list<const fsmEdge*>& edges) const {
+	file << "digraph finite_state_machine {\n";
+	file << "\trankdir=LR\n";
+	file << "\tsize=\"8,5\"\n";
+
+	for(auto init : inits) {
+		file << "\t" << init.second->getID() << " [label = "<< init.second->getLineNb() <<", shape = doublecircle, "<< (std::find(locs.begin(), locs.end(), init.second) != locs.end()? "color = red, " : "") << "fixedsize = true]; \n";
+		file << "\ts" << init.second->getID() << " [shape = point];\n";
+	}
+	
+	for(auto end : getEndTransitions())
+		file << "\te" << end->getSourceNode()->getID() << " [shape = doublecircle, fixedsize = true, style = filled, "<< (std::find(locs.begin(), locs.end(), end->getSourceNode()) != locs.end()? "color = red, " : "fillcolor = black, fontcolor = white, ") << " label = end];\n";
+	
+	for(auto node : nodes) {
+		if(!node->getInputEdges().empty())
+			file << "\t "<< node->getID() <<" [label = "<< node->getLineNb() <<", shape = circle, "<< (std::find(locs.begin(), locs.end(), node) != locs.end()? "color = red, " : "") << "fixedsize = true "<< ((node->getFlags() & fsmNode::N_ATOMIC)? ", style = dotted" : "") << "];\n";
+	}
+
+	for(auto init : inits)
+		file << "\ts" <<  init.second->getID() << " -> " << init.second->getID() << ";\n";
+	
+	for(auto t : trans){
+		auto exprStr = std::string(*t->getExpression());
+		std::replace(exprStr.begin(), exprStr.end(), '\"', ' ');
+		std::replace(exprStr.begin(), exprStr.end(), '\n', ' ');
+		if(t->getTargetNode()) {
+			file << "\t" <<  t->getSourceNode()->getID() <<" -> "<< t->getTargetNode()->getID() << " [" << (std::find(edges.begin(), edges.end(), t) != edges.end()? "color = red," : "") <<" label = \""<< exprStr << "\"];\n";
+		}
+		else
+			file << "\t" <<  t->getSourceNode()->getID() <<" -> e" << t->getSourceNode()->getID() <<" [" << (std::find(edges.begin(), edges.end(), t) != edges.end()? "color = red," : "") <<" label = \""<< exprStr << "\"];\n";
+		
+	}
+
+	file << "}";
+}
+
 /*
 void fsm::printGraphVis(std::ofstream& file) const {
 	file << "digraph finite_state_machine {\n";

@@ -6,7 +6,7 @@
 #include "symbols.hpp"
 #include "ast.hpp"
 
-#include "y.tab.h"
+#include "y.tab.hpp"
 
 #define YY_DECL int yylex(YYSTYPE * yylval_param, symTable** globalSymTab)
 
@@ -64,10 +64,12 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"&&"       	{ DBUG(AND);return AND; }
 <CODE>"||"       	{ DBUG(OR);return OR; }
 <CODE>"spec"		{ DBUG(SPEC);return SPEC; }
-<CODE>"E"			{ DBUG(EVENTUALLY);return EVENTUALLY;}
-<CODE>"A"			{ DBUG(ALWAYS);return ALWAYS;}
-<CODE>"G"			{ DBUG(GLOBALLY);return GLOBALLY;}
-<CODE>"F"			{ DBUG(FINALLY);return FINALLY;}
+<CODE>"ltl"			{ DBUG(LTL); return LTL; }
+<CODE>"E"			{ DBUG(EVENTUALLY);return EVENTUALLY; }
+<CODE>"<>"			{ DBUG(EVENTUALLY);return EVENTUALLY; }
+<CODE>"A"			{ DBUG(ALWAYS);return ALWAYS; }
+<CODE>"[]"			{ DBUG(ALWAYS);return ALWAYS; }
+<CODE>"U"			{ DBUG(UNTIL);return UNTIL; }
 <CODE>"card"		{ DBUG(COUNT);return COUNT; }
 <CODE>"this"		{ DBUG(CONTEXT);return CONTEXT; }
 
@@ -92,10 +94,9 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"full"		{ DBUG(FULL);return FULL; }
 <CODE>"goto"		{ DBUG(GOTO);return GOTO; }
 <CODE>"hidden"		{ DBUG(HIDDEN);return HIDDEN; }
-<CODE>"if"			{ yylval->iVal = nbrLines; 
-					  DBUG(IF);return IF; }
-<CODE>"gd"			{ yylval->iVal = nbrLines; 
-					  DBUG(IF); return IF; }
+<CODE>"if"			{ yylval->iVal = nbrLines; DBUG(IF);return IF; }
+<CODE>"gd"			{ yylval->iVal = nbrLines; DBUG(IF); return IF; }
+
 <CODE>"init"		{ DBUG(HIDDEN);return INIT; }
 <CODE>"len"			{ DBUG(LEN); return LEN; }
 <CODE>"local"		{ DBUG(ISLOCAL); return ISLOCAL; }

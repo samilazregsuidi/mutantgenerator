@@ -45,22 +45,14 @@ ast.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/ast.hpp
 automata.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/automata.hpp
-y.tab.h
-/home/slazreg/Work/Research/Mutation/mutantgenerator/y.tab.h
+y.tab.hpp
+/home/slazreg/Work/Research/Mutation/mutantgenerator/y.tab.hpp
 lexer.h
 /home/slazreg/Work/Research/Mutation/mutantgenerator/lexer.h
 ASTtoFSM.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/ASTtoFSM.hpp
 semantic.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic.hpp
-
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.cpp
-channel.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
-scope.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
-payload.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
 
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
 string
@@ -73,32 +65,6 @@ variable.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
 symbols.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/symbols.hpp
-
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.cpp
-stdio.h
--
-stdlib.h
--
-time.h
--
-string.h
--
-process.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
-transition.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
-state.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
-payload.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
-variable.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
-channel.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
-automata.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/automata.hpp
-ast.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/ast.hpp
 
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
 list
@@ -113,24 +79,6 @@ scope.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
 symbols.hpp
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/symbols.hpp
-
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.cpp
-stdio.h
--
-stdlib.h
--
-time.h
--
-string.h
--
-scope.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
-payload.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
-variable.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
-channel.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
 
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
 list
@@ -187,24 +135,6 @@ list
 -
 stack
 -
-
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.cpp
-variable.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
-iterator
--
-scope.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
-payload.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
-process.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
-argExpr.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/argExpr.hpp
-constExpr.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/constExpr.hpp
-varExpr.hpp
-/home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/varExpr.hpp
 
 /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
 string
@@ -528,7 +458,7 @@ automata/symbol/vardef/symbol.hpp
 
 automata/symbol/visitor/symTabVisitor.hpp
 
-parser/y.tab.h
+parser/y.tab.hpp
 
 semantic/channel.hpp
 string

@@ -44,6 +44,8 @@ public:
 
 	symbol* lookup(const std::string& name) const;
 
+	symbol* lookupGlobal(const std::string& name) const;
+
 	std::set<symbol*> getSymbols(const symbol* left) const;
 
 	std::set<symbol*> getSymbols(void) const;

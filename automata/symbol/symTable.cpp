@@ -113,6 +113,13 @@ std::set<symbol*> symTable::getSymbols(const symbol* left) const {
 	return res;
 }
 
+symbol* symTable::lookupGlobal(const std::string& name) const {
+	if(this->name == "global")
+		return lookup(name);
+	else
+		return prev? prev->lookupGlobal(name): nullptr;
+}
+
 void symTable::insert(symbol* sym) {
 	assert(syms.find(sym->getName()) == syms.end());
 	syms[sym->getName()] = sym;
@@ -139,8 +146,8 @@ void symTable::addPredefinedSym(symTable* tab) {
 	predef = new intSymNode(0, "_nr_pr");
 	predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); tab->insert(predef);
 
-	predef = new pidSymNode(0, "_pid");
-	predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); tab->insert(predef);
+	/*predef = new pidSymNode(0, "_pid");
+	predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); tab->insert(predef);*/
 
 	predef = new pidSymNode(0, "_last");
 	predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); tab->insert(predef);

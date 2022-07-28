@@ -11,15 +11,14 @@
 #include "symbols.hpp"
 #include "ast.hpp"
 #include "automata.hpp"
-#include "y.tab.h"
+#include "y.tab.hpp"
 #include "lexer.h"
 
 #include "ASTtoFSM.hpp"
 
 #include "semantic.hpp"
 
-extern FILE* yyin;
-extern int yyparse(symTable** symTable, stmnt** program);
+
 extern void init_lex();
 
 // Settings defined in main
@@ -54,14 +53,21 @@ int copyFile(const std::string& source, const std::string& target) {
 	return 0;
 }
 
+#define K 50
+
 void launchExecution(const fsm* automata) {
 	state* current = new state(automata);
+	unsigned long i = 0;
 	printf("**********************************\n");
 	current->print();
+	current->printGraphViz(i++);
 	while(transition* trans = transition::sample(current->executables())){
 		current->apply(trans);
 		printf("--------------------------------------\n");
 		current->print();
+		current->printGraphViz(i++);
+		if(i > K)
+			break;
 		//add error status
 	}
 }

@@ -218,6 +218,8 @@ public:
 
 	void print(void) const;
 
+	void printGraphViz(unsigned long i) const;
+
 	static state* Post(const transition* trans, const state* s);
 
 	static std::list<state*> Post(const state* s);
@@ -249,6 +251,8 @@ public:
 	mutable bool timeout;
 
 	double prob;
+
+	const transition* trans;
 };
 
 template<> struct std::hash<state*> {

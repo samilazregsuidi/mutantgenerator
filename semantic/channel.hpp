@@ -54,6 +54,9 @@ public:
 
 private:
 	void len(byte newLen);
+
+private:
+	scope* localScope;
 };
 
 class channelField : public variable {

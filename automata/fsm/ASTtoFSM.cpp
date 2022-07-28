@@ -197,11 +197,15 @@ void ASTtoFSM::visit(const stmntGoto* node)  {
 
 void ASTtoFSM::visit(const stmntLabel* node)  {
     std::string label = node->getLabel();
-    if(label == "accept") 		flags |= fsmNode::N_ACCEPT;
-    if(label == "end") 			flags |= fsmNode::N_END;
-    if(label == "progress") 	flags |= fsmNode::N_PROGRESS;
+    
+    if(label == "accept") 		
+        flags |= fsmNode::N_ACCEPT;
+    if(label == "end") 			
+        flags |= fsmNode::N_END;
+    if(label == "progress") 
+        flags |= fsmNode::N_PROGRESS;
+
     labels.push_back(label);
-    labels.push_back(node->getLabel());
 
     node->getLabelled()->acceptVisitor(this);
 

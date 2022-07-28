@@ -7,16 +7,17 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(Parser "y.tab.cpp")
 set(Lexer "lex.yy.cpp")
+
 add_custom_command(
     OUTPUT ${Parser}
-    COMMAND yacc -y -d -o ${Parser} ${CMAKE_SOURCE_DIR}/parser/promela.y
+    COMMAND yacc -y -d -o ${CMAKE_SOURCE_DIR}/${Parser} ${CMAKE_SOURCE_DIR}/parser/promela.y
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.y
     COMMENT "running yacc"
 )
 
 add_custom_command(
     OUTPUT ${Lexer}
-    COMMAND flex -o ${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
+    COMMAND flex -o ${CMAKE_SOURCE_DIR}/${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.l
     COMMENT "running flex"
 )
@@ -81,8 +82,8 @@ add_executable(mutantgenerator
 	./semantic/payload.cpp
 	./semantic/transition.cpp
 	
-    	${Parser}
-    	${Lexer}
+    	./parser/${Parser}
+    	./parser/${Lexer}
     )
 
 #target_link_libraries(mutantgenerator ${FLEX_LIBRARIES})

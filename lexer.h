@@ -492,7 +492,7 @@ extern int yylex \
 #undef yyTABLES_NAME
 #endif
 
-#line 234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 
 
 #line 499 "lexer.h"

@@ -55,6 +55,8 @@ public:
 
 	void addField(variable* subVar);
 
+	void addPrivateField(variable* field);
+
 	void clearVariables(void);
 
 	unsigned int getVariableId(void) const;
@@ -242,7 +244,7 @@ private:
 
 class PIDVar : public variable {
 public:
-	PIDVar(scope* sc, size_t offset, const pidSymNode* sym, unsigned int bound =  0);
+	PIDVar(scope* sc, size_t offset, const pidSymNode* sym = nullptr, unsigned int bound =  0);
 
 	PIDVar(const PIDVar& other);
 

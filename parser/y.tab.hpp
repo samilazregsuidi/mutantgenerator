@@ -118,29 +118,31 @@ extern int yydebug;
     ALWAYS = 324,
     GLOBALLY = 325,
     FINALLY = 326,
-    ASGN = 327,
-    SND = 328,
-    O_SND = 329,
-    RCV = 330,
-    R_RCV = 331,
-    OR = 332,
-    AND = 333,
-    EQ = 334,
-    NE = 335,
-    GT = 336,
-    LT = 337,
-    GE = 338,
-    LE = 339,
-    LSHIFT = 340,
-    RSHIFT = 341,
-    INCR = 342,
-    DECR = 343,
-    UMIN = 344,
-    NEG = 345,
-    COUNT = 346,
-    CONTEXT = 347,
-    DOT = 348,
-    IMPLIES = 349
+    UNTIL = 327,
+    LTL = 328,
+    ASGN = 329,
+    SND = 330,
+    O_SND = 331,
+    RCV = 332,
+    R_RCV = 333,
+    OR = 334,
+    AND = 335,
+    EQ = 336,
+    NE = 337,
+    GT = 338,
+    LT = 339,
+    GE = 340,
+    LE = 341,
+    LSHIFT = 342,
+    RSHIFT = 343,
+    INCR = 344,
+    DECR = 345,
+    UMIN = 346,
+    NEG = 347,
+    COUNT = 348,
+    CONTEXT = 349,
+    DOT = 350,
+    IMPLIES = 351
   };
 #endif
 /* Tokens.  */
@@ -213,35 +215,37 @@ extern int yydebug;
 #define ALWAYS 324
 #define GLOBALLY 325
 #define FINALLY 326
-#define ASGN 327
-#define SND 328
-#define O_SND 329
-#define RCV 330
-#define R_RCV 331
-#define OR 332
-#define AND 333
-#define EQ 334
-#define NE 335
-#define GT 336
-#define LT 337
-#define GE 338
-#define LE 339
-#define LSHIFT 340
-#define RSHIFT 341
-#define INCR 342
-#define DECR 343
-#define UMIN 344
-#define NEG 345
-#define COUNT 346
-#define CONTEXT 347
-#define DOT 348
-#define IMPLIES 349
+#define UNTIL 327
+#define LTL 328
+#define ASGN 329
+#define SND 330
+#define O_SND 331
+#define RCV 332
+#define R_RCV 333
+#define OR 334
+#define AND 335
+#define EQ 336
+#define NE 337
+#define GT 338
+#define LT 339
+#define GE 340
+#define LE 341
+#define LSHIFT 342
+#define RSHIFT 343
+#define INCR 344
+#define DECR 345
+#define UMIN 346
+#define NEG 347
+#define COUNT 348
+#define CONTEXT 349
+#define DOT 350
+#define IMPLIES 351
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 62 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 62 "promela.y"
  
 	int       				iVal;
 	char*    				sVal;
@@ -265,7 +269,7 @@ union YYSTYPE
 	
 	enum symbol::Type   iType;
 
-#line 269 "y.tab.hpp"
+#line 273 "y.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

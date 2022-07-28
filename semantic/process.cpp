@@ -19,12 +19,12 @@ process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid
 	, symType(sym)
 	, index(index)
 	, s(s)
-	, pid(pid)
 	, start(start)
 	, _else(false)
+	, pid(pid)
 {
 	addRawBytes(sizeof(const fsmNode*));
-	
+
 	for (auto s : sym->getSymTable()->getSymbols<const varSymNode*>())
 		addVariables(s);
 }
@@ -50,10 +50,11 @@ void process::init(void) {
 	
 	scope::init();
 	setFsmNodePointer(start);
+	scope::getVariable("_pid")->setValue(pid);
 }
 
 byte process::getPid(void) const {
-	return pid;
+	return scope::getVariable("_pid")->getValue();
 }
 
 const fsmNode* process::getFsmNodePointer(void) const {
@@ -124,7 +125,7 @@ std::list<const variable*> process::getConstVariables(const exprArgList* args) c
 		if(exp->getType() == astNode:: E_EXPR_CONST)
 			ptr = new constVar(eval(exp, EVAL_EXPRESSION), exp->getExprType(), exp->getLineNb());
 		else
-			ptr = getVariable(exp)->deepCopy();
+			ptr = getVariable(exp);
 		res.push_back(ptr);
 		args = args->getArgList();
 	}
@@ -143,7 +144,7 @@ std::list<variable*> process::getVariables(const exprRArgList* rargs) const {
 			ptr = new constVar(eval(exp, EVAL_EXPRESSION), exp->getExprType(), exp->getLineNb());
 			break;
 		case astNode::E_RARG_VAR:
-			ptr = getVariable(exp)->deepCopy();
+			ptr = getVariable(exp);
 			break;
 		default:
 			assert(false);
@@ -211,7 +212,9 @@ std::list<transition*> process::executables(void) const {
 	std::list<transition*> res;
 
 	const fsmNode* node = getFsmNodePointer();
-	if(!node) return res;
+	
+	if(!node) 
+		return res;
 
 	for(auto edge : node->getEdges()) {
 
@@ -229,18 +232,15 @@ std::list<transition*> process::executables(void) const {
 				// Also, channelSend has allocated memory to handshake_transit: it will have to be free'd.
 
 				std::list<transition*> responses = s->executables();
-				assert(responses.size() > 0);
-				
-				chan->reset();
-				s->resetHandShake();
-				
+				//assert(responses.size() > 0);
 				// After the recursive call, each transition in e_ is executable and its features satisfy the modified base FD.
 				// featuresOut contains all the outgoing features from now on, included the ones of the response that satisfy the base FD (those may not satisfy the modified FD, though).
 				// *allProductsOut == 1 if the outgoing features reference all the products.
 				for(auto response : responses)
-
 					res.push_back(new transition(const_cast<process*>(this), edge, response));
-
+				
+				chan->reset();
+				s->resetHandShake();
 			
 			} else 
 
@@ -249,12 +249,12 @@ std::list<transition*> process::executables(void) const {
 		}
 	}
 
-	if(res.size() == 0) {
+	if(res.size() == 0 && !_else) {
 		_else = 1;
-		return executables();
+		res = executables();
+		_else = 0;
 	}
 
-	_else = 0;
 	return res;
 }
 
@@ -281,13 +281,16 @@ int process::eval(const astNode* node, byte flag) const {
 		case(astNode::E_INLINE_DECL):
 		case(astNode::E_TDEF_DECL):
 		case(astNode::E_MTYPE_DECL):
+			assert(false);
 
 		case(astNode::E_STMNT_IF):
 		case(astNode::E_STMNT_DO):
 		case(astNode::E_STMNT_OPT):
 		case(astNode::E_STMNT_SEQ):
+
 		case(astNode::E_STMNT_BREAK):
 		case(astNode::E_STMNT_GOTO):
+		
 		case(astNode::E_STMNT_LABEL):
 		case(astNode::E_STMNT_ASGN):
 		case(astNode::E_STMNT_PRINT):
@@ -301,21 +304,28 @@ int process::eval(const astNode* node, byte flag) const {
 			return 1;
 
 		case(astNode::E_STMNT):
+			assert(false);
+
 		case(astNode::E_STMNT_EXPR):
-		
+			return eval(dynamic_cast<const stmntExpr*>(node)->getChild(), flag);
+
 		case(astNode::E_EXPR_PAR):
+			return eval(dynamic_cast<const exprPar*>(node)->getExpr(), flag);
+
 		case(astNode::E_EXPR_VAR):
-		
+			return eval(dynamic_cast<const exprVar*>(node)->getVarRef(), flag);
 		
 		case(astNode::E_RARG_VAR):
-		case(astNode::E_RARG_EVAL):
+			return eval(dynamic_cast<const exprRArgVar*>(node)->getVarRef(), flag);
 
-			//these types have only one node...
-			return eval(*node->getChildren().cbegin(), flag);
+		case(astNode::E_RARG_EVAL):
+			return eval(dynamic_cast<const exprRArgEval*>(node)->getToEval(), flag);
 
 		case(astNode::E_STMNT_CHAN_RCV):
-		{				
-			channel* chan = getChannel(dynamic_cast<const stmntChanRecv*>(node)->getChan());
+		{		
+			auto chanRecvStmnt = dynamic_cast<const stmntChanRecv*>(node);
+			assert(chanRecvStmnt);
+			channel* chan = getChannel(chanRecvStmnt->getChan());
 			assert(chan);
 
 			if ((chan->isRendezVous() && chan != s->getHandShakeRequestChan()) || 
@@ -328,9 +338,10 @@ int process::eval(const astNode* node, byte flag) const {
 				// Either a rendezvous concerns the channel, either the channel has a non null capacity and is not empty.
 				
 				unsigned int index = 0;
-				auto rargList = dynamic_cast<const exprRArgList*>(node);
-				while(auto arg = rargList->getExprRArg()){
+				auto rargList = chanRecvStmnt->getRArgList();
+				while(rargList) {
 
+					auto arg = rargList->getExprRArg();
 					
 					if(arg->getType() == astNode::E_RARG_EVAL || arg->getType() == astNode::E_RARG_CONST) {
 						
@@ -364,12 +375,19 @@ int process::eval(const astNode* node, byte flag) const {
 		}
 
 		case(astNode::E_STMNT_INCR):
-		case(astNode::E_STMNT_DECR):
+		{
 			if(flag == EVAL_EXECUTABILITY) 
 				return 1;
 			else 
-				return eval(*node->getChildren().cbegin(), flag);
-
+				return eval(dynamic_cast<const stmntIncr*>(node)->getVarRef(), flag) + 1;
+		}
+		case(astNode::E_STMNT_DECR):
+		{
+			if(flag == EVAL_EXECUTABILITY) 
+				return 1;
+			else 
+				return eval(dynamic_cast<const stmntDecr*>(node)->getVarRef(), flag) - 1;
+		}
 		case(astNode::E_STMNT_ELSE):
 			return (_else == 1);
 		
@@ -478,10 +496,17 @@ int process::eval(const astNode* node, byte flag) const {
 		}
 
 		case(astNode::E_VARREF):
-		case(astNode::E_VARREF_NAME):
 		{
 			auto varRef = dynamic_cast<const exprVarRef*>(node);
 			auto var = getVariable(varRef);
+			auto value = var->getValue();
+			return value;
+		}
+		case(astNode::E_VARREF_NAME):
+		{
+			assert(false);
+			auto varRefName = dynamic_cast<const exprVarRefName*>(node);
+			auto var = getVariable(varRefName);
 			auto value = var->getValue();
 			return value;
 		}
@@ -551,9 +576,9 @@ Apply:
 			// Sends the message in the correct channel.
 			// Increases by one unit the number of messages of this channel.
 			// If the channel was a rendezvous channel, _handshake_transit has been allocated.
-			auto sndStmnt = dynamic_cast<const stmntChanRecv*>(expression);
+			auto sndStmnt = dynamic_cast<const stmntChanSnd*>(expression);
 			auto chan = getChannel(sndStmnt->getChan());
-			chan->send(getConstVariables(sndStmnt->getRArgList()));
+			chan->send(getConstVariables(sndStmnt->getArgList()));
 
 			if(chan->isRendezVous()) {
 				leaveUntouched = 1;
@@ -583,11 +608,13 @@ Apply:
 		case(astNode::E_STMNT_DO):
 		case(astNode::E_STMNT_OPT):
 		case(astNode::E_STMNT_SEQ):
-		case(astNode::E_STMNT_BREAK):
-		case(astNode::E_STMNT_GOTO):
 		case(astNode::E_STMNT_LABEL):
 			//failure("Found control statement while applying an expression at line %2d\n", expression->lineNb);
 			assert(false);
+			break;
+
+		case(astNode::E_STMNT_BREAK):
+		case(astNode::E_STMNT_GOTO):
 			break;
 
 		case(astNode::E_STMNT_ASGN):
@@ -643,11 +670,17 @@ Apply:
 		{
 			auto assertExpr = dynamic_cast<const stmntAssert*>(expression);
 			if(eval(assertExpr->getToAssert(), EVAL_EXPRESSION) == 0) {
+				assert(false);
 				//if(!_assertViolation) _assertViolation = 1;
 			}
+			//assert(false);
 			break;
 		}
 		case(astNode::E_STMNT_EXPR):
+		{
+			expression = dynamic_cast<const stmntExpr*>(expression)->getChild();
+			goto Apply;
+		}
 		case(astNode::E_EXPR_PAR):
 		{
 			expression = dynamic_cast<const exprPar*>(expression)->getExpr();
@@ -688,7 +721,6 @@ Apply:
 		case(astNode::E_EXPR_NFULL):
 		case(astNode::E_EXPR_EMPTY):
 		case(astNode::E_EXPR_NEMPTY):
-			assert(false);
 			break;
 
 		case(astNode::E_EXPR_RUN):
@@ -696,8 +728,12 @@ Apply:
 			// A new process can run iff MAX_PROCESS processes or less are currently running.
 			auto runExpr = dynamic_cast<const exprRun*>(expression);
 			s->addProctype(runExpr->getProcType(), getConstVariables(runExpr->getArgList()));
-		}	
-		break;
+			break;
+		}
+
+		case(astNode::E_EXPR_TRUE):
+		case(astNode::E_EXPR_SKIP):
+			break;
 
 		case(astNode::E_EXPR_LEN):
 		case(astNode::E_EXPR_VAR):
@@ -723,7 +759,6 @@ Apply:
 		if(isAtomic()) 
 			s->setExclusivity(this);
 		else {
-			assert(!s->hasExclusivity());
 			s->resetExclusivity();
 		}
 		s->lastStepPid = proc->getPid();
@@ -743,8 +778,8 @@ void process::print(void) const {
 	
 	} else {
 
-		if(node) 	printf("0x%-4lx:   %s pid  %-13u @ NL%02u\n", getOffset(), symType->getName().c_str(), pid, node->getLineNb());
-		else 		printf("0x%-4lx:   %s pid  %-13u @ end\n", getOffset(), symType->getName().c_str(), pid);
+		if(node) 	printf("0x%-4lx:   %s pid  %-13u @ NL%02u\n", getOffset(), symType->getName().c_str(), getPid(), node->getLineNb());
+		else 		printf("0x%-4lx:   %s pid  %-13u @ end\n", getOffset(), symType->getName().c_str(), getPid());
 	}
 
 	scope::print();

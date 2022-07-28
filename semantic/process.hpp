@@ -101,10 +101,11 @@ private:
 	unsigned int index;
 
 	state* s;
-	byte pid;
 	const fsmNode* start;
 
 	mutable bool _else;
+
+	byte pid;
 };
 
 #endif

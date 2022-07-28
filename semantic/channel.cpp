@@ -26,18 +26,18 @@ channel::channel(scope* sc, size_t _offset, const chanSymNode* chanSym, unsigned
 	} else {
 		_offset = 0;
 		//rendez channel have their own local scope to exchange variables 
-		sc = new scope(name);
+		localScope = new scope(name);
 
 		unsigned int fieldIndex = 0;
 		for(auto typeSym: chanSym->getTypeList()){
 			for(unsigned int j = 0; j < typeSym->getBound(); ++j){
-				auto msgField = new channelField(sc, this, sizeOf, typeSym, fieldIndex++, 0, j);
-				addField(msgField);
-				sizeOf += msgField->getSizeOf();
+				auto field = new channelField(localScope, this, sizeOf, typeSym, fieldIndex++, 0, j);
+				addPrivateField(field);
+				localScope->_addVariable(field);
 			}
 		}
-
-		sc->init();
+		
+		localScope->init();
 	}		
 }
 
@@ -52,12 +52,14 @@ variable* channel::deepCopy(void) const{
 
 channel::~channel() {
 	if(isRendezVous()) {
-		delete sc;
+		delete localScope;
 	}
 }
 
 void channel::reset(void) {
 	if(isRendezVous())
+		localScope->getPayload()->reset();
+	else
 		sc->getPayload()->reset();
 }
 
@@ -66,8 +68,16 @@ void channel::send(const std::list<const variable*>& args) {
 	
 	auto argIt = args.cbegin();
 
-	for(auto field : varList)
+	for(auto field : varList) {
+		
+		//field->print();
+		//(*argIt)->print();
+
 		*field = **argIt++;
+
+		//field->print();
+	
+	}
 
 	if(!isRendezVous())
 		len(len()+1);
@@ -77,8 +87,13 @@ void channel::receive(const std::list<variable*>& rargs) {
 
 	auto rargIt = rargs.begin();
 
-	for(auto field : varList)
+	for(auto field : varList) {
+		
+		//(*rargIt)->print();
+		//field->print();
+
 		**rargIt++ = *field;
+	}
 
 	if(isRendezVous())
 		reset();

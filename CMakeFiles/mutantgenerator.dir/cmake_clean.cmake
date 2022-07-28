@@ -35,8 +35,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o"
   "CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o"
   "CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o"
-  "CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o"
   "CMakeFiles/mutantgenerator.dir/main.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o"
@@ -44,11 +45,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o"
-  "CMakeFiles/mutantgenerator.dir/y.tab.cpp.o"
-  "lex.yy.cpp"
   "mutantgenerator"
   "mutantgenerator.pdb"
-  "y.tab.cpp"
 )
 
 # Per-language clean rules from dependency scanning.

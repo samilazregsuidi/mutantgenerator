@@ -10,7 +10,6 @@
 //E_STMNT, 			// child[0] = E_STMNT_*
 class stmnt : public astNode
 {
-
 protected:
 	stmnt(Type type, int lineNb);
 

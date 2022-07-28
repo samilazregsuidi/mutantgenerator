@@ -730,44 +730,6 @@ CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o
  automata/symbol/vardef/chanSymNode.hpp
  automata/symbol/vardef/mtypeSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
-CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o
- /home/slazreg/Work/Research/Mutation/mutantgenerator/lex.yy.cpp
- automata/ast/ast.hpp
- automata/ast/astNode.hpp
- automata/ast/expr/argExpr.hpp
- automata/ast/expr/binaryExpr.hpp
- automata/ast/expr/constExpr.hpp
- automata/ast/expr/expr.hpp
- automata/ast/expr/unaryExpr.hpp
- automata/ast/expr/varExpr.hpp
- automata/ast/stmnt/chanStmnt.hpp
- automata/ast/stmnt/clockStmnt.hpp
- automata/ast/stmnt/decl.hpp
- automata/ast/stmnt/flowStmnt.hpp
- automata/ast/stmnt/stdlibStmnt.hpp
- automata/ast/stmnt/stmnt.hpp
- automata/symbol/symTable.hpp
- automata/symbol/symbol.hpp
- automata/symbol/symbols.hpp
- automata/symbol/typedef/inlineSymNode.hpp
- automata/symbol/typedef/mtypedefSymNode.hpp
- automata/symbol/typedef/procSymNode.hpp
- automata/symbol/typedef/tdefSymNode.hpp
- automata/symbol/vardef/bitSymNode.hpp
- automata/symbol/vardef/boolSymNode.hpp
- automata/symbol/vardef/byteSymNode.hpp
- automata/symbol/vardef/chanSymNode.hpp
- automata/symbol/vardef/cidSymNode.hpp
- automata/symbol/vardef/intSymNode.hpp
- automata/symbol/vardef/mtypeSymNode.hpp
- automata/symbol/vardef/naSymNode.hpp
- automata/symbol/vardef/pidSymNode.hpp
- automata/symbol/vardef/shortSymNode.hpp
- automata/symbol/vardef/unsgnSymNode.hpp
- automata/symbol/vardef/utypeSymNode.hpp
- automata/symbol/vardef/varSymNode.hpp
- automata/symbol/visitor/symTabVisitor.hpp
- parser/y.tab.h
 CMakeFiles/mutantgenerator.dir/main.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/lexer.h
  /home/slazreg/Work/Research/Mutation/mutantgenerator/main.cpp
@@ -812,7 +774,7 @@ CMakeFiles/mutantgenerator.dir/main.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
- parser/y.tab.h
+ parser/y.tab.hpp
  semantic/channel.hpp
  semantic/payload.hpp
  semantic/process.hpp
@@ -821,6 +783,81 @@ CMakeFiles/mutantgenerator.dir/main.cpp.o
  semantic/state.hpp
  semantic/transition.hpp
  semantic/variable.hpp
+CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp
+ automata/ast/ast.hpp
+ automata/ast/astNode.hpp
+ automata/ast/expr/argExpr.hpp
+ automata/ast/expr/binaryExpr.hpp
+ automata/ast/expr/constExpr.hpp
+ automata/ast/expr/expr.hpp
+ automata/ast/expr/unaryExpr.hpp
+ automata/ast/expr/varExpr.hpp
+ automata/ast/stmnt/chanStmnt.hpp
+ automata/ast/stmnt/clockStmnt.hpp
+ automata/ast/stmnt/decl.hpp
+ automata/ast/stmnt/flowStmnt.hpp
+ automata/ast/stmnt/stdlibStmnt.hpp
+ automata/ast/stmnt/stmnt.hpp
+ automata/symbol/symTable.hpp
+ automata/symbol/symbol.hpp
+ automata/symbol/symbols.hpp
+ automata/symbol/typedef/inlineSymNode.hpp
+ automata/symbol/typedef/mtypedefSymNode.hpp
+ automata/symbol/typedef/procSymNode.hpp
+ automata/symbol/typedef/tdefSymNode.hpp
+ automata/symbol/vardef/bitSymNode.hpp
+ automata/symbol/vardef/boolSymNode.hpp
+ automata/symbol/vardef/byteSymNode.hpp
+ automata/symbol/vardef/chanSymNode.hpp
+ automata/symbol/vardef/cidSymNode.hpp
+ automata/symbol/vardef/intSymNode.hpp
+ automata/symbol/vardef/mtypeSymNode.hpp
+ automata/symbol/vardef/naSymNode.hpp
+ automata/symbol/vardef/pidSymNode.hpp
+ automata/symbol/vardef/shortSymNode.hpp
+ automata/symbol/vardef/unsgnSymNode.hpp
+ automata/symbol/vardef/utypeSymNode.hpp
+ automata/symbol/vardef/varSymNode.hpp
+ automata/symbol/visitor/symTabVisitor.hpp
+CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp
+ automata/ast/ast.hpp
+ automata/ast/astNode.hpp
+ automata/ast/expr/argExpr.hpp
+ automata/ast/expr/binaryExpr.hpp
+ automata/ast/expr/constExpr.hpp
+ automata/ast/expr/expr.hpp
+ automata/ast/expr/unaryExpr.hpp
+ automata/ast/expr/varExpr.hpp
+ automata/ast/stmnt/chanStmnt.hpp
+ automata/ast/stmnt/clockStmnt.hpp
+ automata/ast/stmnt/decl.hpp
+ automata/ast/stmnt/flowStmnt.hpp
+ automata/ast/stmnt/stdlibStmnt.hpp
+ automata/ast/stmnt/stmnt.hpp
+ automata/symbol/symTable.hpp
+ automata/symbol/symbol.hpp
+ automata/symbol/symbols.hpp
+ automata/symbol/typedef/inlineSymNode.hpp
+ automata/symbol/typedef/mtypedefSymNode.hpp
+ automata/symbol/typedef/procSymNode.hpp
+ automata/symbol/typedef/tdefSymNode.hpp
+ automata/symbol/vardef/bitSymNode.hpp
+ automata/symbol/vardef/boolSymNode.hpp
+ automata/symbol/vardef/byteSymNode.hpp
+ automata/symbol/vardef/chanSymNode.hpp
+ automata/symbol/vardef/cidSymNode.hpp
+ automata/symbol/vardef/intSymNode.hpp
+ automata/symbol/vardef/mtypeSymNode.hpp
+ automata/symbol/vardef/naSymNode.hpp
+ automata/symbol/vardef/pidSymNode.hpp
+ automata/symbol/vardef/shortSymNode.hpp
+ automata/symbol/vardef/unsgnSymNode.hpp
+ automata/symbol/vardef/utypeSymNode.hpp
+ automata/symbol/vardef/varSymNode.hpp
+ automata/symbol/visitor/symTabVisitor.hpp
 CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
@@ -1030,41 +1067,3 @@ CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
-CMakeFiles/mutantgenerator.dir/y.tab.cpp.o
- /home/slazreg/Work/Research/Mutation/mutantgenerator/y.tab.cpp
- automata/ast/ast.hpp
- automata/ast/astNode.hpp
- automata/ast/expr/argExpr.hpp
- automata/ast/expr/binaryExpr.hpp
- automata/ast/expr/constExpr.hpp
- automata/ast/expr/expr.hpp
- automata/ast/expr/unaryExpr.hpp
- automata/ast/expr/varExpr.hpp
- automata/ast/stmnt/chanStmnt.hpp
- automata/ast/stmnt/clockStmnt.hpp
- automata/ast/stmnt/decl.hpp
- automata/ast/stmnt/flowStmnt.hpp
- automata/ast/stmnt/stdlibStmnt.hpp
- automata/ast/stmnt/stmnt.hpp
- automata/symbol/symTable.hpp
- automata/symbol/symbol.hpp
- automata/symbol/symbols.hpp
- automata/symbol/typedef/inlineSymNode.hpp
- automata/symbol/typedef/mtypedefSymNode.hpp
- automata/symbol/typedef/procSymNode.hpp
- automata/symbol/typedef/tdefSymNode.hpp
- automata/symbol/vardef/bitSymNode.hpp
- automata/symbol/vardef/boolSymNode.hpp
- automata/symbol/vardef/byteSymNode.hpp
- automata/symbol/vardef/chanSymNode.hpp
- automata/symbol/vardef/cidSymNode.hpp
- automata/symbol/vardef/intSymNode.hpp
- automata/symbol/vardef/mtypeSymNode.hpp
- automata/symbol/vardef/naSymNode.hpp
- automata/symbol/vardef/pidSymNode.hpp
- automata/symbol/vardef/shortSymNode.hpp
- automata/symbol/vardef/unsgnSymNode.hpp
- automata/symbol/vardef/utypeSymNode.hpp
- automata/symbol/vardef/varSymNode.hpp
- automata/symbol/visitor/symTabVisitor.hpp
- parser/y.tab.h

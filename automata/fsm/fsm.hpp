@@ -20,10 +20,15 @@ class fsm
 
 public:
 	fsm(const symTable* globalSymTab);
+
 	virtual ~fsm();
+	
 	void destroySkeleton();
+	
 	fsmNode *createFsmNode(int flags, int lineNb);
+	
 	fsmNode *copyFsmNode(const fsmNode *node);
+	
 	//fsm *stmnt2fsm(astNode *stmnt, symTabNode *symTab);
 	//void setSymTab(symTabNode *sym);
 	//void merge(fsm *child);
@@ -41,11 +46,15 @@ public:
 	const symTable* getGlobalSymTab(void) const;
 
 	void addTransition(fsmEdge* edge);
+	
 	void deleteTransition(fsmEdge* edge);
+	
 	void deleteNode(fsmNode* node);
+	
 	void connect(fsmNode* begin, fsmNode* end);
 
 	std::list<fsmNode *> getNodes(void) const;
+	
 	std::list<fsmEdge *> getTransitions(void) const;
 
 	std::list<fsmEdge*> getEndTransitions(void) const;
@@ -53,10 +62,14 @@ public:
 	operator std::string(void) const;
 
 	void addInitNode(const std::string& procName, fsmNode* node);
+	
 	std::map<std::string, fsmNode*> getInitNodes() const;
+	
 	fsmNode* getFsmWithName(const std::string& name) const;
 
 	void printGraphVis(std::ofstream& file) const;
+
+	void printGraphVisWithLocations(std::ofstream& file, const std::list<const fsmNode*>& locs, const std::list<const fsmEdge*>& edges) const;
 
 private:
 	std::map<std::string, fsmNode*> inits;											 // The initial node

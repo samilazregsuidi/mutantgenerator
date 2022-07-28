@@ -53,16 +53,20 @@ variable::variable(scope* sc, variable* parent, size_t _offset, const varSymNode
 	, vid(++vidCounter)
 	, sizeOf(0)
 {
-	assert(varSym);
+	//assert(varSym);
 
 	//assert(varSym->getType() == symbol::T_INT || varSym->getType() == symbol::T_BIT || varSym->getType() == symbol::T_BYTE || varSym->getType() == symbol::T_SHORT);
 
-	name = varSym->getName();
+	if(varSym) {
+		name = varSym->getName();
 
-	if(varSym->getBound() > 1)
-		name += "["+std::to_string(index)+"]";
+		if(varSym->getBound() > 1)
+			name += "["+std::to_string(index)+"]";
 
-	sizeOf += varSym->getTypeSize();
+		sizeOf += varSym->getTypeSize();
+	
+	}
+
 }
 
 variable::variable(const variable& other) 
@@ -101,8 +105,12 @@ void variable::init(void) {
 
 	auto initExpr = symType->getInitExpr();
 
-	if(initExpr)
-		setValue(dynamic_cast<exprConst*>(initExpr)->getCstValue());
+	if(initExpr) {
+		auto initExprConst = dynamic_cast<exprConst*>(initExpr);
+		//init expr should be const and const only!
+		assert(initExprConst);
+		setValue(initExprConst->getCstValue());
+	}
 }
 
 int variable::operator = (const variable& rvalue) {
@@ -156,6 +164,13 @@ unsigned int variable::getVariableId(void) const {
 void variable::addField(variable* field) {
 	field->setParent(this);
 	sc->_addVariable(field);
+	varList.push_back(field);
+	sizeOf += field->getSizeOf();
+}
+
+void variable::addPrivateField(variable* field) {
+	field->setParent(this);
+	//sc->_addVariable(field);
 	varList.push_back(field);
 	sizeOf += field->getSizeOf();
 }
@@ -283,7 +298,9 @@ constVar::constVar(int value, symbol::Type type, int lineNb)
 	, value(value)
 	, type(type)
 	, lineNb(lineNb)
-{}
+{
+	assert(false);//sizeOf += 
+}
 
 constVar::constVar(const constVar& other) 
 	: variable(other)

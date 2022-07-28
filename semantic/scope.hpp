@@ -56,6 +56,8 @@ public:
 
 	std::list<variable*> getVariablesList(void) const;
 
+	std::map<std::string, variable*> getVariablesMap(void) const;
+
 	void clearVariables(void);
 
 	void rmSubScope(scope* sc);

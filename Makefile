@@ -1095,33 +1095,6 @@ automata/symbol/vardef/varSymNode.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.s
 .PHONY : automata/symbol/vardef/varSymNode.cpp.s
 
-lex.yy.o: lex.yy.cpp.o
-
-.PHONY : lex.yy.o
-
-# target to build an object file
-lex.yy.cpp.o:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/lex.yy.cpp.o
-.PHONY : lex.yy.cpp.o
-
-lex.yy.i: lex.yy.cpp.i
-
-.PHONY : lex.yy.i
-
-# target to preprocess a source file
-lex.yy.cpp.i:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/lex.yy.cpp.i
-.PHONY : lex.yy.cpp.i
-
-lex.yy.s: lex.yy.cpp.s
-
-.PHONY : lex.yy.s
-
-# target to generate assembly for a file
-lex.yy.cpp.s:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/lex.yy.cpp.s
-.PHONY : lex.yy.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -1148,6 +1121,60 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+parser/lex.yy.o: parser/lex.yy.cpp.o
+
+.PHONY : parser/lex.yy.o
+
+# target to build an object file
+parser/lex.yy.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o
+.PHONY : parser/lex.yy.cpp.o
+
+parser/lex.yy.i: parser/lex.yy.cpp.i
+
+.PHONY : parser/lex.yy.i
+
+# target to preprocess a source file
+parser/lex.yy.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.i
+.PHONY : parser/lex.yy.cpp.i
+
+parser/lex.yy.s: parser/lex.yy.cpp.s
+
+.PHONY : parser/lex.yy.s
+
+# target to generate assembly for a file
+parser/lex.yy.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.s
+.PHONY : parser/lex.yy.cpp.s
+
+parser/y.tab.o: parser/y.tab.cpp.o
+
+.PHONY : parser/y.tab.o
+
+# target to build an object file
+parser/y.tab.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o
+.PHONY : parser/y.tab.cpp.o
+
+parser/y.tab.i: parser/y.tab.cpp.i
+
+.PHONY : parser/y.tab.i
+
+# target to preprocess a source file
+parser/y.tab.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.i
+.PHONY : parser/y.tab.cpp.i
+
+parser/y.tab.s: parser/y.tab.cpp.s
+
+.PHONY : parser/y.tab.s
+
+# target to generate assembly for a file
+parser/y.tab.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.s
+.PHONY : parser/y.tab.cpp.s
 
 semantic/channel.o: semantic/channel.cpp.o
 
@@ -1338,33 +1365,6 @@ semantic/variable.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s
 .PHONY : semantic/variable.cpp.s
 
-y.tab.o: y.tab.cpp.o
-
-.PHONY : y.tab.o
-
-# target to build an object file
-y.tab.cpp.o:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/y.tab.cpp.o
-.PHONY : y.tab.cpp.o
-
-y.tab.i: y.tab.cpp.i
-
-.PHONY : y.tab.i
-
-# target to preprocess a source file
-y.tab.cpp.i:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/y.tab.cpp.i
-.PHONY : y.tab.cpp.i
-
-y.tab.s: y.tab.cpp.s
-
-.PHONY : y.tab.s
-
-# target to generate assembly for a file
-y.tab.cpp.s:
-	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/y.tab.cpp.s
-.PHONY : y.tab.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1482,12 +1482,15 @@ help:
 	@echo "... automata/symbol/vardef/varSymNode.o"
 	@echo "... automata/symbol/vardef/varSymNode.i"
 	@echo "... automata/symbol/vardef/varSymNode.s"
-	@echo "... lex.yy.o"
-	@echo "... lex.yy.i"
-	@echo "... lex.yy.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... parser/lex.yy.o"
+	@echo "... parser/lex.yy.i"
+	@echo "... parser/lex.yy.s"
+	@echo "... parser/y.tab.o"
+	@echo "... parser/y.tab.i"
+	@echo "... parser/y.tab.s"
 	@echo "... semantic/channel.o"
 	@echo "... semantic/channel.i"
 	@echo "... semantic/channel.s"
@@ -1509,9 +1512,6 @@ help:
 	@echo "... semantic/variable.o"
 	@echo "... semantic/variable.i"
 	@echo "... semantic/variable.s"
-	@echo "... y.tab.o"
-	@echo "... y.tab.i"
-	@echo "... y.tab.s"
 .PHONY : help
 
 

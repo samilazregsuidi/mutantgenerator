@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/mutantgenerator",
-            "args": ["helloworld.pml"],
+            "args": ["minepump_water.pml"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
