@@ -10,8 +10,6 @@ class channel : public variable {
 public:
 	channel(scope* sc, size_t offset, const chanSymNode* sym, unsigned int bound =  0);
 
-	channel(const channel& other);
-
 	~channel() override;
 
 	variable* deepCopy(void) const override;
@@ -52,6 +50,8 @@ public:
 
 	void print(void) const override;
 
+	void printTexada(void) const override;
+
 private:
 	void len(byte newLen);
 
@@ -63,8 +63,6 @@ class channelField : public variable {
 public:
 	channelField(scope* sc, variable* parent, size_t offset, const varSymNode* sym, unsigned int fieldNumber, unsigned int messageIndex = 0, unsigned int index =  0);
 
-	channelField(const channelField& other);
-
 	variable* deepCopy(void) const override;
 };
 /*
@@ -75,13 +73,13 @@ class CIDVar : public variable {
 public:
 	CIDVar(scope* sc, size_t offset, const cidSymNode* sym, unsigned int bound =  0);
 
-	CIDVar(const CIDVar& other);
-
 	variable* deepCopy(void) const override;
 
 	channel* getRefChannel(void) const;
 	
 	void setRefChannel(channel* newRef);
+
+	void assign(scope* sc) override;
 
 private:
 	channel* ref;

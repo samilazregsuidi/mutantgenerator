@@ -17,6 +17,8 @@
                 "${workspaceFolder}/automata/symbol/visitor/**",
                 "${workspaceFolder}/semantic/**",
                 "${workspaceFolder}/parser/**",
+                "${workspaceFolder}/libs/cudd/cudd",
+                "${workspaceFolder}/libs/cudd/cplusplus",
                 "/usr/include/**",
                 "/usr/include"
             ],

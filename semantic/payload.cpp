@@ -61,6 +61,13 @@ unsigned long payload::hash(void) const {
 	return std::hash<std::string_view>{}(std::string_view(ptr, size));
 }
 
+payload* payload::copy(void) const {
+	auto copy = new payload(size);
+	assert(ptr && copy->ptr);
+	memcpy(copy->ptr, ptr, size);
+	return copy;
+}
+
 /**
  * Stores 'nb' bytes in a memory chunk, at offset 'offset'.
  * Those bytes are read from the byte array 'values'.

@@ -245,7 +245,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 62 "promela.y"
+#line 63 "promela.y"
  
 	int       				iVal;
 	char*    				sVal;

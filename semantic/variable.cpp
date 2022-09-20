@@ -69,7 +69,7 @@ variable::variable(scope* sc, variable* parent, size_t _offset, const varSymNode
 
 }
 
-variable::variable(const variable& other) 
+variable::variable(const variable& other)
 	: name(other.name)
 	, sc(other.sc)
 	, symType(other.symType)
@@ -82,7 +82,7 @@ variable::variable(const variable& other)
 }
 
 variable* variable::deepCopy(void) const {
-	variable* copy = new variable(sc, offset, symType, index);
+	variable* copy = new variable(*this);
 	return copy;
 }
 
@@ -95,6 +95,21 @@ symbol::Type variable::getType(void) const {
 
 void variable::assign(scope* sc) {
 	this->sc = sc;
+	if(parent) {
+		parent = sc->getVariable(parent->getName());
+		assert(parent);
+	}
+
+	if(hasSubFields()){
+		std::list<variable*> newFields;
+		for(auto varSubField : getSubFields()) {
+			auto field = sc->getVariable(varSubField->getName());
+			assert(field);
+			newFields.push_back(field);
+		}
+		varList = newFields;
+	}
+	
 }
 
 scope* variable::getScope(void) const {
@@ -175,6 +190,18 @@ void variable::addPrivateField(variable* field) {
 	sizeOf += field->getSizeOf();
 }
 
+bool variable::hasSubFields(void) const {
+	return getSubFields().size() > 0;
+}
+
+std::list<variable*> variable::getSubFields(void) const {
+	return varList;
+}
+
+void variable::clearVariables(void) {
+	varList.clear();
+}
+
 size_t variable::getSizeOf(void) const {
 	return sizeOf;
 }
@@ -197,6 +224,11 @@ int variable::getValue(void) const {
 void variable::print(void) const {
 	auto value = sc->getPayload()->getValue(offset, symType->getType());
 	printf("0x%-4lx:   %-23s = %d\n", offset, getName().c_str(), value);
+}
+
+void variable::printTexada(void) const {
+	auto value = sc->getPayload()->getValue(offset, symType->getType());
+	printf("%s = %d\n", getName().c_str(), value);
 }
 
 /*************************************************************************************************/
@@ -253,6 +285,9 @@ void utypeVar::print(void) const {
 
 }
 
+void utypeVar::printTexada(void) const {
+}
+
 /*************************************************************************************************/
 
 boolVar::boolVar(scope* sc, size_t offset, const boolSymNode* sym, unsigned int index)
@@ -291,6 +326,14 @@ void boolVar::print(void) const {
 		printf("0x%-4lx:   %-23s = false\n", offset, getName().c_str());
 }
 
+void boolVar::printTexada(void) const {
+	
+	if(getValue() == 1)
+		printf("%s = true\n", getName().c_str());
+	else
+		printf("%s = false\n", getName().c_str());
+}
+
 /************************************************************************************************/
 
 constVar::constVar(int value, symbol::Type type, int lineNb)
@@ -301,13 +344,6 @@ constVar::constVar(int value, symbol::Type type, int lineNb)
 {
 	assert(false);//sizeOf += 
 }
-
-constVar::constVar(const constVar& other) 
-	: variable(other)
-	, value(other.value)
-	, type(other.type)
-	, lineNb(other.lineNb)
-{}
 
 symbol::Type constVar::getType(void) const {
 	return type;
@@ -408,6 +444,17 @@ void mtypeVar::print(void) const {
 	}
 }
 
+void mtypeVar::printTexada(void) const {
+	auto value = getValue();
+	if(value) {
+		auto def = dynamic_cast<const mtypeSymNode*>(symType)->getMTypeDef();
+		auto mtypestr = def->getCmtypeSymNodeName(value);
+		printf("%s = %s\n", getName().c_str(), mtypestr.c_str());
+	} else {
+		printf("%s = nil\n", getName().c_str());
+	}
+}
+
 /******************************************************************************************************/
 
 cmtypeVar::cmtypeVar(scope* sc, const cmtypeSymNode* sym) 
@@ -452,16 +499,14 @@ void cmtypeVar::print(void) const {
 	//assert(false);
 }
 
+void cmtypeVar::printTexada(void) const {
+}
+
 /******************************************************************************************************/
 
 PIDVar::PIDVar(scope* sc, size_t offset, const pidSymNode* sym, unsigned int bound) 
 	: variable(sc, offset, sym, bound)
 	, ref(nullptr)
-{}
-
-PIDVar::PIDVar(const PIDVar& other) 
-	: variable(other)
-	, ref(other.ref)
 {}
 
 variable* PIDVar::deepCopy(void) const{
@@ -478,3 +523,10 @@ void PIDVar::setRefProcess(process* newRef) {
 	sc->getPayload()->setValue<byte>(offset, newRef->getPid());
 }
 
+void PIDVar::assign(scope* sc) {
+	variable::assign(sc);
+	if(ref) {
+		ref = dynamic_cast<process*>(sc->getVariable(ref->getName()));
+		assert(ref);
+	}
+}

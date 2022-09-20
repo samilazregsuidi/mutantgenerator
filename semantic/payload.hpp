@@ -30,6 +30,8 @@ public:
 
 	void reset(size_t offset = 0, size_t end = 0);
 
+	payload* copy(void) const;
+
 	unsigned long hash(void) const;
 
 	/*

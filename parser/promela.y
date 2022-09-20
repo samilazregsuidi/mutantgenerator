@@ -504,6 +504,7 @@ options : option								{ $$ = new stmntOpt($1, nbrLines); }
 		;
 
 option  : SEP sequence OS						{ $$ = $2; }
+		| SEP '[' real_expr ']' sequence OS		{ $$ = $5; $5->setProb($3); }
 		;
 		
 

@@ -681,8 +681,8 @@ int strBufferLen = 0;
 	#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
 	#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
 #elif
-	#define DBUG(TOKEN)
-	#define DBUG_CHAR(CHAR)
+	#define DBUG(TOKEN) ;
+	#define DBUG_CHAR(CHAR) ;
 #endif
 
 #line 689 "lex.yy.cpp"

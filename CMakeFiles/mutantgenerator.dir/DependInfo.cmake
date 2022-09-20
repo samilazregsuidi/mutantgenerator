@@ -66,6 +66,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "./automata/fsm"
   "./semantic"
   "./parser"
+  "./libs/cudd/cplusplus"
   "."
   )
 

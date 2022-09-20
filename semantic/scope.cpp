@@ -8,6 +8,7 @@
 #include "payload.hpp"
 #include "variable.hpp"
 #include "channel.hpp"
+#include "process.hpp"
 
 scope::scope(const std::string& name, scope* parent)
 	: name(name)
@@ -24,11 +25,6 @@ scope::scope(const std::string& name, scope* parent)
 	}
 }
 
-/*process* process::deepCopy(void) const {
-	process* copy = new process(s, offset, symType, start, pid, index);
-	return copy;
-}*/
-
 scope::~scope() {
 	for(auto var : varList)
 		delete var;
@@ -38,6 +34,30 @@ scope::~scope() {
 
 	if(parent)
 		parent->rmSubScope(this);
+}
+
+scope* scope::deepCopy(void) const {
+	auto copy = new scope(*this);
+	copy->payLoad = nullptr;
+
+	copy->subScopes.clear();
+	for(auto subsc : subScopes)
+		copy->addSubScope(subsc->deepCopy());
+
+	copy->varMap.clear();
+	copy->varList.clear();
+
+	for(auto var : varList)
+		copy->_addVariable(var->deepCopy());
+
+	for(auto var : varList)
+		var->assign(copy);
+
+	return copy;
+}
+
+std::string scope::getName(void) const {
+	return name;
 }
 
 void scope::setPayload(payload* newPayLoad) {
@@ -85,7 +105,7 @@ void scope::addRawBytes(size_t size) {
 }
 
 void scope::_addVariable(variable* var) {
-	var->assign(this);
+	var->sc = this;
 	auto varName = var->getName();
 	varMap[varName] = var;
 	varList.push_back(var);
@@ -310,6 +330,23 @@ channel* scope::getChannel(const std::string& name) const {
 	return chan;
 }
 
+process* scope::getProcess(const std::string& name) const {
+	for(auto subSc : subScopes)
+		if(subSc->getName() == name)
+			return dynamic_cast<process*>(subSc);
+	return nullptr;
+}
+
+std::list<process*> scope::getProcesses(void) const {
+	std::list<process*> res;
+	for(auto sc : subScopes){
+		auto proc = dynamic_cast<process*>(sc);
+		if(proc)
+			res.push_back(proc);
+	}
+	return res;
+}
+
 std::list<variable*> scope::getVariablesList(void) const {
 	return varList;
 }
@@ -355,7 +392,19 @@ void scope::rmSubScope(scope* sc) {
 }
 
 void scope::addSubScope(scope* sc) {
+	sc->parent = this;
 	subScopes.push_back(sc);
+}
+
+std::list<scope*> scope::getSubScopes(void) const {
+	return subScopes;
+}
+
+scope* scope::getSubScope(const std::string& name) const {
+	for(auto subSc : subScopes)
+		if(subSc->getName() == name)
+			return subSc;
+	return nullptr;
 }
 
 void scope::print(void) const {
@@ -365,4 +414,13 @@ void scope::print(void) const {
 
 	for(auto sc : subScopes)
 		sc->print();
+}
+
+void scope::printTexada(void) const {
+	
+	for(auto var : varList)
+		var->printTexada();
+
+	for(auto sc : subScopes)
+		sc->printTexada();
 }

@@ -18,6 +18,9 @@ fsmEdge::fsmEdge(fsmNode* source, const astNode* expression, int lineNb){
 	this->expression = expression;
 	this->lineNb = lineNb;
 	this->prob = 1.0;
+
+	auto stmntCast = dynamic_cast<const stmnt*>(expression);
+	prob = stmntCast? stmntCast->getProb() : prob;
 }
 
 /**
@@ -87,6 +90,22 @@ int fsmEdge::getLineNb(void) const {
 		//expression->resolveVariables(global, mTypes, local);
 }*/
 
+double fsmEdge::getProbability(void) const {
+	return prob;
+}
+
 fsmEdge::operator std::string(void) const {
 	return expression? std::string(*expression) : "";
+}
+
+bool fsmEdge::hasFeatures(void) const {
+	return features.getNode() != nullptr;
+}
+
+const ADD& fsmEdge::getFeatures(void) const {
+	return features;
+}
+
+void fsmEdge::setFeatures(const ADD& features) {
+	this->features = features;
 }

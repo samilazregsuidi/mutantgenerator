@@ -10,6 +10,7 @@
 class payload;
 class variable;
 class channel;
+class process;
 class cmtypeVar;
 // A state mask gives for every process the pid, a pointer to its symtab node
 // and its offset in the payload
@@ -18,9 +19,15 @@ class scope {
 public:
 	scope(const std::string& name, scope* parent = nullptr);
 
+	virtual scope* deepCopy(void) const;
+
 	virtual ~scope();
 
-	std::list<const scope*> getSubScopes(void) const;
+	std::list<scope*> getSubScopes(void) const;
+
+	scope* getSubScope(const std::string& name) const;
+
+	std::string getName(void) const;
 
 	size_t getOffset(void) const;
 
@@ -40,6 +47,8 @@ public:
 
 	virtual void print(void) const;
 
+	virtual void printTexada(void) const;
+
 	void addRawBytes(size_t size);
 
 	std::list<variable*> addVariables(const varSymNode* sym);
@@ -54,6 +63,10 @@ public:
 
 	channel* getChannel(const std::string& name) const;
 
+	process* getProcess(const std::string& name) const;
+
+	std::list<process*> getProcesses(void) const;
+
 	std::list<variable*> getVariablesList(void) const;
 
 	std::map<std::string, variable*> getVariablesMap(void) const;
@@ -64,7 +77,7 @@ public:
 
 	void addSubScope(scope* sc);
 
-private:
+protected:
 	std::string name;
 	scope* parent;
 	std::list<scope*> subScopes;

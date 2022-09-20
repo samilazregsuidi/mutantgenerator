@@ -1,0 +1,9 @@
+digraph finite_state_machine {
+	rankdir=LR
+	size="8,5"
+	93824993171440 [label = 4, shape = doublecircle, color = red, fixedsize = true]; 
+	s93824993171440 [shape = point];
+	e93824993171440 [shape = doublecircle, fixedsize = true, style = filled, color = red,  label = end];
+	s93824993171440 -> 93824993171440;
+	93824993171440 -> e93824993171440 [ label = "b = true; "];
+}

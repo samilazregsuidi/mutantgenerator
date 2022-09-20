@@ -13,6 +13,7 @@ stmnt::stmnt(Type type, int lineNb)
 	: astNode(type, lineNb)
 	, local(nullptr)
 	, prev(this)
+	, prob(1.0)
 {}
 
 unsigned int stmnt::assignMutables(const Mask& mask, unsigned int id) {
@@ -83,6 +84,14 @@ std::string stmnt::string(stmnt* list) {
 		cur = cur->getNext();
 	}
 	return res;
+}
+
+void stmnt::setProb(double newProb) {
+	prob = newProb;
+}
+
+double stmnt::getProb(void) const {
+	return prob;
 }
 
 void stmnt::acceptVisitor(ASTConstVisitor* visitor) const {

@@ -44,6 +44,8 @@
 #include <tuple>
 #include <cassert>
 
+#include "cuddObj.hh"
+
 class transition;
 
 #include "symbols.hpp"
@@ -70,9 +72,9 @@ public:
 
 	state(const fsm* stateMachine); // Creates the initial state by setting all variables' value in the payload. Does not set the payloadHash.
 
-	//state(const state& s);
+	//state(const state& s) = default;
 
-	//state* deepCopy(void) const;
+	state* deepCopy(void) const;
 	/**
 	 * Frees the memory used by a given state. It does NOT free any symbol tables, FSM or mtypes list.
 	 * However, it DOES free:
@@ -90,10 +92,11 @@ public:
 	 */
 	~state();
 
-
 	// Executable transitions in state
 	std::list<transition*> executables(byte stutter, int nbErrors, byte* hasDeadlock, byte* resetExclusivity) const;
+
 	//std::list<transition*> executablesNonStutter(ptList props, symTable* globalSymTab, state* state, byte stutter, int nbErrors, byte* hasDeadlock);
+	
 	std::list<transition*> executablesNever(void) const;
 
 		// Expression evaluation (flag)
@@ -117,11 +120,14 @@ public:
 	void addError(void);
 
 	// Applying statements
-	//state* apply(const transition* procTrans, byte preserve, byte* assertViolation); // Execute a transition on a given process.
 
 	state* apply(const transition* trans);
 	
 	state* applyRepeated(const std::list<transition*>& procTrans, byte preserve, byte* assertViolation);
+
+	static state* apply(const state* s, const transition* t);
+
+	static state* applyRepeated(const state* s, const std::list<transition*>& procTrans, byte preserve, byte* assertViolation);
 	
 	//state* applyNever(const transition* trans);
 
@@ -220,18 +226,26 @@ public:
 
 	void printGraphViz(unsigned long i) const;
 
+	void printTexada(void) const;
+
 	static state* Post(const transition* trans, const state* s);
 
 	static std::list<state*> Post(const state* s);
 
 	unsigned long hash(void) const;
 
+	const ADD& getFeatures(void) const;
+
 private:
 	void setPayload(payload* payLoad);
 
+	void assign(scope* sc);
+
 public:
-	const symTable* globalSymTab;
-	const fsm* stateMachine;
+	const symTable* const globalSymTab;
+	const fsm* const stateMachine;
+
+	ADD features;
 
 	std::list<process*> procs;
 	process* never; 	// If f is an LTL formula to be checked, never is the stateMask conversion of ~f.

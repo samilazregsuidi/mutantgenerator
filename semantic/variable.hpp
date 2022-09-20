@@ -19,15 +19,17 @@ class exprRArgList;
 
 class variable {
 public:
+	friend class scope;
+
 	variable(scope* sc, size_t offset, const varSymNode* sym, unsigned int index =  0);
 
 	variable(scope* sc, variable* parent, size_t offset, const varSymNode* sym, unsigned int index =  0);
 
 	variable(const variable& other);
 	
-	virtual ~variable();
-
 	virtual variable* deepCopy(void) const;
+
+	virtual ~variable();
 
 	virtual std::string getName(void) const;
 
@@ -37,13 +39,15 @@ public:
 	
 	virtual void print(void) const;
 
+	virtual void printTexada(void) const;
+
 	virtual void setValue(int value);
 	
 	virtual int getValue(void) const;
 
 	virtual void init(void);
 
-	void assign(scope* sc);
+	virtual void assign(scope* sc);
 
 	scope* getScope(void) const;
 
@@ -56,6 +60,10 @@ public:
 	void addField(variable* subVar);
 
 	void addPrivateField(variable* field);
+
+	bool hasSubFields(void) const;
+
+	std::list<variable*> getSubFields(void) const;
 
 	void clearVariables(void);
 
@@ -97,6 +105,8 @@ protected:
 	size_t sizeOf;
 
 	std::list<variable*> varList;
+
+	bool isHidden;
 };
 
 class utypeVar : public variable {
@@ -124,6 +134,8 @@ public:
 	bool operator != (const variable& other) const override;
 
 	void print(void) const override;
+
+	void printTexada(void) const override;
 };
 
 class boolVar : public variable {
@@ -143,14 +155,14 @@ public:
 	int operator -- (int) override;
 
 	void print(void) const override;
+
+	void printTexada(void) const override;
 };
 
 class constVar : public variable {
 public:
 
 	constVar(int value, symbol::Type type, int lineNb);
-
-	constVar(const constVar& other);
 
 	variable* deepCopy(void) const override;
 
@@ -196,6 +208,8 @@ public:
 	int operator -- (int) override;
 
 	void print(void) const override;
+
+	void printTexada(void) const override;
 };
 
 class cmtypeVar : public variable {
@@ -219,6 +233,8 @@ public:
 	int operator -- (int) override;
 
 	void print(void) const override;
+
+	void printTexada(void) const override;
 };
 
 /*
@@ -246,13 +262,13 @@ class PIDVar : public variable {
 public:
 	PIDVar(scope* sc, size_t offset, const pidSymNode* sym = nullptr, unsigned int bound =  0);
 
-	PIDVar(const PIDVar& other);
-
 	variable* deepCopy(void) const override;
 
 	process* getRefProcess(void) const;
 	
 	void setRefProcess(process* newRef);
+
+	void assign(scope* sc) override;
 
 private:
 	process* ref;

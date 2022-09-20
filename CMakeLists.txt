@@ -10,14 +10,14 @@ set(Lexer "lex.yy.cpp")
 
 add_custom_command(
     OUTPUT ${Parser}
-    COMMAND yacc -y -d -o ${CMAKE_SOURCE_DIR}/${Parser} ${CMAKE_SOURCE_DIR}/parser/promela.y
+    COMMAND yacc -y -d -o ${CMAKE_SOURCE_DIR}/parser/${Parser} ${CMAKE_SOURCE_DIR}/parser/promela.y
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.y
     COMMENT "running yacc"
 )
 
 add_custom_command(
     OUTPUT ${Lexer}
-    COMMAND flex -o ${CMAKE_SOURCE_DIR}/${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
+    COMMAND flex -o ${CMAKE_SOURCE_DIR}/parser/${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.l
     COMMENT "running flex"
 )
@@ -82,11 +82,11 @@ add_executable(mutantgenerator
 	./semantic/payload.cpp
 	./semantic/transition.cpp
 	
-    	./parser/${Parser}
-    	./parser/${Lexer}
-    )
+    ./parser/${Parser}
+    ./parser/${Lexer}
+    
+	)
 
-#target_link_libraries(mutantgenerator ${FLEX_LIBRARIES})
 target_include_directories(mutantgenerator
     PUBLIC
     ./automata/symbol
@@ -104,6 +104,21 @@ target_include_directories(mutantgenerator
     ./semantic
     
     ./parser
+
+    ./libs/cudd/cplusplus
+
     ${CMAKE_CURRENT_BINARY_DIR}
-    )
+	)
+
+
+target_link_directories(mutantgenerator
+	PUBLIC
+
+	./libs/cudd/cplusplus/.libs
+	./libs/cudd/cudd/.libs
+	)
+
+target_link_libraries(mutantgenerator libobj.a libcudd.a)
+
+
 

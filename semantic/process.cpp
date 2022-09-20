@@ -14,6 +14,8 @@
 #include "automata.hpp"
 #include "ast.hpp"
 
+#include "cuddObj.hh"
+
 process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index)
 	: scope(std::to_string(pid) + sym->getName().c_str(), s->global)
 	, symType(sym)
@@ -41,16 +43,36 @@ process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid
 	}
 }
 
-/*process* process::deepCopy(void) const {
-	process* copy = new process(s, offset, symType, start, pid, index);
+//code duplication with scope class
+process* process::deepCopy(void) const {
+	process* copy = new process(*this);
+	copy->payLoad = nullptr;
+
+	copy->subScopes.clear();
+	for(auto subsc : subScopes)
+		copy->addSubScope(subsc->deepCopy());
+
+	copy->varMap.clear();
+	copy->varList.clear();
+
+	for(auto var : varList)
+		copy->_addVariable(var->deepCopy());
+
+	for(auto var : varList)
+		var->assign(copy);
+
 	return copy;
-}*/
+}
 
 void process::init(void) {
 	
 	scope::init();
 	setFsmNodePointer(start);
 	scope::getVariable("_pid")->setValue(pid);
+}
+
+void process::setState(state* newS) {
+	s = newS;
 }
 
 byte process::getPid(void) const {
@@ -220,6 +242,8 @@ std::list<transition*> process::executables(void) const {
 
 		if(eval(edge, EVAL_EXECUTABILITY) > 0) {
 
+			auto conjunct = s->getFeatures() * edge->getFeatures();
+
 			if(edge->getExpression()->getType() == astNode::E_STMNT_CHAN_SND) {
 				
 				auto cSendStmnt = dynamic_cast<const stmntChanSnd*>(edge->getExpression());
@@ -236,16 +260,21 @@ std::list<transition*> process::executables(void) const {
 				// After the recursive call, each transition in e_ is executable and its features satisfy the modified base FD.
 				// featuresOut contains all the outgoing features from now on, included the ones of the response that satisfy the base FD (those may not satisfy the modified FD, though).
 				// *allProductsOut == 1 if the outgoing features reference all the products.
-				for(auto response : responses)
-					res.push_back(new transition(const_cast<process*>(this), edge, response));
-				
+				for(auto response : responses) {
+					conjunct *= response->getEdge()->getFeatures();
+					if((conjunct * s->stateMachine->getFD()).IsOne())
+						res.push_back(new transition(const_cast<process*>(this), edge, conjunct, response));
+				}
+
 				chan->reset();
 				s->resetHandShake();
 			
-			} else 
+			} else { 
 
-				res.push_back(new transition(const_cast<process*>(this), edge));
-
+				//to wrap/abstract when I will have time
+				if((conjunct * s->stateMachine->getFD()).IsOne())
+					res.push_back(new transition(const_cast<process*>(this), edge, conjunct));
+			}
 		}
 	}
 

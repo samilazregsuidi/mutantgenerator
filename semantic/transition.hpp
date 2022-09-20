@@ -8,6 +8,8 @@
 #include <list>
 #include <stack>
 
+#include "cuddObj.hh"
+
 class state;
 class fsmEdge;
 class process;
@@ -31,6 +33,8 @@ public:
 	static byte isProbabilisticTransList(std::list<transition*> list);
 
 	transition(process* proc, const fsmEdge* trans, transition* response = nullptr);
+
+	transition(process* proc, const fsmEdge* trans, const ADD& featExpr, transition* response = nullptr);
 	
 	~transition();
 	
@@ -54,9 +58,10 @@ public:
 
 public:		//
 	process* proc;		//	- The mask of the process to which the transition belongs (from the state that was given to executables())
-	const fsmEdge* edge;			//  - The transition that can be fired
+	const fsmEdge* const edge;			//  - The transition that can be fired
 	transition* response;		// 	- In case of a rendezvous request, this is the response transition.
 	double prob;
+	ADD features;
 };
 
 // An element on the exploration stack (corresponds to a stack frame if the algorithm were implemented recursively).

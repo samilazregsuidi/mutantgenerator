@@ -35,15 +35,13 @@ class exprRArgList;
 // and its offset in the payload
 class process : public scope {
 public:
+	friend class state;
+
 	process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index = 0);
 
 	process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, const std::list<const variable*>& args);
 
-	//process(const process& p);
-
-	//process* deepCopy(void) const;
-
-	std::string getName(void) const;
+	process* deepCopy(void) const override;
 
 	symbol::Type getType(void) const;
 
@@ -101,7 +99,7 @@ private:
 	unsigned int index;
 
 	state* s;
-	const fsmNode* start;
+	const fsmNode* const start;
 
 	mutable bool _else;
 

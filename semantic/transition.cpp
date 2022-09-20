@@ -1,5 +1,7 @@
 #include "transition.hpp"
 
+#include "fsmEdge.hpp"
+
 #include <assert.h>
 #include <iterator>
 
@@ -12,10 +14,16 @@ transition* transition::sample(const std::list<transition*>& transList) {
 }
 
 transition::transition(process* proc, const fsmEdge* edge, transition* response) 
+	: transition(proc, edge, ADD(), nullptr)
+{
+}
+
+transition::transition(process* proc, const fsmEdge* trans, const ADD& featExpr, transition* response)
 	: proc(proc)
 	, edge(edge)
 	, response(response)
-	, prob(1.)
+	, prob(edge->getProbability() * (response? response->getEdge()->getProbability(): 1.0))
+	, features(featExpr)
 {
 	assert(proc && edge);
 }

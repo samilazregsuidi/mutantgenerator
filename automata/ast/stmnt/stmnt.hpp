@@ -39,9 +39,14 @@ public:
 
 	void acceptVisitor(ASTVisitor* visitor) override;
 
+	void setProb(double newProb);
+
+	double getProb(void) const;
+
 protected:
 	symTable* local;
 	stmnt* prev;
+	double prob;
 };
 
 //E_STMNT_SEQ,		// fsm = fsm of this sequence

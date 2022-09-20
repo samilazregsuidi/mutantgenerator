@@ -9,6 +9,8 @@
 
 #include <fstream>
 
+#include "cuddObj.hh"
+
 class symTable;
 
 class fsmEdge;
@@ -59,6 +61,8 @@ public:
 
 	std::list<fsmEdge*> getEndTransitions(void) const;
 
+	const ADD& getFD(void) const;
+
 	operator std::string(void) const;
 
 	void addInitNode(const std::string& procName, fsmNode* node);
@@ -78,6 +82,7 @@ private:
 	std::list<fsmEdge *> trans;							 // List of fsmEdge	- This list contains all transitions of the FSM in an arbitrary order.
 
 	const symTable* globalSymTab;
+	ADD fd;
 };
 
 #endif

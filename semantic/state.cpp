@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "error.h"
+#include <cmath>
 
 #include "state.hpp"
 #include "process.hpp"
@@ -110,35 +110,44 @@ state::state(const state& s)
 	}
 }
 */
-/*
+
 state* state::deepCopy(void) const {
-	state* copy = new state(globalSymTab, stateMachine);
+	state* copy = new state(*this);
+	auto newScope = global->deepCopy();
+	newScope->setPayload(global->getPayload()->copy());
+	copy->assign(newScope);
+	return copy;
+}
 
-	copy->pidCounter = pidCounter;
-	copy->nbProcesses = nbProcesses;
-	copy->nbNeverClaim = nbNeverClaim;
-	copy->lastStepPid = lastStepPid;
-	copy->payLoad = new payload(*payLoad);
+void state::assign(scope* sc) {
+	procs.clear();
+	global = sc;
 
-	for(auto proc : procs) {
-		auto procCopy = proc->deepCopy();
-		procCopy->setState(copy);
-		procCopy->setPayload(copy->payLoad);
-		copy->procs.push_back(procCopy);
+	for(auto proc : sc->getProcesses()) {
+		proc->setState(this);
+		procs.push_back(proc);
 	}
 
-	auto neverCopy = never->deepCopy();
-	neverCopy->setState(copy);
-	neverCopy->setPayload(copy->payLoad);
-	copy->never = neverCopy;
-	
-	for(auto var : varList) {
-		auto varCopy = var->deepCopy();
-		varCopy->setPayload(copy->payLoad);
-		copy->addVar(varCopy);
+	if(never) {
+		never = dynamic_cast<process*>(global->getSubScope(never->getName()));
+		assert(never);
+		never->setState(this);
+	}
+
+	if(handShakeChan) {
+		handShakeChan = global->getChannel(handShakeChan->getName());
+		assert(handShakeChan);
+	}
+	if(handShakeProc) {
+		handShakeProc = global->getProcess(handShakeProc->getName());
+		assert(handShakeProc);
+	}
+	if(exclusiveProc) {
+		exclusiveProc = global->getProcess(exclusiveProc->getName());
+		assert(exclusiveProc);
 	}
 }
-*/
+
 
 /**
  * Frees the memory used by a given state. It does NOT free any symbol tables, FSM or mtypes list.
@@ -203,8 +212,13 @@ byte state::compare(const state& s2) const {
 }*/
 
 void state::print(void) const {
-	
 	global->print();
+	printf("prob : %lf\n", prob);
+}
+
+void state::printTexada(void) const {
+	global->printTexada();
+	printf("..\n");
 }
 
 void state::printGraphViz(unsigned long i) const {
@@ -376,10 +390,22 @@ std::list<transition*> state::executables(void) const {
 	const process* exclusivity = getExclusiveProc();
 	auto handShake = getHandShakeRequest();
 
-	for(auto proc : procs)
-		if (hasHandShakeRequest() || !hasExclusivity() || getExclusiveProcId() == proc->getPid())
-			execs.merge(proc->executables());
+	for(auto proc : procs) {
+		if (hasHandShakeRequest() || !hasExclusivity() || getExclusiveProcId() == proc->getPid()) {
+			auto Ts = proc->executables();
 
+			assert(std::fabs([=](){ double resProb = 0.0; for(auto t : Ts) resProb += t->prob; return resProb; }() - (Ts.size() ? 1.0 : 0.0)) < std::numeric_limits<double>::epsilon());
+
+			for(auto t : Ts)
+				t->prob /= procs.size();
+			
+			
+			
+			execs.merge(Ts);
+		}
+	}
+
+	assert(std::fabs([=](){ double resProb = 0.0; for(auto t : execs) resProb += t->prob; return resProb; }() - (execs.size() ? 1.0 : 0.0)) < std::numeric_limits<double>::epsilon());
 	
 	if (execs.size() == 0) {
 
@@ -414,12 +440,37 @@ std::list<transition*> state::executables(void) const {
 state* state::apply(const transition* trans) {
 	process* proc = trans->getProc();
 	assert(proc);
+	//warning if "different" procs have the same pid i.e., dynamic proc creation
+	proc = getProc(proc->getPid());
 
 	proc->apply(trans);
 
 	assert(!getProc(lastStepPid)->isAtomic() || getExclusiveProcId() == lastStepPid);
 
+	this->prob *= trans->prob;
+
 	this->trans = trans;
 
 	return this;
+}
+
+state* state::apply(const state* s, const transition* t) {
+	auto copy = s->deepCopy();
+	assert(copy);
+	assert(s->hash() == copy->hash());
+	printf("s hash %u and copy hash %u\n", s->hash(), copy->hash());
+	copy->apply(t);
+	return copy;
+}
+
+std::list<state*> state::post(void) const {
+	std::list<state*> res;
+	for(auto t : executables())
+		res.push_back(state::apply(this, t));
+	return res;
+
+}
+
+const ADD& state::getFeatures(void) const {
+	return features;
 }

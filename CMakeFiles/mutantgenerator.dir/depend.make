@@ -730,7 +730,6 @@ CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: automata
 CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: automata/symbol/vardef/mtypeSymNode.hpp
 CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
 
-CMakeFiles/mutantgenerator.dir/main.cpp.o: lexer.h
 CMakeFiles/mutantgenerator.dir/main.cpp.o: main.cpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/ast/ast.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/ast/astNode.hpp
@@ -773,6 +772,7 @@ CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/vardef/unsgnSymNode.h
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/vardef/utypeSymNode.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/vardef/varSymNode.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
+CMakeFiles/mutantgenerator.dir/main.cpp.o: parser/lexer.h
 CMakeFiles/mutantgenerator.dir/main.cpp.o: parser/y.tab.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: semantic/channel.hpp
 CMakeFiles/mutantgenerator.dir/main.cpp.o: semantic/payload.hpp
@@ -822,6 +822,7 @@ CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o: automata/symbol/vardef/varSy
 CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o: automata/symbol/visitor/symTabVisitor.hpp
 
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: parser/y.tab.cpp
+CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: parser/y.tab.hpp
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: automata/ast/ast.hpp
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: automata/ast/astNode.hpp
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: automata/ast/expr/argExpr.hpp
@@ -959,6 +960,7 @@ CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o: automata/symbol/visitor/s
 
 CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/channel.hpp
 CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/payload.hpp
+CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/process.hpp
 CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/scope.cpp
 CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/scope.hpp
 CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/variable.hpp
@@ -1034,6 +1036,7 @@ CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: automata/symbol/visitor/sym
 
 CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: semantic/transition.cpp
 CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: semantic/transition.hpp
+CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: automata/fsm/fsmEdge.hpp
 
 CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: semantic/payload.hpp
 CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: semantic/process.hpp

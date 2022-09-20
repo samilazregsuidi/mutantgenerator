@@ -53,23 +53,62 @@ int copyFile(const std::string& source, const std::string& target) {
 	return 0;
 }
 
-#define K 50
+#define K 500
 
 void launchExecution(const fsm* automata) {
 	state* current = new state(automata);
 	unsigned long i = 0;
-	printf("**********************************\n");
-	current->print();
+	//printf("**********************************\n");
+	current->printTexada();
 	current->printGraphViz(i++);
 	while(transition* trans = transition::sample(current->executables())){
 		current->apply(trans);
-		printf("--------------------------------------\n");
-		current->print();
+		//printf("--------------------------------------\n");
+		current->printTexada();
 		current->printGraphViz(i++);
-		if(i > K)
+		if(i > K){
+			break;
+		}
+		//add error status
+	}
+	printf("--\n");
+}
+
+#define L 5
+
+void createStateSpace(const fsm* automata) {
+	std::stack<state*> st;
+	state* current = new state(automata);
+	st.push(current);
+	unsigned long i = 0;
+	
+	while(!st.empty()){
+
+		current = st.top();
+		printf("****************** current state ****************\n");
+		current->print();
+		st.pop();
+		
+		
+		auto nexts = current->post();
+
+		if(nexts.size() > 0) {
+			printf("************* next possible states **************\n");
+			for(auto n : nexts) {
+				n->print();
+				st.push(n);
+				if(nexts.size() > 1)
+					printf("+++++++++++++++++++++++++++++++++++++++++++++++++\n");
+			}
+		} else {
+			printf("************* end state **************\n");
+		}
+
+		if(i > L)
 			break;
 		//add error status
 	}
+
 }
 
 int main(int argc, char *argv[]) {
@@ -119,7 +158,7 @@ int main(int argc, char *argv[]) {
 		delete copy;
 	}*/
 
-	launchExecution(automata);
+	createStateSpace(automata);
 
 	//std::ofstream symtable;
 	//symtable.open("sym_table_graphviz");

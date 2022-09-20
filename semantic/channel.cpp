@@ -41,12 +41,17 @@ channel::channel(scope* sc, size_t _offset, const chanSymNode* chanSym, unsigned
 	}		
 }
 
-channel::channel(const channel& other) 
-	: variable(other)
-{}
-
 variable* channel::deepCopy(void) const{
-	variable* copy = new channel(*this);
+	channel* copy = new channel(*this);
+	if(copy->isRendezVous()){
+		copy->localScope = new scope(name);
+		copy->clearVariables();
+		for(auto field : getSubFields()) {
+			copy->addPrivateField(field);
+			copy->localScope->_addVariable(field);
+		}
+		localScope->init();
+	}
 	return copy;
 }
 
@@ -174,6 +179,10 @@ void channel::print(void) const {
 
 }
 
+void channel::printTexada(void) const {
+
+}
+
 /**************************************************************************************************/
 
 channelField::channelField(scope* sc, variable* parent, size_t offset, const varSymNode* sym, unsigned int fieldNumber, unsigned int messageIndex, unsigned int index)
@@ -181,10 +190,6 @@ channelField::channelField(scope* sc, variable* parent, size_t offset, const var
 {
 	name = ".("+sym->getTypeName()+")m" + std::to_string(messageIndex) + ".f" + std::to_string(fieldNumber) + name;
 }
-
-channelField::channelField(const channelField& other) 
-	: variable(other)
-{}
 
 variable* channelField::deepCopy(void) const{
 	variable* copy = new channelField(*this);
@@ -196,11 +201,6 @@ variable* channelField::deepCopy(void) const{
 CIDVar::CIDVar(scope* sc, size_t offset, const cidSymNode* sym, unsigned int bound) 
 	: variable(sc, offset, sym, bound)
 	, ref(nullptr)
-{}
-
-CIDVar::CIDVar(const CIDVar& other) 
-	: variable(other)
-	, ref(other.ref)
 {}
 
 variable* CIDVar::deepCopy(void) const{
@@ -215,5 +215,13 @@ channel* CIDVar::getRefChannel(void) const {
 void CIDVar::setRefChannel(channel* newRef) {
 	ref = newRef;
 	sc->getPayload()->setValue<channel*>(offset, newRef);
+}
+
+void CIDVar::assign(scope* sc) {
+	variable::assign(sc);
+	if(ref) {
+		ref = dynamic_cast<channel*>(sc->getVariable(ref->getName()));
+		assert(ref);
+	}
 }
 
