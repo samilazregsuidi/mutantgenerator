@@ -5,7 +5,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <string>
-#include <cuddObj.hh>
+//#include "cuddObj.hh"
 
 class astNode;
 
@@ -23,12 +23,14 @@ public:
 	//void resolveVariables(symTabNode *global, symTabNode *local, const mTypeNode *mTypes) const;
 	int getLineNb(void) const;
 	void setLineNb(int line);
-	bool hasFeatures(void) const;
-	const ADD& getFeatures(void) const;
-	void setFeatures(const ADD& features);
+	//bool hasFeatures(void) const;
+	//const ADD& getFeatures(void) const;
+	//void setFeatures(const ADD& features);
 	//byte getFeaturesValue(void) const;
+	
 	bool project(void);
 	//getExpr?
+	
 	const astNode *getExpression(void) const;
 	double getProbability(void) const;
 	void setExpression(const astNode *expression);
@@ -41,7 +43,7 @@ private:
 	fsm* parent;
 	int lineNb;
 	//bool hasFeat;
-	ADD features;
+	//ADD features;
 	fsmNode *source;
 	const astNode *expression;
 	fsmNode *target;

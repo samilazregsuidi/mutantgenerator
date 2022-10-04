@@ -4,8 +4,11 @@
 #include "symbols.hpp"
 
 typedef char byte;
+typedef unsigned char ubyte;
 
 class process;
+
+//never return the real payload ptr
 
 class payload {
 
@@ -32,7 +35,7 @@ public:
 
 	payload* copy(void) const;
 
-	unsigned long hash(void) const;
+	unsigned long hash(size_t offset = 0, size_t end = 0) const;
 
 	/*
 	* Returns the offset of the variable referenced by 'expression' in 'process' and 'state'.
@@ -96,6 +99,8 @@ public:
 	//void initValues(unsigned int offset, int bytesNbr, byte value);
 
 	bool operator == (const payload& other) const;
+
+	void printHexadecimal(size_t offset = 0, size_t end = 0) const;
 
 private:
 	byte* ptr;

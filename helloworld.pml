@@ -1,5 +1,6 @@
 active proctype test_a(){
 	byte a;
+	
 	if
 	:: [0.6] a = 1;
 	:: [0.4] a = 2;

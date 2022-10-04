@@ -1,41 +1,28 @@
 #include "./Theory.prp"
-mtype = {ABORT, STOP, ABORTED, ABORTING, STOPPED, PAUSE, STOPPING, CONTINUE, START, PAUSED, RUNNING, STARTING, READY}
-inline print_state_transition(i, state, command, next){
-	if
-	::	i <= 0 && command == 0;
-		printf("Supervisor: (%e, _) -> %e\n", state, next);
-	::	i == 0 && command > 0;
-		printf("Supervisor: (%e, %e) -> %e\n", state, command, next);
-	::	i > 0 && command == 0;
-		printf("Worker %d: (%e, _) -> %e\n", i, state, next);
-	::	i > 0 && command > 0;
-		printf("Worker %d: (%e, %e) -> %e\n", i, state, command, next);
-	fi;
-}
-mtype states[3];
-mtype commands[3];
-bool executing[3];
+mtype = {READY, STARTING, RUNNING, PAUSED, START, CONTINUE, STOPPING, PAUSE, STOPPED, ABORTING, ABORTED, STOP, ABORT}
+mtype[3] states[3];
+mtype[3] commands[3];
+bool[3] executing[3];
 inline abort(i){
-	assert((_pid != 1));
 	atomic {
 		if
-		::	ABORT == START && commands[i] == CONTINUE;
-			assert((states[i] == READY));
+		::	ABORT > START && commands[i] == CONTINUE;
+			assert(((states[i] == READY)));
 			commands[i] = START;
 		::	ABORT == PAUSE && commands[i] == CONTINUE;
-			assert((states[i] == STARTING || states[i] == RUNNING));
+			assert(((states[i] == STARTING || states[i] == RUNNING)));
 			commands[i] = PAUSE;
 		::	ABORT == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == PAUSED)));
 			commands[i] = CONTINUE;
 		::	ABORT == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 			commands[i] = STOP;
 		::	ABORT == ABORT;
-			assert((states[i] != READY));
+			assert(((states[i] != READY)));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else;
+			skip;
 		fi;
 	};
 }
@@ -47,44 +34,44 @@ inline prepare(i){
 		atomic {
 			if
 			::	PAUSE == START && commands[i] == CONTINUE;
-				assert((states[i] == READY));
+				assert(((states[i] == READY)));
 				commands[i] = START;
 			::	PAUSE == PAUSE && commands[i] == CONTINUE;
-				assert((states[i] == STARTING || states[i] == RUNNING));
+				assert(((states[i] == STARTING || states[i] == RUNNING)));
 				commands[i] = PAUSE;
 			::	PAUSE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == PAUSED)));
 				commands[i] = CONTINUE;
 			::	PAUSE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 				commands[i] = STOP;
 			::	PAUSE == ABORT;
-				assert((states[i] != READY));
+				assert(((states[i] != READY)));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else;
+				skip;
 			fi;
 		};
 	::	true;
 		atomic {
 			if
 			::	STOP == START && commands[i] == CONTINUE;
-				assert((states[i] == READY));
+				assert(((states[i] == READY)));
 				commands[i] = START;
 			::	STOP == PAUSE && commands[i] == CONTINUE;
-				assert((states[i] == STARTING || states[i] == RUNNING));
+				assert(((states[i] == STARTING || states[i] == RUNNING)));
 				commands[i] = PAUSE;
 			::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == PAUSED)));
 				commands[i] = CONTINUE;
 			::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 				commands[i] = STOP;
 			::	STOP == ABORT;
-				assert((states[i] != READY));
+				assert(((states[i] != READY)));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else;
+				skip;
 			fi;
 		};
 	::	true;
@@ -100,22 +87,22 @@ inline execute(i){
 		atomic {
 			if
 			::	STOP == START && commands[i] == CONTINUE;
-				assert((states[i] == READY));
+				assert(((states[i] == READY)));
 				commands[i] = START;
 			::	STOP == PAUSE && commands[i] == CONTINUE;
-				assert((states[i] == STARTING || states[i] == RUNNING));
+				assert(((states[i] == STARTING || states[i] == RUNNING)));
 				commands[i] = PAUSE;
 			::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == PAUSED)));
 				commands[i] = CONTINUE;
 			::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 				commands[i] = STOP;
 			::	STOP == ABORT;
-				assert((states[i] != READY));
+				assert(((states[i] != READY)));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else;
+				skip;
 			fi;
 		};
 	::	true;
@@ -148,11 +135,9 @@ inline trans_cb(s){
 	skip;
 }
 inline covariant_transition(state, command, next){
-	print_state_transition(k, state, command, next)
 	states[k] = next;
 }
 inline contravariant_transition(state, command, next){
-	print_state_transition(k, state, command, next)
 	states[k] = next;
 }
 proctype Thread(byte k){
@@ -161,34 +146,34 @@ proctype Thread(byte k){
 	atomic {
 		if
 		::	CONTINUE == START && commands[k] == CONTINUE;
-			assert((states[k] == READY));
+			assert(((states[k] == READY)));
 			commands[k] = START;
 		::	CONTINUE == PAUSE && commands[k] == CONTINUE;
-			assert((states[k] == STARTING || states[k] == RUNNING));
+			assert(((states[k] == STARTING || states[k] == RUNNING)));
 			commands[k] = PAUSE;
 		::	CONTINUE == CONTINUE && (commands[k] == START || commands[k] == PAUSE);
-			assert((states[k] == STARTING || states[k] == PAUSED));
+			assert(((states[k] == STARTING || states[k] == PAUSED)));
 			commands[k] = CONTINUE;
 		::	CONTINUE == STOP && (commands[k] == CONTINUE || commands[k] == PAUSE);
-			assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
+			assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
 			commands[k] = STOP;
 		::	CONTINUE == ABORT;
-			assert((states[k] != READY));
+			assert(((states[k] != READY)));
 			commands[k] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", k, commands[k]);
+		::	else;
+			skip;
 		fi;
 	};
 	prepare(k)
 	do
 	::	commands[k] == CONTINUE;
-		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
+		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
 		if
 		::	states[k] == STARTING;
 			covariant_transition(STARTING, CONTINUE, RUNNING)
 		::	states[k] == PAUSED;
 			covariant_transition(PAUSED, CONTINUE, RUNNING)
-		::	else ->
+		::	else;
 			skip;
 		fi;
 		execute(k)
@@ -196,12 +181,12 @@ proctype Thread(byte k){
 		if
 		::	states[k] == PAUSED;
 			commands[k] != PAUSED;
-		::	else ->
-			assert((states[k] == STARTING || states[k] == RUNNING || states[k] == STARTING));
+		::	else;
+			assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == STARTING)));
 			if
 			::	states[k] == STARTING || states[k] == RUNNING;
 				contravariant_transition(RUNNING, PAUSE, PAUSED)
-			::	else ->
+			::	else;
 				skip;
 			fi;
 		fi;
@@ -210,105 +195,60 @@ proctype Thread(byte k){
 	od;
 	if
 	::	commands[k] == STOP;
-		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
+		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
 		covariant_transition(states[k], STOP, STOPPING)
 		finish(k)
 		contravariant_transition(STOPPING, STOP, STOPPED)
 	::	commands[k] == ABORT;
-		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == STOPPING));
+		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == STOPPING)));
 		covariant_transition(states[k], ABORT, ABORTING)
 		contravariant_transition(ABORTING, ABORT, ABORTED)
-	::	else ->
-		assert((false));
+	::	else;
+		assert(((false)));
 	fi;
 }
 inline waiit_for_START_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for START mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for START mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for START mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == RUNNING || states[i] == PAUSED || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_PAUSE_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for PAUSED mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for PAUSED mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for PAUSED mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == PAUSED || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_RESUME_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for RESUME mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for RESUME mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for RESUME mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == RUNNING || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_HALT_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for HALT mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for HALT mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for HALT mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == STOPPED || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_ABORT_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for ABORTED mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for ABORTED mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for ABORTED mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline start(i, waiit){
 	atomic {
 		if
 		::	START == START && commands[i] == CONTINUE;
-			assert((states[i] == READY));
+			assert(((states[i] == READY)));
 			commands[i] = START;
 		::	START == PAUSE && commands[i] == CONTINUE;
-			assert((states[i] == STARTING || states[i] == RUNNING));
+			assert(((states[i] == STARTING || states[i] == RUNNING)));
 			commands[i] = PAUSE;
 		::	START == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == PAUSED)));
 			commands[i] = CONTINUE;
 		::	START == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 			commands[i] = STOP;
 		::	START == ABORT;
-			assert((states[i] != READY));
+			assert(((states[i] != READY)));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else;
+			skip;
 		fi;
 	};
 	run Thread(i);
 	if
 	::	waiit;
 		waiit_for_START_mask(i)
-	::	else ->
+	::	else;
 		skip;
 	fi;
 }
@@ -316,28 +256,28 @@ inline pause(i, waiit){
 	atomic {
 		if
 		::	PAUSE == START && commands[i] == CONTINUE;
-			assert((states[i] == READY));
+			assert(((states[i] == READY)));
 			commands[i] = START;
 		::	PAUSE == PAUSE && commands[i] == CONTINUE;
-			assert((states[i] == STARTING || states[i] == RUNNING));
+			assert(((states[i] == STARTING || states[i] == RUNNING)));
 			commands[i] = PAUSE;
 		::	PAUSE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == PAUSED)));
 			commands[i] = CONTINUE;
 		::	PAUSE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 			commands[i] = STOP;
 		::	PAUSE == ABORT;
-			assert((states[i] != READY));
+			assert(((states[i] != READY)));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else;
+			skip;
 		fi;
 	};
 	if
 	::	waiit;
 		waiit_for_PAUSE_mask(i)
-	::	else ->
+	::	else;
 		skip;
 	fi;
 }
@@ -345,28 +285,28 @@ inline resume(i, waiit){
 	atomic {
 		if
 		::	CONTINUE == START && commands[i] == CONTINUE;
-			assert((states[i] == READY));
+			assert(((states[i] == READY)));
 			commands[i] = START;
 		::	CONTINUE == PAUSE && commands[i] == CONTINUE;
-			assert((states[i] == STARTING || states[i] == RUNNING));
+			assert(((states[i] == STARTING || states[i] == RUNNING)));
 			commands[i] = PAUSE;
 		::	CONTINUE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == PAUSED)));
 			commands[i] = CONTINUE;
 		::	CONTINUE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 			commands[i] = STOP;
 		::	CONTINUE == ABORT;
-			assert((states[i] != READY));
+			assert(((states[i] != READY)));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else;
+			skip;
 		fi;
 	};
 	if
 	::	waiit;
 		waiit_for_RESUME_mask(i)
-	::	else ->
+	::	else;
 		skip;
 	fi;
 }
@@ -374,28 +314,28 @@ inline stop(i, waiit){
 	atomic {
 		if
 		::	STOP == START && commands[i] == CONTINUE;
-			assert((states[i] == READY));
+			assert(((states[i] == READY)));
 			commands[i] = START;
 		::	STOP == PAUSE && commands[i] == CONTINUE;
-			assert((states[i] == STARTING || states[i] == RUNNING));
+			assert(((states[i] == STARTING || states[i] == RUNNING)));
 			commands[i] = PAUSE;
 		::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == PAUSED)));
 			commands[i] = CONTINUE;
 		::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
+			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
 			commands[i] = STOP;
 		::	STOP == ABORT;
-			assert((states[i] != READY));
+			assert(((states[i] != READY)));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else;
+			skip;
 		fi;
 	};
 	if
 	::	waiit;
 		waiit_for_HALT_mask(i)
-	::	else ->
+	::	else;
 		skip;
 	fi;
 }
@@ -407,10 +347,10 @@ inline assert_all(k, state, command){
 	d_step {
 		do
 		::	k < 3;
-			assert((states[k] == state));
-			assert((commands[k] == command));
+			assert(((states[k] == state)));
+			assert(((commands[k] == command)));
 			k++;
-		::	else ->
+		::	else;
 			break;
 		od;
 		k = 0;
@@ -433,7 +373,7 @@ inline covariant_propagation(command, waiit){
 	::	j < 3;
 		send_command(j, command, waiit)
 		j++;
-	::	else ->
+	::	else;
 		j = 1;
 		break;
 	od;
@@ -444,7 +384,7 @@ inline contravariant_propagation(command){
 	::	j > 0;
 		send_command(j, command, true)
 		j--;
-	::	else ->
+	::	else;
 		j = 1;
 		break;
 	od;
@@ -453,12 +393,11 @@ inline propagate_command_in_lifo(command){
 	if
 	::	command == START || command == PAUSED;
 		covariant_propagation(command, true)
-	::	else ->
+	::	else;
 		contravariant_propagation(command)
 	fi;
 }
 inline propagate_command_in_parallel(command){
-	printf("Supervisor propagating command %e...\n", command);
 	covariant_propagation(command, false)
 	do
 	::	j < 3;
@@ -473,7 +412,7 @@ inline propagate_command_in_parallel(command){
 			waiit_for_HALT_mask(j)
 		fi;
 		j++;
-	::	else ->
+	::	else;
 		j = 1;
 		break;
 	od;
@@ -481,13 +420,12 @@ inline propagate_command_in_parallel(command){
 inline propagate_command(command){
 	if
 	::	command == CONTINUE && !supervisor_started;
-		printf("Supervisor doesn't propagate the first CONTINUE command.\n");
 		supervisor_started = true;
-	::	else ->
+	::	else;
 		if
 		::	serialize_commands;
 			propagate_command_in_lifo(command)
-		::	else ->
+		::	else;
 			propagate_command_in_parallel(command)
 		fi;
 	fi;
@@ -499,35 +437,20 @@ inline check_worker_states(){
 		all_workers_stopped = all_workers_stopped && states[j] == STOPPED;
 		exists_aborted_worker = exists_aborted_worker || states[j] == ABORTED;
 		j++;
-	::	else ->
+	::	else;
 		j = 1;
 		break;
 	od;
 }
-inline sv_start_sync(){
-	atomic {
-		if
-		::	START == START && commands[0] == CONTINUE;
-			assert((states[0] == READY));
-			commands[0] = START;
-		::	START == PAUSE && commands[0] == CONTINUE;
-			assert((states[0] == STARTING || states[0] == RUNNING));
-			commands[0] = PAUSE;
-		::	START == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == PAUSED));
-			commands[0] = CONTINUE;
-		::	START == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
-			commands[0] = STOP;
-		::	START == ABORT;
-			assert((states[0] != READY));
-			commands[0] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", 0, commands[0]);
-		fi;
-	};
-	run Supervisor();
-	waiit_for_START_mask(0)
+inline sv_covariant_transition(state, command, next){
+	states[0] = next;
+	sv_trans_cb;
+	(next);
+}
+inline sv_contravariant_transition(state, command, next){
+	sv_trans_cb;
+	(next);
+	states[0] = next;
 }
 inline sv_prepare(){
 	propagate_command(START)
@@ -537,15 +460,105 @@ inline sv_execute(){
 	check_worker_states()
 	if
 	::	all_workers_stopped;
-		printf("Supervisor will stop because all Workers have stopped...\n");
 		stop(0, false)
 	::	exists_aborted_worker;
-		printf("Supervisor will stop because some Workers have aborted...\n");
 		stop(0, false)
-	::	else ->
+	::	else;
 		skip;
 	fi;
 	executing[0] = false;
+}
+proctype Supervisor(){
+	byte j = 1;
+	commands[0] == START;
+	sv_covariant_transition(READY, START, STARTING)
+	atomic {
+		if
+		::	CONTINUE == START && commands[0] == CONTINUE;
+			assert(((states[0] == READY)));
+			commands[0] = START;
+		::	CONTINUE == PAUSE && commands[0] == CONTINUE;
+			assert(((states[0] == STARTING || states[0] == RUNNING)));
+			commands[0] = PAUSE;
+		::	CONTINUE == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
+			assert(((states[0] == STARTING || states[0] == PAUSED)));
+			commands[0] = CONTINUE;
+		::	CONTINUE == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
+			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+			commands[0] = STOP;
+		::	CONTINUE == ABORT;
+			assert(((states[0] != READY)));
+			commands[0] = ABORT;
+		::	else;
+			skip;
+		fi;
+	};
+	sv_prepare()
+	do
+	::	commands[0] == CONTINUE;
+		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+		if
+		::	states[0] == STARTING;
+			sv_covariant_transition(STARTING, CONTINUE, RUNNING)
+		::	states[0] == PAUSED;
+			sv_covariant_transition(PAUSED, CONTINUE, RUNNING)
+		::	else;
+			skip;
+		fi;
+		sv_execute()
+	::	commands[0] == PAUSE;
+		if
+		::	states[0] == PAUSED;
+			commands[0] != PAUSED;
+		::	else;
+			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == STARTING)));
+			if
+			::	states[0] == STARTING || states[0] == RUNNING;
+				sv_contravariant_transition(RUNNING, PAUSE, PAUSED)
+			::	else;
+				skip;
+			fi;
+		fi;
+	::	commands[0] == STOP || commands[0] == ABORT;
+		break;
+	od;
+	if
+	::	commands[0] == STOP;
+		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+		sv_covariant_transition(states[0], STOP, STOPPING)
+		sv_contravariant_transition(STOPPING, STOP, STOPPED)
+	::	commands[0] == ABORT;
+		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == STOPPING)));
+		sv_covariant_transition(states[0], ABORT, ABORTING)
+		sv_contravariant_transition(ABORTING, ABORT, ABORTED)
+	::	else;
+		assert(((false)));
+	fi;
+}
+inline sv_start_sync(){
+	atomic {
+		if
+		::	START == START && commands[0] == CONTINUE;
+			assert(((states[0] == READY)));
+			commands[0] = START;
+		::	START == PAUSE && commands[0] == CONTINUE;
+			assert(((states[0] == STARTING || states[0] == RUNNING)));
+			commands[0] = PAUSE;
+		::	START == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
+			assert(((states[0] == STARTING || states[0] == PAUSED)));
+			commands[0] = CONTINUE;
+		::	START == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
+			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+			commands[0] = STOP;
+		::	START == ABORT;
+			assert(((states[0] != READY)));
+			commands[0] = ABORT;
+		::	else;
+			skip;
+		fi;
+	};
+	run Supervisor();
+	waiit_for_START_mask(0)
 }
 inline sv_trans_cb(s){
 	if
@@ -555,19 +568,9 @@ inline sv_trans_cb(s){
 		propagate_command(PAUSE)
 	::	s == ABORTING || s == STOPPING;
 		propagate_command(STOP)
-	::	else ->
+	::	else;
 		skip;
 	fi;
-}
-inline sv_covariant_transition(state, command, next){
-	print_state_transition(0, state, command, next)
-	states[0] = next;
-	sv_trans_cb(next)
-}
-inline sv_contravariant_transition(state, command, next){
-	sv_trans_cb(next)
-	print_state_transition(0, state, command, next)
-	states[0] = next;
 }
 inline sv_ctor(i){
 	d_step {
@@ -584,7 +587,7 @@ inline sv_ctor(i){
 		::	i < 3;
 			ctor(i)
 			i++;
-		::	else ->
+		::	else;
 			break;
 		od;
 	};
@@ -595,77 +598,10 @@ inline sv_dtor(i){
 		::	i < 3;
 			dtor(i)
 			i++;
-		::	else ->
+		::	else;
 			break;
 		od;
 	};
-}
-proctype Supervisor(){
-	byte j = 1;
-	commands[0] == START;
-	sv_covariant_transition(READY, START, STARTING)
-	atomic {
-		if
-		::	CONTINUE == START && commands[0] == CONTINUE;
-			assert((states[0] == READY));
-			commands[0] = START;
-		::	CONTINUE == PAUSE && commands[0] == CONTINUE;
-			assert((states[0] == STARTING || states[0] == RUNNING));
-			commands[0] = PAUSE;
-		::	CONTINUE == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == PAUSED));
-			commands[0] = CONTINUE;
-		::	CONTINUE == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
-			commands[0] = STOP;
-		::	CONTINUE == ABORT;
-			assert((states[0] != READY));
-			commands[0] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", 0, commands[0]);
-		fi;
-	};
-	sv_prepare()
-	do
-	::	commands[0] == CONTINUE;
-		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
-		if
-		::	states[0] == STARTING;
-			sv_covariant_transition(STARTING, CONTINUE, RUNNING)
-		::	states[0] == PAUSED;
-			sv_covariant_transition(PAUSED, CONTINUE, RUNNING)
-		::	else ->
-			skip;
-		fi;
-		sv_execute()
-	::	commands[0] == PAUSE;
-		if
-		::	states[0] == PAUSED;
-			commands[0] != PAUSED;
-		::	else ->
-			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == STARTING));
-			if
-			::	states[0] == STARTING || states[0] == RUNNING;
-				sv_contravariant_transition(RUNNING, PAUSE, PAUSED)
-			::	else ->
-				skip;
-			fi;
-		fi;
-	::	commands[0] == STOP || commands[0] == ABORT;
-		break;
-	od;
-	if
-	::	commands[0] == STOP;
-		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
-		sv_covariant_transition(states[0], STOP, STOPPING)
-		sv_contravariant_transition(STOPPING, STOP, STOPPED)
-	::	commands[0] == ABORT;
-		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == STOPPING));
-		sv_covariant_transition(states[0], ABORT, ABORTING)
-		sv_contravariant_transition(ABORTING, ABORT, ABORTED)
-	::	else ->
-		assert((false));
-	fi;
 }
 
 init {
@@ -674,12 +610,10 @@ init {
 	sv_ctor(i)
 	i = 0;
 	assert_all(i, READY, CONTINUE)
-	printf("Init starts Supervisor...\n");
 	sv_start_sync()
 	do
 	::	if
 		::	states[0] == RUNNING;
-			printf("Init pauses Supervisor...\n");
 			if
 			::	true;
 				pause(0, true)
@@ -687,7 +621,6 @@ init {
 				pause(0, false)
 			fi;
 		::	states[0] == PAUSED;
-			printf("Init resumes Supervisor...\n");
 			if
 			::	true;
 				resume(0, true)
@@ -700,7 +633,7 @@ init {
 	::	break;
 	od;
 	if
-	::	printf("Init stops Supervisor...\n");
+	::	true;
 		if
 		::	true;
 			stop(0, true)

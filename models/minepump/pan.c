@@ -1984,10 +1984,10 @@ uchar reached5 [] = {
 uchar *loopstate5;
 
 short src_ln4 [] = {
-	  0, 175, 176, 177, 176, 179, 179, 180, 
-	181, 182, 180, 184, 184, 185, 186, 185, 
-	188, 175, 189, 189, 174, 174, 192, 174, 
-	192,   0, };
+	  0, 120, 121, 122, 121, 124, 124, 125, 
+	126, 127, 125, 129, 129, 130, 131, 130, 
+	133, 120, 134, 134, 119, 119, 137, 119, 
+	137,   0, };
 S_F_MAP src_file4 [] = {
 	{ "-", 0, 0 },
 	{ "minepump.pml", 1, 24 },
@@ -2001,8 +2001,8 @@ uchar reached4 [] = {
 uchar *loopstate4;
 
 short src_ln3 [] = {
-	  0, 163, 164, 165, 166, 167, 164, 169, 
-	162, 162, 171, 162, 171,   0, };
+	  0, 108, 109, 110, 111, 112, 109, 114, 
+	107, 107, 116, 107, 116,   0, };
 S_F_MAP src_file3 [] = {
 	{ "-", 0, 0 },
 	{ "minepump.pml", 1, 12 },
@@ -2014,7 +2014,7 @@ uchar reached3 [] = {
 uchar *loopstate3;
 
 short src_ln2 [] = {
-	  0, 155, 156, 157, 155, 159, 155, 159, 
+	  0, 100, 101, 102, 100, 104, 100, 104, 
 	  0, };
 S_F_MAP src_file2 [] = {
 	{ "-", 0, 0 },
@@ -2027,8 +2027,8 @@ uchar reached2 [] = {
 uchar *loopstate2;
 
 short src_ln1 [] = {
-	  0, 146, 147, 146, 149, 149, 150, 146, 
-	152, 146, 152,   0, };
+	  0,  91,  92,  91,  94,  94,  95,  91, 
+	 97,  91,  97,   0, };
 S_F_MAP src_file1 [] = {
 	{ "-", 0, 0 },
 	{ "minepump.pml", 1, 10 },
@@ -2040,40 +2040,30 @@ uchar reached1 [] = {
 uchar *loopstate1;
 
 short src_ln0 [] = {
-	  0,  36,  37,  35,  39,  40,  42,  43, 
-	 41,  45,  45,  41,  47,  47,  48,  48, 
-	 40,  50,  50,  51,  53,  54,  52,  56, 
-	 56,  52,  58,  58,  58,  51,  60,  60, 
-	 60,  39,  62,  62,  65,  66,  64,  68, 
-	 70,  71,  69,  73,  73,  69,  75,  75, 
-	 76,  76,  68,  79,  80,  81,  79,  83, 
-	 84,  87,  88,  89,  91,  92,  93,  94, 
-	 95,  96,  96,  93,  98,  90,  99, 100, 
-	102, 103, 101,  88, 106, 106, 106,  87, 
-	126, 126, 126,  84, 128, 128, 129, 131, 
-	132, 133, 130, 135, 135, 130, 137, 137, 
-	137, 129, 139, 139, 140,  83, 142,  35, 
-	143,  35, 143,   0, };
+	  0,  22,  23,  21,  25,  27,  28,  26, 
+	 30,  30,  26,  32,  32,  34,  37,  38, 
+	 36,  40,  40,  36,  43,  43,  43,  25, 
+	 45,  45,  48,  49,  47,  53,  54,  52, 
+	 56,  56,  52,  58,  58,  62,  63,  61, 
+	 65,  68,  71,  72,  73,  74,  75,  76, 
+	 76,  73,  78,  70,  80,  80,  68,  84, 
+	 84,  84,  85,  85,  65,  87,  21,  88, 
+	 21,  88,   0, };
 S_F_MAP src_file0 [] = {
 	{ "-", 0, 0 },
-	{ "minepump.pml", 1, 106 },
-	{ "-", 107, 108 }
+	{ "minepump.pml", 1, 65 },
+	{ "-", 66, 67 }
 };
 uchar reached0 [] = {
-	  0,   1,   0,   1,   1,   1,   1,   0, 
-	  1,   1,   1,   0,   1,   0,   1,   1, 
-	  0,   1,   1,   1,   1,   0,   1,   1, 
-	  1,   0,   1,   1,   1,   0,   1,   1, 
-	  0,   0,   1,   0,   1,   0,   1,   1, 
-	  1,   0,   1,   1,   1,   0,   1,   0, 
-	  1,   1,   0,   1,   1,   0,   1,   1, 
-	  1,   1,   1,   1,   1,   0,   1,   0, 
-	  0,   1,   0,   0,   1,   0,   1,   1, 
-	  1,   0,   0,   0,   1,   1,   1,   0, 
-	  1,   1,   1,   0,   1,   1,   1,   1, 
-	  0,   0,   1,   1,   1,   0,   1,   1, 
-	  1,   0,   1,   1,   1,   0,   1,   0, 
-	  1,   1,   0,   0, };
+	  0,   1,   0,   1,   1,   1,   0,   1, 
+	  1,   1,   0,   1,   0,   1,   1,   0, 
+	  1,   1,   1,   0,   1,   1,   0,   0, 
+	  1,   0,   1,   0,   1,   1,   0,   1, 
+	  1,   1,   0,   1,   0,   1,   0,   1, 
+	  1,   1,   1,   0,   1,   0,   0,   1, 
+	  0,   0,   1,   0,   1,   1,   0,   1, 
+	  1,   1,   1,   1,   0,   1,   0,   1, 
+	  1,   0,   0, };
 uchar *loopstate0;
 uchar reached23[3];  /* np_ */
 uchar *loopstate23;  /* np_ */
@@ -2913,11 +2903,11 @@ addproc(int calling_pid, int priority, int n)
 		break;
 	case 0:	/* controller */
 		((P0 *)pptr(h))->_t = 0;
-		((P0 *)pptr(h))->_p = 103;
+		((P0 *)pptr(h))->_p = 62;
 #ifdef HAS_PRIORITY
 		((P0 *)pptr(h))->_priority = priority; /* was: 1 */
 #endif
-		reached0[103]=1;
+		reached0[62]=1;
 		/* params: */
 		/* locals: */
 		((P0 *)pptr(h))->pcommand = 13;
@@ -14729,13 +14719,6 @@ iniglobals(int calling_pid)
 		now.readMsg = 3;
 		now.waterLevel = 10;
 		now.uwants = 14;
-		now.f.Start = 1;
-		now.f.Stop = 1;
-		now.f.MethaneAlarm = 1;
-		now.f.MethaneQuery = 1;
-		now.f.Low = 0;
-		now.f.Normal = 0;
-		now.f.High = 1;
 #ifdef VAR_RANGES
 		logval("pumpOn", now.pumpOn);
 		logval("methane", now.methane);
@@ -14743,13 +14726,6 @@ iniglobals(int calling_pid)
 		logval("readMsg", now.readMsg);
 		logval("waterLevel", now.waterLevel);
 		logval("uwants", now.uwants);
-		logval("f.Start", now.f.Start);
-		logval("f.Stop", now.f.Stop);
-		logval("f.MethaneAlarm", now.f.MethaneAlarm);
-		logval("f.MethaneQuery", now.f.MethaneQuery);
-		logval("f.Low", now.f.Low);
-		logval("f.Normal", now.f.Normal);
-		logval("f.High", now.f.High);
 #endif
 }
 
@@ -16662,25 +16638,17 @@ r_xpoint(void)
 void
 set_recvs(void)
 {
-	Is_Recv[123] = 1;
-	Is_Recv[111] = 1;
-	Is_Recv[60] = 1;
-	Is_Recv[51] = 1;
-	Is_Recv[35] = 1;
+	Is_Recv[82] = 1;
+	Is_Recv[70] = 1;
+	Is_Recv[42] = 1;
+	Is_Recv[36] = 1;
+	Is_Recv[25] = 1;
 	Is_Recv[0] = 1;
 }
 void
 c_globals(void)
 {	/* int i; */
 	printf("global vars:\n");
-		printf("	(struct f)\n");
-	printf("	bit    Start:	%d\n", now.f.Start);
-	printf("	bit    Stop:	%d\n", now.f.Stop);
-	printf("	bit    MethaneAlarm:	%d\n", now.f.MethaneAlarm);
-	printf("	bit    MethaneQuery:	%d\n", now.f.MethaneQuery);
-	printf("	bit    Low:	%d\n", now.f.Low);
-	printf("	bit    Normal:	%d\n", now.f.Normal);
-	printf("	bit    High:	%d\n", now.f.High);
 	printf("	mtype  stop:	14\n");
 	printf("	mtype  start:	13\n");
 	printf("	mtype  alarm:	12\n");
@@ -16852,7 +16820,7 @@ c_chandump(int from)
 	printf("\n");
 }
 
-Trans *t_id_lkup[5071];
+Trans *t_id_lkup[5030];
 
 
 #ifdef BFS_PAR

@@ -53722,13 +53722,13 @@
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC watersensor */
-	case 2065: // STATE 1 - minepump.pml:175 - [((waterLevel==low))] (0:0:0 - 1)
+	case 2065: // STATE 1 - minepump.pml:120 - [((waterLevel==low))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[4][1] = 1;
 		if (!((now.waterLevel==11)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2066: // STATE 2 - minepump.pml:176 - [waterLevel = low] (0:19:1 - 1)
+	case 2066: // STATE 2 - minepump.pml:121 - [waterLevel = low] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][2] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53744,7 +53744,7 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2067: // STATE 3 - minepump.pml:177 - [waterLevel = medium] (0:19:1 - 1)
+	case 2067: // STATE 3 - minepump.pml:122 - [waterLevel = medium] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][3] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53760,18 +53760,18 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2068: // STATE 18 - minepump.pml:189 - [.(goto)] (0:19:0 - 10)
+	case 2068: // STATE 18 - minepump.pml:134 - [.(goto)] (0:19:0 - 10)
 		IfNotBlocked
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2069: // STATE 6 - minepump.pml:179 - [((waterLevel==medium))] (0:0:0 - 1)
+	case 2069: // STATE 6 - minepump.pml:124 - [((waterLevel==medium))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[4][6] = 1;
 		if (!((now.waterLevel==10)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2070: // STATE 7 - minepump.pml:180 - [waterLevel = low] (0:19:1 - 1)
+	case 2070: // STATE 7 - minepump.pml:125 - [waterLevel = low] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][7] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53787,7 +53787,7 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2071: // STATE 8 - minepump.pml:181 - [waterLevel = medium] (0:19:1 - 1)
+	case 2071: // STATE 8 - minepump.pml:126 - [waterLevel = medium] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][8] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53803,7 +53803,7 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2072: // STATE 9 - minepump.pml:182 - [waterLevel = high] (0:19:1 - 1)
+	case 2072: // STATE 9 - minepump.pml:127 - [waterLevel = high] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][9] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53819,13 +53819,13 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2073: // STATE 12 - minepump.pml:184 - [((waterLevel==high))] (0:0:0 - 1)
+	case 2073: // STATE 12 - minepump.pml:129 - [((waterLevel==high))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[4][12] = 1;
 		if (!((now.waterLevel==9)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2074: // STATE 13 - minepump.pml:185 - [waterLevel = medium] (0:19:1 - 1)
+	case 2074: // STATE 13 - minepump.pml:130 - [waterLevel = medium] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][13] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53841,7 +53841,7 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2075: // STATE 14 - minepump.pml:186 - [waterLevel = high] (0:19:1 - 1)
+	case 2075: // STATE 14 - minepump.pml:131 - [waterLevel = high] (0:19:1 - 1)
 		IfNotBlocked
 		reached[4][14] = 1;
 		(trpt+1)->bup.oval = now.waterLevel;
@@ -53857,7 +53857,7 @@
 		reached[4][18] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2076: // STATE 19 - minepump.pml:189 - [cLevel!waterLevel] (0:0:0 - 1)
+	case 2076: // STATE 19 - minepump.pml:134 - [cLevel!waterLevel] (0:0:0 - 1)
 		IfNotBlocked
 		reached[4][19] = 1;
 		if (q_len(now.cLevel))
@@ -53872,14 +53872,14 @@
 		qsend(now.cLevel, 0, now.waterLevel, 1);
 		{ boq = now.cLevel; };
 		_m = 2; goto P999; /* 0 */
-	case 2077: // STATE 24 - minepump.pml:192 - [-end-] (0:0:0 - 1)
+	case 2077: // STATE 24 - minepump.pml:137 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[4][24] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC methanesensor */
-	case 2078: // STATE 1 - minepump.pml:163 - [cMethane?_] (0:0:1 - 1)
+	case 2078: // STATE 1 - minepump.pml:108 - [cMethane?_] (0:0:1 - 1)
 		reached[3][1] = 1;
 		if (boq != now.cMethane) continue;
 		if (q_len(now.cMethane) == 0) continue;
@@ -53918,13 +53918,13 @@
 
 		};
 		_m = 4; goto P999; /* 0 */
-	case 2079: // STATE 2 - minepump.pml:164 - [(methane)] (0:0:0 - 1)
+	case 2079: // STATE 2 - minepump.pml:109 - [(methane)] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][2] = 1;
 		if (!(((int)now.methane)))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2080: // STATE 3 - minepump.pml:165 - [cMethane!methanestop] (0:0:0 - 1)
+	case 2080: // STATE 3 - minepump.pml:110 - [cMethane!methanestop] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][3] = 1;
 		if (q_len(now.cMethane))
@@ -53939,13 +53939,13 @@
 		qsend(now.cMethane, 0, 5, 1);
 		{ boq = now.cMethane; };
 		_m = 2; goto P999; /* 0 */
-	case 2081: // STATE 4 - minepump.pml:166 - [(!(methane))] (0:0:0 - 1)
+	case 2081: // STATE 4 - minepump.pml:111 - [(!(methane))] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][4] = 1;
 		if (!( !(((int)now.methane))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2082: // STATE 5 - minepump.pml:167 - [cMethane!ready] (0:0:0 - 1)
+	case 2082: // STATE 5 - minepump.pml:112 - [cMethane!ready] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][5] = 1;
 		if (q_len(now.cMethane))
@@ -53960,14 +53960,14 @@
 		qsend(now.cMethane, 0, 8, 1);
 		{ boq = now.cMethane; };
 		_m = 2; goto P999; /* 0 */
-	case 2083: // STATE 12 - minepump.pml:171 - [-end-] (0:0:0 - 1)
+	case 2083: // STATE 12 - minepump.pml:116 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[3][12] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC methanealarm */
-	case 2084: // STATE 1 - minepump.pml:155 - [methane = 1] (0:0:1 - 1)
+	case 2084: // STATE 1 - minepump.pml:100 - [methane = 1] (0:0:1 - 1)
 		IfNotBlocked
 		reached[2][1] = 1;
 		(trpt+1)->bup.oval = ((int)now.methane);
@@ -53977,7 +53977,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2085: // STATE 2 - minepump.pml:156 - [cAlarm!alarm] (0:0:0 - 1)
+	case 2085: // STATE 2 - minepump.pml:101 - [cAlarm!alarm] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][2] = 1;
 		if (q_len(now.cAlarm))
@@ -53992,7 +53992,7 @@
 		qsend(now.cAlarm, 0, 12, 1);
 		{ boq = now.cAlarm; };
 		_m = 2; goto P999; /* 0 */
-	case 2086: // STATE 3 - minepump.pml:157 - [methane = 0] (0:0:1 - 1)
+	case 2086: // STATE 3 - minepump.pml:102 - [methane = 0] (0:0:1 - 1)
 		IfNotBlocked
 		reached[2][3] = 1;
 		(trpt+1)->bup.oval = ((int)now.methane);
@@ -54002,14 +54002,14 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2087: // STATE 7 - minepump.pml:159 - [-end-] (0:0:0 - 1)
+	case 2087: // STATE 7 - minepump.pml:104 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[2][7] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC user */
-	case 2088: // STATE 1 - minepump.pml:146 - [uwants = start] (0:0:1 - 1)
+	case 2088: // STATE 1 - minepump.pml:91 - [uwants = start] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][1] = 1;
 		(trpt+1)->bup.oval = now.uwants;
@@ -54019,7 +54019,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2089: // STATE 2 - minepump.pml:147 - [uwants = stop] (0:0:1 - 1)
+	case 2089: // STATE 2 - minepump.pml:92 - [uwants = stop] (0:0:1 - 1)
 		IfNotBlocked
 		reached[1][2] = 1;
 		(trpt+1)->bup.oval = now.uwants;
@@ -54029,7 +54029,7 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2090: // STATE 5 - minepump.pml:149 - [cCmd!uwants] (0:0:0 - 3)
+	case 2090: // STATE 5 - minepump.pml:94 - [cCmd!uwants] (0:0:0 - 3)
 		IfNotBlocked
 		reached[1][5] = 1;
 		if (q_len(now.cCmd))
@@ -54044,7 +54044,7 @@
 		qsend(now.cCmd, 0, now.uwants, 1);
 		{ boq = now.cCmd; };
 		_m = 2; goto P999; /* 0 */
-	case 2091: // STATE 6 - minepump.pml:150 - [cCmd?_] (0:0:1 - 1)
+	case 2091: // STATE 6 - minepump.pml:95 - [cCmd?_] (0:0:1 - 1)
 		reached[1][6] = 1;
 		if (boq != now.cCmd) continue;
 		if (q_len(now.cCmd) == 0) continue;
@@ -54083,14 +54083,14 @@
 
 		};
 		_m = 4; goto P999; /* 0 */
-	case 2092: // STATE 10 - minepump.pml:152 - [-end-] (0:0:0 - 1)
+	case 2092: // STATE 10 - minepump.pml:97 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
 		reached[1][10] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 
 		 /* PROC controller */
-	case 2093: // STATE 1 - minepump.pml:36 - [cCmd?pcommand] (33:0:2 - 1)
+	case 2093: // STATE 1 - minepump.pml:22 - [cCmd?pcommand] (23:0:2 - 1)
 		reached[0][1] = 1;
 		if (boq != now.cCmd) continue;
 		if (q_len(now.cCmd) == 0) continue;
@@ -54133,7 +54133,7 @@
 #endif
 
 		};
-		/* merge: readMsg = commandMsg(0, 2, 33) */
+		/* merge: readMsg = commandMsg(0, 2, 23) */
 		reached[0][2] = 1;
 		(trpt+1)->bup.ovals[1] = now.readMsg;
 		now.readMsg = 3;
@@ -54142,7 +54142,7 @@
 #endif
 		;
 		_m = 4; goto P999; /* 1 */
-	case 2094: // STATE 4 - minepump.pml:39 - [((pcommand==stop))] (0:0:1 - 1)
+	case 2094: // STATE 4 - minepump.pml:25 - [((pcommand==stop))] (0:0:1 - 1)
 		IfNotBlocked
 		reached[0][4] = 1;
 		if (!((((P0 *)_this)->pcommand==14)))
@@ -54154,32 +54154,26 @@
 #endif
 			((P0 *)_this)->pcommand = 0;
 		_m = 3; goto P999; /* 0 */
-	case 2095: // STATE 5 - minepump.pml:40 - [(f.Stop)] (0:0:0 - 1)
+	case 2095: // STATE 5 - minepump.pml:27 - [((pstate==running))] (12:0:1 - 1)
 		IfNotBlocked
 		reached[0][5] = 1;
-		if (!(((int)now.f.Stop)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2096: // STATE 6 - minepump.pml:42 - [((pstate==running))] (13:0:1 - 1)
-		IfNotBlocked
-		reached[0][6] = 1;
 		if (!((now.pstate==7)))
 			continue;
-		/* merge: pumpOn = 0(0, 7, 13) */
-		reached[0][7] = 1;
+		/* merge: pumpOn = 0(0, 6, 12) */
+		reached[0][6] = 1;
 		(trpt+1)->bup.oval = ((int)now.pumpOn);
 		now.pumpOn = 0;
 #ifdef VAR_RANGES
 		logval("pumpOn", ((int)now.pumpOn));
 #endif
 		;
-		/* merge: .(goto)(0, 12, 13) */
-		reached[0][12] = 1;
+		/* merge: .(goto)(0, 11, 12) */
+		reached[0][11] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2097: // STATE 13 - minepump.pml:47 - [pstate = stopped] (0:0:1 - 3)
+	case 2096: // STATE 12 - minepump.pml:32 - [pstate = stopped] (0:0:1 - 3)
 		IfNotBlocked
-		reached[0][13] = 1;
+		reached[0][12] = 1;
 		(trpt+1)->bup.oval = now.pstate;
 		now.pstate = 6;
 #ifdef VAR_RANGES
@@ -54187,9 +54181,9 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2098: // STATE 18 - minepump.pml:50 - [((pcommand==start))] (0:0:1 - 1)
+	case 2097: // STATE 13 - minepump.pml:34 - [((pcommand==start))] (0:0:1 - 1)
 		IfNotBlocked
-		reached[0][18] = 1;
+		reached[0][13] = 1;
 		if (!((((P0 *)_this)->pcommand==13)))
 			continue;
 		if (TstOnly) return 1; /* TT */
@@ -54199,43 +54193,34 @@
 #endif
 			((P0 *)_this)->pcommand = 0;
 		_m = 3; goto P999; /* 0 */
-	case 2099: // STATE 19 - minepump.pml:51 - [(f.Start)] (0:0:0 - 1)
+	case 2098: // STATE 14 - minepump.pml:37 - [((pstate!=running))] (25:0:1 - 1)
 		IfNotBlocked
-		reached[0][19] = 1;
-		if (!(((int)now.f.Start)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2100: // STATE 20 - minepump.pml:53 - [((pstate!=running))] (35:0:1 - 1)
-		IfNotBlocked
-		reached[0][20] = 1;
+		reached[0][14] = 1;
 		if (!((now.pstate!=7)))
 			continue;
-		/* merge: pstate = ready(0, 21, 35) */
-		reached[0][21] = 1;
+		/* merge: pstate = ready(0, 15, 25) */
+		reached[0][15] = 1;
 		(trpt+1)->bup.oval = now.pstate;
 		now.pstate = 8;
 #ifdef VAR_RANGES
 		logval("pstate", now.pstate);
 #endif
 		;
-		/* merge: .(goto)(0, 26, 35) */
-		reached[0][26] = 1;
+		/* merge: .(goto)(0, 20, 25) */
+		reached[0][20] = 1;
 		;
-		/* merge: .(goto)(0, 30, 35) */
-		reached[0][30] = 1;
+		/* merge: .(goto)(0, 24, 25) */
+		reached[0][24] = 1;
 		;
-		/* merge: .(goto)(0, 34, 35) */
-		reached[0][34] = 1;
-		;
-		_m = 3; goto P999; /* 4 */
-	case 2101: // STATE 32 - minepump.pml:60 - [assert(0)] (0:0:0 - 1)
+		_m = 3; goto P999; /* 3 */
+	case 2099: // STATE 22 - minepump.pml:43 - [assert(0)] (0:0:0 - 1)
 		IfNotBlocked
-		reached[0][32] = 1;
+		reached[0][22] = 1;
 		spin_assert(0, "0", II, tt, t);
 		_m = 3; goto P999; /* 0 */
-	case 2102: // STATE 35 - minepump.pml:62 - [cCmd!pstate] (0:0:0 - 10)
+	case 2100: // STATE 25 - minepump.pml:45 - [cCmd!pstate] (0:0:0 - 6)
 		IfNotBlocked
-		reached[0][35] = 1;
+		reached[0][25] = 1;
 		if (q_len(now.cCmd))
 			continue;
 #ifdef HAS_CODE
@@ -54248,8 +54233,8 @@
 		qsend(now.cCmd, 0, now.pstate, 1);
 		{ boq = now.cCmd; };
 		_m = 2; goto P999; /* 0 */
-	case 2103: // STATE 36 - minepump.pml:65 - [cAlarm?_] (50:0:2 - 1)
-		reached[0][36] = 1;
+	case 2101: // STATE 26 - minepump.pml:48 - [cAlarm?_] (34:0:2 - 1)
+		reached[0][26] = 1;
 		if (boq != now.cAlarm) continue;
 		if (q_len(now.cAlarm) == 0) continue;
 
@@ -54287,8 +54272,8 @@
 #endif
 
 		};
-		/* merge: readMsg = alarmMsg(0, 37, 50) */
-		reached[0][37] = 1;
+		/* merge: readMsg = alarmMsg(0, 27, 34) */
+		reached[0][27] = 1;
 		(trpt+1)->bup.ovals[1] = now.readMsg;
 		now.readMsg = 2;
 #ifdef VAR_RANGES
@@ -54296,32 +54281,26 @@
 #endif
 		;
 		_m = 4; goto P999; /* 1 */
-	case 2104: // STATE 39 - minepump.pml:68 - [(f.MethaneAlarm)] (0:0:0 - 1)
+	case 2102: // STATE 29 - minepump.pml:53 - [((pstate==running))] (36:0:1 - 1)
 		IfNotBlocked
-		reached[0][39] = 1;
-		if (!(((int)now.f.MethaneAlarm)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2105: // STATE 40 - minepump.pml:70 - [((pstate==running))] (47:0:1 - 1)
-		IfNotBlocked
-		reached[0][40] = 1;
+		reached[0][29] = 1;
 		if (!((now.pstate==7)))
 			continue;
-		/* merge: pumpOn = 0(0, 41, 47) */
-		reached[0][41] = 1;
+		/* merge: pumpOn = 0(0, 30, 36) */
+		reached[0][30] = 1;
 		(trpt+1)->bup.oval = ((int)now.pumpOn);
 		now.pumpOn = 0;
 #ifdef VAR_RANGES
 		logval("pumpOn", ((int)now.pumpOn));
 #endif
 		;
-		/* merge: .(goto)(0, 46, 47) */
-		reached[0][46] = 1;
+		/* merge: .(goto)(0, 35, 36) */
+		reached[0][35] = 1;
 		;
 		_m = 3; goto P999; /* 2 */
-	case 2106: // STATE 47 - minepump.pml:75 - [pstate = methanestop] (0:0:1 - 3)
+	case 2103: // STATE 36 - minepump.pml:58 - [pstate = methanestop] (0:0:1 - 3)
 		IfNotBlocked
-		reached[0][47] = 1;
+		reached[0][36] = 1;
 		(trpt+1)->bup.oval = now.pstate;
 		now.pstate = 5;
 #ifdef VAR_RANGES
@@ -54329,8 +54308,8 @@
 #endif
 		;
 		_m = 3; goto P999; /* 0 */
-	case 2107: // STATE 52 - minepump.pml:80 - [cLevel?level] (101:0:2 - 1)
-		reached[0][52] = 1;
+	case 2104: // STATE 37 - minepump.pml:62 - [cLevel?level] (60:0:2 - 1)
+		reached[0][37] = 1;
 		if (boq != now.cLevel) continue;
 		if (q_len(now.cLevel) == 0) continue;
 
@@ -54372,8 +54351,8 @@
 #endif
 
 		};
-		/* merge: readMsg = levelMsg(0, 53, 101) */
-		reached[0][53] = 1;
+		/* merge: readMsg = levelMsg(0, 38, 60) */
+		reached[0][38] = 1;
 		(trpt+1)->bup.ovals[1] = now.readMsg;
 		now.readMsg = 1;
 #ifdef VAR_RANGES
@@ -54381,9 +54360,9 @@
 #endif
 		;
 		_m = 4; goto P999; /* 1 */
-	case 2108: // STATE 55 - minepump.pml:83 - [((level==high))] (0:0:1 - 1)
+	case 2105: // STATE 40 - minepump.pml:65 - [((level==high))] (0:0:1 - 1)
 		IfNotBlocked
-		reached[0][55] = 1;
+		reached[0][40] = 1;
 		if (!((((P0 *)_this)->level==9)))
 			continue;
 		if (TstOnly) return 1; /* TT */
@@ -54393,27 +54372,15 @@
 #endif
 			((P0 *)_this)->level = 0;
 		_m = 3; goto P999; /* 0 */
-	case 2109: // STATE 56 - minepump.pml:84 - [(f.High)] (0:0:0 - 1)
+	case 2106: // STATE 41 - minepump.pml:68 - [(((pstate==ready)||(pstate==lowstop)))] (0:0:0 - 1)
 		IfNotBlocked
-		reached[0][56] = 1;
-		if (!(((int)now.f.High)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2110: // STATE 57 - minepump.pml:87 - [(((pstate==ready)||(pstate==lowstop)))] (0:0:0 - 1)
-		IfNotBlocked
-		reached[0][57] = 1;
+		reached[0][41] = 1;
 		if (!(((now.pstate==8)||(now.pstate==4))))
 			continue;
 		_m = 3; goto P999; /* 0 */
-	case 2111: // STATE 58 - minepump.pml:88 - [(f.MethaneQuery)] (0:0:0 - 1)
+	case 2107: // STATE 42 - minepump.pml:71 - [cMethane!pstate] (0:0:0 - 1)
 		IfNotBlocked
-		reached[0][58] = 1;
-		if (!(((int)now.f.MethaneQuery)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2112: // STATE 60 - minepump.pml:91 - [cMethane!pstate] (0:0:0 - 1)
-		IfNotBlocked
-		reached[0][60] = 1;
+		reached[0][42] = 1;
 		if (q_len(now.cMethane))
 			continue;
 #ifdef HAS_CODE
@@ -54426,8 +54393,8 @@
 		qsend(now.cMethane, 0, now.pstate, 1);
 		{ boq = now.cMethane; };
 		_m = 2; goto P999; /* 0 */
-	case 2113: // STATE 61 - minepump.pml:92 - [cMethane?pstate] (0:0:1 - 1)
-		reached[0][61] = 1;
+	case 2108: // STATE 43 - minepump.pml:72 - [cMethane?pstate] (0:0:1 - 1)
+		reached[0][43] = 1;
 		if (boq != now.cMethane) continue;
 		if (q_len(now.cMethane) == 0) continue;
 
@@ -54469,13 +54436,13 @@
 
 		};
 		_m = 4; goto P999; /* 0 */
-	case 2114: // STATE 62 - minepump.pml:93 - [((pstate==ready))] (103:0:2 - 1)
+	case 2109: // STATE 44 - minepump.pml:73 - [((pstate==ready))] (62:0:2 - 1)
 		IfNotBlocked
-		reached[0][62] = 1;
+		reached[0][44] = 1;
 		if (!((now.pstate==8)))
 			continue;
-		/* merge: pstate = running(103, 63, 103) */
-		reached[0][63] = 1;
+		/* merge: pstate = running(62, 45, 62) */
+		reached[0][45] = 1;
 		(trpt+1)->bup.ovals = grab_ints(2);
 		(trpt+1)->bup.ovals[0] = now.pstate;
 		now.pstate = 7;
@@ -54483,114 +54450,62 @@
 		logval("pstate", now.pstate);
 #endif
 		;
-		/* merge: pumpOn = 1(103, 64, 103) */
-		reached[0][64] = 1;
+		/* merge: pumpOn = 1(62, 46, 62) */
+		reached[0][46] = 1;
 		(trpt+1)->bup.ovals[1] = ((int)now.pumpOn);
 		now.pumpOn = 1;
 #ifdef VAR_RANGES
 		logval("pumpOn", ((int)now.pumpOn));
 #endif
 		;
-		/* merge: .(goto)(103, 68, 103) */
-		reached[0][68] = 1;
+		/* merge: .(goto)(62, 50, 62) */
+		reached[0][50] = 1;
 		;
-		/* merge: .(goto)(0, 76, 103) */
-		reached[0][76] = 1;
+		/* merge: .(goto)(0, 55, 62) */
+		reached[0][55] = 1;
 		;
-		/* merge: .(goto)(0, 80, 103) */
-		reached[0][80] = 1;
+		/* merge: .(goto)(0, 61, 62) */
+		reached[0][61] = 1;
 		;
-		/* merge: .(goto)(0, 84, 103) */
-		reached[0][84] = 1;
+		/* merge: .(goto)(0, 63, 62) */
+		reached[0][63] = 1;
 		;
-		/* merge: .(goto)(0, 102, 103) */
-		reached[0][102] = 1;
-		;
-		/* merge: .(goto)(0, 104, 103) */
-		reached[0][104] = 1;
-		;
-		_m = 3; goto P999; /* 8 */
-	case 2115: // STATE 68 - minepump.pml:98 - [.(goto)] (0:103:0 - 2)
+		_m = 3; goto P999; /* 6 */
+	case 2110: // STATE 50 - minepump.pml:78 - [.(goto)] (0:62:0 - 2)
 		IfNotBlocked
-		reached[0][68] = 1;
+		reached[0][50] = 1;
 		;
-		/* merge: .(goto)(0, 76, 103) */
-		reached[0][76] = 1;
+		/* merge: .(goto)(0, 55, 62) */
+		reached[0][55] = 1;
 		;
-		/* merge: .(goto)(0, 80, 103) */
-		reached[0][80] = 1;
+		/* merge: .(goto)(0, 61, 62) */
+		reached[0][61] = 1;
 		;
-		/* merge: .(goto)(0, 84, 103) */
-		reached[0][84] = 1;
+		/* merge: .(goto)(0, 63, 62) */
+		reached[0][63] = 1;
 		;
-		/* merge: .(goto)(0, 102, 103) */
-		reached[0][102] = 1;
-		;
-		/* merge: .(goto)(0, 104, 103) */
-		reached[0][104] = 1;
-		;
-		_m = 3; goto P999; /* 5 */
-	case 2116: // STATE 66 - minepump.pml:96 - [(1)] (103:0:0 - 1)
+		_m = 3; goto P999; /* 3 */
+	case 2111: // STATE 48 - minepump.pml:76 - [(1)] (62:0:0 - 1)
 		IfNotBlocked
-		reached[0][66] = 1;
+		reached[0][48] = 1;
 		if (!(1))
 			continue;
-		/* merge: .(goto)(103, 68, 103) */
-		reached[0][68] = 1;
+		/* merge: .(goto)(62, 50, 62) */
+		reached[0][50] = 1;
 		;
-		/* merge: .(goto)(0, 76, 103) */
-		reached[0][76] = 1;
+		/* merge: .(goto)(0, 55, 62) */
+		reached[0][55] = 1;
 		;
-		/* merge: .(goto)(0, 80, 103) */
-		reached[0][80] = 1;
+		/* merge: .(goto)(0, 61, 62) */
+		reached[0][61] = 1;
 		;
-		/* merge: .(goto)(0, 84, 103) */
-		reached[0][84] = 1;
+		/* merge: .(goto)(0, 63, 62) */
+		reached[0][63] = 1;
 		;
-		/* merge: .(goto)(0, 102, 103) */
-		reached[0][102] = 1;
-		;
-		/* merge: .(goto)(0, 104, 103) */
-		reached[0][104] = 1;
-		;
-		_m = 3; goto P999; /* 6 */
-	case 2117: // STATE 72 - minepump.pml:102 - [pstate = running] (0:103:2 - 1)
+		_m = 3; goto P999; /* 4 */
+	case 2112: // STATE 56 - minepump.pml:84 - [((level==low))] (0:0:1 - 1)
 		IfNotBlocked
-		reached[0][72] = 1;
-		(trpt+1)->bup.ovals = grab_ints(2);
-		(trpt+1)->bup.ovals[0] = now.pstate;
-		now.pstate = 7;
-#ifdef VAR_RANGES
-		logval("pstate", now.pstate);
-#endif
-		;
-		/* merge: pumpOn = 1(103, 73, 103) */
-		reached[0][73] = 1;
-		(trpt+1)->bup.ovals[1] = ((int)now.pumpOn);
-		now.pumpOn = 1;
-#ifdef VAR_RANGES
-		logval("pumpOn", ((int)now.pumpOn));
-#endif
-		;
-		/* merge: .(goto)(0, 76, 103) */
-		reached[0][76] = 1;
-		;
-		/* merge: .(goto)(0, 80, 103) */
-		reached[0][80] = 1;
-		;
-		/* merge: .(goto)(0, 84, 103) */
-		reached[0][84] = 1;
-		;
-		/* merge: .(goto)(0, 102, 103) */
-		reached[0][102] = 1;
-		;
-		/* merge: .(goto)(0, 104, 103) */
-		reached[0][104] = 1;
-		;
-		_m = 3; goto P999; /* 6 */
-	case 2118: // STATE 85 - minepump.pml:128 - [((level==low))] (0:0:1 - 1)
-		IfNotBlocked
-		reached[0][85] = 1;
+		reached[0][56] = 1;
 		if (!((((P0 *)_this)->level==11)))
 			continue;
 		if (TstOnly) return 1; /* TT */
@@ -54600,50 +54515,9 @@
 #endif
 			((P0 *)_this)->level = 0;
 		_m = 3; goto P999; /* 0 */
-	case 2119: // STATE 86 - minepump.pml:129 - [(f.Low)] (0:0:0 - 1)
+	case 2113: // STATE 58 - minepump.pml:85 - [((level==medium))] (0:0:1 - 1)
 		IfNotBlocked
-		reached[0][86] = 1;
-		if (!(((int)now.f.Low)))
-			continue;
-		_m = 3; goto P999; /* 0 */
-	case 2120: // STATE 87 - minepump.pml:131 - [((pstate==running))] (103:0:2 - 1)
-		IfNotBlocked
-		reached[0][87] = 1;
-		if (!((now.pstate==7)))
-			continue;
-		/* merge: pumpOn = 0(103, 88, 103) */
-		reached[0][88] = 1;
-		(trpt+1)->bup.ovals = grab_ints(2);
-		(trpt+1)->bup.ovals[0] = ((int)now.pumpOn);
-		now.pumpOn = 0;
-#ifdef VAR_RANGES
-		logval("pumpOn", ((int)now.pumpOn));
-#endif
-		;
-		/* merge: pstate = lowstop(103, 89, 103) */
-		reached[0][89] = 1;
-		(trpt+1)->bup.ovals[1] = now.pstate;
-		now.pstate = 4;
-#ifdef VAR_RANGES
-		logval("pstate", now.pstate);
-#endif
-		;
-		/* merge: .(goto)(0, 94, 103) */
-		reached[0][94] = 1;
-		;
-		/* merge: .(goto)(0, 98, 103) */
-		reached[0][98] = 1;
-		;
-		/* merge: .(goto)(0, 102, 103) */
-		reached[0][102] = 1;
-		;
-		/* merge: .(goto)(0, 104, 103) */
-		reached[0][104] = 1;
-		;
-		_m = 3; goto P999; /* 6 */
-	case 2121: // STATE 99 - minepump.pml:139 - [((level==medium))] (0:0:1 - 1)
-		IfNotBlocked
-		reached[0][99] = 1;
+		reached[0][58] = 1;
 		if (!((((P0 *)_this)->level==10)))
 			continue;
 		if (TstOnly) return 1; /* TT */
@@ -54653,9 +54527,9 @@
 #endif
 			((P0 *)_this)->level = 0;
 		_m = 3; goto P999; /* 0 */
-	case 2122: // STATE 106 - minepump.pml:143 - [-end-] (0:0:0 - 1)
+	case 2114: // STATE 65 - minepump.pml:88 - [-end-] (0:0:0 - 1)
 		IfNotBlocked
-		reached[0][106] = 1;
+		reached[0][65] = 1;
 		if (!delproc(1, II)) continue;
 		_m = 3; goto P999; /* 0 */
 	case  _T5:	/* np_ */

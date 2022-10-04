@@ -39,14 +39,21 @@ file(REMOVE_RECURSE
   "CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o"
   "CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o"
+  "CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o"
   "CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o"
   "mutantgenerator"
   "mutantgenerator.pdb"
+  "parser/lex.yy.cpp"
+  "parser/y.tab.cpp"
 )
 
 # Per-language clean rules from dependency scanning.

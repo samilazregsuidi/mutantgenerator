@@ -37,8 +37,6 @@ public:
 	
 	payload* getPayload(void) const;
 
-	void* getPayloadPtr(void) const;
-
 	virtual void init(void);
 
 	size_t _getSizeOf(void) const;
@@ -48,6 +46,8 @@ public:
 	virtual void print(void) const;
 
 	virtual void printTexada(void) const;
+
+	virtual void printHexadecimal(void) const;
 
 	void addRawBytes(size_t size);
 
@@ -76,6 +76,8 @@ public:
 	void rmSubScope(scope* sc);
 
 	void addSubScope(scope* sc);
+
+	unsigned long hash(void) const;
 
 protected:
 	std::string name;

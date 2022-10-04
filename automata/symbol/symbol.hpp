@@ -97,7 +97,11 @@ public:
 	bool isGlobal(void) const;
 	
 	void setGlobal(bool global);
-	
+
+	bool isPredefined(void) const;
+
+	bool isHidden(void) const;
+
 	virtual unsigned int getSizeOf(void) const;
 
 	virtual void printGraphViz(std::ofstream& file) const;

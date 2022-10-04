@@ -1,16 +1,25 @@
-never pump_state_consistency {    /* !([] ((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop)))) */
+never pump_synch_on {    /* !([] ((! (pumpOn)) || ((pstate==running)))) */
 T0_init:
 	do
-	:: atomic { (! (((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop))))) -> assert(!(! (((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop)))))) }
+	:: atomic { (! (((! (pumpOn)) || ((pstate==running))))) -> assert(!(! (((! (pumpOn)) || ((pstate==running)))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:
 	skip
 }
-never pump_synch_on {    /* !([] ((! (pumpOn)) || ((pstate==running)))) */
+never read_msg_consistency {    /* !([] ((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg)))) */
 T0_init:
 	do
-	:: atomic { (! (((! (pumpOn)) || ((pstate==running))))) -> assert(!(! (((! (pumpOn)) || ((pstate==running)))))) }
+	:: atomic { (! (((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg))))) -> assert(!(! (((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never pump_state_consistency {    /* !([] ((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop)))) */
+T0_init:
+	do
+	:: atomic { (! (((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop))))) -> assert(!(! (((((((pstate==ready)) || ((pstate==running))) || ((pstate==stopped))) || ((pstate==methanestop))) || ((pstate==lowstop)))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_all:
@@ -36,22 +45,13 @@ T0_init:
 accept_all:
 	skip
 }
-never read_msg_consistency {    /* !([] ((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg)))) */
+never pump_methane_switch_off {    /* !((! ((([] (<> ((readMsg==commandMsg)))) && ([] (<> ((readMsg==alarmMsg))))) && ([] (<> ((readMsg==levelMsg)))))) || ([] ((! ((pumpOn) && (methane))) || (<> (! (pumpOn)))))) */
 T0_init:
 	do
-	:: atomic { (! (((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg))))) -> assert(!(! (((((readMsg==commandMsg)) || ((readMsg==alarmMsg))) || ((readMsg==levelMsg)))))) }
-	:: (1) -> goto T0_init
-	od;
-accept_all:
-	skip
-}
-never methane_sensor_liveness {    /* !((! ((([] (<> ((readMsg==commandMsg)))) && ([] (<> ((readMsg==alarmMsg))))) && ([] (<> ((readMsg==levelMsg)))))) || ([] ((! (methane)) || (<> (! ((pstate==running))))))) */
-T0_init:
-	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
@@ -63,25 +63,25 @@ T0_init:
 	od;
 accept_S9050:
 	do
-	:: (! ((! ((pstate==running))))) -> goto T0_S9050
+	:: (! ((! (pumpOn)))) -> goto T0_S9050
 	od;
 T3_S9050:
 	do
-	:: (! ((! ((pstate==running)))) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running))))) -> goto T3_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! (pumpOn)))) -> goto T3_S9050
 	od;
 T2_S9050:
 	do
-	:: (! ((! ((pstate==running)))) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running))))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! (pumpOn)))) -> goto T2_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==commandMsg))) -> goto T3_S9050
 	od;
 T0_S4758:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -93,10 +93,10 @@ T0_S4758:
 	od;
 T0_S5609:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
@@ -110,10 +110,10 @@ T0_S5609:
 	od;
 T0_S5680:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -126,10 +126,10 @@ T0_S5680:
 	od;
 T0_S5705:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -143,10 +143,10 @@ T0_S5705:
 	od;
 T0_S6727:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -161,10 +161,10 @@ T0_S6727:
 	od;
 T0_S6755:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -180,17 +180,17 @@ T0_S6755:
 	od;
 T0_S9050:
 	do
-	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running))))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	od;
 T0_S9132:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -202,13 +202,13 @@ T0_S9132:
 	od;
 T0_S9316:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg))) -> goto T0_S10160
 	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
@@ -222,10 +222,10 @@ T0_S9316:
 	od;
 T0_S9469:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -238,13 +238,13 @@ T0_S9469:
 	od;
 T0_S9498:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg))) -> goto T0_S10160
 	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
@@ -256,10 +256,10 @@ T0_S9498:
 	od;
 T0_S9809:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
@@ -272,10 +272,10 @@ T0_S9809:
 	od;
 T0_S9940:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
@@ -291,10 +291,10 @@ T0_S9940:
 	od;
 T0_S9994:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
@@ -308,10 +308,10 @@ T0_S9994:
 	od;
 T0_S10160:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
@@ -326,10 +326,10 @@ T0_S10160:
 	od;
 T0_S10274:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
@@ -344,12 +344,12 @@ T0_S10274:
 	od;
 T0_S10998:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
 	:: (((readMsg==alarmMsg))) -> goto T0_S10160
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
@@ -362,11 +362,11 @@ T0_S10998:
 	od;
 T0_S11000:
 	do
-	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn)))) -> goto T0_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg))) -> goto T2_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
-	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pumpOn) && (methane)))) && ! ((! (pumpOn))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
 	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
 	:: (((readMsg==alarmMsg))) -> goto T0_S10160
 	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
@@ -1025,6 +1025,344 @@ T0_S2:
 accept_all:
 	skip
 }
+never methane_sensor_liveness {    /* !((! ((([] (<> ((readMsg==commandMsg)))) && ([] (<> ((readMsg==alarmMsg))))) && ([] (<> ((readMsg==levelMsg)))))) || ([] ((! (methane)) || (<> (! ((pstate==running))))))) */
+T0_init:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+accept_S9050:
+	do
+	:: (! ((! ((pstate==running))))) -> goto T0_S9050
+	od;
+T3_S9050:
+	do
+	:: (! ((! ((pstate==running)))) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running))))) -> goto T3_S9050
+	od;
+T2_S9050:
+	do
+	:: (! ((! ((pstate==running)))) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running))))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ((readMsg==commandMsg))) -> goto T3_S9050
+	od;
+T0_S4758:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S5609:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S5680:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S5705:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S6727:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S6755:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9050:
+	do
+	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running))))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	od;
+T0_S9132:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg))) -> goto T0_S9940
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9316:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9469:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg))) -> goto T0_S9940
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9498:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
+	:: (((readMsg==commandMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9809:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6755
+	:: (((readMsg==commandMsg))) -> goto T0_S9940
+	:: (((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	od;
+T0_S9940:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S9994:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	od;
+T0_S10160:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S10274:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	od;
+T0_S10998:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S4758
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	od;
+T0_S11000:
+	do
+	:: (! ((! ((pstate==running)))) && ! ((! (methane)))) -> goto T0_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto T2_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S5680
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto accept_S9050
+	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T3_S9050
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5609
+	:: (((readMsg==alarmMsg))) -> goto T0_S10160
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S5705
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9940
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S6727
+	:: (((readMsg==alarmMsg)) && ((readMsg==levelMsg))) -> goto T0_S9316
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9132
+	:: (1) -> goto T0_S11000
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg))) -> goto T0_S9994
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9469
+	:: (((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9498
+	:: (((readMsg==alarmMsg)) && ((readMsg==commandMsg)) && ((readMsg==levelMsg))) -> goto T0_S9809
+	:: (((readMsg==levelMsg))) -> goto T0_S10998
+	:: (((readMsg==commandMsg))) -> goto T0_S10274
+	od;
+}
 never methane_sensor_liveness_light {    /* !((! ([] (<> ((readMsg==alarmMsg))))) || ([] ((! (methane)) || (<> (! ((pstate==running))))))) */
 T0_init:
 	do
@@ -1060,7 +1398,7 @@ T0_S98:
 	:: (! ((! ((pstate==running)))) && ! ((! (methane))) && ((readMsg==alarmMsg))) -> goto accept_S86
 	od;
 }
-never pump_mathane_safetyness_light {    /* !((! ([] (<> ((readMsg==alarmMsg))))) || (! (<> ([] ((pumpOn) && (methane)))))) */
+never pump_methane_safetyness_light {    /* !((! ([] (<> ((readMsg==alarmMsg))))) || (! (<> ([] ((pumpOn) && (methane)))))) */
 T0_init:
 	do
 	:: (((pumpOn) && (methane)) && ((readMsg==alarmMsg))) -> goto accept_S7
@@ -2706,11 +3044,26 @@ T0_init:
 accept_all:
 	skip
 }
-never medium_water_evolution_consistency {    /* !([] (((waterLevel==medium)) U ((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high))))) */
+never low_water_evolution_consistency {    /* !([] ((! ((waterLevel==low))) || (((waterLevel==low)) U (((waterLevel==medium)) || ((waterLevel==low)))))) */
 T0_init:
 	do
-	:: (! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high))))) -> goto accept_S4
-	:: atomic { (! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high)))) && ! (((waterLevel==medium)))) -> assert(!(! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high)))) && ! (((waterLevel==medium))))) }
+	:: (! ((! ((waterLevel==low)))) && ! ((((waterLevel==medium)) || ((waterLevel==low))))) -> goto accept_S4
+	:: atomic { (! ((! ((waterLevel==low)))) && ! ((((waterLevel==medium)) || ((waterLevel==low)))) && ! (((waterLevel==low)))) -> assert(!(! ((! ((waterLevel==low)))) && ! ((((waterLevel==medium)) || ((waterLevel==low)))) && ! (((waterLevel==low))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((((waterLevel==medium)) || ((waterLevel==low))))) -> goto accept_S4
+	:: atomic { (! ((((waterLevel==medium)) || ((waterLevel==low)))) && ! (((waterLevel==low)))) -> assert(!(! ((((waterLevel==medium)) || ((waterLevel==low)))) && ! (((waterLevel==low))))) }
+	od;
+accept_all:
+	skip
+}
+never medium_water_evolution_consistency {    /* !([] ((! ((waterLevel==medium))) || (((waterLevel==medium)) U ((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high)))))) */
+T0_init:
+	do
+	:: (! ((! ((waterLevel==medium)))) && ! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high))))) -> goto accept_S4
+	:: atomic { (! ((! ((waterLevel==medium)))) && ! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high)))) && ! (((waterLevel==medium)))) -> assert(!(! ((! ((waterLevel==medium)))) && ! (((((waterLevel==low)) || ((waterLevel==medium))) || ((waterLevel==high)))) && ! (((waterLevel==medium))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_S4:
@@ -2721,11 +3074,11 @@ accept_S4:
 accept_all:
 	skip
 }
-never high_water_evolution_consistency {    /* !([] (((waterLevel==high)) U (((waterLevel==medium)) || ((waterLevel==high))))) */
+never high_water_evolution_consistency {    /* !([] ((! ((waterLevel==high))) || (((waterLevel==high)) U (((waterLevel==medium)) || ((waterLevel==high)))))) */
 T0_init:
 	do
-	:: (! ((((waterLevel==medium)) || ((waterLevel==high))))) -> goto accept_S4
-	:: atomic { (! ((((waterLevel==medium)) || ((waterLevel==high)))) && ! (((waterLevel==high)))) -> assert(!(! ((((waterLevel==medium)) || ((waterLevel==high)))) && ! (((waterLevel==high))))) }
+	:: (! ((! ((waterLevel==high)))) && ! ((((waterLevel==medium)) || ((waterLevel==high))))) -> goto accept_S4
+	:: atomic { (! ((! ((waterLevel==high)))) && ! ((((waterLevel==medium)) || ((waterLevel==high)))) && ! (((waterLevel==high)))) -> assert(!(! ((! ((waterLevel==high)))) && ! ((((waterLevel==medium)) || ((waterLevel==high)))) && ! (((waterLevel==high))))) }
 	:: (1) -> goto T0_init
 	od;
 accept_S4:

@@ -1,307 +1,10 @@
-/*
- * This file contains the theory of ADAPRO, expressed in the language of linear
- * temporal logic (notated in Promela, with the help of CPP macros). It defines 
- * the formal specification of the framework.
- */
-/******************************************************************************/
-
-/**
- * Expresses the predicate that Supervisor is in the given state.
- */
-#define supervisor_in_state(state)                                             \
-    states[0] == state
-
-/**
- * Expresses the predicate that all Workers are in the given state.
- */
-#define all_workers_in_state(state)                                            \
-    states[1] == state && states[2] == state
-
-/**
- * Expresses the predicate that there exists a Worker in the given state.
- */
-#define some_workers_in_state(state)                                           \
-    states[1] == state || states[2] == state
-
-/**
- * Expresses the predicate that Supervisor is either in the state STOPPING or
- * ABORTING.
- */
-#define supervisor_halting                                                     \
-    states[0] == STOPPING || states[0] == ABORTING
-
-/**
- * Expresses the predicate that Supervisor is either in the state STOPPED or
- * ABORTED.
- */
-#define supervisor_halted                                                      \
-    states[0] == STOPPED || states[0] == ABORTED
-
-/**
- * Expresses the predicate that every Worker is either in the state STOPPED or
- * ABORTED.
- */
-#define all_workers_halted                                                     \
-    (states[1] == STOPPED || states[1] == ABORTED || states[1] == 0) &&        \
-    (states[2] == STOPPED || states[2] == ABORTED || states[2] == 0)
-
-/**
- * Expresses the predicate that Thread number i is in the state RUNNING with
- * command CONTINUE.
- */
-#define executable(i)                                                          \
-    states[i] == RUNNING && commands[i] == CONTINUE 
-
-/**
- * Expresses the predicate that, infinitely often, every executable Thread gets
- * to execute its user-defined program logic.
- */
-#define all_alive                                                              \
-    []<>((executable(0)) -> (executing[0])) &&                                 \
-    []<>((executable(1)) -> (executing[1])) &&                                 \
-    []<>((executable(2)) -> (executing[2]))
-
-/**
- * Expresses weak fairness, i.e. that every Thread that is persistently 
- * executable, will eventually get to execute its action.
- */
-#define weak_fairness                                                          \
-    (<>[](executable(0)) -> []<>(executing[0])) &&                             \
-    (<>[](executable(1)) -> []<>(executing[1])) &&                             \
-    (<>[](executable(2)) -> []<>(executing[2]))
-/**
- * Expresses strong fairness, i.e. that every Thread that is infinitely often 
- * executable, will eventually get to execute its action.
- */
-#define strong_fairness                                                        \
-    ([]<>(executable(0)) -> []<>(executing[0])) &&                             \
-    ([]<>(executable(1)) -> []<>(executing[1])) &&                             \
-    ([]<>(executable(2)) -> []<>(executing[2]))
-
-/**
- * Expresses the predicate that the initial state of any constructed Thread is 
- * READY and that its only possible successor state is STARTING. (This means 
- * that READY is a safe state, i.e. cannot directly lead into a transition to 
- * ABORTING.)
- */
-#define READY_property(i)                                                      \
-    states[i] == 0 U ((states[i] == READY) W (states[i] == STARTING))
-
-/**
- * Expresses the predicate that the only possible successor states of STARTING
- * are RUNNING, PAUSED, and ABORTING. (Note that STARTING is not a safe state,
- * because it has an outgoing transition to ABORTING.)
- */
-#define STARTING_property(i)                                                   \
-    states[i] == STARTING -> (states[i] == STARTING U                          \
-        (states[i] == RUNNING || states[i] == PAUSED ||                        \
-         states[i] == STOPPING || states[i] == ABORTING))
-
-/**
- * Expresses the predicate that the only possible successor states of RUNNING
- * are RUNNING, PAUSED, STOPPING, STOPPED. A Thread is allowed to stay in the
- * RUNNING state forever. (Note that RUNNING is not a safe state, since it has
- * an outgoing transition to ABORTING.)
- */
-#define RUNNING_property(i)                                                    \
-    states[i] == RUNNING -> ((states[i] == RUNNING) W                          \
-    (states[i] == PAUSED || states[i] == STOPPING || states[i] == ABORTING))
-
-/**
- * Expresses the predicate that the only possible successor states of PAUSED are
- * RUNNING and STOPPING. (PAUSED is a safe state, because it doesn't have an
- * outgoing transition to ABORTING.)
- */
-#define PAUSED_property(i)                                                     \
-    states[i] == PAUSED ->                                                     \
-    ((states[i] == PAUSED) W (states[i] == RUNNING || states[i] == STOPPING))
-
-/**
- * Expresses the predicate that the only possible successor states of STOPPING
- * are STOPPED and ABORTING. (STOPPING is not a safe state because it has an
- * outgoing transition to ABORTING.)
- */
-#define STOPPING_property(i)                                                   \
-    [](states[i] == STOPPING -> (states[i] == STOPPING U                       \
-        (states[i] == STOPPED || states[i] == ABORTING)))
-
-/**
- * Expresses the predicate that the only possible successor state of ABORTING is
- * ABORTED. (Since it doesn't have a loop, it is a safe state.)
- */
-#define ABORTING_property(i)                                                   \
-    [](states[i] == ABORTING -> (states[i] == ABORTING U                       \
-        (states[i] == ABORTED)))
-
-/**
- * Expresses the predicate that the values in the array lhs that equal to rhs
- * remain constant.
- */
-#define final(lhs, rhs)                                                        \
-    ((lhs[0] == rhs) -> ((lhs[0] == rhs) W [](lhs[0] == 0))) &&                \
-    ((lhs[1] == rhs) -> ((lhs[1] == rhs) W [](lhs[1] == 0))) &&                \
-    ((lhs[2] == rhs) -> ((lhs[2] == rhs) W [](lhs[2] == 0)))
-
-/******************************************************************************/
-
-/**
- * See READY_property.
- */
-ltl fsm_ready
-{
-    (READY_property(0)) && (READY_property(1)) && (READY_property(2))
-}
-
-/**
- * See STARTING_property.
- */
-ltl fsm_starting
-{
-    []((STARTING_property(0)) && (STARTING_property(1)) && (STARTING_property(2)))
-}
-
-/**
- * See RUNNING_property.
- */
-ltl fsm_running
-{
-    []((RUNNING_property(0)) && (RUNNING_property(1)) && (RUNNING_property(2)))
-}
-
-/**
- * See PAUSED_property.
- */
-ltl fsm_paused
-{
-    []((PAUSED_property(0)) && (PAUSED_property(1)) && (PAUSED_property(2)))
-}
-
-/**
- * See STOPPING_property.
- */
-ltl fsm_stopping
-{
-    []((STOPPING_property(0)) && (STOPPING_property(1)) && (STOPPING_property(2)))
-}
-
-/**
- * Expresses the predicate that the state STOPPED is a fixed point state for any
- * Thread.
- */
-ltl fsm_stopped
-{
-    [](final(states, STOPPED))
-}
-
-/**
- * See ABORTING_property.
- */
-ltl fsm_aborting
-{
-    []((ABORTING_property(0)) && (ABORTING_property(1)) && (ABORTING_property(2)))
-}
-
-/**
- * Expresses the predicate that the state ABORTED is a fixed point state for any
- * Thread.
- */
-ltl fsm_aborted
-{
-    [](final(states, ABORTED))
-}
-
-/**
- * Expresses the predicate that the command ABORT is a fixed point command for
- * any Thread.
- */
-ltl abort_is_undoable
-{
-    [](final(commands, ABORT))
-}
-
-/**
- * Expresses the predicate that Supervisor is the first Thread that will be
- * created.
- */
-ltl supervisor_is_the_first_thread
-{
-    []((supervisor_in_state(0)) -> (all_workers_in_state(0)))
-}
-
-/**
- * Expresses the predicate that the only situation in which a Worker is in state 
- * READY is the one where Supervisor is in state STARTING. The justification for
- * this claim is that Supervisor is the Thread that constructs Workers, i.e.
- * causes them to obtain their initial states and commands.
- */
-ltl supervisor_constructs_workers
-{
-    []((some_workers_in_state(READY)) -> !(supervisor_in_state(0)))
-}
-
-/**
- * Expresses the predicate that once all workers have stopped, Supervisor
- * eventually stops, unless an external command pauses Supervisor indefinitely.
- * (Without external interference, Supervisor is always guaranteed to eventually 
- * stop after all workers have stopped.)
- */
-ltl supervisor_stops_after_all_workers_stop
-{
-    []((all_workers_in_state(STOPPED)) -> 
-        ([]<>(supervisor_in_state(PAUSED)) || <>(supervisor_in_state(STOPPED))))
-}
-
-/**
- * Expresses the predicate, that unless paused by an external command, 
- * Supervisor will eventually halt after one or more Workers have aborted.
- */
-ltl supervisor_stops_after_some_workers_abort
-{
-    []((some_workers_in_state(ABORTED)) -> 
-        ([]<>(supervisor_in_state(PAUSED)) || <>(supervisor_in_state(STOPPED))))
-}
-
-/**
- * Expresses the predicate that Supervisor never aborts.
- */
-ltl supervisor_never_aborts {!<>(states[0] == ABORTED || commands[0] == ABORT)}
-
-/**
- * Expresses the predicate that Supervisor is the last Thread to halt.
- */
-ltl supervisor_halts_last
-{
-    []((supervisor_halting) -> <>(all_workers_halted))
-}
-
-ltl liveness
-{
-    (all_alive) W (supervisor_halting)
-}
-
-ltl fairness
-{
-    (strong_fairness)
-}
 
 mtype = {ABORT, STOP, ABORTED, ABORTING, STOPPED, PAUSE, STOPPING, CONTINUE, START, PAUSED, RUNNING, STARTING, READY}
-inline print_state_transition(i, state, command, next){
-	if
-	::	i == 0 && command == 0;
-		printf("Supervisor: (%e, _) -> %e\n", state, next);
-	::	i == 0 && command > 0;
-		printf("Supervisor: (%e, %e) -> %e\n", state, command, next);
-	::	i > 0 && command == 0;
-		printf("Worker %d: (%e, _) -> %e\n", i, state, next);
-	::	i > 0 && command > 0;
-		printf("Worker %d: (%e, %e) -> %e\n", i, state, command, next);
-	fi;
-}
+
 mtype states[3];
 mtype commands[3];
 bool executing[3];
 inline abort(i){
-	assert((_pid != 1));
 	atomic {
 		if
 		::	ABORT == START && commands[i] == CONTINUE;
@@ -319,8 +22,7 @@ inline abort(i){
 		::	ABORT == ABORT;
 			assert((states[i] != READY));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else -> skip;
 		fi;
 	};
 }
@@ -346,8 +48,7 @@ inline prepare(i){
 			::	PAUSE == ABORT;
 				assert((states[i] != READY));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else -> skip;
 			fi;
 		};
 	::	true;
@@ -368,8 +69,7 @@ inline prepare(i){
 			::	STOP == ABORT;
 				assert((states[i] != READY));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else -> skip;
 			fi;
 		};
 	::	true;
@@ -399,8 +99,7 @@ inline execute(i){
 			::	STOP == ABORT;
 				assert((states[i] != READY));
 				commands[i] = ABORT;
-			::	else ->
-				printf("Thread %d ignores command %e.\n", i, commands[i]);
+			::	else -> skip;
 			fi;
 		};
 	::	true;
@@ -433,11 +132,9 @@ inline trans_cb(s){
 	skip;
 }
 inline covariant_transition(state, command, next){
-	print_state_transition(k, state, command, next)
 	states[k] = next;
 }
 inline contravariant_transition(state, command, next){
-	print_state_transition(k, state, command, next)
 	states[k] = next;
 }
 proctype Thread(byte k){
@@ -460,8 +157,7 @@ proctype Thread(byte k){
 		::	CONTINUE == ABORT;
 			assert((states[k] != READY));
 			commands[k] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", k, commands[k]);
+		::	else -> skip;
 		fi;
 	};
 	prepare(k)
@@ -508,64 +204,19 @@ proctype Thread(byte k){
 	fi;
 }
 inline waiit_for_START_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for START mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for START mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for START mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == RUNNING || states[i] == PAUSED || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_PAUSE_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for PAUSED mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for PAUSED mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for PAUSED mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == PAUSED || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_RESUME_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for RESUME mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for RESUME mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for RESUME mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == RUNNING || states[i] == STOPPING || states[i] == STOPPED || states[i] == ABORTING || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_HALT_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for HALT mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for HALT mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for HALT mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == STOPPED || states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline waiit_for_ABORT_mask(i){
-	if
-	::	_pid == 0;
-		printf("Init is waiiting for ABORTED mask on Thread %d...\n", i);
-	::	_pid == 1;
-		printf("Supervisor is waiiting for ABORTED mask on Thread %d...\n", i);
-	::	_pid > 1;
-		printf("Worker %d is waiiting for ABORTED mask on Thread %d...\n", _pid - 1, i);
-	fi;
 	states[i] == ABORTED;
-	printf("waiiting ended.\n");
 }
 inline start(i, waiit){
 	atomic {
@@ -585,8 +236,7 @@ inline start(i, waiit){
 		::	START == ABORT;
 			assert((states[i] != READY));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else -> skip;
 		fi;
 	};
 	run Thread(i);
@@ -615,8 +265,7 @@ inline pause(i, waiit){
 		::	PAUSE == ABORT;
 			assert((states[i] != READY));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else -> skip;
 		fi;
 	};
 	if
@@ -644,8 +293,7 @@ inline resume(i, waiit){
 		::	CONTINUE == ABORT;
 			assert((states[i] != READY));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else -> skip;
 		fi;
 	};
 	if
@@ -673,8 +321,7 @@ inline stop(i, waiit){
 		::	STOP == ABORT;
 			assert((states[i] != READY));
 			commands[i] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", i, commands[i]);
+		::	else -> skip;
 		fi;
 	};
 	if
@@ -743,7 +390,6 @@ inline propagate_command_in_lifo(command){
 	fi;
 }
 inline propagate_command_in_parallel(command){
-	printf("Supervisor propagating command %e...\n", command);
 	covariant_propagation(command, false)
 	do
 	::	j < 3;
@@ -766,7 +412,6 @@ inline propagate_command_in_parallel(command){
 inline propagate_command(command){
 	if
 	::	command == CONTINUE && !supervisor_started;
-		printf("Supervisor doesn't propagate the first CONTINUE command.\n");
 		supervisor_started = true;
 	::	else ->
 		if
@@ -789,102 +434,35 @@ inline check_worker_states(){
 		break;
 	od;
 }
-inline sv_start_sync(){
-	atomic {
-		if
-		::	START == START && commands[0] == CONTINUE;
-			assert((states[0] == READY));
-			commands[0] = START;
-		::	START == PAUSE && commands[0] == CONTINUE;
-			assert((states[0] == STARTING || states[0] == RUNNING));
-			commands[0] = PAUSE;
-		::	START == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == PAUSED));
-			commands[0] = CONTINUE;
-		::	START == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
-			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
-			commands[0] = STOP;
-		::	START == ABORT;
-			assert((states[0] != READY));
-			commands[0] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", 0, commands[0]);
-		fi;
-	};
-	run Supervisor();
-	waiit_for_START_mask(0)
+
+inline sv_covariant_transition(state, command, next){
+	states[0] = next;
+	sv_trans_cb(next)
 }
+
+inline sv_contravariant_transition(state, command, next){
+	sv_trans_cb(next)
+	states[0] = next;
+}
+
 inline sv_prepare(){
 	propagate_command(START)
 }
+
 inline sv_execute(){
 	executing[0] = true;
 	check_worker_states()
 	if
 	::	all_workers_stopped;
-		printf("Supervisor will stop because all Workers have stopped...\n");
 		stop(0, false)
 	::	exists_aborted_worker;
-		printf("Supervisor will stop because some Workers have aborted...\n");
 		stop(0, false)
 	::	else ->
 		skip;
 	fi;
 	executing[0] = false;
 }
-inline sv_trans_cb(s){
-	if
-	::	s == RUNNING;
-		propagate_command(CONTINUE)
-	::	s == PAUSED;
-		propagate_command(PAUSE)
-	::	s == ABORTING || s == STOPPING;
-		propagate_command(STOP)
-	::	else ->
-		skip;
-	fi;
-}
-inline sv_covariant_transition(state, command, next){
-	print_state_transition(0, state, command, next)
-	states[0] = next;
-	sv_trans_cb(next)
-}
-inline sv_contravariant_transition(state, command, next){
-	sv_trans_cb(next)
-	print_state_transition(0, state, command, next)
-	states[0] = next;
-}
-inline sv_ctor(i){
-	d_step {
-		if
-		::	true;
-			serialize_commands = true;
-		::	true;
-			serialize_commands = false;
-		fi;
-		all_workers_stopped = false;
-		exists_aborted_worker = false;
-		supervisor_started = false;
-		do
-		::	i < 3;
-			ctor(i)
-			i++;
-		::	else ->
-			break;
-		od;
-	};
-}
-inline sv_dtor(i){
-	d_step {
-		do
-		::	i < 3;
-			dtor(i)
-			i++;
-		::	else ->
-			break;
-		od;
-	};
-}
+
 proctype Supervisor(){
 	byte j = 1;
 	commands[0] == START;
@@ -906,8 +484,7 @@ proctype Supervisor(){
 		::	CONTINUE == ABORT;
 			assert((states[0] != READY));
 			commands[0] = ABORT;
-		::	else ->
-			printf("Thread %d ignores command %e.\n", 0, commands[0]);
+		::	else -> skip;
 		fi;
 	};
 	sv_prepare()
@@ -953,18 +530,87 @@ proctype Supervisor(){
 	fi;
 }
 
+inline sv_start_sync(){
+	atomic {
+		if
+		::	START == START && commands[0] == CONTINUE;
+			assert((states[0] == READY));
+			commands[0] = START;
+		::	START == PAUSE && commands[0] == CONTINUE;
+			assert((states[0] == STARTING || states[0] == RUNNING));
+			commands[0] = PAUSE;
+		::	START == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
+			assert((states[0] == STARTING || states[0] == PAUSED));
+			commands[0] = CONTINUE;
+		::	START == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
+			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
+			commands[0] = STOP;
+		::	START == ABORT;
+			assert((states[0] != READY));
+			commands[0] = ABORT;
+		::	else -> skip;
+		fi;
+	};
+	run Supervisor();
+	waiit_for_START_mask(0)
+}
+
+
+inline sv_trans_cb(s){
+	if
+	::	s == RUNNING;
+		propagate_command(CONTINUE)
+	::	s == PAUSED;
+		propagate_command(PAUSE)
+	::	s == ABORTING || s == STOPPING;
+		propagate_command(STOP)
+	::	else ->
+		skip;
+	fi;
+}
+
+inline sv_ctor(i){
+	d_step {
+		if
+		::	true;
+			serialize_commands = true;
+		::	true;
+			serialize_commands = false;
+		fi;
+		all_workers_stopped = false;
+		exists_aborted_worker = false;
+		supervisor_started = false;
+		do
+		::	i < 3;
+			ctor(i)
+			i++;
+		::	else ->
+			break;
+		od;
+	};
+}
+inline sv_dtor(i){
+	d_step {
+		do
+		::	i < 3;
+			dtor(i)
+			i++;
+		::	else ->
+			break;
+		od;
+	};
+}
+
 init {
 	byte i = 0;
 	assert_all(i, 0, 0)
 	sv_ctor(i)
 	i = 0;
 	assert_all(i, READY, CONTINUE)
-	printf("Init starts Supervisor...\n");
 	sv_start_sync()
 	do
 	::	if
 		::	states[0] == RUNNING;
-			printf("Init pauses Supervisor...\n");
 			if
 			::	true;
 				pause(0, true)
@@ -972,7 +618,6 @@ init {
 				pause(0, false)
 			fi;
 		::	states[0] == PAUSED;
-			printf("Init resumes Supervisor...\n");
 			if
 			::	true;
 				resume(0, true)
@@ -985,7 +630,7 @@ init {
 	::	break;
 	od;
 	if
-	::	printf("Init stops Supervisor...\n");
+	::	true;
 		if
 		::	true;
 			stop(0, true)

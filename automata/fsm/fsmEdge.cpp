@@ -84,12 +84,6 @@ int fsmEdge::getLineNb(void) const {
 	return lineNb;
 }
 
-/*void fsmEdge::resolveVariables(symTabNode* global, symTabNode* local, const mTypeNode* mTypes) const{
-	assert(false);
-	//if(expression) 
-		//expression->resolveVariables(global, mTypes, local);
-}*/
-
 double fsmEdge::getProbability(void) const {
 	return prob;
 }
@@ -98,14 +92,14 @@ fsmEdge::operator std::string(void) const {
 	return expression? std::string(*expression) : "";
 }
 
-bool fsmEdge::hasFeatures(void) const {
+/*bool fsmEdge::hasFeatures(void) const {
 	return features.getNode() != nullptr;
-}
+}*/
 
-const ADD& fsmEdge::getFeatures(void) const {
+/*const ADD& fsmEdge::getFeatures(void) const {
 	return features;
-}
+}*/
 
-void fsmEdge::setFeatures(const ADD& features) {
+/*void fsmEdge::setFeatures(const ADD& features) {
 	this->features = features;
-}
+}*/

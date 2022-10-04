@@ -18,7 +18,6 @@
 
 #include "semantic.hpp"
 
-
 extern void init_lex();
 
 // Settings defined in main
@@ -53,20 +52,23 @@ int copyFile(const std::string& source, const std::string& target) {
 	return 0;
 }
 
-#define K 500
+#define PRINT_STATE printTexada
+
+#define B 10
 
 void launchExecution(const fsm* automata) {
-	state* current = new state(automata);
+	state* current = new progState(automata);
 	unsigned long i = 0;
 	//printf("**********************************\n");
-	current->printTexada();
+	current->PRINT_STATE();
 	current->printGraphViz(i++);
+
 	while(transition* trans = transition::sample(current->executables())){
 		current->apply(trans);
 		//printf("--------------------------------------\n");
-		current->printTexada();
+		current->PRINT_STATE();
 		current->printGraphViz(i++);
-		if(i > K){
+		if(i > B){
 			break;
 		}
 		//add error status
@@ -74,11 +76,46 @@ void launchExecution(const fsm* automata) {
 	printf("--\n");
 }
 
-#define L 5
+#define K 100
+
+void findLasso(const fsm* automata, size_t k_steps) {
+	
+	size_t i = 0;
+
+	std::set<unsigned long> hashSet;
+
+	state* current = new progState(automata);
+	transition* trans = nullptr;
+
+	while(true) {
+
+		//printf("**********************************\n");
+		current->PRINT_STATE();
+		current->printGraphViz(i);
+
+		auto hash = current->hash();
+		if(hashSet.find(hash) == hashSet.end() || i++ < k_steps) {
+			
+			hashSet.insert(current->hash());
+			
+			if((trans = transition::sample(current->executables()))) {
+				printf("..\n");
+				current->apply(trans);
+			} else 
+				break;
+
+		} else break;
+		
+	}
+		
+	printf("--\n");
+}
+
+#define D 5
 
 void createStateSpace(const fsm* automata) {
 	std::stack<state*> st;
-	state* current = new state(automata);
+	state* current = new progState(automata);
 	st.push(current);
 	unsigned long i = 0;
 	
@@ -86,16 +123,16 @@ void createStateSpace(const fsm* automata) {
 
 		current = st.top();
 		printf("****************** current state ****************\n");
-		current->print();
+		current->PRINT_STATE();
 		st.pop();
 		
 		
-		auto nexts = current->post();
+		auto nexts = current->Post();
 
 		if(nexts.size() > 0) {
 			printf("************* next possible states **************\n");
 			for(auto n : nexts) {
-				n->print();
+				n->PRINT_STATE();
 				st.push(n);
 				if(nexts.size() > 1)
 					printf("+++++++++++++++++++++++++++++++++++++++++++++++++\n");
@@ -104,12 +141,14 @@ void createStateSpace(const fsm* automata) {
 			printf("************* end state **************\n");
 		}
 
-		if(i > L)
+		if(i > D)
 			break;
 		//add error status
 	}
 
 }
+
+#define NB_LASSO 1000
 
 int main(int argc, char *argv[]) {
 
@@ -132,33 +171,36 @@ int main(int argc, char *argv[]) {
 		std::cout << "Syntax error; aborting..\n"; exit(1); 
 	}
 
+	srand(time(NULL));
+
 	unsigned int index = program->assignMutables();
 	std::cout << "NUMBER OF MUTABLE NODE " << index << "\n";
 
 	std::ofstream output;
 	output.open("mutants/original.pml");
-	output << "#include \"./ltl.inc\"\n";
+	output << "#include \"./Theory.prp\"\n";
 	output << stmnt::string(program);
 	output.close();
 
-	ASTtoFSM converter;
-	fsm* automata = converter.astToFsm(globalSymTab, program);
-	std::ofstream graph;
-	graph.open("fsm_graphvis");
-	automata->printGraphVis(graph);
-	graph.close();
+	//ASTtoFSM converter;
+	//fsm* automata = converter.astToFsm(globalSymTab, program);
+	//std::ofstream graph;
+	//graph.open("fsm_graphvis");
+	//automata->printGraphVis(graph);
+	//graph.close();
 
-	/*for(unsigned int i = 1; i <= index; i++) {
+	for(unsigned int i = 1; i <= index; i++) {
 		auto copy = program->deepCopy();
 		astNode::mutate(copy, i);
 		output.open("mutants/mutant_"+ std::to_string(i) + ".pml");
-		output << "#include \"./ltl.inc\"\n";
+		output << "#include \"./Theory.prp\"\n";
 		output << stmnt::string(copy);
 		output.close();
 		delete copy;
-	}*/
+	}
 
-	createStateSpace(automata);
+	//for(int i = 0; i < NB_LASSO; ++i)
+	//	findLasso(automata, K);
 
 	//std::ofstream symtable;
 	//symtable.open("sym_table_graphviz");

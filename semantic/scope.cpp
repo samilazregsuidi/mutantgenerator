@@ -72,8 +72,8 @@ payload* scope::getPayload(void) const {
 	return payLoad;
 }
 
-void* scope::getPayloadPtr(void) const {
-	return reinterpret_cast<byte*>(payLoad) + offset;
+unsigned long scope::hash(void) const {
+	return payLoad->hash(offset, getSizeOf());
 }
 
 size_t scope::getOffset(void) const {
@@ -423,4 +423,8 @@ void scope::printTexada(void) const {
 
 	for(auto sc : subScopes)
 		sc->printTexada();
+}
+
+void scope::printHexadecimal(void) const {
+	payLoad->printHexadecimal(offset, getSizeOf());
 }

@@ -227,6 +227,8 @@ void variable::print(void) const {
 }
 
 void variable::printTexada(void) const {
+	if(symType->isPredefined())
+		return;
 	auto value = sc->getPayload()->getValue(offset, symType->getType());
 	printf("%s = %d\n", getName().c_str(), value);
 }
@@ -327,7 +329,9 @@ void boolVar::print(void) const {
 }
 
 void boolVar::printTexada(void) const {
-	
+	if(symType->isPredefined())
+		return;
+
 	if(getValue() == 1)
 		printf("%s = true\n", getName().c_str());
 	else
@@ -445,6 +449,8 @@ void mtypeVar::print(void) const {
 }
 
 void mtypeVar::printTexada(void) const {
+	if(symType->isPredefined())
+		return;
 	auto value = getValue();
 	if(value) {
 		auto def = dynamic_cast<const mtypeSymNode*>(symType)->getMTypeDef();

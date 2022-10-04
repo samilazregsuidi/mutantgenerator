@@ -1,6 +1,6 @@
-#line 2 "lex.yy.cpp"
+#line 2 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
-#line 4 "lex.yy.cpp"
+#line 4 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -658,8 +658,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "promela.l"
-#line 2 "promela.l"
+#line 1 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 2 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -675,19 +675,18 @@ int nbrLines = 0;
 char strBuffer[1024];
 int strBufferLen = 0;
 
-#define DBOUG 0
 
 #ifdef DBOUG
 	#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
 	#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
-#elif
+#else
 	#define DBUG(TOKEN) ;
 	#define DBUG_CHAR(CHAR) ;
 #endif
 
-#line 689 "lex.yy.cpp"
+#line 688 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
-#line 691 "lex.yy.cpp"
+#line 690 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
 #define INITIAL 0
 #define CODE 1
@@ -919,11 +918,11 @@ YY_DECL
 		}
 
 	{
-#line 42 "promela.l"
+#line 41 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 
 
 
-#line 927 "lex.yy.cpp"
+#line 926 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -982,449 +981,449 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "promela.l"
+#line 44 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SEP);return SEP; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 46 "promela.l"
+#line 45 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SEMI);return SEMI; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 47 "promela.l"
+#line 46 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SEMI);return SEMI; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 48 "promela.l"
+#line 47 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(DECR);return DECR; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 49 "promela.l"
+#line 48 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(INCR);return INCR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 50 "promela.l"
+#line 49 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(LSHIFT);return LSHIFT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 51 "promela.l"
+#line 50 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(LE);return LE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 52 "promela.l"
+#line 51 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(LT);return LT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 53 "promela.l"
+#line 52 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(RSHIFT);return RSHIFT; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 54 "promela.l"
+#line 53 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(GE);return GE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 55 "promela.l"
+#line 54 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(IMPLIES);return IMPLIES; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 56 "promela.l"
+#line 55 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(GT);return GT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 57 "promela.l"
+#line 56 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(EQ);return EQ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 58 "promela.l"
+#line 57 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ASGN);return ASGN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 59 "promela.l"
+#line 58 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(NE);return NE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 60 "promela.l"
+#line 59 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(O_SND);return O_SND; /* Sorted send, p.48 */ }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 61 "promela.l"
+#line 60 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SND);return SND; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 62 "promela.l"
+#line 61 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(R_RCV);return R_RCV; /* Random receive, p.48 */ }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 63 "promela.l"
+#line 62 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(RCV);return RCV; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 64 "promela.l"
+#line 63 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(AND);return AND; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 65 "promela.l"
+#line 64 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(OR);return OR; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 66 "promela.l"
+#line 65 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SPEC);return SPEC; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 67 "promela.l"
+#line 66 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(LTL); return LTL; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 68 "promela.l"
+#line 67 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(EVENTUALLY);return EVENTUALLY; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 69 "promela.l"
+#line 68 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(EVENTUALLY);return EVENTUALLY; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 70 "promela.l"
+#line 69 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ALWAYS);return ALWAYS; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 71 "promela.l"
+#line 70 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ALWAYS);return ALWAYS; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 72 "promela.l"
+#line 71 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(UNTIL);return UNTIL; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 73 "promela.l"
+#line 72 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(COUNT);return COUNT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 74 "promela.l"
+#line 73 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(CONTEXT);return CONTEXT; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 76 "promela.l"
+#line 75 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ACTIVE);return ACTIVE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 77 "promela.l"
+#line 76 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ASSERT);return ASSERT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 78 "promela.l"
+#line 77 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ATOMIC);return ATOMIC; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 79 "promela.l"
+#line 78 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(BREAK);return BREAK; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 80 "promela.l"
+#line 79 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(C_CODE);return C_CODE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 81 "promela.l"
+#line 80 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(C_DECL);return C_DECL; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 82 "promela.l"
+#line 81 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(C_EXPR);return C_EXPR; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 83 "promela.l"
+#line 82 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(C_STATE);return C_STATE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 84 "promela.l"
+#line 83 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(C_TRACK);return C_TRACK; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 85 "promela.l"
+#line 84 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(D_PROTOTYPE);return D_PROCTYPE; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 86 "promela.l"
+#line 85 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(DO);yylval->iVal = nbrLines; 
 					  return DO; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 88 "promela.l"
+#line 87 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ELSE);return ELSE; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 89 "promela.l"
+#line 88 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(EMPTY);return EMPTY; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 90 "promela.l"
+#line 89 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ENABLED);return ENABLED; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 91 "promela.l"
+#line 90 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(EVAL);return EVAL; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 92 "promela.l"
+#line 91 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(FI);return FI; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 93 "promela.l"
+#line 92 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(FI);return FI; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 94 "promela.l"
+#line 93 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(FULL);return FULL; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 95 "promela.l"
+#line 94 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(GOTO);return GOTO; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 96 "promela.l"
+#line 95 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(HIDDEN);return HIDDEN; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 97 "promela.l"
+#line 96 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { yylval->iVal = nbrLines; DBUG(IF);return IF; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 98 "promela.l"
+#line 97 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { yylval->iVal = nbrLines; DBUG(IF); return IF; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 100 "promela.l"
+#line 99 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(HIDDEN);return INIT; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 101 "promela.l"
+#line 100 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(LEN); return LEN; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 102 "promela.l"
+#line 101 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(ISLOCAL); return ISLOCAL; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 103 "promela.l"
+#line 102 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(NEMPTY); return NEMPTY; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 104 "promela.l"
+#line 103 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(CLAIM); return CLAIM; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 105 "promela.l"
+#line 104 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(NFULL); return NFULL; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 106 "promela.l"
+#line 105 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TRACE); return TRACE; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 107 "promela.l"
+#line 106 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(NONPROGRESS); return NONPROGRESS; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 108 "promela.l"
+#line 107 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(OD); return OD; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 109 "promela.l"
+#line 108 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(OF); return OF; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 110 "promela.l"
+#line 109 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PC_VAL); return PC_VAL; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 111 "promela.l"
+#line 110 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PRINT); return PRINT; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 112 "promela.l"
+#line 111 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PRINTM); return PRINTM; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 113 "promela.l"
+#line 112 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PRIORITY); return PRIORITY; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 114 "promela.l"
+#line 113 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PROCTYPE); return PROCTYPE; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 115 "promela.l"
+#line 114 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(PROVIDED); return PROVIDED; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 116 "promela.l"
+#line 115 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(RUN); return RUN; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 117 "promela.l"
+#line 116 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(D_STEP); return D_STEP; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 118 "promela.l"
+#line 117 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TIMEOUT); return TIMEOUT; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 119 "promela.l"
+#line 118 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TRACE); return TRACE; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 120 "promela.l"
+#line 119 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SHOW); return SHOW; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 121 "promela.l"
+#line 120 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPEDEF); return TYPEDEF; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 122 "promela.l"
+#line 121 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(UNLESS); return UNLESS; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 123 "promela.l"
+#line 122 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(XU); return XU; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 124 "promela.l"
+#line 123 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(XU); return XU; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 125 "promela.l"
+#line 124 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(WHEN); return WHEN; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 126 "promela.l"
+#line 125 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(WHILE); return WHILE; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 127 "promela.l"
+#line 126 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(WAIT); return WAIT; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 128 "promela.l"
+#line 127 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(RESET); return RESET; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 130 "promela.l"
+#line 129 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { yylval->iType = symbol::T_BIT;
 					  DBUG(TYPE); return TYPE; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 132 "promela.l"
+#line 131 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_BOOL;
 					  return TYPE; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 134 "promela.l"
+#line 133 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_BYTE;
 					  return TYPE; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 136 "promela.l"
+#line 135 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_PID;
 					  return TYPE; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 138 "promela.l"
+#line 137 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_SHORT;
 					  return TYPE; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 140 "promela.l"
+#line 139 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_INT;
 					  return TYPE; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 142 "promela.l"
+#line 141 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { fprintf(stderr, "The 'unsigned' type is not supported.\n");
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
@@ -1432,53 +1431,53 @@ YY_RULE_SETUP
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 146 "promela.l"
+#line 145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_CID;
 					  return TYPE; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 148 "promela.l"
+#line 147 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_MTYPE;
 					  return TYPE; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 150 "promela.l"
+#line 149 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_CLOCK;
 					  return TYPE; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 153 "promela.l"
+#line 152 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { return INLINE; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 155 "promela.l"
+#line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(FALSE);  yylval->iVal = 0; 
 					  return FALSE; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 158 "promela.l"
-{ DBUG(TRUE); std::cout << "TOKEN: TRUE\n"; yylval->iVal = 1; 
+#line 157 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TRUE); 	yylval->iVal = 1; 
 					  return TRUE; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 161 "promela.l"
+#line 160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(SKIP); return SKIP; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 163 "promela.l"
+#line 162 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN STRINGBLOCK; 													/* printf("BEGIN STRINGBLOCK AT L %d\n", nbrLines); */
 					  strBufferLen = 0; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 165 "promela.l"
+#line 164 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */
 					  strBuffer[strBufferLen] = '\0';
 					  yylval->sVal = (char*) calloc(strBufferLen + 1, sizeof(char));
@@ -1489,31 +1488,31 @@ YY_RULE_SETUP
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 172 "promela.l"
+#line 171 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = '"';
 					  strBufferLen++; }
 	YY_BREAK
 case 99:
 /* rule 99 can match eol */
 YY_RULE_SETUP
-#line 174 "promela.l"
+#line 173 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = '\n';
 					  strBufferLen++; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 176 "promela.l"
+#line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = yytext[0];
 					  strBufferLen++; }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 180 "promela.l"
+#line 179 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG_CHAR(yytext[0]); return yytext[0]; } 
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 182 "promela.l"
+#line 181 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 {
 					  yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
@@ -1533,7 +1532,7 @@ YY_RULE_SETUP
 							  case symbol::T_INLINE:
 							     DBUG(INAME);
 								 return INAME;
-							  default:
+							  default: 
 							  	 break;
 						  }
 					  }
@@ -1544,97 +1543,97 @@ YY_RULE_SETUP
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 210 "promela.l"
+#line 209 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { yylval->rVal = atof(yytext);
 					  DBUG(REAL); return REAL;  }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 212 "promela.l"
+#line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(CONST); yylval->iVal = atoi(yytext);
 					  return CONST; }
 	YY_BREAK
 case 105:
 /* rule 105 can match eol */
 YY_RULE_SETUP
-#line 215 "promela.l"
+#line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 216 "promela.l"
+#line 215 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 218 "promela.l"
+#line 217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN COMMENTBLOCK; 													/* printf("BEGIN COMMENTBLOCK AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 219 "promela.l"
+#line 218 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 109:
 /* rule 109 can match eol */
 YY_RULE_SETUP
-#line 220 "promela.l"
+#line 219 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 221 "promela.l"
+#line 220 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 223 "promela.l"
+#line 222 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN COMMENTLINE; 													/* printf("BEGIN COMMENTLINE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 112:
 /* rule 112 can match eol */
 YY_RULE_SETUP
-#line 224 "promela.l"
+#line 223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { nbrLines++; BEGIN CODE; 												/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 225 "promela.l"
+#line 224 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 227 "promela.l"
+#line 226 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN CPPBLOCK; }
 	YY_BREAK
 case 115:
 /* rule 115 can match eol */
 YY_RULE_SETUP
-#line 228 "promela.l"
+#line 227 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN CODE; }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 229 "promela.l"
+#line 228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { nbrLines = atoi(yytext); }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 230 "promela.l"
+#line 229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 232 "promela.l"
+#line 231 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { fprintf(stderr, "Invalid char '%s' at line %d\n", yytext, nbrLines);
 					  exit(1); }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 235 "promela.l"
+#line 234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 ECHO;
 	YY_BREAK
-#line 1638 "lex.yy.cpp"
+#line 1637 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CODE):
 case YY_STATE_EOF(COMMENTBLOCK):
@@ -2644,7 +2643,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 235 "promela.l"
+#line 234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 
 
 void init_lex(){

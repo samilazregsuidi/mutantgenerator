@@ -121,15 +121,15 @@
 #endif
 #ifdef NP
 	#define HAS_NP	2
-	#define VERI	23	/* np_ */
+	#define VERI	24	/* np_ */
 #endif
 #if defined(NOCLAIM) && defined(NP)
 	#undef NOCLAIM
 #endif
 #ifndef NOCLAIM
-	#define NCLAIMS	18
+	#define NCLAIMS	19
 	#ifndef NP
-		#define VERI	22
+		#define VERI	23
 	#endif
 #endif
 
@@ -139,121 +139,127 @@ typedef struct S_F_MAP {
 	int upto;
 } S_F_MAP;
 
-#define _nstates22	11	/* user_cmd_consistency */
-#define minseq22	5061
-#define maxseq22	5070
-#define _endstate22	10
+#define _nstates23	11	/* user_cmd_consistency */
+#define minseq23	5634
+#define maxseq23	5643
+#define _endstate23	10
 
-#define _nstates21	21	/* high_water_evolution_consistency */
-#define minseq21	5041
-#define maxseq21	5060
+#define _nstates22	21	/* high_water_evolution_consistency */
+#define minseq22	5614
+#define maxseq22	5633
+#define _endstate22	20
+
+#define _nstates21	21	/* medium_water_evolution_consistency */
+#define minseq21	5594
+#define maxseq21	5613
 #define _endstate21	20
 
-#define _nstates20	21	/* medium_water_evolution_consistency */
-#define minseq20	5021
-#define maxseq20	5040
-#define _endstate20	20
+#define _nstates20	11	/* water_level_consistency */
+#define minseq20	5584
+#define maxseq20	5593
+#define _endstate20	10
 
-#define _nstates19	11	/* water_level_consistency */
-#define minseq19	5011
-#define maxseq19	5020
-#define _endstate19	10
+#define _nstates19	27	/* pump_activation */
+#define minseq19	5558
+#define maxseq19	5583
+#define _endstate19	26
 
-#define _nstates18	27	/* pump_activation */
-#define minseq18	4985
-#define maxseq18	5010
-#define _endstate18	26
+#define _nstates18	1146	/* pump_effectiveness */
+#define minseq18	4413
+#define maxseq18	5557
+#define _endstate18	1145
 
-#define _nstates17	1146	/* pump_effectiveness */
-#define minseq17	3840
-#define maxseq17	4984
+#define _nstates17	1146	/* pump_stopped */
+#define minseq17	3268
+#define maxseq17	4412
 #define _endstate17	1145
 
-#define _nstates16	1146	/* pump_stopped */
-#define minseq16	2695
-#define maxseq16	3839
-#define _endstate16	1145
+#define _nstates16	608	/* pump_stopping */
+#define minseq16	2661
+#define maxseq16	3267
+#define _endstate16	607
 
-#define _nstates15	608	/* pump_stopping */
-#define minseq15	2088
-#define maxseq15	2694
-#define _endstate15	607
+#define _nstates15	50	/* pump_methane_safetyness_light */
+#define minseq15	2612
+#define maxseq15	2660
+#define _endstate15	49
 
-#define _nstates14	50	/* pump_mathane_safetyness_light */
-#define minseq14	2039
-#define maxseq14	2087
+#define _nstates14	50	/* methane_sensor_liveness_light */
+#define minseq14	2563
+#define maxseq14	2611
 #define _endstate14	49
 
-#define _nstates13	50	/* methane_sensor_liveness_light */
-#define minseq13	1990
-#define maxseq13	2038
-#define _endstate13	49
+#define _nstates13	608	/* methane_sensor_liveness */
+#define minseq13	1956
+#define maxseq13	2562
+#define _endstate13	607
 
 #define _nstates12	27	/* pump_safe_methane_starting */
-#define minseq12	1964
-#define maxseq12	1989
+#define minseq12	1930
+#define maxseq12	1955
 #define _endstate12	26
 
 #define _nstates11	1146	/* pump_methane_safetyness */
-#define minseq11	819
-#define maxseq11	1963
+#define minseq11	785
+#define maxseq11	1929
 #define _endstate11	1145
 
-#define _nstates10	608	/* methane_sensor_liveness */
-#define minseq10	212
-#define maxseq10	818
+#define _nstates10	608	/* pump_methane_switch_off */
+#define minseq10	178
+#define maxseq10	784
 #define _endstate10	607
 
-#define _nstates9	11	/* read_msg_consistency */
-#define minseq9	202
-#define maxseq9	211
+#define _nstates9	11	/* pump_strong_synch_off */
+#define minseq9	168
+#define maxseq9	177
 #define _endstate9	10
 
-#define _nstates8	11	/* pump_strong_synch_off */
-#define minseq8	192
-#define maxseq8	201
-#define _endstate8	10
+#define _nstates8	14	/* pump_weak_synch_off */
+#define minseq8	155
+#define maxseq8	167
+#define _endstate8	13
 
-#define _nstates7	14	/* pump_weak_synch_off */
-#define minseq7	179
-#define maxseq7	191
-#define _endstate7	13
+#define _nstates7	11	/* pump_state_consistency */
+#define minseq7	145
+#define maxseq7	154
+#define _endstate7	10
 
-#define _nstates6	11	/* pump_synch_on */
-#define minseq6	169
-#define maxseq6	178
+#define _nstates6	11	/* read_msg_consistency */
+#define minseq6	135
+#define maxseq6	144
 #define _endstate6	10
 
-#define _nstates5	11	/* pump_state_consistency */
-#define minseq5	159
-#define maxseq5	168
+#define _nstates5	11	/* pump_synch_on */
+#define minseq5	125
+#define maxseq5	134
 #define _endstate5	10
 
 #define _nstates4	25	/* watersensor */
-#define minseq4	135
-#define maxseq4	158
+#define minseq4	101
+#define maxseq4	124
 #define _endstate4	24
 
 #define _nstates3	13	/* methanesensor */
-#define minseq3	123
-#define maxseq3	134
+#define minseq3	89
+#define maxseq3	100
 #define _endstate3	12
 
 #define _nstates2	8	/* methanealarm */
-#define minseq2	116
-#define maxseq2	122
+#define minseq2	82
+#define maxseq2	88
 #define _endstate2	7
 
 #define _nstates1	11	/* user */
-#define minseq1	106
-#define maxseq1	115
+#define minseq1	72
+#define maxseq1	81
 #define _endstate1	10
 
-#define _nstates0	107	/* controller */
+#define _nstates0	73	/* controller */
 #define minseq0	0
-#define maxseq0	105
-#define _endstate0	106
+#define maxseq0	71
+#define _endstate0	72
 
+extern short src_ln23[];
 extern short src_ln22[];
 extern short src_ln21[];
 extern short src_ln20[];
@@ -277,6 +283,7 @@ extern short src_ln3[];
 extern short src_ln2[];
 extern short src_ln1[];
 extern short src_ln0[];
+extern S_F_MAP src_file23[];
 extern S_F_MAP src_file22[];
 extern S_F_MAP src_file21[];
 extern S_F_MAP src_file20[];
@@ -302,8 +309,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned short
-#define _T5	2123
-#define _T2	2124
+#define _T5	2369
+#define _T2	2370
 #define WS		8 /* word size in bytes */
 #define SYNC	4
 #define ASYNC	0
@@ -318,16 +325,17 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-struct features { /* user defined type */
-	unsigned Start : 1;
-	unsigned Stop : 1;
-	unsigned MethaneAlarm : 1;
-	unsigned MethaneQuery : 1;
-	unsigned Low : 1;
-	unsigned Normal : 1;
-	unsigned High : 1;
-};
-typedef struct P22 { /* user_cmd_consistency */
+typedef struct P23 { /* user_cmd_consistency */
+	unsigned _pid : 8;  /* 0..255 */
+	unsigned _t   : 6; /* proctype */
+	unsigned _p   : 12; /* state    */
+#ifdef HAS_PRIORITY
+	unsigned _priority : 8; /* 0..255 */
+#endif
+} P23;
+#define Air23	(sizeof(P23) - 4)
+
+typedef struct P22 { /* high_water_evolution_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -337,7 +345,7 @@ typedef struct P22 { /* user_cmd_consistency */
 } P22;
 #define Air22	(sizeof(P22) - 4)
 
-typedef struct P21 { /* high_water_evolution_consistency */
+typedef struct P21 { /* medium_water_evolution_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -347,7 +355,7 @@ typedef struct P21 { /* high_water_evolution_consistency */
 } P21;
 #define Air21	(sizeof(P21) - 4)
 
-typedef struct P20 { /* medium_water_evolution_consistency */
+typedef struct P20 { /* water_level_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -357,7 +365,7 @@ typedef struct P20 { /* medium_water_evolution_consistency */
 } P20;
 #define Air20	(sizeof(P20) - 4)
 
-typedef struct P19 { /* water_level_consistency */
+typedef struct P19 { /* pump_activation */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -367,7 +375,7 @@ typedef struct P19 { /* water_level_consistency */
 } P19;
 #define Air19	(sizeof(P19) - 4)
 
-typedef struct P18 { /* pump_activation */
+typedef struct P18 { /* pump_effectiveness */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -377,7 +385,7 @@ typedef struct P18 { /* pump_activation */
 } P18;
 #define Air18	(sizeof(P18) - 4)
 
-typedef struct P17 { /* pump_effectiveness */
+typedef struct P17 { /* pump_stopped */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -387,7 +395,7 @@ typedef struct P17 { /* pump_effectiveness */
 } P17;
 #define Air17	(sizeof(P17) - 4)
 
-typedef struct P16 { /* pump_stopped */
+typedef struct P16 { /* pump_stopping */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -397,7 +405,7 @@ typedef struct P16 { /* pump_stopped */
 } P16;
 #define Air16	(sizeof(P16) - 4)
 
-typedef struct P15 { /* pump_stopping */
+typedef struct P15 { /* pump_methane_safetyness_light */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -407,7 +415,7 @@ typedef struct P15 { /* pump_stopping */
 } P15;
 #define Air15	(sizeof(P15) - 4)
 
-typedef struct P14 { /* pump_mathane_safetyness_light */
+typedef struct P14 { /* methane_sensor_liveness_light */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -417,7 +425,7 @@ typedef struct P14 { /* pump_mathane_safetyness_light */
 } P14;
 #define Air14	(sizeof(P14) - 4)
 
-typedef struct P13 { /* methane_sensor_liveness_light */
+typedef struct P13 { /* methane_sensor_liveness */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -447,7 +455,7 @@ typedef struct P11 { /* pump_methane_safetyness */
 } P11;
 #define Air11	(sizeof(P11) - 4)
 
-typedef struct P10 { /* methane_sensor_liveness */
+typedef struct P10 { /* pump_methane_switch_off */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -457,7 +465,7 @@ typedef struct P10 { /* methane_sensor_liveness */
 } P10;
 #define Air10	(sizeof(P10) - 4)
 
-typedef struct P9 { /* read_msg_consistency */
+typedef struct P9 { /* pump_strong_synch_off */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -467,7 +475,7 @@ typedef struct P9 { /* read_msg_consistency */
 } P9;
 #define Air9	(sizeof(P9) - 4)
 
-typedef struct P8 { /* pump_strong_synch_off */
+typedef struct P8 { /* pump_weak_synch_off */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -477,7 +485,7 @@ typedef struct P8 { /* pump_strong_synch_off */
 } P8;
 #define Air8	(sizeof(P8) - 4)
 
-typedef struct P7 { /* pump_weak_synch_off */
+typedef struct P7 { /* pump_state_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -487,7 +495,7 @@ typedef struct P7 { /* pump_weak_synch_off */
 } P7;
 #define Air7	(sizeof(P7) - 4)
 
-typedef struct P6 { /* pump_synch_on */
+typedef struct P6 { /* read_msg_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -497,7 +505,7 @@ typedef struct P6 { /* pump_synch_on */
 } P6;
 #define Air6	(sizeof(P6) - 4)
 
-typedef struct P5 { /* pump_state_consistency */
+typedef struct P5 { /* pump_synch_on */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
@@ -564,32 +572,32 @@ typedef struct P0 { /* controller */
 } P0;
 #define Air0	(sizeof(P0) - Offsetof(P0, level) - 1*sizeof(uchar))
 
-typedef struct P23 { /* np_ */
+typedef struct P24 { /* np_ */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
 	unsigned _p   : 12; /* state    */
 #ifdef HAS_PRIORITY
 	unsigned _priority : 8; /* 0..255 */
 #endif
-} P23;
-#define Air23	(sizeof(P23) - 4)
+} P24;
+#define Air24	(sizeof(P24) - 4)
 
 
 #ifndef NOCLAIM
  #ifndef NP
 	#undef VERI
-	#define VERI	24
+	#define VERI	25
  #endif
-	#define Pclaim	P24
+	#define Pclaim	P25
 
-typedef struct P24 {
+typedef struct P25 {
 	unsigned _pid : 8; /* always zero */
 	unsigned _t   : 6; /* active-claim type  */
 	unsigned _p   : 12; /* active-claim state */
 	unsigned _n   : 6; /* active-claim index */
 	uchar c_cur[NCLAIMS]; /* claim-states */
-} P24;
-	#define Air24	(0)
+} P25;
+	#define Air25	(0)
 
 #endif
 #if defined(BFS) && defined(REACH)
@@ -788,7 +796,6 @@ typedef struct State {
 	uchar readMsg;
 	uchar waterLevel;
 	uchar uwants;
-	struct features f;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
 	char *_ids_[MAXPROC+MAXQ+4];
@@ -813,38 +820,39 @@ typedef struct TRIX_v6 {
 #define FORWARD_MOVES	"pan.m"
 #define BACKWARD_MOVES	"pan.b"
 #define TRANSITIONS	"pan.t"
-#define _NP_	23
-#define _nstates23	3 /* np_ */
-#define _endstate23	2 /* np_ */
+#define _NP_	24
+#define _nstates24	3 /* np_ */
+#define _endstate24	2 /* np_ */
 
-#define _start23	0 /* np_ */
-#define _start22	6
+#define _start24	0 /* np_ */
+#define _start23	6
+#define _start22	8
 #define _start21	8
-#define _start20	8
-#define _start19	6
-#define _start18	7
+#define _start20	6
+#define _start19	7
+#define _start18	25
 #define _start17	25
 #define _start16	25
-#define _start15	25
+#define _start15	9
 #define _start14	9
-#define _start13	9
+#define _start13	25
 #define _start12	7
 #define _start11	25
 #define _start10	25
 #define _start9	6
-#define _start8	6
-#define _start7	5
+#define _start8	5
+#define _start7	6
 #define _start6	6
 #define _start5	6
 #define _start4	21
 #define _start3	9
 #define _start2	4
 #define _start1	7
-#define _start0	103
+#define _start0	69
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
-	#define ACCEPT_LAB	22 /* user-defined accept labels */
+	#define ACCEPT_LAB	23 /* user-defined accept labels */
 #endif
 #ifdef MEMCNT
 	#ifdef MEMLIM
@@ -1228,8 +1236,8 @@ void qsend(int, int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	2125
-unsigned char Is_Recv[5071];
+#define NTRANS	2371
+unsigned char Is_Recv[5644];
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);

@@ -14,12 +14,11 @@ int nbrLines = 0;
 char strBuffer[1024];
 int strBufferLen = 0;
 
-#define DBOUG 0
 
 #ifdef DBOUG
 	#define DBUG(TOKEN) std::cout<<"TOKEN : " << #TOKEN << "\n"
 	#define DBUG_CHAR(CHAR) std::cout<<"TOKEN : " << CHAR << "\n"
-#elif
+#else
 	#define DBUG(TOKEN) ;
 	#define DBUG_CHAR(CHAR) ;
 #endif
@@ -155,7 +154,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"false"		{ DBUG(FALSE);  yylval->iVal = 0; 
 					  return FALSE; }
 
-<CODE>"true"		{ DBUG(TRUE); std::cout << "TOKEN: TRUE\n"; yylval->iVal = 1; 
+<CODE>"true"		{ DBUG(TRUE); 	yylval->iVal = 1; 
 					  return TRUE; }
 
 <CODE>"skip"		{ DBUG(SKIP); return SKIP; }
@@ -198,7 +197,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 							  case symbol::T_INLINE:
 							     DBUG(INAME);
 								 return INAME;
-							  default:
+							  default: 
 							  	 break;
 						  }
 					  }

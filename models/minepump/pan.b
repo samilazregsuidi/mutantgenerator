@@ -4457,31 +4457,27 @@
 		;
 		;
 		goto R999;
-;
-		;
-		
-	case 2096: // STATE 7
+
+	case 2095: // STATE 6
 		;
 		now.pumpOn = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2097: // STATE 13
+	case 2096: // STATE 12
 		;
 		now.pstate = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2098: // STATE 18
+	case 2097: // STATE 13
 		;
 	/* 0 */	((P0 *)_this)->pcommand = trpt->bup.oval;
 		;
 		;
 		goto R999;
-;
-		;
-		
-	case 2100: // STATE 21
+
+	case 2098: // STATE 15
 		;
 		now.pstate = trpt->bup.oval;
 		;
@@ -4489,13 +4485,13 @@
 ;
 		;
 		
-	case 2102: // STATE 35
+	case 2100: // STATE 25
 		;
 		_m = unsend(now.cCmd);
 		;
 		goto R999;
 
-	case 2103: // STATE 37
+	case 2101: // STATE 27
 		;
 		now.readMsg = trpt->bup.ovals[1];
 		XX = 1;
@@ -4504,22 +4500,20 @@
 		;
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
-;
-		;
-		
-	case 2105: // STATE 41
+
+	case 2102: // STATE 30
 		;
 		now.pumpOn = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2106: // STATE 47
+	case 2103: // STATE 36
 		;
 		now.pstate = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2107: // STATE 53
+	case 2104: // STATE 38
 		;
 		now.readMsg = trpt->bup.ovals[1];
 		XX = 1;
@@ -4530,7 +4524,7 @@
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 
-	case 2108: // STATE 55
+	case 2105: // STATE 40
 		;
 	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
 		;
@@ -4538,18 +4532,14 @@
 		goto R999;
 ;
 		;
-		;
-		;
-		;
-		;
 		
-	case 2112: // STATE 60
+	case 2107: // STATE 42
 		;
 		_m = unsend(now.cMethane);
 		;
 		goto R999;
 
-	case 2113: // STATE 61
+	case 2108: // STATE 43
 		;
 		XX = 1;
 		unrecv(now.cMethane, XX-1, 0, now.pstate, 1);
@@ -4558,7 +4548,7 @@
 		;
 		goto R999;
 
-	case 2114: // STATE 64
+	case 2109: // STATE 46
 		;
 		now.pumpOn = trpt->bup.ovals[1];
 		now.pstate = trpt->bup.ovals[0];
@@ -4567,46 +4557,28 @@
 		goto R999;
 ;
 		
-	case 2115: // STATE 68
+	case 2110: // STATE 50
 		goto R999;
 ;
 		
-	case 2116: // STATE 66
+	case 2111: // STATE 48
 		goto R999;
 
-	case 2117: // STATE 73
-		;
-		now.pumpOn = trpt->bup.ovals[1];
-		now.pstate = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 2);
-		goto R999;
-
-	case 2118: // STATE 85
-		;
-	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
-		;
-		;
-		goto R999;
-;
-		;
-		
-	case 2120: // STATE 89
-		;
-		now.pstate = trpt->bup.ovals[1];
-		now.pumpOn = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 2);
-		goto R999;
-
-	case 2121: // STATE 99
+	case 2112: // STATE 56
 		;
 	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
 		;
 		;
 		goto R999;
 
-	case 2122: // STATE 106
+	case 2113: // STATE 58
+		;
+	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
+		;
+		;
+		goto R999;
+
+	case 2114: // STATE 65
 		;
 		p_restor(II);
 		;

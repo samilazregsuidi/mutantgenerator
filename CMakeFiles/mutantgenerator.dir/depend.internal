@@ -407,6 +407,7 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
 CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.hpp
@@ -447,6 +448,7 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
 CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmEdge.cpp
@@ -487,6 +489,7 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
 CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/automata.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.hpp
@@ -528,6 +531,7 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
 CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symTable.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symTable.hpp
@@ -773,11 +777,13 @@ CMakeFiles/mutantgenerator.dir/main.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
  parser/lexer.h
  parser/y.tab.hpp
  semantic/channel.hpp
  semantic/payload.hpp
  semantic/process.hpp
+ semantic/programState.hpp
  semantic/scope.hpp
  semantic/semantic.hpp
  semantic/state.hpp
@@ -886,6 +892,17 @@ CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o
  automata/symbol/vardef/utypeSymNode.hpp
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
+CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeState.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeState.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
+CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
 CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
@@ -915,6 +932,9 @@ CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
@@ -937,6 +957,118 @@ CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o
  automata/fsm/fsm.hpp
  automata/fsm/fsmEdge.hpp
  automata/fsm/fsmNode.hpp
+ automata/symbol/symTable.hpp
+ automata/symbol/symbol.hpp
+ automata/symbol/symbols.hpp
+ automata/symbol/typedef/inlineSymNode.hpp
+ automata/symbol/typedef/mtypedefSymNode.hpp
+ automata/symbol/typedef/procSymNode.hpp
+ automata/symbol/typedef/tdefSymNode.hpp
+ automata/symbol/vardef/bitSymNode.hpp
+ automata/symbol/vardef/boolSymNode.hpp
+ automata/symbol/vardef/byteSymNode.hpp
+ automata/symbol/vardef/chanSymNode.hpp
+ automata/symbol/vardef/cidSymNode.hpp
+ automata/symbol/vardef/intSymNode.hpp
+ automata/symbol/vardef/mtypeSymNode.hpp
+ automata/symbol/vardef/naSymNode.hpp
+ automata/symbol/vardef/pidSymNode.hpp
+ automata/symbol/vardef/shortSymNode.hpp
+ automata/symbol/vardef/unsgnSymNode.hpp
+ automata/symbol/vardef/utypeSymNode.hpp
+ automata/symbol/vardef/varSymNode.hpp
+ automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
+CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
+ automata/ast/ast.hpp
+ automata/ast/astNode.hpp
+ automata/ast/expr/argExpr.hpp
+ automata/ast/expr/binaryExpr.hpp
+ automata/ast/expr/constExpr.hpp
+ automata/ast/expr/expr.hpp
+ automata/ast/expr/unaryExpr.hpp
+ automata/ast/expr/varExpr.hpp
+ automata/ast/stmnt/chanStmnt.hpp
+ automata/ast/stmnt/clockStmnt.hpp
+ automata/ast/stmnt/decl.hpp
+ automata/ast/stmnt/flowStmnt.hpp
+ automata/ast/stmnt/stdlibStmnt.hpp
+ automata/ast/stmnt/stmnt.hpp
+ automata/fsm/automata.hpp
+ automata/fsm/fsm.hpp
+ automata/fsm/fsmEdge.hpp
+ automata/fsm/fsmNode.hpp
+ automata/symbol/symTable.hpp
+ automata/symbol/symbol.hpp
+ automata/symbol/symbols.hpp
+ automata/symbol/typedef/inlineSymNode.hpp
+ automata/symbol/typedef/mtypedefSymNode.hpp
+ automata/symbol/typedef/procSymNode.hpp
+ automata/symbol/typedef/tdefSymNode.hpp
+ automata/symbol/vardef/bitSymNode.hpp
+ automata/symbol/vardef/boolSymNode.hpp
+ automata/symbol/vardef/byteSymNode.hpp
+ automata/symbol/vardef/chanSymNode.hpp
+ automata/symbol/vardef/cidSymNode.hpp
+ automata/symbol/vardef/intSymNode.hpp
+ automata/symbol/vardef/mtypeSymNode.hpp
+ automata/symbol/vardef/naSymNode.hpp
+ automata/symbol/vardef/pidSymNode.hpp
+ automata/symbol/vardef/shortSymNode.hpp
+ automata/symbol/vardef/unsgnSymNode.hpp
+ automata/symbol/vardef/utypeSymNode.hpp
+ automata/symbol/vardef/varSymNode.hpp
+ automata/symbol/visitor/symTabVisitor.hpp
+ libs/cudd/cplusplus/cuddObj.hh
+CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
+ automata/fsm/fsmEdge.hpp
+ automata/symbol/symTable.hpp
+ automata/symbol/symbol.hpp
+ automata/symbol/symbols.hpp
+ automata/symbol/typedef/inlineSymNode.hpp
+ automata/symbol/typedef/mtypedefSymNode.hpp
+ automata/symbol/typedef/procSymNode.hpp
+ automata/symbol/typedef/tdefSymNode.hpp
+ automata/symbol/vardef/bitSymNode.hpp
+ automata/symbol/vardef/boolSymNode.hpp
+ automata/symbol/vardef/byteSymNode.hpp
+ automata/symbol/vardef/chanSymNode.hpp
+ automata/symbol/vardef/cidSymNode.hpp
+ automata/symbol/vardef/intSymNode.hpp
+ automata/symbol/vardef/mtypeSymNode.hpp
+ automata/symbol/vardef/naSymNode.hpp
+ automata/symbol/vardef/pidSymNode.hpp
+ automata/symbol/vardef/shortSymNode.hpp
+ automata/symbol/vardef/unsgnSymNode.hpp
+ automata/symbol/vardef/utypeSymNode.hpp
+ automata/symbol/vardef/varSymNode.hpp
+ automata/symbol/visitor/symTabVisitor.hpp
+CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.cpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
+ automata/fsm/fsmEdge.hpp
  automata/symbol/symTable.hpp
  automata/symbol/symbol.hpp
  automata/symbol/symbols.hpp
@@ -964,6 +1096,7 @@ CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
  automata/symbol/symTable.hpp
  automata/symbol/symbol.hpp
@@ -987,32 +1120,10 @@ CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o
  automata/symbol/vardef/varSymNode.hpp
  automata/symbol/visitor/symTabVisitor.hpp
 CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
- /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.hpp
- /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
- /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
- /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
- automata/ast/ast.hpp
- automata/ast/astNode.hpp
- automata/ast/expr/argExpr.hpp
- automata/ast/expr/binaryExpr.hpp
- automata/ast/expr/constExpr.hpp
- automata/ast/expr/expr.hpp
- automata/ast/expr/unaryExpr.hpp
- automata/ast/expr/varExpr.hpp
- automata/ast/stmnt/chanStmnt.hpp
- automata/ast/stmnt/clockStmnt.hpp
- automata/ast/stmnt/decl.hpp
- automata/ast/stmnt/flowStmnt.hpp
- automata/ast/stmnt/stdlibStmnt.hpp
- automata/ast/stmnt/stmnt.hpp
- automata/fsm/automata.hpp
- automata/fsm/fsm.hpp
- automata/fsm/fsmEdge.hpp
- automata/fsm/fsmNode.hpp
  automata/symbol/symTable.hpp
  automata/symbol/symbol.hpp
  automata/symbol/symbols.hpp
@@ -1037,11 +1148,11 @@ CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
 CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.hpp
- automata/fsm/fsmEdge.hpp
 CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.hpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.cpp
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.hpp
  automata/ast/astNode.hpp

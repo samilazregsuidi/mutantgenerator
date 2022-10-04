@@ -83,6 +83,14 @@ bool symbol::isGlobal(void) const
 	return parent->isGlobal();
 }
 
+bool symbol::isPredefined(void) const {
+	return mask & PREDEFINED;
+}
+
+bool symbol::isHidden(void) const {
+	return mask & PREDEFINED;
+}
+
 unsigned int symbol::getSizeOf(void) const
 {
 	return 0;

@@ -94,5 +94,5 @@
         "std_abs.h": "c",
         "*.p": "cpp",
         "symtable.hpp": "c"
-    }
+    },
 }

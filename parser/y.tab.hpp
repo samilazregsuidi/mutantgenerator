@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_Y_TAB_HPP_INCLUDED
-# define YY_YY_Y_TAB_HPP_INCLUDED
+#ifndef YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
+# define YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -245,7 +245,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 63 "promela.y"
+#line 63 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
  
 	int       				iVal;
 	char*    				sVal;
@@ -269,7 +269,7 @@ union YYSTYPE
 	
 	enum symbol::Type   iType;
 
-#line 273 "y.tab.hpp"
+#line 273 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -281,4 +281,4 @@ typedef union YYSTYPE YYSTYPE;
 
 int yyparse (symTable** globalSymTab, stmnt** program);
 
-#endif /* !YY_YY_Y_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED  */

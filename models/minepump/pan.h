@@ -140,119 +140,119 @@ typedef struct S_F_MAP {
 } S_F_MAP;
 
 #define _nstates22	11	/* user_cmd_consistency */
-#define minseq22	5061
-#define maxseq22	5070
+#define minseq22	5020
+#define maxseq22	5029
 #define _endstate22	10
 
 #define _nstates21	21	/* high_water_evolution_consistency */
-#define minseq21	5041
-#define maxseq21	5060
+#define minseq21	5000
+#define maxseq21	5019
 #define _endstate21	20
 
 #define _nstates20	21	/* medium_water_evolution_consistency */
-#define minseq20	5021
-#define maxseq20	5040
+#define minseq20	4980
+#define maxseq20	4999
 #define _endstate20	20
 
 #define _nstates19	11	/* water_level_consistency */
-#define minseq19	5011
-#define maxseq19	5020
+#define minseq19	4970
+#define maxseq19	4979
 #define _endstate19	10
 
 #define _nstates18	27	/* pump_activation */
-#define minseq18	4985
-#define maxseq18	5010
+#define minseq18	4944
+#define maxseq18	4969
 #define _endstate18	26
 
 #define _nstates17	1146	/* pump_effectiveness */
-#define minseq17	3840
-#define maxseq17	4984
+#define minseq17	3799
+#define maxseq17	4943
 #define _endstate17	1145
 
 #define _nstates16	1146	/* pump_stopped */
-#define minseq16	2695
-#define maxseq16	3839
+#define minseq16	2654
+#define maxseq16	3798
 #define _endstate16	1145
 
 #define _nstates15	608	/* pump_stopping */
-#define minseq15	2088
-#define maxseq15	2694
+#define minseq15	2047
+#define maxseq15	2653
 #define _endstate15	607
 
 #define _nstates14	50	/* pump_mathane_safetyness_light */
-#define minseq14	2039
-#define maxseq14	2087
+#define minseq14	1998
+#define maxseq14	2046
 #define _endstate14	49
 
 #define _nstates13	50	/* methane_sensor_liveness_light */
-#define minseq13	1990
-#define maxseq13	2038
+#define minseq13	1949
+#define maxseq13	1997
 #define _endstate13	49
 
 #define _nstates12	27	/* pump_safe_methane_starting */
-#define minseq12	1964
-#define maxseq12	1989
+#define minseq12	1923
+#define maxseq12	1948
 #define _endstate12	26
 
 #define _nstates11	1146	/* pump_methane_safetyness */
-#define minseq11	819
-#define maxseq11	1963
+#define minseq11	778
+#define maxseq11	1922
 #define _endstate11	1145
 
 #define _nstates10	608	/* methane_sensor_liveness */
-#define minseq10	212
-#define maxseq10	818
+#define minseq10	171
+#define maxseq10	777
 #define _endstate10	607
 
 #define _nstates9	11	/* read_msg_consistency */
-#define minseq9	202
-#define maxseq9	211
+#define minseq9	161
+#define maxseq9	170
 #define _endstate9	10
 
 #define _nstates8	11	/* pump_strong_synch_off */
-#define minseq8	192
-#define maxseq8	201
+#define minseq8	151
+#define maxseq8	160
 #define _endstate8	10
 
 #define _nstates7	14	/* pump_weak_synch_off */
-#define minseq7	179
-#define maxseq7	191
+#define minseq7	138
+#define maxseq7	150
 #define _endstate7	13
 
 #define _nstates6	11	/* pump_synch_on */
-#define minseq6	169
-#define maxseq6	178
+#define minseq6	128
+#define maxseq6	137
 #define _endstate6	10
 
 #define _nstates5	11	/* pump_state_consistency */
-#define minseq5	159
-#define maxseq5	168
+#define minseq5	118
+#define maxseq5	127
 #define _endstate5	10
 
 #define _nstates4	25	/* watersensor */
-#define minseq4	135
-#define maxseq4	158
+#define minseq4	94
+#define maxseq4	117
 #define _endstate4	24
 
 #define _nstates3	13	/* methanesensor */
-#define minseq3	123
-#define maxseq3	134
+#define minseq3	82
+#define maxseq3	93
 #define _endstate3	12
 
 #define _nstates2	8	/* methanealarm */
-#define minseq2	116
-#define maxseq2	122
+#define minseq2	75
+#define maxseq2	81
 #define _endstate2	7
 
 #define _nstates1	11	/* user */
-#define minseq1	106
-#define maxseq1	115
+#define minseq1	65
+#define maxseq1	74
 #define _endstate1	10
 
-#define _nstates0	107	/* controller */
+#define _nstates0	66	/* controller */
 #define minseq0	0
-#define maxseq0	105
-#define _endstate0	106
+#define maxseq0	64
+#define _endstate0	65
 
 extern short src_ln22[];
 extern short src_ln21[];
@@ -302,8 +302,8 @@ extern S_F_MAP src_file1[];
 extern S_F_MAP src_file0[];
 
 #define T_ID	unsigned short
-#define _T5	2123
-#define _T2	2124
+#define _T5	2115
+#define _T2	2116
 #define WS		8 /* word size in bytes */
 #define SYNC	4
 #define ASYNC	0
@@ -318,15 +318,6 @@ extern S_F_MAP src_file0[];
 	#endif
 #endif
 
-struct features { /* user defined type */
-	unsigned Start : 1;
-	unsigned Stop : 1;
-	unsigned MethaneAlarm : 1;
-	unsigned MethaneQuery : 1;
-	unsigned Low : 1;
-	unsigned Normal : 1;
-	unsigned High : 1;
-};
 typedef struct P22 { /* user_cmd_consistency */
 	unsigned _pid : 8;  /* 0..255 */
 	unsigned _t   : 6; /* proctype */
@@ -788,7 +779,6 @@ typedef struct State {
 	uchar readMsg;
 	uchar waterLevel;
 	uchar uwants;
-	struct features f;
 #ifdef TRIX
 	/* room for 512 proc+chan ptrs, + safety margin */
 	char *_ids_[MAXPROC+MAXQ+4];
@@ -840,7 +830,7 @@ typedef struct TRIX_v6 {
 #define _start3	9
 #define _start2	4
 #define _start1	7
-#define _start0	103
+#define _start0	62
 #ifdef NP
 	#define ACCEPT_LAB	1 /* at least 1 in np_ */
 #else
@@ -1228,8 +1218,8 @@ void qsend(int, int, int, int);
 #define GLOBAL	7
 #define BAD	8
 #define ALPHA_F	9
-#define NTRANS	2125
-unsigned char Is_Recv[5071];
+#define NTRANS	2117
+unsigned char Is_Recv[5030];
 #if defined(BFS_PAR) || NCORE>1
 	void e_critical(int);
 	void x_critical(int);

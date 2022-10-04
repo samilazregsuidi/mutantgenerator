@@ -2606,7 +2606,7 @@
 		;
 		goto R999;
 
-		 /* CLAIM pump_mathane_safetyness_light */
+		 /* CLAIM pump_methane_safetyness_light */
 ;
 		;
 		;
@@ -2676,6 +2676,519 @@
 		;
 		goto R999;
 
+		 /* CLAIM methane_sensor_liveness */
+;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		;
+		
+	case 1550: // STATE 607
+		;
+		p_restor(II);
+		;
+		;
+		goto R999;
+
 		 /* CLAIM pump_safe_methane_starting */
 ;
 		;
@@ -2687,10 +3200,10 @@
 		;
 		;
 		
-	case 1302: // STATE 17
+	case 1555: // STATE 17
 		goto R999;
 
-	case 1303: // STATE 26
+	case 1556: // STATE 26
 		;
 		p_restor(II);
 		;
@@ -3691,14 +4204,14 @@
 		;
 		;
 		
-	case 1800: // STATE 1145
+	case 2053: // STATE 1145
 		;
 		p_restor(II);
 		;
 		;
 		goto R999;
 
-		 /* CLAIM methane_sensor_liveness */
+		 /* CLAIM pump_methane_switch_off */
 ;
 		;
 		;
@@ -4204,20 +4717,7 @@
 		;
 		;
 		
-	case 2053: // STATE 607
-		;
-		p_restor(II);
-		;
-		;
-		goto R999;
-
-		 /* CLAIM read_msg_consistency */
-;
-		
-	case 2054: // STATE 1
-		goto R999;
-
-	case 2055: // STATE 10
+	case 2306: // STATE 607
 		;
 		p_restor(II);
 		;
@@ -4227,10 +4727,10 @@
 		 /* CLAIM pump_strong_synch_off */
 ;
 		
-	case 2056: // STATE 1
+	case 2307: // STATE 1
 		goto R999;
 
-	case 2057: // STATE 10
+	case 2308: // STATE 10
 		;
 		p_restor(II);
 		;
@@ -4243,20 +4743,7 @@
 		;
 		;
 		
-	case 2060: // STATE 13
-		;
-		p_restor(II);
-		;
-		;
-		goto R999;
-
-		 /* CLAIM pump_synch_on */
-;
-		
-	case 2061: // STATE 1
-		goto R999;
-
-	case 2062: // STATE 10
+	case 2311: // STATE 13
 		;
 		p_restor(II);
 		;
@@ -4266,10 +4753,36 @@
 		 /* CLAIM pump_state_consistency */
 ;
 		
-	case 2063: // STATE 1
+	case 2312: // STATE 1
 		goto R999;
 
-	case 2064: // STATE 10
+	case 2313: // STATE 10
+		;
+		p_restor(II);
+		;
+		;
+		goto R999;
+
+		 /* CLAIM read_msg_consistency */
+;
+		
+	case 2314: // STATE 1
+		goto R999;
+
+	case 2315: // STATE 10
+		;
+		p_restor(II);
+		;
+		;
+		goto R999;
+
+		 /* CLAIM pump_synch_on */
+;
+		
+	case 2316: // STATE 1
+		goto R999;
+
+	case 2317: // STATE 10
 		;
 		p_restor(II);
 		;
@@ -4280,37 +4793,37 @@
 ;
 		;
 		
-	case 2066: // STATE 2
+	case 2319: // STATE 2
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2067: // STATE 3
+	case 2320: // STATE 3
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 ;
 		
-	case 2068: // STATE 18
+	case 2321: // STATE 18
 		goto R999;
 ;
 		;
 		
-	case 2070: // STATE 7
+	case 2323: // STATE 7
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2071: // STATE 8
+	case 2324: // STATE 8
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2072: // STATE 9
+	case 2325: // STATE 9
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
@@ -4318,25 +4831,25 @@
 ;
 		;
 		
-	case 2074: // STATE 13
+	case 2327: // STATE 13
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2075: // STATE 14
+	case 2328: // STATE 14
 		;
 		now.waterLevel = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2076: // STATE 19
+	case 2329: // STATE 19
 		;
 		_m = unsend(now.cLevel);
 		;
 		goto R999;
 
-	case 2077: // STATE 24
+	case 2330: // STATE 24
 		;
 		p_restor(II);
 		;
@@ -4345,7 +4858,7 @@
 
 		 /* PROC methanesensor */
 
-	case 2078: // STATE 1
+	case 2331: // STATE 1
 		;
 		XX = 1;
 		unrecv(now.cMethane, XX-1, 0, trpt->bup.oval, 1);
@@ -4355,7 +4868,7 @@
 ;
 		;
 		
-	case 2080: // STATE 3
+	case 2333: // STATE 3
 		;
 		_m = unsend(now.cMethane);
 		;
@@ -4363,13 +4876,13 @@
 ;
 		;
 		
-	case 2082: // STATE 5
+	case 2335: // STATE 5
 		;
 		_m = unsend(now.cMethane);
 		;
 		goto R999;
 
-	case 2083: // STATE 12
+	case 2336: // STATE 12
 		;
 		p_restor(II);
 		;
@@ -4378,25 +4891,25 @@
 
 		 /* PROC methanealarm */
 
-	case 2084: // STATE 1
+	case 2337: // STATE 1
 		;
 		now.methane = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2085: // STATE 2
+	case 2338: // STATE 2
 		;
 		_m = unsend(now.cAlarm);
 		;
 		goto R999;
 
-	case 2086: // STATE 3
+	case 2339: // STATE 3
 		;
 		now.methane = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2087: // STATE 7
+	case 2340: // STATE 7
 		;
 		p_restor(II);
 		;
@@ -4405,25 +4918,25 @@
 
 		 /* PROC user */
 
-	case 2088: // STATE 1
+	case 2341: // STATE 1
 		;
 		now.uwants = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2089: // STATE 2
+	case 2342: // STATE 2
 		;
 		now.uwants = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2090: // STATE 5
+	case 2343: // STATE 5
 		;
 		_m = unsend(now.cCmd);
 		;
 		goto R999;
 
-	case 2091: // STATE 6
+	case 2344: // STATE 6
 		;
 		XX = 1;
 		unrecv(now.cCmd, XX-1, 0, trpt->bup.oval, 1);
@@ -4431,7 +4944,7 @@
 		;
 		goto R999;
 
-	case 2092: // STATE 10
+	case 2345: // STATE 10
 		;
 		p_restor(II);
 		;
@@ -4440,7 +4953,7 @@
 
 		 /* PROC controller */
 
-	case 2093: // STATE 2
+	case 2346: // STATE 2
 		;
 		now.readMsg = trpt->bup.ovals[1];
 		XX = 1;
@@ -4451,37 +4964,33 @@
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 
-	case 2094: // STATE 4
+	case 2347: // STATE 4
 		;
 	/* 0 */	((P0 *)_this)->pcommand = trpt->bup.oval;
 		;
 		;
 		goto R999;
-;
-		;
-		
-	case 2096: // STATE 7
+
+	case 2348: // STATE 6
 		;
 		now.pumpOn = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2097: // STATE 13
+	case 2349: // STATE 12
 		;
 		now.pstate = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2098: // STATE 18
+	case 2350: // STATE 13
 		;
 	/* 0 */	((P0 *)_this)->pcommand = trpt->bup.oval;
 		;
 		;
 		goto R999;
-;
-		;
-		
-	case 2100: // STATE 21
+
+	case 2351: // STATE 15
 		;
 		now.pstate = trpt->bup.oval;
 		;
@@ -4489,13 +4998,13 @@
 ;
 		;
 		
-	case 2102: // STATE 35
+	case 2353: // STATE 25
 		;
 		_m = unsend(now.cCmd);
 		;
 		goto R999;
 
-	case 2103: // STATE 37
+	case 2354: // STATE 27
 		;
 		now.readMsg = trpt->bup.ovals[1];
 		XX = 1;
@@ -4504,22 +5013,20 @@
 		;
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
-;
-		;
-		
-	case 2105: // STATE 41
+
+	case 2355: // STATE 30
 		;
 		now.pumpOn = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2106: // STATE 47
+	case 2356: // STATE 36
 		;
 		now.pstate = trpt->bup.oval;
 		;
 		goto R999;
 
-	case 2107: // STATE 53
+	case 2357: // STATE 38
 		;
 		now.readMsg = trpt->bup.ovals[1];
 		XX = 1;
@@ -4530,7 +5037,7 @@
 		ungrab_ints(trpt->bup.ovals, 2);
 		goto R999;
 
-	case 2108: // STATE 55
+	case 2358: // STATE 40
 		;
 	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
 		;
@@ -4538,18 +5045,14 @@
 		goto R999;
 ;
 		;
-		;
-		;
-		;
-		;
 		
-	case 2112: // STATE 60
+	case 2360: // STATE 42
 		;
 		_m = unsend(now.cMethane);
 		;
 		goto R999;
 
-	case 2113: // STATE 61
+	case 2361: // STATE 43
 		;
 		XX = 1;
 		unrecv(now.cMethane, XX-1, 0, now.pstate, 1);
@@ -4558,7 +5061,7 @@
 		;
 		goto R999;
 
-	case 2114: // STATE 64
+	case 2362: // STATE 46
 		;
 		now.pumpOn = trpt->bup.ovals[1];
 		now.pstate = trpt->bup.ovals[0];
@@ -4567,41 +5070,36 @@
 		goto R999;
 ;
 		
-	case 2115: // STATE 68
+	case 2363: // STATE 50
 		goto R999;
 ;
 		
-	case 2116: // STATE 66
+	case 2364: // STATE 48
 		goto R999;
 
-	case 2117: // STATE 73
-		;
-		now.pumpOn = trpt->bup.ovals[1];
-		now.pstate = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 2);
-		goto R999;
-;
-		;
-		;
-		;
-		
-	case 2120: // STATE 89
-		;
-		now.pstate = trpt->bup.ovals[1];
-		now.pumpOn = trpt->bup.ovals[0];
-		;
-		ungrab_ints(trpt->bup.ovals, 2);
-		goto R999;
-
-	case 2121: // STATE 99
+	case 2365: // STATE 56
 		;
 	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
 		;
 		;
 		goto R999;
 
-	case 2122: // STATE 106
+	case 2366: // STATE 59
+		;
+		now.pstate = trpt->bup.ovals[1];
+		now.methane = trpt->bup.ovals[0];
+		;
+		ungrab_ints(trpt->bup.ovals, 2);
+		goto R999;
+
+	case 2367: // STATE 65
+		;
+	/* 0 */	((P0 *)_this)->level = trpt->bup.oval;
+		;
+		;
+		goto R999;
+
+	case 2368: // STATE 72
 		;
 		p_restor(II);
 		;

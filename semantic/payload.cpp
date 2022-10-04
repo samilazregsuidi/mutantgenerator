@@ -25,7 +25,8 @@ payload::payload(size_t size)
 	}
 }*/
 
-payload::~payload() {
+payload::~payload() 
+{
 	if(ptr)
 		free(ptr);
 }
@@ -57,8 +58,10 @@ void payload::addSize(size_t add) {
 	size += add;
 }
 
-unsigned long payload::hash(void) const {
-	return std::hash<std::string_view>{}(std::string_view(ptr, size));
+unsigned long payload::hash(size_t offset, size_t end) const {
+	if(end == 0)
+		end = size;
+	return std::hash<std::string_view>{}(std::string_view(ptr + offset, end));
 }
 
 payload* payload::copy(void) const {
@@ -85,7 +88,8 @@ payload* payload::copy(void) const {
 }*/
 
 /**
- * Reads 'nb' bytes in a memory chunk of the state, at offset 'offset', puts them in an array of byte and returns it.
+ * Reads 'nb' bytes in a memory chunk of the state,) const {
+	auto old_hash = std::hash<std::string_view>{}(std::string_view(reinterpret_cast<byte*>(getPayloadPtr()), getSizeOf())); at offset 'offset', puts them in an array of byte and returns it.
  */
 /*const byte* payload::readValues(unsigned int offset, int nb) const {
 	byte* bytePtr = reinterpret_cast<byte*>(this->ptr);
@@ -158,4 +162,36 @@ void payload::setValue(size_t offset, int value, symbol::Type type) {
 
 bool payload::operator == (const payload& other) const {
 	return size == other.size && memcmp(ptr, other.ptr, size) == 0;
+}
+
+void payload::printHexadecimal(size_t offset, size_t end) const {
+	
+	if(end == 0)
+		end = size;
+
+	auto hexPtr = reinterpret_cast<unsigned long*>(ptr + offset);
+	auto nbHexBlocks = end / sizeof(unsigned long);
+	auto restData = end % sizeof(unsigned long);
+	
+	printf("size = : %lu\n", end);
+
+	for(size_t i = 0; i < nbHexBlocks; ++i, hexPtr++) {
+		printf("0x%lx\n", *hexPtr);
+	}
+
+	while(restData){
+		if(restData >= 4) {
+			printf("0x%lx\n", *reinterpret_cast<unsigned int*>(hexPtr));
+			restData -= 4;
+		} else if (restData >= 2) {
+			printf("0x%lx\n", *reinterpret_cast<unsigned short*>(hexPtr));
+			restData -= 2;
+		} else if (restData == 1) {
+			printf("0x%lx\n", *reinterpret_cast<unsigned char*>(hexPtr));
+			restData -= 1;
+		}
+	}
+
+	printf("hash: 0x%lx\n", hash(offset, end));
+	//printf("hash: 0x%lx\n", std::hash<std::string_view>{}(std::string_view(ptr + offset, end)));
 }

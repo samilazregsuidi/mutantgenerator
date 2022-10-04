@@ -15,28 +15,47 @@ time_limit = 60
 properties = {
 'pump_state_consistency',
 'pump_synch_on', 
-'pump_weak_synch_off',
-'pump_strong_synch_off',
 'read_msg_consistency',
 
-'methane_sensor_liveness', 
+'pump_methane_switch_off'
 'pump_methane_safetyness', 
 'pump_safe_methane_starting', 
-'methane_sensor_liveness_light', 
-'pump_methane_safetyness_light', 
 
 'pump_stopping', 
 'pump_stopped',
-
 'pump_effectiveness', 
 'pump_activation',
 
 'water_level_consistency',
-'low_medium_evolution_consistency',
-'low_high_evolution_consistency',
 
 'user_cmd_consistency'
 }
+
+#properties = {
+#'pump_state_consistency',
+#'pump_synch_on', 
+#'read_msg_consistency',
+#'pump_weak_synch_off',
+#'pump_strong_synch_off',
+
+#'pump_methane_switch_off'
+#'pump_methane_safetyness', 
+#'pump_safe_methane_starting', 
+#'methane_sensor_liveness',
+#'methane_sensor_liveness_light',
+#'pump_methane_safetyness_light',
+
+#'pump_stopping', 
+#'pump_stopped',
+#'pump_effectiveness', 
+#'pump_activation',
+
+#'water_level_consistency',
+#'medium_water_evolution_consistency',
+#'high_water_evolution_consistency',
+
+#'user_cmd_consistency'
+#}
 
 mutants = glob.glob('*.pml')
 #mutants = {'original.pml', 'mutant_1.pml', 'mutant_10.pml', 'mutant_20.pml', 'mutant_30.pml', 'mutant_40.pml', 'mutant_50.pml', 'mutant_60.pml', 'mutant_70.pml', 'mutant_80.pml', 'mutant_90.pml'} 

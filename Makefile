@@ -1203,6 +1203,60 @@ semantic/channel.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s
 .PHONY : semantic/channel.cpp.s
 
+semantic/compositeState.o: semantic/compositeState.cpp.o
+
+.PHONY : semantic/compositeState.o
+
+# target to build an object file
+semantic/compositeState.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o
+.PHONY : semantic/compositeState.cpp.o
+
+semantic/compositeState.i: semantic/compositeState.cpp.i
+
+.PHONY : semantic/compositeState.i
+
+# target to preprocess a source file
+semantic/compositeState.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.i
+.PHONY : semantic/compositeState.cpp.i
+
+semantic/compositeState.s: semantic/compositeState.cpp.s
+
+.PHONY : semantic/compositeState.s
+
+# target to generate assembly for a file
+semantic/compositeState.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.s
+.PHONY : semantic/compositeState.cpp.s
+
+semantic/compositeTransition.o: semantic/compositeTransition.cpp.o
+
+.PHONY : semantic/compositeTransition.o
+
+# target to build an object file
+semantic/compositeTransition.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o
+.PHONY : semantic/compositeTransition.cpp.o
+
+semantic/compositeTransition.i: semantic/compositeTransition.cpp.i
+
+.PHONY : semantic/compositeTransition.i
+
+# target to preprocess a source file
+semantic/compositeTransition.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.i
+.PHONY : semantic/compositeTransition.cpp.i
+
+semantic/compositeTransition.s: semantic/compositeTransition.cpp.s
+
+.PHONY : semantic/compositeTransition.s
+
+# target to generate assembly for a file
+semantic/compositeTransition.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.s
+.PHONY : semantic/compositeTransition.cpp.s
+
 semantic/payload.o: semantic/payload.cpp.o
 
 .PHONY : semantic/payload.o
@@ -1256,6 +1310,87 @@ semantic/process.s: semantic/process.cpp.s
 semantic/process.cpp.s:
 	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s
 .PHONY : semantic/process.cpp.s
+
+semantic/programState.o: semantic/programState.cpp.o
+
+.PHONY : semantic/programState.o
+
+# target to build an object file
+semantic/programState.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o
+.PHONY : semantic/programState.cpp.o
+
+semantic/programState.i: semantic/programState.cpp.i
+
+.PHONY : semantic/programState.i
+
+# target to preprocess a source file
+semantic/programState.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.i
+.PHONY : semantic/programState.cpp.i
+
+semantic/programState.s: semantic/programState.cpp.s
+
+.PHONY : semantic/programState.s
+
+# target to generate assembly for a file
+semantic/programState.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.s
+.PHONY : semantic/programState.cpp.s
+
+semantic/programTransition.o: semantic/programTransition.cpp.o
+
+.PHONY : semantic/programTransition.o
+
+# target to build an object file
+semantic/programTransition.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o
+.PHONY : semantic/programTransition.cpp.o
+
+semantic/programTransition.i: semantic/programTransition.cpp.i
+
+.PHONY : semantic/programTransition.i
+
+# target to preprocess a source file
+semantic/programTransition.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.i
+.PHONY : semantic/programTransition.cpp.i
+
+semantic/programTransition.s: semantic/programTransition.cpp.s
+
+.PHONY : semantic/programTransition.s
+
+# target to generate assembly for a file
+semantic/programTransition.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.s
+.PHONY : semantic/programTransition.cpp.s
+
+semantic/rendezVousTransition.o: semantic/rendezVousTransition.cpp.o
+
+.PHONY : semantic/rendezVousTransition.o
+
+# target to build an object file
+semantic/rendezVousTransition.cpp.o:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o
+.PHONY : semantic/rendezVousTransition.cpp.o
+
+semantic/rendezVousTransition.i: semantic/rendezVousTransition.cpp.i
+
+.PHONY : semantic/rendezVousTransition.i
+
+# target to preprocess a source file
+semantic/rendezVousTransition.cpp.i:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.i
+.PHONY : semantic/rendezVousTransition.cpp.i
+
+semantic/rendezVousTransition.s: semantic/rendezVousTransition.cpp.s
+
+.PHONY : semantic/rendezVousTransition.s
+
+# target to generate assembly for a file
+semantic/rendezVousTransition.cpp.s:
+	$(MAKE) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.s
+.PHONY : semantic/rendezVousTransition.cpp.s
 
 semantic/scope.o: semantic/scope.cpp.o
 
@@ -1494,12 +1629,27 @@ help:
 	@echo "... semantic/channel.o"
 	@echo "... semantic/channel.i"
 	@echo "... semantic/channel.s"
+	@echo "... semantic/compositeState.o"
+	@echo "... semantic/compositeState.i"
+	@echo "... semantic/compositeState.s"
+	@echo "... semantic/compositeTransition.o"
+	@echo "... semantic/compositeTransition.i"
+	@echo "... semantic/compositeTransition.s"
 	@echo "... semantic/payload.o"
 	@echo "... semantic/payload.i"
 	@echo "... semantic/payload.s"
 	@echo "... semantic/process.o"
 	@echo "... semantic/process.i"
 	@echo "... semantic/process.s"
+	@echo "... semantic/programState.o"
+	@echo "... semantic/programState.i"
+	@echo "... semantic/programState.s"
+	@echo "... semantic/programTransition.o"
+	@echo "... semantic/programTransition.i"
+	@echo "... semantic/programTransition.s"
+	@echo "... semantic/rendezVousTransition.o"
+	@echo "... semantic/rendezVousTransition.i"
+	@echo "... semantic/rendezVousTransition.s"
 	@echo "... semantic/scope.o"
 	@echo "... semantic/scope.i"
 	@echo "... semantic/scope.s"

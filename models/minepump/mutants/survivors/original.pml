@@ -1,30 +1,4 @@
-//#include "./ltl.inc"
-
-#define readCommand (readMsg == commandMsg)
-#define readAlarm (readMsg == alarmMsg)
-#define readLevel (readMsg == levelMsg)
-#define userStart (uwants == start)
-#define userStop (uwants == stop)
-#define highWater (waterLevel == high)
-#define mediumWater (waterLevel == medium)
-#define lowWater (waterLevel == low)
-#define stateReady (pstate == ready)
-#define stateRunning (pstate == running)
-#define stateStopped (pstate == stopped)
-#define stateMethanestop (pstate == methanestop)
-#define stateLowstop (pstate == lowstop)
-
-typedef features {
-	bool Start = 1;
-	bool Stop = 1;
-	bool MethaneAlarm = 1;
-	bool MethaneQuery = 1;
-	bool Low = 1;
-	bool Normal = 1;
-	bool High = 1;
-}
-
-features f;
+#include "./ltl.inc"
 mtype = {levelMsg, stop, methanestop, alarm, running, commandMsg, start, alarmMsg, high, low, stopped, medium, ready, lowstop}
 chan cCmd = [0] of {mtype};
 chan cAlarm = [0] of {mtype};
@@ -47,30 +21,20 @@ active proctype controller(){
 		if
 		::	pcommand == stop;
 			if
-			::	f.Stop;
-				if
-				::	atomic {
-						pstate == running;
-						pumpOn = false;
-					};
-				::	else;
-					skip;
-				fi;
-				pstate = stopped;
+			::	atomic {
+					pstate == running;
+					pumpOn = false;
+				};
 			::	else;
 				skip;
 			fi;
+			pstate = stopped;
 		::	pcommand == start;
 			if
-			::	f.Start;
-				if
-				::	atomic {
-						pstate != running;
-						pstate = ready;
-					};
-				::	else;
-					skip;
-				fi;
+			::	atomic {
+					pstate != running;
+					pstate = ready;
+				};
 			::	else;
 				skip;
 			fi;
@@ -83,19 +47,14 @@ active proctype controller(){
 			readMsg = alarmMsg;
 		};
 		if
-		::	f.MethaneAlarm;
-			if
-			::	atomic {
-					pstate == running;
-					pumpOn = false;
-				};
-			::	else;
-				skip;
-			fi;
-			pstate = methanestop;
+		::	atomic {
+				pstate == running;
+				pumpOn = false;
+			};
 		::	else;
 			skip;
 		fi;
+		pstate = methanestop;
 	::	atomic {
 			cLevel?level;
 			readMsg = levelMsg;
@@ -103,48 +62,28 @@ active proctype controller(){
 		if
 		::	level == high;
 			if
-			::	f.High;
-				if
-				::	pstate == ready || pstate == lowstop;
+			::	pstate == ready || pstate == lowstop;
+				atomic {
+					cMethane!pstate;
+					cMethane?pstate;
 					if
-					::	f.MethaneQuery;
-						skip;
-						atomic {
-							cMethane!pstate;
-							cMethane?pstate;
-							if
-							::	pstate == ready;
-								pstate = running;
-								pumpOn = true;
-							::	else;
-								skip;
-							fi;
-						};
+					::	pstate == ready;
+						pstate = running;
+						pumpOn = true;
 					::	else;
 						skip;
-						atomic {
-							pstate = running;
-							pumpOn = true;
-						};
 					fi;
-				::	else;
-					skip;
-				fi;
+				};
 			::	else;
 				skip;
 			fi;
 		::	level == low;
 			if
-			::	f.Low;
-				if
-				::	atomic {
-						pstate == running;
-						pumpOn = false;
-						pstate = lowstop;
-					};
-				::	else;
-					skip;
-				fi;
+			::	atomic {
+					pstate == running;
+					pumpOn = false;
+					pstate = lowstop;
+				};
 			::	else;
 				skip;
 			fi;

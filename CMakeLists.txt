@@ -9,14 +9,14 @@ set(Parser "y.tab.cpp")
 set(Lexer "lex.yy.cpp")
 
 add_custom_command(
-    OUTPUT ${Parser}
+    OUTPUT ${CMAKE_SOURCE_DIR}/parser/${Parser}
     COMMAND yacc -y -d -o ${CMAKE_SOURCE_DIR}/parser/${Parser} ${CMAKE_SOURCE_DIR}/parser/promela.y
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.y
     COMMENT "running yacc"
 )
 
 add_custom_command(
-    OUTPUT ${Lexer}
+    OUTPUT ${CMAKE_SOURCE_DIR}/parser/${Lexer}
     COMMAND flex -o ${CMAKE_SOURCE_DIR}/parser/${Lexer} ${CMAKE_SOURCE_DIR}/parser/promela.l
     DEPENDS ${CMAKE_SOURCE_DIR}/parser/promela.l
     COMMENT "running flex"
@@ -75,15 +75,20 @@ add_executable(mutantgenerator
 	./automata/fsm/fsmEdge.cpp
 	
 	./semantic/state.cpp
+	./semantic/programState
+	./semantic/compositeState.cpp
 	./semantic/scope.cpp
 	./semantic/process.cpp
 	./semantic/variable.cpp
 	./semantic/channel.cpp
 	./semantic/payload.cpp
 	./semantic/transition.cpp
-	
-    ./parser/${Parser}
-    ./parser/${Lexer}
+	./semantic/programTransition.cpp
+	./semantic/rendezVousTransition.cpp
+	./semantic/compositeTransition.cpp
+
+${CMAKE_SOURCE_DIR}/parser/${Parser}
+${CMAKE_SOURCE_DIR}/parser/${Lexer}
     
 	)
 

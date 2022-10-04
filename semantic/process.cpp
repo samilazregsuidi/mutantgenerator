@@ -5,7 +5,9 @@
 
 #include "process.hpp"
 #include "transition.hpp"
-#include "state.hpp"
+#include "rendezVousTransition.hpp"
+#include "programTransition.hpp"
+#include "programState.hpp"
 
 #include "payload.hpp"
 #include "variable.hpp"
@@ -16,7 +18,7 @@
 
 #include "cuddObj.hh"
 
-process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index)
+process::process(progState* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index)
 	: scope(std::to_string(pid) + sym->getName().c_str(), s->global)
 	, symType(sym)
 	, index(index)
@@ -31,7 +33,7 @@ process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid
 		addVariables(s);
 }
 
-process::process(state* s, const seqSymNode* sym, const fsmNode* start, byte pid, const std::list<const variable*>& args)
+process::process(progState* s, const seqSymNode* sym, const fsmNode* start, byte pid, const std::list<const variable*>& args)
 	: process(s, sym, start, pid, 0)
 {
 	auto argIt = args.cbegin();
@@ -71,7 +73,7 @@ void process::init(void) {
 	scope::getVariable("_pid")->setValue(pid);
 }
 
-void process::setState(state* newS) {
+void process::setProgState(progState* newS) {
 	s = newS;
 }
 
@@ -222,6 +224,9 @@ bool process::endstate(void) const {
 	return getFsmNodePointer() == nullptr;
 }
 
+std::string process::getName(void) const {
+	return scope::getName();
+}
 
 /**
  * Returns a list of all the executable transitions (for all the processes).
@@ -242,7 +247,7 @@ std::list<transition*> process::executables(void) const {
 
 		if(eval(edge, EVAL_EXECUTABILITY) > 0) {
 
-			auto conjunct = s->getFeatures() * edge->getFeatures();
+			//auto conjunct = s->getFeatures() * edge->getFeatures();
 
 			if(edge->getExpression()->getType() == astNode::E_STMNT_CHAN_SND) {
 				
@@ -261,9 +266,10 @@ std::list<transition*> process::executables(void) const {
 				// featuresOut contains all the outgoing features from now on, included the ones of the response that satisfy the base FD (those may not satisfy the modified FD, though).
 				// *allProductsOut == 1 if the outgoing features reference all the products.
 				for(auto response : responses) {
-					conjunct *= response->getEdge()->getFeatures();
-					if((conjunct * s->stateMachine->getFD()).IsOne())
-						res.push_back(new transition(const_cast<process*>(this), edge, conjunct, response));
+					//conjunct *= dynamic_cast<progTransition*>(response)->getEdge()->getFeatures();
+					//if((conjunct * s->stateMachine->getFD()).IsOne())
+						//res.push_back(new RVTransition(s, const_cast<process*>(this), edge, conjunct, dynamic_cast<progTransition*>(response)));
+					res.push_back(new RVTransition(s, const_cast<process*>(this), edge, dynamic_cast<progTransition*>(response)));
 				}
 
 				chan->reset();
@@ -272,8 +278,9 @@ std::list<transition*> process::executables(void) const {
 			} else { 
 
 				//to wrap/abstract when I will have time
-				if((conjunct * s->stateMachine->getFD()).IsOne())
-					res.push_back(new transition(const_cast<process*>(this), edge, conjunct));
+				//if((conjunct * s->stateMachine->getFD()).IsOne())
+					//res.push_back(new progTransition(s, const_cast<process*>(this), edge, conjunct));
+				res.push_back(new progTransition(s, const_cast<process*>(this), edge));
 			}
 		}
 	}
@@ -571,8 +578,8 @@ int process::eval(const fsmEdge* edge, byte flag) const {
  * that evaluated to false.
  */
 state* process::apply(const transition* trans) {
-	const process* proc = trans->getProc();
-	const fsmEdge* edge = trans->getEdge();
+	const process* proc = dynamic_cast<const progTransition*>(trans)->getProc();
+	const fsmEdge* edge =  dynamic_cast<const progTransition*>(trans)->getEdge();
 
 	assert(proc);
 	assert(edge);
@@ -612,7 +619,8 @@ Apply:
 			if(chan->isRendezVous()) {
 				leaveUntouched = 1;
 
-				assert(trans->getResponse());
+				auto RVTrans = dynamic_cast<const RVTransition*>(trans);
+				assert(RVTrans->getResponse());
 
 				// Send was a rendezvous request. We immediately try to complete this rendezvous.
 				s->setHandShake({chan, this});
@@ -625,7 +633,7 @@ Apply:
 				// Note that the features of the resulting state will be: "state->features & request_transition->features & response_transition->features"
 				// Also, applying this transition will free _handshake_transit (because of calling "channelReceive()").
 				// Furthermore, the number of message in the rendezvous channel will be 0.
-				auto response = trans->getResponse();
+				auto response = RVTrans->getResponse();
 				response->getProc()->apply(response);
 				
 				// Rendezvous completed: HANDSHAKE is reset.
@@ -813,4 +821,23 @@ void process::print(void) const {
 
 	scope::print();
 
+}
+
+/*byte process::compare(const state& s2) const {
+
+}*/
+
+void process::printGraphViz(unsigned long i) const {
+}
+
+void process::printTexada(void) const {
+	scope::printTexada();
+}
+
+unsigned long process::hash(void) const {
+	return scope::hash();
+}
+
+void process::printHexadecimal(void) const {
+	scope::printHexadecimal();
 }

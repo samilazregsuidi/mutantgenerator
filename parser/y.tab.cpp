@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "promela.y"
+#line 1 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
 
 
 // This is based on the original Yacc grammar of SPIN (spin.y):
@@ -121,7 +121,7 @@ int mtypeId = 1;
 bool inInline = false;
 
 
-#line 125 "y.tab.cpp"
+#line 125 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -154,8 +154,8 @@ bool inInline = false;
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_Y_TAB_HPP_INCLUDED
-# define YY_YY_Y_TAB_HPP_INCLUDED
+#ifndef YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
+# define YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 1
@@ -365,7 +365,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 63 "promela.y"
+#line 63 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
  
 	int       				iVal;
 	char*    				sVal;
@@ -389,7 +389,7 @@ union YYSTYPE
 	
 	enum symbol::Type   iType;
 
-#line 393 "y.tab.cpp"
+#line 393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -401,7 +401,7 @@ typedef union YYSTYPE YYSTYPE;
 
 int yyparse (symTable** globalSymTab, stmnt** program);
 
-#endif /* !YY_YY_Y_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED  */
 
 
 
@@ -2193,51 +2193,51 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 146 "promela.y"
+#line 146 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; }
-#line 2199 "y.tab.cpp"
+#line 2199 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 4:
-#line 151 "promela.y"
-                                                                                { std::cout<< "REDUCE: units -> program\n";}
-#line 2205 "y.tab.cpp"
+#line 151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: units -> program\n")*/}
+#line 2205 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 5:
-#line 154 "promela.y"
-                                                                                { std::cout<< "REDUCE: unit -> units\n"; }
-#line 2211 "y.tab.cpp"
+#line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: unit -> units\n")*/ }
+#line 2211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 6:
-#line 155 "promela.y"
-                                                                                { std::cout<< "REDUCE: units unit -> units\n"; }
-#line 2217 "y.tab.cpp"
+#line 155 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: units unit -> units\n")*/ }
+#line 2217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 7:
-#line 158 "promela.y"
-                                                        { std::cout<< "REDUCE: proc -> unit\n"; *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2223 "y.tab.cpp"
+#line 158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                        { /*DBUG("REDUCE: proc -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
+#line 2223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 8:
-#line 159 "promela.y"
-                                                                { std::cout<< "REDUCE: init -> unit\n"; *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2229 "y.tab.cpp"
+#line 159 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { /*DBUG("REDUCE: init -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
+#line 2229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 9:
-#line 160 "promela.y"
+#line 160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { assert(false); std::cout << "The 'events' construct is currently not supported."; }
-#line 2235 "y.tab.cpp"
+#line 2235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 10:
-#line 161 "promela.y"
+#line 161 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { 
-													std::cout << "REDUCE: one_decl -> unit\n";
+													/*DBUG("REDUCE: one_decl -> unit\n")*/
 													stmnt* decl = nullptr;
 													if (declSyms.front()->getType() == symbol::T_CHAN) 
 														decl = new chanDecl(declSyms, nbrLines);
@@ -2249,35 +2249,35 @@ yyreduce:
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-#line 2253 "y.tab.cpp"
+#line 2253 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 11:
-#line 174 "promela.y"
-                                                                { std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2259 "y.tab.cpp"
+#line 174 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { /*DBUG("REDUCE: utype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
+#line 2259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 12:
-#line 175 "promela.y"
-                                                                                        { std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2265 "y.tab.cpp"
+#line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: mtype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
+#line 2265 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 13:
-#line 176 "promela.y"
-                                                                { std::cout << "Embedded C code is not supported."; }
-#line 2271 "y.tab.cpp"
+#line 176 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { std::cout << "Embedded C code is not supported."; 						}
+#line 2271 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 14:
-#line 177 "promela.y"
-                                                                { std::cout << "REDUCE: ns -> unit\n"; *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2277 "y.tab.cpp"
+#line 177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { /*DBUG("REDUCE: ns -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); 	}
+#line 2277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 16:
-#line 184 "promela.y"
+#line 184 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                 { 
 													nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; 
 													currentSymTab = currentSymTab->createSubTable(nameSpace); 
@@ -2285,19 +2285,19 @@ yyreduce:
 													predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); 
 													currentSymTab->insert(predef);
 												}
-#line 2289 "y.tab.cpp"
+#line 2289 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 17:
-#line 192 "promela.y"
+#line 192 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { currentSymTab = savedSymTab; }
-#line 2295 "y.tab.cpp"
+#line 2295 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 18:
-#line 195 "promela.y"
+#line 195 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
-		  											std::cout<< "REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n";
+		  											/*DBUG("REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n")*/
 													auto procNbLine = (yyvsp[0].pStmntVal)->getLineNb();
 		  											procSymNode* proc = new procSymNode((yyvsp[-8].sVal), (yyvsp[-10].pConstExprVal), declSyms, (yyvsp[0].pStmntVal), procNbLine);
 		  											declSyms.clear();
@@ -2306,43 +2306,43 @@ yyreduce:
 		  											nameSpace = "global";
 		  											free((yyvsp[-8].sVal));
 		  										}
-#line 2310 "y.tab.cpp"
+#line 2310 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 19:
-#line 207 "promela.y"
-                                                                                { std::cout << "REDUCE: -> PROCTYPE proctype\n"; }
-#line 2316 "y.tab.cpp"
+#line 207 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: -> PROCTYPE proctype\n")*/ }
+#line 2316 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 20:
-#line 208 "promela.y"
+#line 208 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Deterministic proctypes are not supported (only useful for simulation)."; }
-#line 2322 "y.tab.cpp"
+#line 2322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 21:
-#line 211 "promela.y"
-                                                                        { std::cout << "REDUCE: void -> inst\n"; (yyval.pConstExprVal) = new exprConst(0, nbrLines); }
-#line 2328 "y.tab.cpp"
+#line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: void -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(0, nbrLines); 	}
+#line 2328 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 22:
-#line 212 "promela.y"
-                                                                                        { std::cout << "REDUCE: ACTIVE -> inst\n"; (yyval.pConstExprVal) = new exprConst(1, nbrLines); }
-#line 2334 "y.tab.cpp"
+#line 212 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: ACTIVE -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(1, nbrLines); }
+#line 2334 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 23:
-#line 213 "promela.y"
-                                                                        { std::cout << "REDUCE: ACTIVE [ CONST ] -> inst \n"; (yyval.pConstExprVal) = new exprConst((yyvsp[-1].iVal), nbrLines); }
-#line 2340 "y.tab.cpp"
+#line 213 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: ACTIVE [ CONST ] -> inst \n")*/ (yyval.pConstExprVal) = new exprConst((yyvsp[-1].iVal), nbrLines); }
+#line 2340 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 24:
-#line 214 "promela.y"
+#line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
-													std::cout << "REDUCE: ACTIVE [ NAME ] -> inst\n";
+													/*DBUG("REDUCE: ACTIVE [ NAME ] -> inst\n")*/
 													varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookup((yyvsp[-1].sVal))) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<(yyvsp[-1].sVal)<<" does not exist.";
 													else if(var->getType() != symbol::T_INT && var->getType() != symbol::T_BYTE && var->getType() != symbol::T_SHORT) std::cout << "The variable "<<(yyvsp[-1].sVal)<<" is not of type int, short or bit.";
@@ -2352,19 +2352,19 @@ yyreduce:
 													}
 													free((yyvsp[-1].sVal));											
 												}
-#line 2356 "y.tab.cpp"
+#line 2356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 25:
-#line 228 "promela.y"
+#line 228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                 { nameSpace = "init"; }
-#line 2362 "y.tab.cpp"
+#line 2362 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 26:
-#line 230 "promela.y"
+#line 230 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
-													std::cout << "REDUCE: INIT Opt_priority body -> init\n";
+													/*DBUG("REDUCE: INIT Opt_priority body -> init\n")*/
 													if(*globalSymTab && (*globalSymTab)->lookup("init") != nullptr) 
 														std::cout << "This is the second init process; only one is allowed.";
 													else {
@@ -2374,19 +2374,19 @@ yyreduce:
 													}
 													nameSpace = "global";
 												}
-#line 2378 "y.tab.cpp"
+#line 2378 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 27:
-#line 243 "promela.y"
+#line 243 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Event sequences (traces) are not supported."; }
-#line 2384 "y.tab.cpp"
+#line 2384 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 28:
-#line 246 "promela.y"
+#line 246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         {	
-													std::cout << "REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n";
+													/*DBUG("REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n")*/
 													tdefSymNode* tdef = new tdefSymNode((yyvsp[-3].sVal), *globalSymTab, declSyms, nbrLines);
 													(yyval.pStmntVal) = new tdefDecl(tdef, nbrLines);
 													(*globalSymTab)->insert(tdef);
@@ -2395,22 +2395,22 @@ yyreduce:
 													declSyms.clear();
 													free((yyvsp[-3].sVal));  
 												}
-#line 2399 "y.tab.cpp"
+#line 2399 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 29:
-#line 258 "promela.y"
+#line 258 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         {	mtypeDef = new mtypedefSymNode(nbrLines);	}
-#line 2405 "y.tab.cpp"
+#line 2405 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 30:
-#line 259 "promela.y"
+#line 259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 {
 													assert(mtypeDef->getMTypeList().size() != 0);
 													(*globalSymTab)->insert(mtypeDef);
 
-													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
+													/*DBUG("REDUCE: vis TYPE asgn { nlst } -> one_decl\n")*/
 													if((yyvsp[-5].iType) != symbol::T_MTYPE) {
 														std::cout <<  "This syntax only works for MTYPEs definition.";
 														exit(1);
@@ -2418,34 +2418,34 @@ yyreduce:
 													(yyval.pStmntVal) = new mtypeDecl(mtypeDef, nbrLines);
 													// The mtype values are added in the nlst rule.
 												}
-#line 2422 "y.tab.cpp"
+#line 2422 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 31:
-#line 277 "promela.y"
+#line 277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                          { inInline = true; }
-#line 2428 "y.tab.cpp"
+#line 2428 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 32:
-#line 278 "promela.y"
+#line 278 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                        { nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); }
-#line 2434 "y.tab.cpp"
+#line 2434 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 33:
-#line 280 "promela.y"
+#line 280 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { for(std::string it : params) 
 		  		currentSymTab->insert(varSymNode::createSymbol(symbol::T_NA, nbrLines, it));
 		    currentSymTab = savedSymTab;
 		  }
-#line 2443 "y.tab.cpp"
+#line 2443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 34:
-#line 284 "promela.y"
+#line 284 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {
-													std::cout<< "REDUCE: INLINE nm ( param_list ) body -> ns\n";
+													/*DBUG("REDUCE: INLINE nm ( param_list ) body -> ns\n")*/
 													auto sym = new inlineSymNode((yyvsp[-6].sVal), params, (yyvsp[0].pStmntVal), nbrLines);
 													params.clear();
 		  											(yyval.pStmntVal) = new inlineDecl(sym, nbrLines);
@@ -2453,223 +2453,223 @@ yyreduce:
 													inInline = false;
 													free((yyvsp[-6].sVal));
 												}
-#line 2457 "y.tab.cpp"
+#line 2457 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 44:
-#line 312 "promela.y"
+#line 312 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													savedSymTab = currentSymTab; 
 													if(!(currentSymTab = (*globalSymTab)->getSubSymTab(nameSpace)))
 														currentSymTab = savedSymTab->createSubTable(nameSpace); 
 													nameSpace = "";
 												}
-#line 2468 "y.tab.cpp"
+#line 2468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 45:
-#line 319 "promela.y"
-                                                                                        { std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab->setBlock((yyvsp[-2].pStmntVal)); currentSymTab = savedSymTab; }
-#line 2474 "y.tab.cpp"
+#line 319 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: '{' sequence OS '}' -> body\n")*/ (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab->setBlock((yyvsp[-2].pStmntVal)); currentSymTab = savedSymTab; }
+#line 2474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 46:
-#line 322 "promela.y"
-                                                                                { std::cout << "REDUCE: step -> sequence\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal);  }
-#line 2480 "y.tab.cpp"
+#line 322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: step -> sequence\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal);  }
+#line 2480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 47:
-#line 323 "promela.y"
-                                                                                { std::cout << "REDUCE: sequence MS step -> sequence\n"; (yyval.pStmntVal) = stmnt::merge((yyvsp[-2].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2486 "y.tab.cpp"
+#line 323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: sequence MS step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-2].pStmntVal), (yyvsp[0].pStmntVal)); }
+#line 2486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 48:
-#line 324 "promela.y"
-                                                                                { std::cout << "REDUCE: sequence step -> sequence\n"; (yyval.pStmntVal) = stmnt::merge((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2492 "y.tab.cpp"
+#line 324 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: sequence step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntVal)); }
+#line 2492 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 49:
-#line 327 "promela.y"
+#line 327 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF); 
 												 	(yyval.pStmntVal) = new varDecl(static_cast<std::list<varSymNode*>>(declSyms), nbrLines);
 												 	declSyms.clear();
 												}
-#line 2502 "y.tab.cpp"
+#line 2502 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 50:
-#line 332 "promela.y"
+#line 332 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Declarations with labels are not suported."; }
-#line 2508 "y.tab.cpp"
+#line 2508 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 51:
-#line 333 "promela.y"
+#line 333 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Channel assertions are currently not supported."; }
-#line 2514 "y.tab.cpp"
+#line 2514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 52:
-#line 334 "promela.y"
-                                                                                        { std::cout << "REDUCE: stmnt -> step\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2520 "y.tab.cpp"
+#line 334 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: stmnt -> step\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
+#line 2520 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 53:
-#line 335 "promela.y"
+#line 335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Unless statements are currently not supported."; }
-#line 2526 "y.tab.cpp"
+#line 2526 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 55:
-#line 344 "promela.y"
+#line 344 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'hidden' keyword is not supported."; }
-#line 2532 "y.tab.cpp"
+#line 2532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 56:
-#line 345 "promela.y"
+#line 345 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'show' keyword is not supported."; }
-#line 2538 "y.tab.cpp"
+#line 2538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 57:
-#line 346 "promela.y"
+#line 346 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'local' keyword is not supported."; }
-#line 2544 "y.tab.cpp"
+#line 2544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 60:
-#line 356 "promela.y"
+#line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                    { declType = (yyvsp[0].iType); }
-#line 2550 "y.tab.cpp"
+#line 2550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 61:
-#line 356 "promela.y"
-                                                { std::cout << "REDUCE: vis TYPE var_list -> one_decl\n"; }
-#line 2556 "y.tab.cpp"
+#line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                { /*DBUG("REDUCE: vis TYPE var_list -> one_decl\n")*/ }
+#line 2556 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 62:
-#line 357 "promela.y"
+#line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                             { declType = symbol::T_UTYPE; typeDef = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookup((yyvsp[0].sVal))) : nullptr; assert(typeDef); }
-#line 2562 "y.tab.cpp"
+#line 2562 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 63:
-#line 357 "promela.y"
-                                                                                                                                                                                                        { std::cout << "REDUCE: vis UNAME var_list -> one_decl\n"; free((yyvsp[-2].sVal)); }
-#line 2568 "y.tab.cpp"
+#line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                                                                                                                                        { /*DBUG("REDUCE: vis UNAME var_list -> one_decl\n")*/ free((yyvsp[-2].sVal)); }
+#line 2568 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 64:
-#line 360 "promela.y"
-                                                                                { std::cout << "REDUCE: one_decl -> decl_list\n"; }
-#line 2574 "y.tab.cpp"
+#line 360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: one_decl -> decl_list\n")*/ }
+#line 2574 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 65:
-#line 361 "promela.y"
-                                                                        { std::cout << "REDUCE: one_decl SEMI decl_list -> decl_lst\n"; }
-#line 2580 "y.tab.cpp"
+#line 361 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: one_decl SEMI decl_list -> decl_lst\n")*/ }
+#line 2580 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 66:
-#line 365 "promela.y"
-                                                                        { std::cout << "REDUCE: void -> decl\n"; }
-#line 2586 "y.tab.cpp"
+#line 365 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: void -> decl\n")*/ }
+#line 2586 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 67:
-#line 366 "promela.y"
-                                                                                        { std::cout << "REDUCE: decl_list -> decl\n"; }
-#line 2592 "y.tab.cpp"
+#line 366 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: decl_list -> decl\n")*/ }
+#line 2592 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 68:
-#line 373 "promela.y"
-                                                                                { std::cout << "REDUCE: ivar -> var_list\n"; currentSymTab->insert((yyvsp[0].pVarSymVal)); declSyms.push_front((yyvsp[0].pVarSymVal)); }
-#line 2598 "y.tab.cpp"
+#line 373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: ivar -> var_list\n")*/ currentSymTab->insert((yyvsp[0].pVarSymVal)); declSyms.push_front((yyvsp[0].pVarSymVal)); }
+#line 2598 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 69:
-#line 374 "promela.y"
-                                                                                { std::cout << "REDUCE: ivar , var_list -> var_list\n"; currentSymTab->insert((yyvsp[-2].pVarSymVal)); declSyms.push_front((yyvsp[-2].pVarSymVal)); }
-#line 2604 "y.tab.cpp"
+#line 374 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: ivar , var_list -> var_list\n")*/ currentSymTab->insert((yyvsp[-2].pVarSymVal)); declSyms.push_front((yyvsp[-2].pVarSymVal)); }
+#line 2604 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 70:
-#line 377 "promela.y"
+#line 377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
-												  std::cout << "REDUCE: var_decl -> ivar\n"; (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); 
+												  /*DBUG("REDUCE: var_decl -> ivar\n")*/ (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2614 "y.tab.cpp"
+#line 2614 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 71:
-#line 382 "promela.y"
-                                                                                { std::cout << "REDUCE: var_decl ASGN expr -> ivar\n"; 
+#line 382 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: var_decl ASGN expr -> ivar\n")*/ 
 												  (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal)); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2624 "y.tab.cpp"
+#line 2624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 72:
-#line 387 "promela.y"
-                                                                        { std::cout << "REDUCE: var_decl ASGN ch_init -> ivar\n"; (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, typeLst);	
+#line 387 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: var_decl ASGN ch_init -> ivar\n")*/ (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, typeLst);	
 												  typeLst.clear(); if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal); //double free???if($3.sVal) free($3.sVal); 
 												}
-#line 2632 "y.tab.cpp"
+#line 2632 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 73:
-#line 392 "promela.y"
+#line 392 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { }
-#line 2638 "y.tab.cpp"
+#line 2638 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 74:
-#line 393 "promela.y"
+#line 393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { params.push_front(std::string((yyvsp[0].sVal))); free((yyvsp[0].sVal)); }
-#line 2644 "y.tab.cpp"
+#line 2644 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 75:
-#line 394 "promela.y"
+#line 394 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                             { params.push_front(std::string((yyvsp[-2].sVal))); free((yyvsp[-2].sVal)); }
-#line 2650 "y.tab.cpp"
+#line 2650 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 76:
-#line 398 "promela.y"
-                                                        { std::cout << "REDUCE: [ CONST ] OF { typ_list } -> ch_init\n"; (yyval.pDataVal).iVal = (yyvsp[-5].iVal); }
-#line 2656 "y.tab.cpp"
+#line 398 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                        { /*DBUG("REDUCE: [ CONST ] OF { typ_list } -> ch_init\n")*/ (yyval.pDataVal).iVal = (yyvsp[-5].iVal); }
+#line 2656 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 77:
-#line 401 "promela.y"
+#line 401 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pDataVal).sVal = nullptr; (yyval.pDataVal).iType = (yyvsp[0].iType); }
-#line 2662 "y.tab.cpp"
+#line 2662 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 78:
-#line 402 "promela.y"
+#line 402 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iType = symbol::T_UTYPE; }
-#line 2668 "y.tab.cpp"
+#line 2668 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 79:
-#line 406 "promela.y"
-                                                                                {	std::cout << "REDUCE: basetype -> typ_list\n";
+#line 406 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                {	/*DBUG("REDUCE: basetype -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if((yyvsp[0].pDataVal).iType != symbol::T_UTYPE && (yyvsp[0].pDataVal).iType != symbol::T_NA) {
 														typ = varSymNode::createSymbol((yyvsp[0].pDataVal).iType, nbrLines);
@@ -2684,12 +2684,12 @@ yyreduce:
 													typeLst.push_back(typ);
 													if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2688 "y.tab.cpp"
+#line 2688 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 80:
-#line 421 "promela.y"
-                                                                        {	std::cout << "REDUCE: basetype , typ_list -> typ_list\n";
+#line 421 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        {	/*DBUG("REDUCE: basetype , typ_list -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if((yyvsp[-2].pDataVal).iType != symbol::T_UTYPE && (yyvsp[-2].pDataVal).iType != symbol::T_NA) {
 														typ = varSymNode::createSymbol((yyvsp[-2].pDataVal).iType, nbrLines);
@@ -2704,229 +2704,229 @@ yyreduce:
 													typeLst.push_front(typ);
 													if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2708 "y.tab.cpp"
+#line 2708 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 81:
-#line 438 "promela.y"
-                                                                                { std::cout << "REDUCE: NAME -> vardcl\n"; (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iVal = 1; }
-#line 2714 "y.tab.cpp"
+#line 438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*/*DBUG("REDUCE: NAME -> vardcl\n"*)*/ (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iVal = 1; }
+#line 2714 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 82:
-#line 439 "promela.y"
+#line 439 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "The 'unsigned' data type is not supported."; }
-#line 2720 "y.tab.cpp"
+#line 2720 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 83:
-#line 440 "promela.y"
-                                                                        { std::cout << "REDUCE: NAME [ CONST ] -> vardcl\n"; (yyval.pDataVal).sVal = (yyvsp[-3].sVal); (yyval.pDataVal).iVal = (yyvsp[-1].iVal); }
-#line 2726 "y.tab.cpp"
+#line 440 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: NAME [ CONST ] -> vardcl\n")*/ (yyval.pDataVal).sVal = (yyvsp[-3].sVal); (yyval.pDataVal).iVal = (yyvsp[-1].iVal); }
+#line 2726 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 84:
-#line 443 "promela.y"
-                                                                                { std::cout << "REDUCE: cmpnd -> varref\n"; (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal); auto sym = (yyval.pExprVarRefVal)->resolve(currentSymTab); assert(sym || inInline); }
-#line 2732 "y.tab.cpp"
+#line 443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: cmpnd -> varref\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal); symbol* sym = nullptr; if(!inInline) sym = (yyval.pExprVarRefVal)->resolve(currentSymTab); assert(sym || inInline); }
+#line 2732 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 85:
-#line 446 "promela.y"
-                                                                                { std::cout << "REDUCE: NAME -> pfld\n"; (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2738 "y.tab.cpp"
+#line 446 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: NAME -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
+#line 2738 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 86:
-#line 447 "promela.y"
-                                                                                { std::cout << "REDUCE: NAME [ expr ] -> pfld\n"; (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); free((yyvsp[-3].sVal)); }
-#line 2744 "y.tab.cpp"
+#line 447 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: NAME [ expr ] -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); free((yyvsp[-3].sVal)); }
+#line 2744 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 87:
-#line 450 "promela.y"
-                                                                                { std::cout << "REDUCE: pfld sfld -> cmpnd\n"; (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2750 "y.tab.cpp"
+#line 450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
+#line 2750 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 88:
-#line 451 "promela.y"
-                                                                        { std::cout << "REDUCE: CONTEX . pfld sfld -> cmpnd\n"; (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2756 "y.tab.cpp"
+#line 451 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: CONTEX . pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
+#line 2756 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 89:
-#line 454 "promela.y"
-                                                                                        { std::cout << "REDUCE: void -> sfld\n"; (yyval.pExprVarRefVal) = nullptr; }
-#line 2762 "y.tab.cpp"
+#line 454 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: void -> sfld\n")*/ (yyval.pExprVarRefVal) = nullptr; }
+#line 2762 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 90:
-#line 455 "promela.y"
-                                                                        { std::cout << "REDUCE: . cmpnd -> sfld\n"; (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal);   }
-#line 2768 "y.tab.cpp"
+#line 455 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: . cmpnd -> sfld\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal);   }
+#line 2768 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 91:
-#line 459 "promela.y"
-                                                                                { std::cout << "REDUCE: special -> stmnt\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2774 "y.tab.cpp"
+#line 459 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: special -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
+#line 2774 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 92:
-#line 460 "promela.y"
-                                                                                        { std::cout << "REDUCE: Stmnt -> stmnt\n"; (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2780 "y.tab.cpp"
+#line 460 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: Stmnt -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
+#line 2780 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 93:
-#line 463 "promela.y"
+#line 463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntChanRecv((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 2786 "y.tab.cpp"
+#line 2786 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 94:
-#line 464 "promela.y"
+#line 464 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntChanSnd((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 2792 "y.tab.cpp"
+#line 2792 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 95:
-#line 465 "promela.y"
+#line 465 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIf((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2798 "y.tab.cpp"
+#line 2798 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 96:
-#line 466 "promela.y"
+#line 466 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDo((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2804 "y.tab.cpp"
+#line 2804 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 97:
-#line 467 "promela.y"
+#line 467 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntBreak(nbrLines); }
-#line 2810 "y.tab.cpp"
+#line 2810 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 98:
-#line 468 "promela.y"
+#line 468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2816 "y.tab.cpp"
+#line 2816 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 99:
-#line 469 "promela.y"
+#line 469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>((yyvsp[0].pStmntVal))->getLabelled()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
 												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); free((yyvsp[-2].sVal)); }
-#line 2824 "y.tab.cpp"
+#line 2824 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 100:
-#line 473 "promela.y"
+#line 473 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAsgn((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2830 "y.tab.cpp"
+#line 2830 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 101:
-#line 474 "promela.y"
+#line 474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIncr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2836 "y.tab.cpp"
+#line 2836 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 102:
-#line 475 "promela.y"
+#line 475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDecr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2842 "y.tab.cpp"
+#line 2842 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 103:
-#line 476 "promela.y"
+#line 476 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntPrint((yyvsp[-2].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 2848 "y.tab.cpp"
+#line 2848 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 104:
-#line 477 "promela.y"
+#line 477 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2854 "y.tab.cpp"
+#line 2854 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 105:
-#line 478 "promela.y"
+#line 478 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].iVal), nbrLines); }
-#line 2860 "y.tab.cpp"
+#line 2860 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 106:
-#line 479 "promela.y"
+#line 479 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntAssert((yyvsp[0].pExprVal), nbrLines); }
-#line 2866 "y.tab.cpp"
+#line 2866 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 107:
-#line 480 "promela.y"
+#line 480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 2872 "y.tab.cpp"
+#line 2872 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 108:
-#line 481 "promela.y"
+#line 481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2878 "y.tab.cpp"
+#line 2878 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 109:
-#line 482 "promela.y"
+#line 482 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2884 "y.tab.cpp"
+#line 2884 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 110:
-#line 483 "promela.y"
+#line 483 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2890 "y.tab.cpp"
+#line 2890 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 111:
-#line 484 "promela.y"
+#line 484 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2896 "y.tab.cpp"
+#line 2896 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 112:
-#line 485 "promela.y"
+#line 485 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntExpr((yyvsp[0].pExprVal), nbrLines); }
-#line 2902 "y.tab.cpp"
+#line 2902 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 113:
-#line 486 "promela.y"
+#line 486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntElse(nbrLines); }
-#line 2908 "y.tab.cpp"
+#line 2908 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 114:
-#line 487 "promela.y"
+#line 487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAtomic((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2914 "y.tab.cpp"
+#line 2914 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 115:
-#line 488 "promela.y"
+#line 488 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntDStep((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2920 "y.tab.cpp"
+#line 2920 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 116:
-#line 489 "promela.y"
+#line 489 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntSeq((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2926 "y.tab.cpp"
+#line 2926 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 117:
-#line 490 "promela.y"
+#line 490 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
 													(yyval.pStmntVal) = new stmntCall((yyvsp[-3].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); 
 													auto fctSym = (*globalSymTab)->lookup((yyvsp[-3].sVal));
@@ -2937,233 +2937,233 @@ yyreduce:
 														assert(dynamic_cast<inlineSymNode*>(fctSym)->getParams().size() == (yyvsp[-1].pExprArgListVal)->getSize());
 													free((yyvsp[-3].sVal)); 
 												}
-#line 2941 "y.tab.cpp"
+#line 2941 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 118:
-#line 502 "promela.y"
+#line 502 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[0].pStmntVal), nbrLines); }
-#line 2947 "y.tab.cpp"
+#line 2947 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 119:
-#line 503 "promela.y"
+#line 503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntOptVal), nbrLines); }
-#line 2953 "y.tab.cpp"
+#line 2953 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 120:
-#line 506 "promela.y"
+#line 506 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); }
-#line 2959 "y.tab.cpp"
+#line 2959 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 121:
-#line 507 "promela.y"
+#line 507 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); (yyvsp[-1].pStmntVal)->setProb((yyvsp[-3].rVal)); }
-#line 2965 "y.tab.cpp"
+#line 2965 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 122:
-#line 511 "promela.y"
+#line 511 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-1].rVal); }
-#line 2971 "y.tab.cpp"
+#line 2971 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 123:
-#line 512 "promela.y"
+#line 512 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) + (yyvsp[0].rVal); }
-#line 2977 "y.tab.cpp"
+#line 2977 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 124:
-#line 513 "promela.y"
+#line 513 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) - (yyvsp[0].rVal); }
-#line 2983 "y.tab.cpp"
+#line 2983 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 125:
-#line 514 "promela.y"
+#line 514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) * (yyvsp[0].rVal); }
-#line 2989 "y.tab.cpp"
+#line 2989 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 126:
-#line 515 "promela.y"
+#line 515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) / (yyvsp[0].rVal); }
-#line 2995 "y.tab.cpp"
+#line 2995 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 127:
-#line 516 "promela.y"
+#line 516 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].rVal);}
-#line 3001 "y.tab.cpp"
+#line 3001 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 128:
-#line 517 "promela.y"
+#line 517 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].iVal);}
-#line 3007 "y.tab.cpp"
+#line 3007 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 130:
-#line 521 "promela.y"
+#line 521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* redundant semi at end of sequence */ }
-#line 3013 "y.tab.cpp"
+#line 3013 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 131:
-#line 524 "promela.y"
+#line 524 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* at least one semi-colon */ }
-#line 3019 "y.tab.cpp"
+#line 3019 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 132:
-#line 525 "promela.y"
+#line 525 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* but more are okay too   */ }
-#line 3025 "y.tab.cpp"
+#line 3025 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 133:
-#line 528 "promela.y"
+#line 528 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3031 "y.tab.cpp"
+#line 3031 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 134:
-#line 529 "promela.y"
+#line 529 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3037 "y.tab.cpp"
+#line 3037 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 135:
-#line 532 "promela.y"
+#line 532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprPar		((yyvsp[-1].pExprVal), nbrLines); }
-#line 3043 "y.tab.cpp"
+#line 3043 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 136:
-#line 533 "promela.y"
+#line 533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprPlus		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3049 "y.tab.cpp"
+#line 3049 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 137:
-#line 534 "promela.y"
+#line 534 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMinus	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3055 "y.tab.cpp"
+#line 3055 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 138:
-#line 535 "promela.y"
+#line 535 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprTimes	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3061 "y.tab.cpp"
+#line 3061 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 139:
-#line 536 "promela.y"
+#line 536 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprDiv		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3067 "y.tab.cpp"
+#line 3067 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 140:
-#line 537 "promela.y"
+#line 537 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMod		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3073 "y.tab.cpp"
+#line 3073 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 141:
-#line 538 "promela.y"
+#line 538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3079 "y.tab.cpp"
+#line 3079 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 142:
-#line 539 "promela.y"
+#line 539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwXor	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3085 "y.tab.cpp"
+#line 3085 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 143:
-#line 540 "promela.y"
+#line 540 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3091 "y.tab.cpp"
+#line 3091 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 144:
-#line 541 "promela.y"
+#line 541 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3097 "y.tab.cpp"
+#line 3097 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 145:
-#line 542 "promela.y"
+#line 542 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3103 "y.tab.cpp"
+#line 3103 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 146:
-#line 543 "promela.y"
+#line 543 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3109 "y.tab.cpp"
+#line 3109 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 147:
-#line 544 "promela.y"
+#line 544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3115 "y.tab.cpp"
+#line 3115 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 148:
-#line 545 "promela.y"
+#line 545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprEQ		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3121 "y.tab.cpp"
+#line 3121 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 149:
-#line 546 "promela.y"
+#line 546 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprNE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3127 "y.tab.cpp"
+#line 3127 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 150:
-#line 547 "promela.y"
+#line 547 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3133 "y.tab.cpp"
+#line 3133 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 151:
-#line 548 "promela.y"
+#line 548 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3139 "y.tab.cpp"
+#line 3139 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 152:
-#line 549 "promela.y"
+#line 549 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3145 "y.tab.cpp"
+#line 3145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 153:
-#line 550 "promela.y"
+#line 550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprRShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3151 "y.tab.cpp"
+#line 3151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 154:
-#line 551 "promela.y"
+#line 551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprCount	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3157 "y.tab.cpp"
+#line 3157 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 155:
-#line 552 "promela.y"
+#line 552 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprBitwNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3163 "y.tab.cpp"
+#line 3163 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 156:
-#line 553 "promela.y"
+#line 553 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 	if((yyvsp[0].pExprVal)->getType() != astNode::E_EXPR_CONST) 
 														(yyval.pExprVal) = new exprUMin((yyvsp[0].pExprVal), nbrLines);
 													else {
@@ -3172,345 +3172,345 @@ yyreduce:
 														delete tmp;
 													}
 												}
-#line 3176 "y.tab.cpp"
+#line 3176 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 157:
-#line 561 "promela.y"
+#line 561 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3182 "y.tab.cpp"
+#line 3182 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 158:
-#line 562 "promela.y"
+#line 562 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pExprVal) = new exprCond	((yyvsp[-5].pExprVal), (yyvsp[-3].pExprVal), (yyvsp[-1].pExprVal), nbrLines); }
-#line 3188 "y.tab.cpp"
+#line 3188 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 159:
-#line 563 "promela.y"
+#line 563 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { auto run = new exprRun ((yyvsp[-4].sVal), (yyvsp[-2].pExprArgListVal), nbrLines);
 												  (yyval.pExprVal) = run;
 												  auto procSym = run->resolve(*globalSymTab); 
 												  assert(procSym); free((yyvsp[-4].sVal)); 
 												}
-#line 3198 "y.tab.cpp"
+#line 3198 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 160:
-#line 568 "promela.y"
+#line 568 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprLen	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3204 "y.tab.cpp"
+#line 3204 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 161:
-#line 569 "promela.y"
+#line 569 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "The enabled keyword is not supported."; }
-#line 3210 "y.tab.cpp"
+#line 3210 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 162:
-#line 570 "promela.y"
+#line 570 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3216 "y.tab.cpp"
+#line 3216 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 163:
-#line 571 "promela.y"
+#line 571 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Sorted send and random receive are not supported."; }
-#line 3222 "y.tab.cpp"
+#line 3222 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 164:
-#line 572 "promela.y"
+#line 572 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprVar	((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3228 "y.tab.cpp"
+#line 3228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 165:
-#line 573 "promela.y"
+#line 573 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 3234 "y.tab.cpp"
+#line 3234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 166:
-#line 574 "promela.y"
+#line 574 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines); }
-#line 3240 "y.tab.cpp"
+#line 3240 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 167:
-#line 575 "promela.y"
+#line 575 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprTrue	(nbrLines); }
-#line 3246 "y.tab.cpp"
+#line 3246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 168:
-#line 576 "promela.y"
+#line 576 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprFalse(nbrLines); }
-#line 3252 "y.tab.cpp"
+#line 3252 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 169:
-#line 577 "promela.y"
+#line 577 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprTimeout(nbrLines); }
-#line 3258 "y.tab.cpp"
+#line 3258 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 170:
-#line 578 "promela.y"
+#line 578 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "The 'np_' variable is not supported."; }
-#line 3264 "y.tab.cpp"
+#line 3264 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 171:
-#line 579 "promela.y"
+#line 579 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "The 'pc_value()' construct is not supported."; }
-#line 3270 "y.tab.cpp"
+#line 3270 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 172:
-#line 580 "promela.y"
+#line 580 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3276 "y.tab.cpp"
+#line 3276 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 173:
-#line 581 "promela.y"
+#line 581 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3282 "y.tab.cpp"
+#line 3282 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 174:
-#line 582 "promela.y"
+#line 582 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3288 "y.tab.cpp"
+#line 3288 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 175:
-#line 583 "promela.y"
+#line 583 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3294 "y.tab.cpp"
+#line 3294 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 177:
-#line 587 "promela.y"
+#line 587 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { assert(false); std::cout << "The 'priority' construct is related to simulation and not supported."; }
-#line 3300 "y.tab.cpp"
+#line 3300 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 178:
-#line 590 "promela.y"
+#line 590 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3306 "y.tab.cpp"
+#line 3306 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 179:
-#line 591 "promela.y"
+#line 591 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3312 "y.tab.cpp"
+#line 3312 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 181:
-#line 595 "promela.y"
+#line 595 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { assert(false); std::cout << "The 'provided' construct is currently not supported."; }
-#line 3318 "y.tab.cpp"
+#line 3318 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 182:
-#line 600 "promela.y"
+#line 600 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3324 "y.tab.cpp"
+#line 3324 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 183:
-#line 601 "promela.y"
+#line 601 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprPar	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3330 "y.tab.cpp"
+#line 3330 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 184:
-#line 602 "promela.y"
+#line 602 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3336 "y.tab.cpp"
+#line 3336 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 185:
-#line 603 "promela.y"
+#line 603 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3342 "y.tab.cpp"
+#line 3342 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 186:
-#line 604 "promela.y"
+#line 604 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3348 "y.tab.cpp"
+#line 3348 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 187:
-#line 605 "promela.y"
+#line 605 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3354 "y.tab.cpp"
+#line 3354 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 188:
-#line 606 "promela.y"
+#line 606 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3360 "y.tab.cpp"
+#line 3360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 189:
-#line 607 "promela.y"
+#line 607 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3366 "y.tab.cpp"
+#line 3366 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 190:
-#line 608 "promela.y"
+#line 608 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprSkip	(nbrLines); }
-#line 3372 "y.tab.cpp"
+#line 3372 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 191:
-#line 611 "promela.y"
+#line 611 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pExprVal) = new exprFull	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3378 "y.tab.cpp"
+#line 3378 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 192:
-#line 612 "promela.y"
+#line 612 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNFull((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3384 "y.tab.cpp"
+#line 3384 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 193:
-#line 613 "promela.y"
+#line 613 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3390 "y.tab.cpp"
+#line 3390 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 194:
-#line 614 "promela.y"
+#line 614 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3396 "y.tab.cpp"
+#line 3396 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 195:
-#line 618 "promela.y"
+#line 618 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                 { (yyval.pExprArgListVal) = nullptr; }
-#line 3402 "y.tab.cpp"
+#line 3402 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 196:
-#line 619 "promela.y"
+#line 619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3408 "y.tab.cpp"
+#line 3408 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 197:
-#line 623 "promela.y"
+#line 623 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprArgListVal) = nullptr; }
-#line 3414 "y.tab.cpp"
+#line 3414 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 198:
-#line 624 "promela.y"
+#line 624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3420 "y.tab.cpp"
+#line 3420 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 199:
-#line 628 "promela.y"
+#line 628 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3426 "y.tab.cpp"
+#line 3426 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 200:
-#line 629 "promela.y"
+#line 629 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { assert(false); }
-#line 3432 "y.tab.cpp"
+#line 3432 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 201:
-#line 632 "promela.y"
+#line 632 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[0].pExprVal), nbrLines), nbrLines); }
-#line 3438 "y.tab.cpp"
+#line 3438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 202:
-#line 633 "promela.y"
+#line 633 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[-2].pExprVal), nbrLines), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 3444 "y.tab.cpp"
+#line 3444 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 203:
-#line 636 "promela.y"
+#line 636 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3450 "y.tab.cpp"
+#line 3450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 204:
-#line 637 "promela.y"
+#line 637 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
-#line 3456 "y.tab.cpp"
+#line 3456 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 205:
-#line 638 "promela.y"
+#line 638 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst((yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3462 "y.tab.cpp"
+#line 3462 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 206:
-#line 639 "promela.y"
+#line 639 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst(-(yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3468 "y.tab.cpp"
+#line 3468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 207:
-#line 643 "promela.y"
+#line 643 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[0].pExprRArgVal), nbrLines); }
-#line 3474 "y.tab.cpp"
+#line 3474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 208:
-#line 644 "promela.y"
+#line 644 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 3480 "y.tab.cpp"
+#line 3480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 209:
-#line 645 "promela.y"
+#line 645 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprRArgListVal), nbrLines); }
-#line 3486 "y.tab.cpp"
+#line 3486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 210:
-#line 646 "promela.y"
+#line 646 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = (yyvsp[-1].pExprRArgListVal); }
-#line 3492 "y.tab.cpp"
+#line 3492 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 211:
-#line 649 "promela.y"
-                                                                                { std::cout << "REDUCE: NAME -> nlst\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3498 "y.tab.cpp"
+#line 649 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: NAME -> nlst\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
+#line 3498 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 212:
-#line 650 "promela.y"
-                                                                                        { std::cout << "REDUCE: nlst NAME -> NAME\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3504 "y.tab.cpp"
+#line 650 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: nlst NAME -> NAME\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
+#line 3504 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 213:
-#line 651 "promela.y"
-                                                                { std::cout << "REDUCE: nlst , -> nlst\n"; }
-#line 3510 "y.tab.cpp"
+#line 651 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { /*DBUG("REDUCE: nlst , -> nlst\n")*/ }
+#line 3510 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
 
-#line 3514 "y.tab.cpp"
+#line 3514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
       default: break;
     }
@@ -3742,5 +3742,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 696 "promela.y"
+#line 696 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
 

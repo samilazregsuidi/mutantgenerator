@@ -148,18 +148,18 @@ start_parsing	: { *globalSymTab = new symTable("global"); symTable::addPredefine
 /** PROMELA Grammar Rules **/
 
 
-program	: units	 								{ std::cout<< "REDUCE: units -> program\n";}
+program	: units	 								{ /*DBUG("REDUCE: units -> program\n")*/}
 		;
 
-units	: unit									{ std::cout<< "REDUCE: unit -> units\n"; }
-		| units unit							{ std::cout<< "REDUCE: units unit -> units\n"; }
+units	: unit									{ /*DBUG("REDUCE: unit -> units\n")*/ }
+		| units unit							{ /*DBUG("REDUCE: units unit -> units\n")*/ }
 		;
 
-unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| init		/* init { }           */	{ std::cout<< "REDUCE: init -> unit\n"; *program = stmnt::merge(*program, $1); }
+unit	: proc		/* proctype { }       */	{ /*DBUG("REDUCE: proc -> unit\n")*/ *program = stmnt::merge(*program, $1); }
+		| init		/* init { }           */	{ /*DBUG("REDUCE: init -> unit\n")*/ *program = stmnt::merge(*program, $1); }
 		| events	/* event assertions   */  	{ assert(false); std::cout << "The 'events' construct is currently not supported."; }
 		| one_decl	/* variables, chans   */	{ 
-													std::cout << "REDUCE: one_decl -> unit\n";
+													/*DBUG("REDUCE: one_decl -> unit\n")*/
 													stmnt* decl = nullptr;
 													if (declSyms.front()->getType() == symbol::T_CHAN) 
 														decl = new chanDecl(declSyms, nbrLines);
@@ -171,10 +171,10 @@ unit	: proc		/* proctype { }       */	{ std::cout<< "REDUCE: proc -> unit\n"; *p
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-		| utypedef		/* user defined types */{ std::cout << "REDUCE: utype -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| mtypedef								{ std::cout << "REDUCE: mtype -> unit\n"; *program = stmnt::merge(*program, $1); }
-		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; }
-		| ns		/* named sequence     */  	{ std::cout << "REDUCE: ns -> unit\n"; *program = stmnt::merge(*program, $1); }
+		| utypedef		/* user defined types */{ /*DBUG("REDUCE: utype -> unit\n")*/ *program = stmnt::merge(*program, $1); }
+		| mtypedef								{ /*DBUG("REDUCE: mtype -> unit\n")*/ *program = stmnt::merge(*program, $1); }
+		| c_fcts	/* c functions etc.   */  	{ std::cout << "Embedded C code is not supported."; 						}
+		| ns		/* named sequence     */  	{ /*DBUG("REDUCE: ns -> unit\n")*/ *program = stmnt::merge(*program, $1); 	}
 		| SEMI		/* optional separator */	/* ignored */			
 	/*	| error									 ?! undefined non-terminal */
 		;
@@ -193,7 +193,7 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  Opt_priority							/* Ignore */
 		  Opt_enabler							/* Ignore */
 		  body									{	
-		  											std::cout<< "REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n";
+		  											/*DBUG("REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n")*/
 													auto procNbLine = $11->getLineNb();
 		  											procSymNode* proc = new procSymNode($3, $1, declSyms, $11, procNbLine);
 		  											declSyms.clear();
@@ -204,15 +204,15 @@ proc	: inst		/* optional instantiator */	/* returns an EXP_NODE describing the n
 		  										}
 		;
 
-proctype: PROCTYPE								{ std::cout << "REDUCE: -> PROCTYPE proctype\n"; }
+proctype: PROCTYPE								{ /*DBUG("REDUCE: -> PROCTYPE proctype\n")*/ }
 		| D_PROCTYPE							{ std::cout << "Deterministic proctypes are not supported (only useful for simulation)."; }
 		;
 
-inst	: /* empty */							{ std::cout << "REDUCE: void -> inst\n"; $$ = new exprConst(0, nbrLines); }
-		| ACTIVE								{ std::cout << "REDUCE: ACTIVE -> inst\n"; $$ = new exprConst(1, nbrLines); }
-		| ACTIVE '[' CONST ']'					{ std::cout << "REDUCE: ACTIVE [ CONST ] -> inst \n"; $$ = new exprConst($3, nbrLines); }
+inst	: /* empty */							{ /*DBUG("REDUCE: void -> inst\n")*/ $$ = new exprConst(0, nbrLines); 	}
+		| ACTIVE								{ /*DBUG("REDUCE: ACTIVE -> inst\n")*/ $$ = new exprConst(1, nbrLines); }
+		| ACTIVE '[' CONST ']'					{ /*DBUG("REDUCE: ACTIVE [ CONST ] -> inst \n")*/ $$ = new exprConst($3, nbrLines); }
 		| ACTIVE '[' NAME ']'					{ 
-													std::cout << "REDUCE: ACTIVE [ NAME ] -> inst\n";
+													/*DBUG("REDUCE: ACTIVE [ NAME ] -> inst\n")*/
 													varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookup($3)) : nullptr;
 													if(var == nullptr) std::cout << "The variable "<<$3<<" does not exist.";
 													else if(var->getType() != symbol::T_INT && var->getType() != symbol::T_BYTE && var->getType() != symbol::T_SHORT) std::cout << "The variable "<<$3<<" is not of type int, short or bit.";
@@ -228,7 +228,7 @@ init	: INIT
 		{ nameSpace = "init"; } 
 		Opt_priority 
 		body 									{	
-													std::cout << "REDUCE: INIT Opt_priority body -> init\n";
+													/*DBUG("REDUCE: INIT Opt_priority body -> init\n")*/
 													if(*globalSymTab && (*globalSymTab)->lookup("init") != nullptr) 
 														std::cout << "This is the second init process; only one is allowed.";
 													else {
@@ -244,7 +244,7 @@ events	: TRACE body							{ std::cout << "Event sequences (traces) are not suppo
 		;
 
 utypedef: TYPEDEF NAME '{' decl_lst '}'			{	
-													std::cout << "REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n";
+													/*DBUG("REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n")*/
 													tdefSymNode* tdef = new tdefSymNode($2, *globalSymTab, declSyms, nbrLines);
 													$$ = new tdefDecl(tdef, nbrLines);
 													(*globalSymTab)->insert(tdef);
@@ -260,7 +260,7 @@ mtypedef: vis TYPE  asgn 						{	mtypeDef = new mtypedefSymNode(nbrLines);	}
 													assert(mtypeDef->getMTypeList().size() != 0);
 													(*globalSymTab)->insert(mtypeDef);
 
-													std::cout << "REDUCE: vis TYPE asgn { nlst } -> one_decl\n";
+													/*DBUG("REDUCE: vis TYPE asgn { nlst } -> one_decl\n")*/
 													if($2 != symbol::T_MTYPE) {
 														std::cout <<  "This syntax only works for MTYPEs definition.";
 														exit(1);
@@ -282,7 +282,7 @@ ns		: INLINE { inInline = true; }
 		    currentSymTab = savedSymTab;
 		  }
 		  body									{
-													std::cout<< "REDUCE: INLINE nm ( param_list ) body -> ns\n";
+													/*DBUG("REDUCE: INLINE nm ( param_list ) body -> ns\n")*/
 													auto sym = new inlineSymNode($3, params, $9, nbrLines);
 													params.clear();
 		  											$$ = new inlineDecl(sym, nbrLines);
@@ -316,12 +316,12 @@ body	: '{' 									{
 													nameSpace = "";
 												} 
 				sequence OS 
-		  '}'									{ std::cout << "REDUCE: '{' sequence OS '}' -> body\n"; $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab->setBlock($3); currentSymTab = savedSymTab; }
+		  '}'									{ /*DBUG("REDUCE: '{' sequence OS '}' -> body\n")*/ $$ = $3; $$->setLocalSymTab(currentSymTab); currentSymTab->setBlock($3); currentSymTab = savedSymTab; }
 		;
 
-sequence: step									{ std::cout << "REDUCE: step -> sequence\n"; $$ = $1;  }
-		| sequence MS step						{ std::cout << "REDUCE: sequence MS step -> sequence\n"; $$ = stmnt::merge($1, $3); }
-		| sequence step							{ std::cout << "REDUCE: sequence step -> sequence\n"; $$ = stmnt::merge($1, $2); }
+sequence: step									{ /*DBUG("REDUCE: step -> sequence\n")*/ $$ = $1;  }
+		| sequence MS step						{ /*DBUG("REDUCE: sequence MS step -> sequence\n")*/ $$ = stmnt::merge($1, $3); }
+		| sequence step							{ /*DBUG("REDUCE: sequence step -> sequence\n")*/ $$ = stmnt::merge($1, $2); }
 		;
 		
 step    : one_decl								{ 
@@ -331,7 +331,7 @@ step    : one_decl								{
 												}
 		| NAME ':' one_decl						{ std::cout << "Declarations with labels are not suported."; }
 		| NAME ':' XU							{ std::cout << "Channel assertions are currently not supported."; }
-		| stmnt									{ std::cout << "REDUCE: stmnt -> step\n"; $$ = $1; }
+		| stmnt									{ /*DBUG("REDUCE: stmnt -> step\n")*/ $$ = $1; }
 		| stmnt UNLESS stmnt					{ std::cout << "Unless statements are currently not supported."; }
 		;
 
@@ -353,38 +353,38 @@ asgn	: /* empty */							/* Ignore */
 		
 /* Note: "bit", "bool", "byte", "pid", "short", "int", "unsigned", "chan", "mtype", "clock", all produce a TYPE token with ival which contains the type. */
 		
-one_decl: vis TYPE { declType = $2; } var_list	{ std::cout << "REDUCE: vis TYPE var_list -> one_decl\n"; }
-	 	| vis UNAME { declType = symbol::T_UTYPE; typeDef = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookup($2)) : nullptr; assert(typeDef); } var_list 			{ std::cout << "REDUCE: vis UNAME var_list -> one_decl\n"; free($2); }
+one_decl: vis TYPE { declType = $2; } var_list	{ /*DBUG("REDUCE: vis TYPE var_list -> one_decl\n")*/ }
+	 	| vis UNAME { declType = symbol::T_UTYPE; typeDef = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookup($2)) : nullptr; assert(typeDef); } var_list 			{ /*DBUG("REDUCE: vis UNAME var_list -> one_decl\n")*/ free($2); }
 		;
 
-decl_lst: one_decl								{ std::cout << "REDUCE: one_decl -> decl_list\n"; }
-		| one_decl SEMI decl_lst				{ std::cout << "REDUCE: one_decl SEMI decl_list -> decl_lst\n"; }
+decl_lst: one_decl								{ /*DBUG("REDUCE: one_decl -> decl_list\n")*/ }
+		| one_decl SEMI decl_lst				{ /*DBUG("REDUCE: one_decl SEMI decl_list -> decl_lst\n")*/ }
 		;
 
 												// Used for the parameters of a proctype
-decl    : /* empty */							{ std::cout << "REDUCE: void -> decl\n"; }
-		| decl_lst								{ std::cout << "REDUCE: decl_list -> decl\n"; }
+decl    : /* empty */							{ /*DBUG("REDUCE: void -> decl\n")*/ }
+		| decl_lst								{ /*DBUG("REDUCE: decl_list -> decl\n")*/ }
 		;
 
 //vref_lst: varref								/* Unreachable */
 //		| varref ',' vref_lst					/* Unreachable */
 		;
 
-var_list: ivar									{ std::cout << "REDUCE: ivar -> var_list\n"; currentSymTab->insert($1); declSyms.push_front($1); }
-		| ivar ',' var_list						{ std::cout << "REDUCE: ivar , var_list -> var_list\n"; currentSymTab->insert($1); declSyms.push_front($1); }
+var_list: ivar									{ /*DBUG("REDUCE: ivar -> var_list\n")*/ currentSymTab->insert($1); declSyms.push_front($1); }
+		| ivar ',' var_list						{ /*DBUG("REDUCE: ivar , var_list -> var_list\n")*/ currentSymTab->insert($1); declSyms.push_front($1); }
 		;
 
 ivar    : vardcl								{ 
-												  std::cout << "REDUCE: var_decl -> ivar\n"; $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal); 
+												  /*DBUG("REDUCE: var_decl -> ivar\n")*/ $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); }
 												  if($1.sVal) free($1.sVal);
 												}
-		| vardcl ASGN expr						{ std::cout << "REDUCE: var_decl ASGN expr -> ivar\n"; 
+		| vardcl ASGN expr						{ /*DBUG("REDUCE: var_decl ASGN expr -> ivar\n")*/ 
 												  $$ = varSymNode::createSymbol(declType, nbrLines, $1.sVal, $1.iVal, $3); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>($$)->setUType(typeDef); }
 												  if($1.sVal) free($1.sVal);
 												}
-		| vardcl ASGN ch_init					{ std::cout << "REDUCE: var_decl ASGN ch_init -> ivar\n"; $$ = new chanSymNode(nbrLines, $1.sVal, $1.iVal, $3.iVal, typeLst);	
+		| vardcl ASGN ch_init					{ /*DBUG("REDUCE: var_decl ASGN ch_init -> ivar\n")*/ $$ = new chanSymNode(nbrLines, $1.sVal, $1.iVal, $3.iVal, typeLst);	
 												  typeLst.clear(); if($1.sVal) free($1.sVal); //double free???if($3.sVal) free($3.sVal); 
 												}
 		;
@@ -395,7 +395,7 @@ param_list	: 									{ }
 			;
 
 
-ch_init : '[' CONST ']' OF '{' typ_list '}'		{ std::cout << "REDUCE: [ CONST ] OF { typ_list } -> ch_init\n"; $$.iVal = $2; } 
+ch_init : '[' CONST ']' OF '{' typ_list '}'		{ /*DBUG("REDUCE: [ CONST ] OF { typ_list } -> ch_init\n")*/ $$.iVal = $2; } 
 		;
 				
 basetype: TYPE									{ $$.sVal = nullptr; $$.iType = $1; }
@@ -403,7 +403,7 @@ basetype: TYPE									{ $$.sVal = nullptr; $$.iType = $1; }
 	/*	| error	 e.g., unsigned ':' const */	/* ?! Undefined non-terminal ?! */
 		;
 
-typ_list: basetype								{	std::cout << "REDUCE: basetype -> typ_list\n";
+typ_list: basetype								{	/*DBUG("REDUCE: basetype -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if($1.iType != symbol::T_UTYPE && $1.iType != symbol::T_NA) {
 														typ = varSymNode::createSymbol($1.iType, nbrLines);
@@ -418,7 +418,7 @@ typ_list: basetype								{	std::cout << "REDUCE: basetype -> typ_list\n";
 													typeLst.push_back(typ);
 													if($1.sVal) free($1.sVal);
 												}		
-		| basetype ',' typ_list					{	std::cout << "REDUCE: basetype , typ_list -> typ_list\n";
+		| basetype ',' typ_list					{	/*DBUG("REDUCE: basetype , typ_list -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if($1.iType != symbol::T_UTYPE && $1.iType != symbol::T_NA) {
 														typ = varSymNode::createSymbol($1.iType, nbrLines);
@@ -435,29 +435,29 @@ typ_list: basetype								{	std::cout << "REDUCE: basetype -> typ_list\n";
 												}
 		;
 
-vardcl  : NAME  								{ std::cout << "REDUCE: NAME -> vardcl\n"; $$.sVal = $1; $$.iVal = 1; }
+vardcl  : NAME  								{ /*/*DBUG("REDUCE: NAME -> vardcl\n"*)*/ $$.sVal = $1; $$.iVal = 1; }
 		| NAME ':' CONST						{ std::cout << "The 'unsigned' data type is not supported."; }
-		| NAME '[' CONST ']'					{ std::cout << "REDUCE: NAME [ CONST ] -> vardcl\n"; $$.sVal = $1; $$.iVal = $3; }
+		| NAME '[' CONST ']'					{ /*DBUG("REDUCE: NAME [ CONST ] -> vardcl\n")*/ $$.sVal = $1; $$.iVal = $3; }
 		;
 
-varref	: cmpnd									{ std::cout << "REDUCE: cmpnd -> varref\n"; $$ = $1; auto sym = $$->resolve(currentSymTab); assert(sym || inInline); }
+varref	: cmpnd									{ /*DBUG("REDUCE: cmpnd -> varref\n")*/ $$ = $1; symbol* sym = nullptr; if(!inInline) sym = $$->resolve(currentSymTab); assert(sym || inInline); }
 		;
 
-pfld	: NAME									{ std::cout << "REDUCE: NAME -> pfld\n"; $$ = new exprVarRefName($1, nbrLines); free($1); }
-		| NAME '[' expr ']'						{ std::cout << "REDUCE: NAME [ expr ] -> pfld\n"; $$ = new exprVarRefName($1, $3, nbrLines); free($1); }
+pfld	: NAME									{ /*DBUG("REDUCE: NAME -> pfld\n")*/ $$ = new exprVarRefName($1, nbrLines); free($1); }
+		| NAME '[' expr ']'						{ /*DBUG("REDUCE: NAME [ expr ] -> pfld\n")*/ $$ = new exprVarRefName($1, $3, nbrLines); free($1); }
 		;
 
-cmpnd	: pfld sfld								{ std::cout << "REDUCE: pfld sfld -> cmpnd\n"; $$ = new exprVarRef(nbrLines, $1, $2); }
-		| CONTEXT '.' pfld sfld					{ std::cout << "REDUCE: CONTEX . pfld sfld -> cmpnd\n"; $$ = new exprVarRef(nbrLines, $3, $4); }
+cmpnd	: pfld sfld								{ /*DBUG("REDUCE: pfld sfld -> cmpnd\n")*/ $$ = new exprVarRef(nbrLines, $1, $2); }
+		| CONTEXT '.' pfld sfld					{ /*DBUG("REDUCE: CONTEX . pfld sfld -> cmpnd\n")*/ $$ = new exprVarRef(nbrLines, $3, $4); }
 		;
 
-sfld	: 										{ std::cout << "REDUCE: void -> sfld\n"; $$ = nullptr; }
-		| '.' cmpnd %prec DOT					{ std::cout << "REDUCE: . cmpnd -> sfld\n"; $$ = $2;   }
+sfld	: 										{ /*DBUG("REDUCE: void -> sfld\n")*/ $$ = nullptr; }
+		| '.' cmpnd %prec DOT					{ /*DBUG("REDUCE: . cmpnd -> sfld\n")*/ $$ = $2;   }
 		;
 
 		
-stmnt	: Special								{ std::cout << "REDUCE: special -> stmnt\n"; $$ = $1; }
-		| Stmnt									{ std::cout << "REDUCE: Stmnt -> stmnt\n"; $$ = $1; }
+stmnt	: Special								{ /*DBUG("REDUCE: special -> stmnt\n")*/ $$ = $1; }
+		| Stmnt									{ /*DBUG("REDUCE: Stmnt -> stmnt\n")*/ $$ = $1; }
 		;	
 
 Special : varref RCV rargs						{ $$ = new stmntChanRecv($1, $3, nbrLines); }
@@ -646,9 +646,9 @@ rargs	: rarg									{ $$ = new exprRArgList($1, nbrLines); }
 		| '(' rargs ')'							{ $$ = $2; }
 		;
 
-nlst	: NAME									{ std::cout << "REDUCE: NAME -> nlst\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $1, mtypeId++); (*globalSymTab)->insert(sym); free($1); }
-		| nlst NAME								{ std::cout << "REDUCE: nlst NAME -> NAME\n"; cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $2, mtypeId++); (*globalSymTab)->insert(sym); free($2); }
-		| nlst ',' /* commas optional */		{ std::cout << "REDUCE: nlst , -> nlst\n"; }
+nlst	: NAME									{ /*DBUG("REDUCE: NAME -> nlst\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $1, mtypeId++); (*globalSymTab)->insert(sym); free($1); }
+		| nlst NAME								{ /*DBUG("REDUCE: nlst NAME -> NAME\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, $2, mtypeId++); (*globalSymTab)->insert(sym); free($2); }
+		| nlst ',' /* commas optional */		{ /*DBUG("REDUCE: nlst , -> nlst\n")*/ }
 		;
 		
 		
