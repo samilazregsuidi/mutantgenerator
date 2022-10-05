@@ -8,7 +8,7 @@ class shortSymNode : public varSymNode{
 public:
 	shortSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
 
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

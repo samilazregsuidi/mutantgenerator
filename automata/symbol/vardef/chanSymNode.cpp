@@ -19,8 +19,8 @@ chanSymNode::~chanSymNode(){
 		delete it;
 }
 
-std::string chanSymNode::getTypeName(void) const {
-	return "chan"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string chanSymNode::getBasicTypeName(void) const {
+	return "chan";
 }
 
 int chanSymNode::getTypeSize(void) const {

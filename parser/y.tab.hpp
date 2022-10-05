@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
 # define YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
@@ -44,108 +45,117 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    CONST = 258,
-    IF = 259,
-    DO = 260,
-    TYPE = 261,
-    NAME = 262,
-    UNAME = 263,
-    PNAME = 264,
-    INAME = 265,
-    STRING = 266,
-    REAL = 267,
-    TRUE = 268,
-    FALSE = 269,
-    SKIP = 270,
-    ASSERT = 271,
-    PRINT = 272,
-    PRINTM = 273,
-    C_CODE = 274,
-    C_DECL = 275,
-    C_EXPR = 276,
-    C_STATE = 277,
-    C_TRACK = 278,
-    RUN = 279,
-    LEN = 280,
-    ENABLED = 281,
-    EVAL = 282,
-    PC_VAL = 283,
-    TYPEDEF = 284,
-    MTYPE = 285,
-    INLINE = 286,
-    LABEL = 287,
-    OF = 288,
-    GOTO = 289,
-    BREAK = 290,
-    ELSE = 291,
-    SEMI = 292,
-    FI = 293,
-    OD = 294,
-    SEP = 295,
-    ATOMIC = 296,
-    NON_ATOMIC = 297,
-    D_STEP = 298,
-    UNLESS = 299,
-    TIMEOUT = 300,
-    NONPROGRESS = 301,
-    ACTIVE = 302,
-    PROCTYPE = 303,
-    D_PROCTYPE = 304,
-    HIDDEN = 305,
-    SHOW = 306,
-    ISLOCAL = 307,
-    PRIORITY = 308,
-    PROVIDED = 309,
-    FULL = 310,
-    EMPTY = 311,
-    NFULL = 312,
-    NEMPTY = 313,
-    XU = 314,
-    CLAIM = 315,
-    TRACE = 316,
-    INIT = 317,
-    WHILE = 318,
-    WHEN = 319,
-    WAIT = 320,
-    RESET = 321,
-    SPEC = 322,
-    EVENTUALLY = 323,
-    ALWAYS = 324,
-    GLOBALLY = 325,
-    FINALLY = 326,
-    UNTIL = 327,
-    LTL = 328,
-    ASGN = 329,
-    SND = 330,
-    O_SND = 331,
-    RCV = 332,
-    R_RCV = 333,
-    OR = 334,
-    AND = 335,
-    EQ = 336,
-    NE = 337,
-    GT = 338,
-    LT = 339,
-    GE = 340,
-    LE = 341,
-    LSHIFT = 342,
-    RSHIFT = 343,
-    INCR = 344,
-    DECR = 345,
-    UMIN = 346,
-    NEG = 347,
-    COUNT = 348,
-    CONTEXT = 349,
-    DOT = 350,
-    IMPLIES = 351
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    CONST = 258,                   /* CONST  */
+    IF = 259,                      /* IF  */
+    DO = 260,                      /* DO  */
+    TYPE = 261,                    /* TYPE  */
+    NAME = 262,                    /* NAME  */
+    UNAME = 263,                   /* UNAME  */
+    PNAME = 264,                   /* PNAME  */
+    INAME = 265,                   /* INAME  */
+    STRING = 266,                  /* STRING  */
+    REAL = 267,                    /* REAL  */
+    TRUE = 268,                    /* TRUE  */
+    FALSE = 269,                   /* FALSE  */
+    SKIP = 270,                    /* SKIP  */
+    ASSERT = 271,                  /* ASSERT  */
+    PRINT = 272,                   /* PRINT  */
+    PRINTM = 273,                  /* PRINTM  */
+    C_CODE = 274,                  /* C_CODE  */
+    C_DECL = 275,                  /* C_DECL  */
+    C_EXPR = 276,                  /* C_EXPR  */
+    C_STATE = 277,                 /* C_STATE  */
+    C_TRACK = 278,                 /* C_TRACK  */
+    RUN = 279,                     /* RUN  */
+    LEN = 280,                     /* LEN  */
+    ENABLED = 281,                 /* ENABLED  */
+    EVAL = 282,                    /* EVAL  */
+    PC_VAL = 283,                  /* PC_VAL  */
+    TYPEDEF = 284,                 /* TYPEDEF  */
+    MTYPE = 285,                   /* MTYPE  */
+    INLINE = 286,                  /* INLINE  */
+    LABEL = 287,                   /* LABEL  */
+    OF = 288,                      /* OF  */
+    GOTO = 289,                    /* GOTO  */
+    BREAK = 290,                   /* BREAK  */
+    ELSE = 291,                    /* ELSE  */
+    SEMI = 292,                    /* SEMI  */
+    FI = 293,                      /* FI  */
+    OD = 294,                      /* OD  */
+    SEP = 295,                     /* SEP  */
+    ATOMIC = 296,                  /* ATOMIC  */
+    NON_ATOMIC = 297,              /* NON_ATOMIC  */
+    D_STEP = 298,                  /* D_STEP  */
+    UNLESS = 299,                  /* UNLESS  */
+    TIMEOUT = 300,                 /* TIMEOUT  */
+    NONPROGRESS = 301,             /* NONPROGRESS  */
+    ACTIVE = 302,                  /* ACTIVE  */
+    PROCTYPE = 303,                /* PROCTYPE  */
+    D_PROCTYPE = 304,              /* D_PROCTYPE  */
+    HIDDEN = 305,                  /* HIDDEN  */
+    SHOW = 306,                    /* SHOW  */
+    ISLOCAL = 307,                 /* ISLOCAL  */
+    PRIORITY = 308,                /* PRIORITY  */
+    PROVIDED = 309,                /* PROVIDED  */
+    FULL = 310,                    /* FULL  */
+    EMPTY = 311,                   /* EMPTY  */
+    NFULL = 312,                   /* NFULL  */
+    NEMPTY = 313,                  /* NEMPTY  */
+    XU = 314,                      /* XU  */
+    CLAIM = 315,                   /* CLAIM  */
+    TRACE = 316,                   /* TRACE  */
+    INIT = 317,                    /* INIT  */
+    WHILE = 318,                   /* WHILE  */
+    WHEN = 319,                    /* WHEN  */
+    WAIT = 320,                    /* WAIT  */
+    RESET = 321,                   /* RESET  */
+    SPEC = 322,                    /* SPEC  */
+    EVENTUALLY = 323,              /* EVENTUALLY  */
+    ALWAYS = 324,                  /* ALWAYS  */
+    GLOBALLY = 325,                /* GLOBALLY  */
+    FINALLY = 326,                 /* FINALLY  */
+    UNTIL = 327,                   /* UNTIL  */
+    LTL = 328,                     /* LTL  */
+    ASGN = 329,                    /* ASGN  */
+    SND = 330,                     /* SND  */
+    O_SND = 331,                   /* O_SND  */
+    RCV = 332,                     /* RCV  */
+    R_RCV = 333,                   /* R_RCV  */
+    OR = 334,                      /* OR  */
+    AND = 335,                     /* AND  */
+    EQ = 336,                      /* EQ  */
+    NE = 337,                      /* NE  */
+    GT = 338,                      /* GT  */
+    LT = 339,                      /* LT  */
+    GE = 340,                      /* GE  */
+    LE = 341,                      /* LE  */
+    LSHIFT = 342,                  /* LSHIFT  */
+    RSHIFT = 343,                  /* RSHIFT  */
+    INCR = 344,                    /* INCR  */
+    DECR = 345,                    /* DECR  */
+    UMIN = 346,                    /* UMIN  */
+    NEG = 347,                     /* NEG  */
+    COUNT = 348,                   /* COUNT  */
+    CONTEXT = 349,                 /* CONTEXT  */
+    DOT = 350,                     /* DOT  */
+    IMPLIES = 351                  /* IMPLIES  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
 #define CONST 258
 #define IF 259
 #define DO 260
@@ -269,7 +279,7 @@ union YYSTYPE
 	
 	enum symbol::Type   iType;
 
-#line 273 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp"
+#line 283 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -279,6 +289,8 @@ typedef union YYSTYPE YYSTYPE;
 
 
 
+
 int yyparse (symTable** globalSymTab, stmnt** program);
+
 
 #endif /* !YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED  */

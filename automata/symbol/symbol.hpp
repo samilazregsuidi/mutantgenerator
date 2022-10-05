@@ -77,7 +77,10 @@ public:
 	virtual void acceptVisitor(symTabConstVisitor* visitor) const = 0;
 
 	virtual std::string getTypeName(void) const = 0;
+
+	virtual std::string getBasicTypeName(void) const = 0;
 	
+	//getBasicTypeSize
 	virtual int getTypeSize(void) const = 0;
 
 	static symbol* merge(symbol* first, symbol* second);

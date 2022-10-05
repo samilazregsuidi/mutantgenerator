@@ -16,6 +16,8 @@ public:
 
 	std::string getTypeName(void) const override;
 
+	std::string getBasicTypeName(void) const override;
+
 	int getTypeSize(void) const override;
 
 	int getUpperBound(void) const;

@@ -34,6 +34,8 @@ public:
 	
 	unsigned int getBound(void) const;
 
+	std::string getTypeName(void) const override;
+
 	virtual int getUpperBound(void) const;
 	
 	virtual int getLowerBound(void) const;

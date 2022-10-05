@@ -33,6 +33,10 @@ std::string mtypedefSymNode::getTypeName(void) const {
 	return "mtypedef";
 }
 
+std::string mtypedefSymNode::getBasicTypeName(void) const {
+	return "mtypedef";
+}
+
 int mtypedefSymNode::getTypeSize(void) const {
 	return 0;
 }

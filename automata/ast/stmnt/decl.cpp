@@ -67,7 +67,7 @@ bool varDecl::mutateMutable(unsigned int id){
 }
 
 varDecl::operator std::string() const {
-	std::string res = declSymTab.front()->getTypeName() + " ";
+	std::string res = declSymTab.front()->getBasicTypeName() + " ";
 	unsigned int count = 0; 
 	for(auto sym : declSymTab) {
 		res += sym->getName() + (sym->getBound() > 1 ? "[" + std::to_string(sym->getBound()) + "]" : "")

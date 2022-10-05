@@ -34,8 +34,8 @@ int utypeSymNode::getTypeSize(void) const {
 	return res;
 }
 
-std::string utypeSymNode::getTypeName(void) const {
-	return utype->getName()+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string utypeSymNode::getBasicTypeName(void) const {
+	return utype->getName();
 }
 
 void utypeSymNode::acceptVisitor(symTabVisitor *visitor) {

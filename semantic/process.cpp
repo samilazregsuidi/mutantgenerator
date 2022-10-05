@@ -16,7 +16,7 @@
 #include "automata.hpp"
 #include "ast.hpp"
 
-#include "cuddObj.hh"
+//#include "cuddObj.hh"
 
 process::process(progState* s, const seqSymNode* sym, const fsmNode* start, byte pid, unsigned int index)
 	: scope(std::to_string(pid) + sym->getName().c_str(), s->global)

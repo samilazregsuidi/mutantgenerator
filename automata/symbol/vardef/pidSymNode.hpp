@@ -4,11 +4,11 @@
 #include "varSymNode.hpp"
 
 //T_PID
-class pidSymNode : public varSymNode{
+class pidSymNode : public varSymNode {
 public:
 	pidSymNode(int lineNb, const std::string& name = std::string(), int bound = 1, expr* init = nullptr);
 	
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

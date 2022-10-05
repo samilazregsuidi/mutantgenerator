@@ -5,8 +5,8 @@ bitSymNode::bitSymNode(int lineNb, const std::string& name, int bound, expr* ini
 	: varSymNode(symbol::T_BIT, lineNb, name, bound, init)
 {}
 
-std::string bitSymNode::getTypeName(void) const {
-	return "bit" + (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string bitSymNode::getBasicTypeName(void) const {
+	return "bit";
 }
 
 int bitSymNode::getTypeSize(void) const {

@@ -91,7 +91,7 @@ expr* stmntAssert::getToAssert() const {
 
 stmntAssert::operator std::string() const {
     assert(getToAssert());
-    return "assert(" + std::string(*getToAssert()) + ");\n";
+    return "assert" + std::string(*getToAssert()) + ";\n";
 }
 
 std::string stmntAssert::getTypeDescr(void) const {

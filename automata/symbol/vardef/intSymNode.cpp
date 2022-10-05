@@ -1,12 +1,14 @@
 #include "intSymNode.hpp"
 #include "symTabVisitor.hpp"
 
+#include <limits>
+
 intSymNode::intSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_INT, lineNb, name, bound, init)
 {}
 
-std::string intSymNode::getTypeName(void) const {
-	return "int"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string intSymNode::getBasicTypeName(void) const {
+	return "int";
 }
 
 int intSymNode::getTypeSize(void) const {

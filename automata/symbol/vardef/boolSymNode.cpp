@@ -1,12 +1,14 @@
 #include "boolSymNode.hpp"
 #include "symTabVisitor.hpp"
 
+#include <limits>
+
 boolSymNode::boolSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_BOOL, lineNb, name, bound, init)
 {}
 
-std::string boolSymNode::getTypeName(void) const {
-	return "bool" + (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string boolSymNode::getBasicTypeName(void) const {
+	return "bool";
 }
 
 int boolSymNode::getTypeSize(void) const {

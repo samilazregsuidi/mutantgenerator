@@ -5,8 +5,8 @@ pidSymNode::pidSymNode(int lineNb, const std::string& name, int bound, expr* ini
 	: varSymNode(symbol::T_PID, lineNb, name, bound, init)
 {}
 
-std::string pidSymNode::getTypeName(void) const {
-	return "pid"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string pidSymNode::getBasicTypeName(void) const {
+	return "pid";
 }
 
 int pidSymNode::getTypeSize(void) const {

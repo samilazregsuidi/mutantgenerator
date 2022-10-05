@@ -15,6 +15,10 @@ std::string tdefSymNode::getTypeName(void) const {
 	return "typedef";
 }
 
+std::string tdefSymNode::getBasicTypeName(void) const {
+	return "typedef";
+}
+
 int tdefSymNode::getTypeSize(void) const {
 	return 0;
 }

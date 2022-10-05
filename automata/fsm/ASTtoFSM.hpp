@@ -6,6 +6,7 @@
 #include <stack>
 #include <list>
 #include <map>
+#include <string>
 
 class symTable;
 

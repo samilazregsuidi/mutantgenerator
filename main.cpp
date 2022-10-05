@@ -152,9 +152,11 @@ void createStateSpace(const fsm* automata) {
 
 int main(int argc, char *argv[]) {
 
-	if(sizeof(int)   != 4)	{ std::cout << "Bad architecture: int type must be four bytes long.\n"; exit(1); }
-	if(sizeof(short) != 2)	{ std::cout << "Bad architecture: short type must be two bytes long.\n"; exit(1); }
-	if(sizeof(void*) != 8)  { std::cout << "Bad architecture: pointer type must be eight bytes long.\n"; exit(1); }
+	if(sizeof(int)   != 4)			{ std::cout << "Bad architecture: int type must be four bytes long.\n"; exit(1); }
+	if(sizeof(short) != 2)			{ std::cout << "Bad architecture: short type must be two bytes long.\n"; exit(1); }
+	if(sizeof(unsigned long) != 8)  { std::cout << "Bad architecture: long type must be two bytes long.\n"; exit(1); }
+	if(sizeof(double) != 8)  		{ std::cout << "Bad architecture: double type must be two bytes long.\n"; exit(1); }
+	if(sizeof(void*) != 8)  		{ std::cout << "Bad architecture: pointer type must be eight bytes long.\n"; exit(1); }
 
 	if(argc < 2) { std::cout << "No fPromela file provided."; exit(1); }
 

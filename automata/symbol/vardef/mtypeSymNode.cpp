@@ -11,8 +11,8 @@ mtypeSymNode::mtypeSymNode(int lineNb, const std::string& name, int bound, expr*
 
 mtypeSymNode::~mtypeSymNode() {}
 
-std::string mtypeSymNode::getTypeName(void) const {
-	return "mtype"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string mtypeSymNode::getBasicTypeName(void) const {
+	return "mtype";
 }
 
 void mtypeSymNode::setSymTable(symTable* parent) {
@@ -65,7 +65,7 @@ cmtypeSymNode::cmtypeSymNode(int lineNb, mtypedefSymNode* def, const std::string
 	mask = READ_ACCESS;
 }
 
-std::string cmtypeSymNode::getTypeName(void) const {
+std::string cmtypeSymNode::getBasicTypeName(void) const {
 	return "cmtype";
 }
 

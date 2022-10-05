@@ -1,12 +1,14 @@
 #include "shortSymNode.hpp"
 #include "symTabVisitor.hpp"
 
+#include <limits>
+
 shortSymNode::shortSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_SHORT, lineNb, name, bound, init)
 {}
 
-std::string shortSymNode::getTypeName(void) const {
-	return "short"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string shortSymNode::getBasicTypeName(void) const {
+	return "short";
 }
 
 int shortSymNode::getTypeSize(void) const {

@@ -27,7 +27,8 @@
 
 #include <list>
 #include <map>
-#include <cstring>
+#include <string>
+#include <functional>
 
 typedef char byte;
 typedef unsigned char ubyte;

@@ -14,6 +14,8 @@
 #include "unsgnSymNode.hpp"
 #include "mtypedefSymNode.hpp"
 
+#include <limits>
+
 varSymNode::varSymNode(Type type, int lineNb, const std::string& name, unsigned int bound, expr* init)
 	: symbol(type, lineNb, name)
 {
@@ -47,6 +49,10 @@ unsigned int varSymNode::getBound(void) const {
 	return bound;
 }
 
+std::string varSymNode::getTypeName(void) const {
+	return getBasicTypeName() + (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+}
+
 int varSymNode::getUpperBound(void) const {
 	assert(false);
 }
@@ -72,28 +78,6 @@ unsigned int varSymNode::getSizeOf(void) const {
 void varSymNode::printGraphViz(std::ofstream& file) const {
 	file << "{ <" << getID() << "> " << getTypeName() << "|" << getName() + (init? " : " + std::string(*init) : "")  << "| " << getSizeOf() << " "<< ((getTypeSize() > 1)? "bytes" : "byte") <<" | "<< (getLineNb()!=0 ? "line " + std::to_string(getLineNb()) : "predef.") << " }";
 }
-
-/**
- * Initialises the values of memSize and memOffset of all variables
- * in the symTab and its descendants and starts with the node given
- * as the first parameter.  The initial memory offset is given as
- * a parameter (usually 0).
- *
- * The function will also lookup all variable references and replace
- * them by pointers.  If a variable cannot be found, execution aborts.
- *
- * The return value is the next offset to be used after the variables
- * of the symtab were added.
- */
-/*unsigned int varSymNode::processVariables(symbol *globalSymTab, const mTypeList *mTypes, unsigned int iOffset, bool bGlobal) {
-	global = bGlobal;
-	if (init && init->getType() != astNode::E_EXPR_CONST && init->getType() != astNode::E_EXPR_TRUE && init->getType() != astNode::E_EXPR_FALSE)
-		assert(false);
-	memSize = this->getTypeSize();
-	memOffset = iOffset;
-	unsigned int iMemSpace = memSize * bound;
-	return !next ? iOffset + iMemSpace : next->processVariables(globalSymTab, mTypes, iOffset + iMemSpace, bGlobal);
-}*/
 
 varSymNode *varSymNode::createSymbol(symbol::Type type, const varSymNode &old) {
 	assert(old.getType() == T_NA);

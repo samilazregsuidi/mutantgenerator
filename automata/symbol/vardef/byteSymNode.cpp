@@ -1,12 +1,14 @@
 #include "byteSymNode.hpp"
 #include "symTabVisitor.hpp"
 
+#include <limits>
+
 byteSymNode::byteSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_BYTE, lineNb, name, bound, init)
 {}
 
-std::string byteSymNode::getTypeName(void) const {
-	return "byte"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string byteSymNode::getBasicTypeName(void) const {
+	return "byte";
 }
 
 int byteSymNode::getTypeSize(void) const {

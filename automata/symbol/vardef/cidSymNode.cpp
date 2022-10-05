@@ -1,12 +1,14 @@
 #include "cidSymNode.hpp"
 #include "symTabVisitor.hpp"
 
+#include <limits>
+
 cidSymNode::cidSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_CID, lineNb, name, bound, init)
 {}
 
-std::string cidSymNode::getTypeName(void) const {
-	return "cid"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string cidSymNode::getBasicTypeName(void) const {
+	return "cid";
 }
 
 int cidSymNode::getTypeSize(void) const {

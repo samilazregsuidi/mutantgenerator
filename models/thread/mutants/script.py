@@ -32,7 +32,7 @@ for mutant in mutants:
 	to_print = res.stdout.decode('utf-8')
 	
 	if to_print.find('error') != -1 or to_print.find('Error') != -1 or to_print.find('ERROR') != -1:
-		print('syntax or semantic error ' + mutant+'#'+properties+'\n')
+		print('syntax or semantic error ' + mutant+'\n')
 		continue
 	
 	print('parsed \t\t' + mutant)

@@ -18,7 +18,7 @@ public:
 
 	void setUType(tdefSymNode* utype);
 
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

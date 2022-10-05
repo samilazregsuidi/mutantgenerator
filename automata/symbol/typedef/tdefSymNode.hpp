@@ -14,6 +14,8 @@ public:
 
 	std::string getTypeName(void) const override;
 
+	std::string getBasicTypeName(void) const override;
+
 	int getTypeSize(void) const override;
 
 	std::set<varSymNode*> getFields(void) const;

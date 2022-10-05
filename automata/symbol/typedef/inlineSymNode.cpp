@@ -12,6 +12,10 @@ std::string inlineSymNode::getTypeName(void) const {
 	return "inline";
 }
 
+std::string inlineSymNode::getBasicTypeName(void) const {
+	return "inline";
+}
+
 int inlineSymNode::getTypeSize(void) const {
 	return 0;
 }

@@ -130,9 +130,9 @@ void fsm::addTransition(fsmEdge* edge){
 	trans.push_back(edge);
 }
 
-const ADD& fsm::getFD(void) const {
+/*const ADD& fsm::getFD(void) const {
 	return fd;
-}
+}*/
 
 void fsm::printGraphVis(std::ofstream& file) const {
 	file << "digraph finite_state_machine {\n";

@@ -52,6 +52,10 @@ std::string procSymNode::getTypeName(void) const {
 	return "proctype";
 }
 
+std::string procSymNode::getBasicTypeName(void) const {
+	return "proctype";
+}
+
 int procSymNode::getTypeSize(void) const {
 	return 0;
 }
@@ -103,6 +107,10 @@ std::string initSymNode::getTypeName(void) const {
 	return "never";
 }
 
+std::string initSymNode::getBasicTypeName(void) const {
+	return "never";
+}
+
 int initSymNode::getTypeSize(void) const {
 	return 1;
 }
@@ -122,6 +130,10 @@ neverSymNode::neverSymNode(int lineNb, stmnt* block)
 {}
 
 std::string neverSymNode::getTypeName(void) const {
+	return "init";
+}
+
+std::string neverSymNode::getBasicTypeName(void) const {
 	return "init";
 }
 

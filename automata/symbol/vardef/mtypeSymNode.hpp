@@ -14,7 +14,7 @@ public:
 
 	void setSymTable(symTable* parent) override;
 
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 
@@ -39,7 +39,7 @@ class cmtypeSymNode : public varSymNode {
 public:
 	cmtypeSymNode(int lineNb, mtypedefSymNode* def, const std::string& name, int value);
 
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

@@ -435,6 +435,19 @@ inline check_worker_states(){
 	od;
 }
 
+inline sv_trans_cb(s){
+	if
+	::	s == RUNNING;
+		propagate_command(CONTINUE)
+	::	s == PAUSED;
+		propagate_command(PAUSE)
+	::	s == ABORTING || s == STOPPING;
+		propagate_command(STOP)
+	::	else ->
+		skip;
+	fi;
+}
+
 inline sv_covariant_transition(state, command, next){
 	states[0] = next;
 	sv_trans_cb(next)
@@ -553,20 +566,6 @@ inline sv_start_sync(){
 	};
 	run Supervisor();
 	waiit_for_START_mask(0)
-}
-
-
-inline sv_trans_cb(s){
-	if
-	::	s == RUNNING;
-		propagate_command(CONTINUE)
-	::	s == PAUSED;
-		propagate_command(PAUSE)
-	::	s == ABORTING || s == STOPPING;
-		propagate_command(STOP)
-	::	else ->
-		skip;
-	fi;
 }
 
 inline sv_ctor(i){

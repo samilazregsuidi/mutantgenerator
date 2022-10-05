@@ -12,7 +12,7 @@ protected:
 public:
 	stmnt* getBlock(void) const;
 
-	operator std::string(void) const override ;
+	operator std::string(void) const override;
 
 	symTable* getSymTable(void) const;
 
@@ -26,7 +26,9 @@ public:
 
 	std::string getTypeName(void) const override;
 
-	int getTypeSize(void) const override;
+	std::string getBasicTypeName(void) const override;
+
+	int getTypeSize(void) const override;	
 
 	void acceptVisitor(symTabVisitor* visitor) override;
 
@@ -41,6 +43,8 @@ public:
 	neverSymNode(int lineNb, stmnt* block);
 
 	std::string getTypeName(void) const override;
+
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 
@@ -61,6 +65,8 @@ public:
 	~procSymNode();
 
 	std::string getTypeName(void) const override;
+
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

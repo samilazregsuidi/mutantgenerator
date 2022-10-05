@@ -12,6 +12,8 @@ public:
 
 	std::string getTypeName(void) const override;
 
+	std::string getBasicTypeName(void) const override;
+
 	int getTypeSize(void) const override;
 
 	const std::list<std::string>& getParams(void) const;

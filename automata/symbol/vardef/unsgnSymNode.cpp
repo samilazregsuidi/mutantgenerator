@@ -5,8 +5,8 @@ unsgnSymNode::unsgnSymNode(int lineNb, const std::string& name, int bound, expr*
 	: varSymNode(symbol::T_UNSGN, lineNb, name, bound, init)
 {}
 
-std::string unsgnSymNode::getTypeName(void) const {
-	return "unsigned"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+std::string unsgnSymNode::getBasicTypeName(void) const {
+	return "unsigned";
 }
 
 int unsgnSymNode::getTypeSize(void) const {

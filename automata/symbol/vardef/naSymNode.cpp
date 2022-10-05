@@ -5,9 +5,9 @@ naSymNode::naSymNode(int lineNb, const std::string& name, int bound, expr* init)
 	: varSymNode(symbol::T_NA, lineNb, name, bound, init)
 {}
 
-std::string naSymNode::getTypeName(void) const {
+std::string naSymNode::getBasicTypeName(void) const {
 	//assert(false);
-	return "NA"+ (getBound() > 1? "[" + std::to_string(getBound()) + "]": "");
+	return "NA";
 }
 
 int naSymNode::getTypeSize(void) const {

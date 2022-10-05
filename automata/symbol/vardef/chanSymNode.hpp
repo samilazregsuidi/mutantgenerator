@@ -14,7 +14,7 @@ public:
 
 	~chanSymNode(void) override ;
 
-	std::string getTypeName(void) const override;
+	std::string getBasicTypeName(void) const override;
 
 	int getTypeSize(void) const override;
 

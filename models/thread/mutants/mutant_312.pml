@@ -1,25 +1,25 @@
 #include "./Theory.prp"
 mtype = {READY, STARTING, RUNNING, PAUSED, START, CONTINUE, STOPPING, PAUSE, STOPPED, ABORTING, ABORTED, STOP, ABORT}
-mtype[3] states[3];
-mtype[3] commands[3];
-bool[3] executing[3];
+mtype states[3];
+mtype commands[3];
+bool executing[3];
 inline abort(i){
 	atomic {
 		if
 		::	ABORT == START && commands[i] == CONTINUE;
-			assert(((states[i] == READY)));
+			assert((states[i] == READY));
 			commands[i] = START;
 		::	ABORT == PAUSE && commands[i] == CONTINUE;
-			assert(((states[i] == STARTING || states[i] == RUNNING)));
+			assert((states[i] == STARTING || states[i] == RUNNING));
 			commands[i] = PAUSE;
 		::	ABORT == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == PAUSED));
 			commands[i] = CONTINUE;
 		::	ABORT == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 			commands[i] = STOP;
 		::	ABORT == ABORT;
-			assert(((states[i] != READY)));
+			assert((states[i] != READY));
 			commands[i] = ABORT;
 		::	else;
 			skip;
@@ -34,19 +34,19 @@ inline prepare(i){
 		atomic {
 			if
 			::	PAUSE == START && commands[i] == CONTINUE;
-				assert(((states[i] == READY)));
+				assert((states[i] == READY));
 				commands[i] = START;
 			::	PAUSE == PAUSE && commands[i] == CONTINUE;
-				assert(((states[i] == STARTING || states[i] == RUNNING)));
+				assert((states[i] == STARTING || states[i] == RUNNING));
 				commands[i] = PAUSE;
 			::	PAUSE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == PAUSED));
 				commands[i] = CONTINUE;
 			::	PAUSE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 				commands[i] = STOP;
 			::	PAUSE == ABORT;
-				assert(((states[i] != READY)));
+				assert((states[i] != READY));
 				commands[i] = ABORT;
 			::	else;
 				skip;
@@ -56,19 +56,19 @@ inline prepare(i){
 		atomic {
 			if
 			::	STOP == START && commands[i] == CONTINUE;
-				assert(((states[i] == READY)));
+				assert((states[i] == READY));
 				commands[i] = START;
 			::	STOP == PAUSE && commands[i] == CONTINUE;
-				assert(((states[i] == STARTING || states[i] == RUNNING)));
+				assert((states[i] == STARTING || states[i] == RUNNING));
 				commands[i] = PAUSE;
 			::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == PAUSED));
 				commands[i] = CONTINUE;
 			::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 				commands[i] = STOP;
 			::	STOP == ABORT;
-				assert(((states[i] != READY)));
+				assert((states[i] != READY));
 				commands[i] = ABORT;
 			::	else;
 				skip;
@@ -87,19 +87,19 @@ inline execute(i){
 		atomic {
 			if
 			::	STOP == START && commands[i] == CONTINUE;
-				assert(((states[i] == READY)));
+				assert((states[i] == READY));
 				commands[i] = START;
 			::	STOP == PAUSE && commands[i] == CONTINUE;
-				assert(((states[i] == STARTING || states[i] == RUNNING)));
+				assert((states[i] == STARTING || states[i] == RUNNING));
 				commands[i] = PAUSE;
 			::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == PAUSED));
 				commands[i] = CONTINUE;
 			::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-				assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+				assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 				commands[i] = STOP;
 			::	STOP == ABORT;
-				assert(((states[i] != READY)));
+				assert((states[i] != READY));
 				commands[i] = ABORT;
 			::	else;
 				skip;
@@ -146,19 +146,19 @@ proctype Thread(byte k){
 	atomic {
 		if
 		::	CONTINUE == START && commands[k] == CONTINUE;
-			assert(((states[k] == READY)));
+			assert((states[k] == READY));
 			commands[k] = START;
 		::	CONTINUE == PAUSE && commands[k] == CONTINUE;
-			assert(((states[k] == STARTING || states[k] == RUNNING)));
+			assert((states[k] == STARTING || states[k] == RUNNING));
 			commands[k] = PAUSE;
 		::	CONTINUE == CONTINUE && (commands[k] == START || commands[k] == PAUSE);
-			assert(((states[k] == STARTING || states[k] == PAUSED)));
+			assert((states[k] == STARTING || states[k] == PAUSED));
 			commands[k] = CONTINUE;
 		::	CONTINUE == STOP && (commands[k] == CONTINUE || commands[k] == PAUSE);
-			assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
+			assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
 			commands[k] = STOP;
 		::	CONTINUE == ABORT;
-			assert(((states[k] != READY)));
+			assert((states[k] != READY));
 			commands[k] = ABORT;
 		::	else;
 			skip;
@@ -167,7 +167,7 @@ proctype Thread(byte k){
 	prepare(k)
 	do
 	::	commands[k] == CONTINUE;
-		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
+		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
 		if
 		::	states[k] == STARTING;
 			covariant_transition(STARTING, CONTINUE, RUNNING)
@@ -182,7 +182,7 @@ proctype Thread(byte k){
 		::	states[k] == PAUSED;
 			commands[k] != PAUSED;
 		::	else;
-			assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == STARTING)));
+			assert((states[k] == STARTING || states[k] == RUNNING || states[k] == STARTING));
 			if
 			::	states[k] == STARTING || states[k] == RUNNING;
 				contravariant_transition(RUNNING, PAUSE, PAUSED)
@@ -195,16 +195,16 @@ proctype Thread(byte k){
 	od;
 	if
 	::	commands[k] == STOP;
-		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED)));
+		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == PAUSED));
 		covariant_transition(states[k], STOP, STOPPING)
 		finish(k)
 		contravariant_transition(STOPPING, STOP, STOPPED)
 	::	commands[k] == ABORT;
-		assert(((states[k] == STARTING || states[k] == RUNNING || states[k] == STOPPING)));
+		assert((states[k] == STARTING || states[k] == RUNNING || states[k] == STOPPING));
 		covariant_transition(states[k], ABORT, ABORTING)
 		contravariant_transition(ABORTING, ABORT, ABORTED)
 	::	else;
-		assert(((false)));
+		assert((false));
 	fi;
 }
 inline waiit_for_START_mask(i){
@@ -226,19 +226,19 @@ inline start(i, waiit){
 	atomic {
 		if
 		::	START == START && commands[i] == CONTINUE;
-			assert(((states[i] == READY)));
+			assert((states[i] == READY));
 			commands[i] = START;
 		::	START == PAUSE && commands[i] == CONTINUE;
-			assert(((states[i] == STARTING || states[i] == RUNNING)));
+			assert((states[i] == STARTING || states[i] == RUNNING));
 			commands[i] = PAUSE;
 		::	START == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == PAUSED));
 			commands[i] = CONTINUE;
 		::	START == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 			commands[i] = STOP;
 		::	START == ABORT;
-			assert(((states[i] != READY)));
+			assert((states[i] != READY));
 			commands[i] = ABORT;
 		::	else;
 			skip;
@@ -256,19 +256,19 @@ inline pause(i, waiit){
 	atomic {
 		if
 		::	PAUSE == START && commands[i] == CONTINUE;
-			assert(((states[i] == READY)));
+			assert((states[i] == READY));
 			commands[i] = START;
 		::	PAUSE == PAUSE && commands[i] == CONTINUE;
-			assert(((states[i] == STARTING || states[i] == RUNNING)));
+			assert((states[i] == STARTING || states[i] == RUNNING));
 			commands[i] = PAUSE;
 		::	PAUSE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == PAUSED));
 			commands[i] = CONTINUE;
 		::	PAUSE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 			commands[i] = STOP;
 		::	PAUSE == ABORT;
-			assert(((states[i] != READY)));
+			assert((states[i] != READY));
 			commands[i] = ABORT;
 		::	else;
 			skip;
@@ -285,19 +285,19 @@ inline resume(i, waiit){
 	atomic {
 		if
 		::	CONTINUE == START && commands[i] == CONTINUE;
-			assert(((states[i] == READY)));
+			assert((states[i] == READY));
 			commands[i] = START;
 		::	CONTINUE == PAUSE && commands[i] == CONTINUE;
-			assert(((states[i] == STARTING || states[i] == RUNNING)));
+			assert((states[i] == STARTING || states[i] == RUNNING));
 			commands[i] = PAUSE;
 		::	CONTINUE == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == PAUSED));
 			commands[i] = CONTINUE;
 		::	CONTINUE == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 			commands[i] = STOP;
 		::	CONTINUE == ABORT;
-			assert(((states[i] != READY)));
+			assert((states[i] != READY));
 			commands[i] = ABORT;
 		::	else;
 			skip;
@@ -314,19 +314,19 @@ inline stop(i, waiit){
 	atomic {
 		if
 		::	STOP == START && commands[i] == CONTINUE;
-			assert(((states[i] == READY)));
+			assert((states[i] == READY));
 			commands[i] = START;
 		::	STOP == PAUSE && commands[i] == CONTINUE;
-			assert(((states[i] == STARTING || states[i] == RUNNING)));
+			assert((states[i] == STARTING || states[i] == RUNNING));
 			commands[i] = PAUSE;
 		::	STOP == CONTINUE && (commands[i] == START || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == PAUSED));
 			commands[i] = CONTINUE;
 		::	STOP == STOP && (commands[i] == CONTINUE || commands[i] == PAUSE);
-			assert(((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED)));
+			assert((states[i] == STARTING || states[i] == RUNNING || states[i] == PAUSED));
 			commands[i] = STOP;
 		::	STOP == ABORT;
-			assert(((states[i] != READY)));
+			assert((states[i] != READY));
 			commands[i] = ABORT;
 		::	else;
 			skip;
@@ -347,8 +347,8 @@ inline assert_all(k, state, command){
 	d_step {
 		do
 		::	k < 3;
-			assert(((states[k] == state)));
-			assert(((commands[k] == command)));
+			assert((states[k] == state));
+			assert((commands[k] == command));
 			k++;
 		::	else;
 			break;
@@ -442,14 +442,24 @@ inline check_worker_states(){
 		break;
 	od;
 }
+inline sv_trans_cb(s){
+	if
+	::	s == RUNNING;
+		propagate_command(CONTINUE)
+	::	s == PAUSED;
+		propagate_command(PAUSE)
+	::	s == ABORTING || s == STOPPING;
+		propagate_command(STOP)
+	::	else;
+		skip;
+	fi;
+}
 inline sv_covariant_transition(state, command, next){
 	states[0] = next;
-	sv_trans_cb;
-	(next);
+	sv_trans_cb(next)
 }
 inline sv_contravariant_transition(state, command, next){
-	sv_trans_cb;
-	(next);
+	sv_trans_cb(next)
 	states[0] = next;
 }
 inline sv_prepare(){
@@ -475,19 +485,19 @@ proctype Supervisor(){
 	atomic {
 		if
 		::	CONTINUE == START && commands[0] == CONTINUE;
-			assert(((states[0] == READY)));
+			assert((states[0] == READY));
 			commands[0] = START;
 		::	CONTINUE == PAUSE && commands[0] == CONTINUE;
-			assert(((states[0] == STARTING || states[0] == RUNNING)));
-			commands[0] = PAUSE;
-		::	CONTINUE == CONTINUE && (commands[0] <= START || commands[0] == PAUSE);
-			assert(((states[0] == STARTING || states[0] == PAUSED)));
+			assert((states[0] == STARTING || states[0] == RUNNING));
+			commands[0] = STOPPED;
+		::	CONTINUE == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
+			assert((states[0] == STARTING || states[0] == PAUSED));
 			commands[0] = CONTINUE;
 		::	CONTINUE == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
-			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
 			commands[0] = STOP;
 		::	CONTINUE == ABORT;
-			assert(((states[0] != READY)));
+			assert((states[0] != READY));
 			commands[0] = ABORT;
 		::	else;
 			skip;
@@ -496,7 +506,7 @@ proctype Supervisor(){
 	sv_prepare()
 	do
 	::	commands[0] == CONTINUE;
-		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
 		if
 		::	states[0] == STARTING;
 			sv_covariant_transition(STARTING, CONTINUE, RUNNING)
@@ -511,7 +521,7 @@ proctype Supervisor(){
 		::	states[0] == PAUSED;
 			commands[0] != PAUSED;
 		::	else;
-			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == STARTING)));
+			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == STARTING));
 			if
 			::	states[0] == STARTING || states[0] == RUNNING;
 				sv_contravariant_transition(RUNNING, PAUSE, PAUSED)
@@ -524,34 +534,34 @@ proctype Supervisor(){
 	od;
 	if
 	::	commands[0] == STOP;
-		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
 		sv_covariant_transition(states[0], STOP, STOPPING)
 		sv_contravariant_transition(STOPPING, STOP, STOPPED)
 	::	commands[0] == ABORT;
-		assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == STOPPING)));
+		assert((states[0] == STARTING || states[0] == RUNNING || states[0] == STOPPING));
 		sv_covariant_transition(states[0], ABORT, ABORTING)
 		sv_contravariant_transition(ABORTING, ABORT, ABORTED)
 	::	else;
-		assert(((false)));
+		assert((false));
 	fi;
 }
 inline sv_start_sync(){
 	atomic {
 		if
 		::	START == START && commands[0] == CONTINUE;
-			assert(((states[0] == READY)));
+			assert((states[0] == READY));
 			commands[0] = START;
 		::	START == PAUSE && commands[0] == CONTINUE;
-			assert(((states[0] == STARTING || states[0] == RUNNING)));
+			assert((states[0] == STARTING || states[0] == RUNNING));
 			commands[0] = PAUSE;
 		::	START == CONTINUE && (commands[0] == START || commands[0] == PAUSE);
-			assert(((states[0] == STARTING || states[0] == PAUSED)));
+			assert((states[0] == STARTING || states[0] == PAUSED));
 			commands[0] = CONTINUE;
 		::	START == STOP && (commands[0] == CONTINUE || commands[0] == PAUSE);
-			assert(((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED)));
+			assert((states[0] == STARTING || states[0] == RUNNING || states[0] == PAUSED));
 			commands[0] = STOP;
 		::	START == ABORT;
-			assert(((states[0] != READY)));
+			assert((states[0] != READY));
 			commands[0] = ABORT;
 		::	else;
 			skip;
@@ -559,18 +569,6 @@ inline sv_start_sync(){
 	};
 	run Supervisor();
 	waiit_for_START_mask(0)
-}
-inline sv_trans_cb(s){
-	if
-	::	s == RUNNING;
-		propagate_command(CONTINUE)
-	::	s == PAUSED;
-		propagate_command(PAUSE)
-	::	s == ABORTING || s == STOPPING;
-		propagate_command(STOP)
-	::	else;
-		skip;
-	fi;
 }
 inline sv_ctor(i){
 	d_step {

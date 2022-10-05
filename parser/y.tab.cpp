@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -34,6 +34,10 @@
 /* C LALR(1) parser skeleton written by Richard Stallman, by
    simplifying the original so-called "semantic" parser.  */
 
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
+
 /* All symbols defined below should begin with yy or YY, to avoid
    infringing on user name space.  This should be done even for local
    variables, as they might otherwise be expanded by user macros.
@@ -41,14 +45,11 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* Identify Bison output, and Bison version.  */
+#define YYBISON 30802
 
-/* Identify Bison output.  */
-#define YYBISON 1
-
-/* Bison version.  */
-#define YYBISON_VERSION "3.5.1"
+/* Bison version string.  */
+#define YYBISON_VERSION "3.8.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -121,7 +122,7 @@ int mtypeId = 1;
 bool inInline = false;
 
 
-#line 125 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 126 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -144,264 +145,204 @@ bool inInline = false;
 #  endif
 # endif
 
-/* Enabling verbose error messages.  */
-#ifdef YYERROR_VERBOSE
-# undef YYERROR_VERBOSE
-# define YYERROR_VERBOSE 1
-#else
-# define YYERROR_VERBOSE 1
-#endif
-
-/* Use api.header.include to #include this header
-   instead of duplicating it here.  */
-#ifndef YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
-# define YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 1
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-
-/* Token type.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    CONST = 258,
-    IF = 259,
-    DO = 260,
-    TYPE = 261,
-    NAME = 262,
-    UNAME = 263,
-    PNAME = 264,
-    INAME = 265,
-    STRING = 266,
-    REAL = 267,
-    TRUE = 268,
-    FALSE = 269,
-    SKIP = 270,
-    ASSERT = 271,
-    PRINT = 272,
-    PRINTM = 273,
-    C_CODE = 274,
-    C_DECL = 275,
-    C_EXPR = 276,
-    C_STATE = 277,
-    C_TRACK = 278,
-    RUN = 279,
-    LEN = 280,
-    ENABLED = 281,
-    EVAL = 282,
-    PC_VAL = 283,
-    TYPEDEF = 284,
-    MTYPE = 285,
-    INLINE = 286,
-    LABEL = 287,
-    OF = 288,
-    GOTO = 289,
-    BREAK = 290,
-    ELSE = 291,
-    SEMI = 292,
-    FI = 293,
-    OD = 294,
-    SEP = 295,
-    ATOMIC = 296,
-    NON_ATOMIC = 297,
-    D_STEP = 298,
-    UNLESS = 299,
-    TIMEOUT = 300,
-    NONPROGRESS = 301,
-    ACTIVE = 302,
-    PROCTYPE = 303,
-    D_PROCTYPE = 304,
-    HIDDEN = 305,
-    SHOW = 306,
-    ISLOCAL = 307,
-    PRIORITY = 308,
-    PROVIDED = 309,
-    FULL = 310,
-    EMPTY = 311,
-    NFULL = 312,
-    NEMPTY = 313,
-    XU = 314,
-    CLAIM = 315,
-    TRACE = 316,
-    INIT = 317,
-    WHILE = 318,
-    WHEN = 319,
-    WAIT = 320,
-    RESET = 321,
-    SPEC = 322,
-    EVENTUALLY = 323,
-    ALWAYS = 324,
-    GLOBALLY = 325,
-    FINALLY = 326,
-    UNTIL = 327,
-    LTL = 328,
-    ASGN = 329,
-    SND = 330,
-    O_SND = 331,
-    RCV = 332,
-    R_RCV = 333,
-    OR = 334,
-    AND = 335,
-    EQ = 336,
-    NE = 337,
-    GT = 338,
-    LT = 339,
-    GE = 340,
-    LE = 341,
-    LSHIFT = 342,
-    RSHIFT = 343,
-    INCR = 344,
-    DECR = 345,
-    UMIN = 346,
-    NEG = 347,
-    COUNT = 348,
-    CONTEXT = 349,
-    DOT = 350,
-    IMPLIES = 351
-  };
-#endif
-/* Tokens.  */
-#define CONST 258
-#define IF 259
-#define DO 260
-#define TYPE 261
-#define NAME 262
-#define UNAME 263
-#define PNAME 264
-#define INAME 265
-#define STRING 266
-#define REAL 267
-#define TRUE 268
-#define FALSE 269
-#define SKIP 270
-#define ASSERT 271
-#define PRINT 272
-#define PRINTM 273
-#define C_CODE 274
-#define C_DECL 275
-#define C_EXPR 276
-#define C_STATE 277
-#define C_TRACK 278
-#define RUN 279
-#define LEN 280
-#define ENABLED 281
-#define EVAL 282
-#define PC_VAL 283
-#define TYPEDEF 284
-#define MTYPE 285
-#define INLINE 286
-#define LABEL 287
-#define OF 288
-#define GOTO 289
-#define BREAK 290
-#define ELSE 291
-#define SEMI 292
-#define FI 293
-#define OD 294
-#define SEP 295
-#define ATOMIC 296
-#define NON_ATOMIC 297
-#define D_STEP 298
-#define UNLESS 299
-#define TIMEOUT 300
-#define NONPROGRESS 301
-#define ACTIVE 302
-#define PROCTYPE 303
-#define D_PROCTYPE 304
-#define HIDDEN 305
-#define SHOW 306
-#define ISLOCAL 307
-#define PRIORITY 308
-#define PROVIDED 309
-#define FULL 310
-#define EMPTY 311
-#define NFULL 312
-#define NEMPTY 313
-#define XU 314
-#define CLAIM 315
-#define TRACE 316
-#define INIT 317
-#define WHILE 318
-#define WHEN 319
-#define WAIT 320
-#define RESET 321
-#define SPEC 322
-#define EVENTUALLY 323
-#define ALWAYS 324
-#define GLOBALLY 325
-#define FINALLY 326
-#define UNTIL 327
-#define LTL 328
-#define ASGN 329
-#define SND 330
-#define O_SND 331
-#define RCV 332
-#define R_RCV 333
-#define OR 334
-#define AND 335
-#define EQ 336
-#define NE 337
-#define GT 338
-#define LT 339
-#define GE 340
-#define LE 341
-#define LSHIFT 342
-#define RSHIFT 343
-#define INCR 344
-#define DECR 345
-#define UMIN 346
-#define NEG 347
-#define COUNT 348
-#define CONTEXT 349
-#define DOT 350
-#define IMPLIES 351
-
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
+#include "y.tab.hpp"
+/* Symbol kind.  */
+enum yysymbol_kind_t
 {
-#line 63 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
- 
-	int       				iVal;
-	char*    				sVal;
-	double					rVal;
-	class dataTuple			pDataVal;
-	
-	class stmnt*			pStmntVal;
-	class stmntOpt*			pStmntOptVal;
-	class expr*				pExprVal;
-	class exprConst*		pConstExprVal;
-	class exprVarRef*		pExprVarRefVal;
-	class exprVarRefName*	pExprVarRefNameVal;
-	class exprArgList*		pExprArgListVal;
-	class exprRArgList*		pExprRArgListVal;
-	class exprRArg*			pExprRArgVal;
-	
-	class symbol*			pSymTabVal;
-	class varSymNode*		pVarSymVal;
-	class tdefSymNode*		pTdefSymVal;
-	class mtypedefSymNode*	pTypedefSymVal;
-	
-	enum symbol::Type   iType;
-
-#line 393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-
+  YYSYMBOL_YYEMPTY = -2,
+  YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
+  YYSYMBOL_YYerror = 1,                    /* error  */
+  YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
+  YYSYMBOL_CONST = 3,                      /* CONST  */
+  YYSYMBOL_IF = 4,                         /* IF  */
+  YYSYMBOL_DO = 5,                         /* DO  */
+  YYSYMBOL_TYPE = 6,                       /* TYPE  */
+  YYSYMBOL_NAME = 7,                       /* NAME  */
+  YYSYMBOL_UNAME = 8,                      /* UNAME  */
+  YYSYMBOL_PNAME = 9,                      /* PNAME  */
+  YYSYMBOL_INAME = 10,                     /* INAME  */
+  YYSYMBOL_STRING = 11,                    /* STRING  */
+  YYSYMBOL_REAL = 12,                      /* REAL  */
+  YYSYMBOL_TRUE = 13,                      /* TRUE  */
+  YYSYMBOL_FALSE = 14,                     /* FALSE  */
+  YYSYMBOL_SKIP = 15,                      /* SKIP  */
+  YYSYMBOL_ASSERT = 16,                    /* ASSERT  */
+  YYSYMBOL_PRINT = 17,                     /* PRINT  */
+  YYSYMBOL_PRINTM = 18,                    /* PRINTM  */
+  YYSYMBOL_C_CODE = 19,                    /* C_CODE  */
+  YYSYMBOL_C_DECL = 20,                    /* C_DECL  */
+  YYSYMBOL_C_EXPR = 21,                    /* C_EXPR  */
+  YYSYMBOL_C_STATE = 22,                   /* C_STATE  */
+  YYSYMBOL_C_TRACK = 23,                   /* C_TRACK  */
+  YYSYMBOL_RUN = 24,                       /* RUN  */
+  YYSYMBOL_LEN = 25,                       /* LEN  */
+  YYSYMBOL_ENABLED = 26,                   /* ENABLED  */
+  YYSYMBOL_EVAL = 27,                      /* EVAL  */
+  YYSYMBOL_PC_VAL = 28,                    /* PC_VAL  */
+  YYSYMBOL_TYPEDEF = 29,                   /* TYPEDEF  */
+  YYSYMBOL_MTYPE = 30,                     /* MTYPE  */
+  YYSYMBOL_INLINE = 31,                    /* INLINE  */
+  YYSYMBOL_LABEL = 32,                     /* LABEL  */
+  YYSYMBOL_OF = 33,                        /* OF  */
+  YYSYMBOL_GOTO = 34,                      /* GOTO  */
+  YYSYMBOL_BREAK = 35,                     /* BREAK  */
+  YYSYMBOL_ELSE = 36,                      /* ELSE  */
+  YYSYMBOL_SEMI = 37,                      /* SEMI  */
+  YYSYMBOL_FI = 38,                        /* FI  */
+  YYSYMBOL_OD = 39,                        /* OD  */
+  YYSYMBOL_SEP = 40,                       /* SEP  */
+  YYSYMBOL_ATOMIC = 41,                    /* ATOMIC  */
+  YYSYMBOL_NON_ATOMIC = 42,                /* NON_ATOMIC  */
+  YYSYMBOL_D_STEP = 43,                    /* D_STEP  */
+  YYSYMBOL_UNLESS = 44,                    /* UNLESS  */
+  YYSYMBOL_TIMEOUT = 45,                   /* TIMEOUT  */
+  YYSYMBOL_NONPROGRESS = 46,               /* NONPROGRESS  */
+  YYSYMBOL_ACTIVE = 47,                    /* ACTIVE  */
+  YYSYMBOL_PROCTYPE = 48,                  /* PROCTYPE  */
+  YYSYMBOL_D_PROCTYPE = 49,                /* D_PROCTYPE  */
+  YYSYMBOL_HIDDEN = 50,                    /* HIDDEN  */
+  YYSYMBOL_SHOW = 51,                      /* SHOW  */
+  YYSYMBOL_ISLOCAL = 52,                   /* ISLOCAL  */
+  YYSYMBOL_PRIORITY = 53,                  /* PRIORITY  */
+  YYSYMBOL_PROVIDED = 54,                  /* PROVIDED  */
+  YYSYMBOL_FULL = 55,                      /* FULL  */
+  YYSYMBOL_EMPTY = 56,                     /* EMPTY  */
+  YYSYMBOL_NFULL = 57,                     /* NFULL  */
+  YYSYMBOL_NEMPTY = 58,                    /* NEMPTY  */
+  YYSYMBOL_XU = 59,                        /* XU  */
+  YYSYMBOL_CLAIM = 60,                     /* CLAIM  */
+  YYSYMBOL_TRACE = 61,                     /* TRACE  */
+  YYSYMBOL_INIT = 62,                      /* INIT  */
+  YYSYMBOL_WHILE = 63,                     /* WHILE  */
+  YYSYMBOL_WHEN = 64,                      /* WHEN  */
+  YYSYMBOL_WAIT = 65,                      /* WAIT  */
+  YYSYMBOL_RESET = 66,                     /* RESET  */
+  YYSYMBOL_SPEC = 67,                      /* SPEC  */
+  YYSYMBOL_EVENTUALLY = 68,                /* EVENTUALLY  */
+  YYSYMBOL_ALWAYS = 69,                    /* ALWAYS  */
+  YYSYMBOL_GLOBALLY = 70,                  /* GLOBALLY  */
+  YYSYMBOL_FINALLY = 71,                   /* FINALLY  */
+  YYSYMBOL_UNTIL = 72,                     /* UNTIL  */
+  YYSYMBOL_LTL = 73,                       /* LTL  */
+  YYSYMBOL_ASGN = 74,                      /* ASGN  */
+  YYSYMBOL_SND = 75,                       /* SND  */
+  YYSYMBOL_O_SND = 76,                     /* O_SND  */
+  YYSYMBOL_RCV = 77,                       /* RCV  */
+  YYSYMBOL_R_RCV = 78,                     /* R_RCV  */
+  YYSYMBOL_OR = 79,                        /* OR  */
+  YYSYMBOL_AND = 80,                       /* AND  */
+  YYSYMBOL_81_ = 81,                       /* '|'  */
+  YYSYMBOL_82_ = 82,                       /* '^'  */
+  YYSYMBOL_83_ = 83,                       /* '&'  */
+  YYSYMBOL_EQ = 84,                        /* EQ  */
+  YYSYMBOL_NE = 85,                        /* NE  */
+  YYSYMBOL_GT = 86,                        /* GT  */
+  YYSYMBOL_LT = 87,                        /* LT  */
+  YYSYMBOL_GE = 88,                        /* GE  */
+  YYSYMBOL_LE = 89,                        /* LE  */
+  YYSYMBOL_LSHIFT = 90,                    /* LSHIFT  */
+  YYSYMBOL_RSHIFT = 91,                    /* RSHIFT  */
+  YYSYMBOL_92_ = 92,                       /* '+'  */
+  YYSYMBOL_93_ = 93,                       /* '-'  */
+  YYSYMBOL_94_ = 94,                       /* '*'  */
+  YYSYMBOL_95_ = 95,                       /* '/'  */
+  YYSYMBOL_96_ = 96,                       /* '%'  */
+  YYSYMBOL_INCR = 97,                      /* INCR  */
+  YYSYMBOL_DECR = 98,                      /* DECR  */
+  YYSYMBOL_99_ = 99,                       /* '~'  */
+  YYSYMBOL_UMIN = 100,                     /* UMIN  */
+  YYSYMBOL_NEG = 101,                      /* NEG  */
+  YYSYMBOL_COUNT = 102,                    /* COUNT  */
+  YYSYMBOL_CONTEXT = 103,                  /* CONTEXT  */
+  YYSYMBOL_DOT = 104,                      /* DOT  */
+  YYSYMBOL_IMPLIES = 105,                  /* IMPLIES  */
+  YYSYMBOL_106_ = 106,                     /* '('  */
+  YYSYMBOL_107_ = 107,                     /* ')'  */
+  YYSYMBOL_108_ = 108,                     /* '['  */
+  YYSYMBOL_109_ = 109,                     /* ']'  */
+  YYSYMBOL_110_ = 110,                     /* '{'  */
+  YYSYMBOL_111_ = 111,                     /* '}'  */
+  YYSYMBOL_112_ = 112,                     /* ':'  */
+  YYSYMBOL_113_ = 113,                     /* ','  */
+  YYSYMBOL_114_ = 114,                     /* '.'  */
+  YYSYMBOL_115_ = 115,                     /* '@'  */
+  YYSYMBOL_YYACCEPT = 116,                 /* $accept  */
+  YYSYMBOL_start_parsing = 117,            /* start_parsing  */
+  YYSYMBOL_118_1 = 118,                    /* $@1  */
+  YYSYMBOL_program = 119,                  /* program  */
+  YYSYMBOL_units = 120,                    /* units  */
+  YYSYMBOL_unit = 121,                     /* unit  */
+  YYSYMBOL_proc = 122,                     /* proc  */
+  YYSYMBOL_123_2 = 123,                    /* $@2  */
+  YYSYMBOL_124_3 = 124,                    /* $@3  */
+  YYSYMBOL_proctype = 125,                 /* proctype  */
+  YYSYMBOL_inst = 126,                     /* inst  */
+  YYSYMBOL_init = 127,                     /* init  */
+  YYSYMBOL_128_4 = 128,                    /* $@4  */
+  YYSYMBOL_events = 129,                   /* events  */
+  YYSYMBOL_utypedef = 130,                 /* utypedef  */
+  YYSYMBOL_mtypedef = 131,                 /* mtypedef  */
+  YYSYMBOL_132_5 = 132,                    /* $@5  */
+  YYSYMBOL_ns = 133,                       /* ns  */
+  YYSYMBOL_134_6 = 134,                    /* $@6  */
+  YYSYMBOL_135_7 = 135,                    /* $@7  */
+  YYSYMBOL_136_8 = 136,                    /* $@8  */
+  YYSYMBOL_c_fcts = 137,                   /* c_fcts  */
+  YYSYMBOL_cstate = 138,                   /* cstate  */
+  YYSYMBOL_ccode = 139,                    /* ccode  */
+  YYSYMBOL_cexpr = 140,                    /* cexpr  */
+  YYSYMBOL_body = 141,                     /* body  */
+  YYSYMBOL_142_9 = 142,                    /* $@9  */
+  YYSYMBOL_sequence = 143,                 /* sequence  */
+  YYSYMBOL_step = 144,                     /* step  */
+  YYSYMBOL_vis = 145,                      /* vis  */
+  YYSYMBOL_asgn = 146,                     /* asgn  */
+  YYSYMBOL_one_decl = 147,                 /* one_decl  */
+  YYSYMBOL_148_10 = 148,                   /* $@10  */
+  YYSYMBOL_149_11 = 149,                   /* $@11  */
+  YYSYMBOL_decl_lst = 150,                 /* decl_lst  */
+  YYSYMBOL_decl = 151,                     /* decl  */
+  YYSYMBOL_var_list = 152,                 /* var_list  */
+  YYSYMBOL_ivar = 153,                     /* ivar  */
+  YYSYMBOL_param_list = 154,               /* param_list  */
+  YYSYMBOL_ch_init = 155,                  /* ch_init  */
+  YYSYMBOL_basetype = 156,                 /* basetype  */
+  YYSYMBOL_typ_list = 157,                 /* typ_list  */
+  YYSYMBOL_vardcl = 158,                   /* vardcl  */
+  YYSYMBOL_varref = 159,                   /* varref  */
+  YYSYMBOL_pfld = 160,                     /* pfld  */
+  YYSYMBOL_cmpnd = 161,                    /* cmpnd  */
+  YYSYMBOL_sfld = 162,                     /* sfld  */
+  YYSYMBOL_stmnt = 163,                    /* stmnt  */
+  YYSYMBOL_Special = 164,                  /* Special  */
+  YYSYMBOL_Stmnt = 165,                    /* Stmnt  */
+  YYSYMBOL_options = 166,                  /* options  */
+  YYSYMBOL_option = 167,                   /* option  */
+  YYSYMBOL_real_expr = 168,                /* real_expr  */
+  YYSYMBOL_OS = 169,                       /* OS  */
+  YYSYMBOL_MS = 170,                       /* MS  */
+  YYSYMBOL_aname = 171,                    /* aname  */
+  YYSYMBOL_expr = 172,                     /* expr  */
+  YYSYMBOL_Opt_priority = 173,             /* Opt_priority  */
+  YYSYMBOL_full_expr = 174,                /* full_expr  */
+  YYSYMBOL_Opt_enabler = 175,              /* Opt_enabler  */
+  YYSYMBOL_Expr = 176,                     /* Expr  */
+  YYSYMBOL_Probe = 177,                    /* Probe  */
+  YYSYMBOL_args = 178,                     /* args  */
+  YYSYMBOL_prargs = 179,                   /* prargs  */
+  YYSYMBOL_margs = 180,                    /* margs  */
+  YYSYMBOL_arg = 181,                      /* arg  */
+  YYSYMBOL_rarg = 182,                     /* rarg  */
+  YYSYMBOL_rargs = 183,                    /* rargs  */
+  YYSYMBOL_nlst = 184,                     /* nlst  */
+  YYSYMBOL_props = 185,                    /* props  */
+  YYSYMBOL_prop = 186,                     /* prop  */
+  YYSYMBOL_prop_expr = 187,                /* prop_expr  */
+  YYSYMBOL_quants = 188,                   /* quants  */
+  YYSYMBOL_quant = 189                     /* quant  */
 };
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
+typedef enum yysymbol_kind_t yysymbol_kind_t;
 
-
-
-int yyparse (symTable** globalSymTab, stmnt** program);
-
-#endif /* !YY_YY_HOME_SLAZREG_WORK_RESEARCH_MUTATION_MUTANTGENERATOR_PARSER_Y_TAB_HPP_INCLUDED  */
 
 
 
@@ -440,6 +381,18 @@ typedef __INT_LEAST16_TYPE__ yytype_int16;
 typedef int_least16_t yytype_int16;
 #else
 typedef short yytype_int16;
+#endif
+
+/* Work around bug in HP-UX 11.23, which defines these macros
+   incorrectly for preprocessor constants.  This workaround can likely
+   be removed in 2023, as HPE has promised support for HP-UX 11.23
+   (aka HP-UX 11i v2) only through the end of 2022; see Table 2 of
+   <https://h20195.www2.hpe.com/V2/getpdf.aspx/4AA4-7673ENW.pdf>.  */
+#ifdef __hpux
+# undef UINT_LEAST8_MAX
+# undef UINT_LEAST16_MAX
+# define UINT_LEAST8_MAX 255
+# define UINT_LEAST16_MAX 65535
 #endif
 
 #if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
@@ -501,6 +454,7 @@ typedef int yytype_uint16;
 
 #define YYSIZEOF(X) YY_CAST (YYPTRDIFF_T, sizeof (X))
 
+
 /* Stored state numbers (used for stacks). */
 typedef yytype_int16 yy_state_t;
 
@@ -518,6 +472,7 @@ typedef int yy_state_fast_t;
 #  define YY_(Msgid) Msgid
 # endif
 #endif
+
 
 #ifndef YY_ATTRIBUTE_PURE
 # if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
@@ -537,17 +492,23 @@ typedef int yy_state_fast_t;
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
+#if defined __GNUC__ && ! defined __ICC && 406 <= __GNUC__ * 100 + __GNUC_MINOR__
+# if __GNUC__ * 100 + __GNUC_MINOR__ < 407
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")
+# else
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
     _Pragma ("GCC diagnostic push")                                     \
     _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
+# endif
 # define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
@@ -576,7 +537,7 @@ typedef int yy_state_fast_t;
 
 #define YY_ASSERT(E) ((void) (0 && (E)))
 
-#if ! defined yyoverflow || YYERROR_VERBOSE
+#if 1
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
@@ -641,8 +602,7 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 # endif
-#endif /* ! defined yyoverflow || YYERROR_VERBOSE */
-
+#endif /* 1 */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
@@ -718,14 +678,16 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  472
 
-#define YYUNDEFTOK  2
+/* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   351
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
-#define YYTRANSLATE(YYX)                                                \
-  (0 <= (YYX) && (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+#define YYTRANSLATE(YYX)                                \
+  (0 <= (YYX) && (YYX) <= YYMAXUTOK                     \
+   ? YY_CAST (yysymbol_kind_t, yytranslate[YYX])        \
+   : YYSYMBOL_YYUNDEF)
 
 /* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex.  */
@@ -770,7 +732,7 @@ static const yytype_int8 yytranslate[] =
 };
 
 #if YYDEBUG
-  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+/* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
        0,   146,   146,   146,   151,   154,   155,   158,   159,   160,
@@ -801,58 +763,51 @@ static const yytype_int16 yyrline[] =
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || 1
+/** Accessing symbol of state STATE.  */
+#define YY_ACCESSING_SYMBOL(State) YY_CAST (yysymbol_kind_t, yystos[State])
+
+#if 1
+/* The user-facing name of the symbol whose (internal) number is
+   YYSYMBOL.  No bounds checking.  */
+static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
+
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "CONST", "IF", "DO", "TYPE", "NAME",
-  "UNAME", "PNAME", "INAME", "STRING", "REAL", "TRUE", "FALSE", "SKIP",
-  "ASSERT", "PRINT", "PRINTM", "C_CODE", "C_DECL", "C_EXPR", "C_STATE",
-  "C_TRACK", "RUN", "LEN", "ENABLED", "EVAL", "PC_VAL", "TYPEDEF", "MTYPE",
-  "INLINE", "LABEL", "OF", "GOTO", "BREAK", "ELSE", "SEMI", "FI", "OD",
-  "SEP", "ATOMIC", "NON_ATOMIC", "D_STEP", "UNLESS", "TIMEOUT",
-  "NONPROGRESS", "ACTIVE", "PROCTYPE", "D_PROCTYPE", "HIDDEN", "SHOW",
-  "ISLOCAL", "PRIORITY", "PROVIDED", "FULL", "EMPTY", "NFULL", "NEMPTY",
-  "XU", "CLAIM", "TRACE", "INIT", "WHILE", "WHEN", "WAIT", "RESET", "SPEC",
-  "EVENTUALLY", "ALWAYS", "GLOBALLY", "FINALLY", "UNTIL", "LTL", "ASGN",
-  "SND", "O_SND", "RCV", "R_RCV", "OR", "AND", "'|'", "'^'", "'&'", "EQ",
-  "NE", "GT", "LT", "GE", "LE", "LSHIFT", "RSHIFT", "'+'", "'-'", "'*'",
-  "'/'", "'%'", "INCR", "DECR", "'~'", "UMIN", "NEG", "COUNT", "CONTEXT",
-  "DOT", "IMPLIES", "'('", "')'", "'['", "']'", "'{'", "'}'", "':'", "','",
-  "'.'", "'@'", "$accept", "start_parsing", "$@1", "program", "units",
-  "unit", "proc", "$@2", "$@3", "proctype", "inst", "init", "$@4",
-  "events", "utypedef", "mtypedef", "$@5", "ns", "$@6", "$@7", "$@8",
-  "c_fcts", "cstate", "ccode", "cexpr", "body", "$@9", "sequence", "step",
-  "vis", "asgn", "one_decl", "$@10", "$@11", "decl_lst", "decl",
-  "var_list", "ivar", "param_list", "ch_init", "basetype", "typ_list",
-  "vardcl", "varref", "pfld", "cmpnd", "sfld", "stmnt", "Special", "Stmnt",
-  "options", "option", "real_expr", "OS", "MS", "aname", "expr",
-  "Opt_priority", "full_expr", "Opt_enabler", "Expr", "Probe", "args",
-  "prargs", "margs", "arg", "rarg", "rargs", "nlst", "props", "prop",
-  "prop_expr", "quants", "quant", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "CONST", "IF", "DO",
+  "TYPE", "NAME", "UNAME", "PNAME", "INAME", "STRING", "REAL", "TRUE",
+  "FALSE", "SKIP", "ASSERT", "PRINT", "PRINTM", "C_CODE", "C_DECL",
+  "C_EXPR", "C_STATE", "C_TRACK", "RUN", "LEN", "ENABLED", "EVAL",
+  "PC_VAL", "TYPEDEF", "MTYPE", "INLINE", "LABEL", "OF", "GOTO", "BREAK",
+  "ELSE", "SEMI", "FI", "OD", "SEP", "ATOMIC", "NON_ATOMIC", "D_STEP",
+  "UNLESS", "TIMEOUT", "NONPROGRESS", "ACTIVE", "PROCTYPE", "D_PROCTYPE",
+  "HIDDEN", "SHOW", "ISLOCAL", "PRIORITY", "PROVIDED", "FULL", "EMPTY",
+  "NFULL", "NEMPTY", "XU", "CLAIM", "TRACE", "INIT", "WHILE", "WHEN",
+  "WAIT", "RESET", "SPEC", "EVENTUALLY", "ALWAYS", "GLOBALLY", "FINALLY",
+  "UNTIL", "LTL", "ASGN", "SND", "O_SND", "RCV", "R_RCV", "OR", "AND",
+  "'|'", "'^'", "'&'", "EQ", "NE", "GT", "LT", "GE", "LE", "LSHIFT",
+  "RSHIFT", "'+'", "'-'", "'*'", "'/'", "'%'", "INCR", "DECR", "'~'",
+  "UMIN", "NEG", "COUNT", "CONTEXT", "DOT", "IMPLIES", "'('", "')'", "'['",
+  "']'", "'{'", "'}'", "':'", "','", "'.'", "'@'", "$accept",
+  "start_parsing", "$@1", "program", "units", "unit", "proc", "$@2", "$@3",
+  "proctype", "inst", "init", "$@4", "events", "utypedef", "mtypedef",
+  "$@5", "ns", "$@6", "$@7", "$@8", "c_fcts", "cstate", "ccode", "cexpr",
+  "body", "$@9", "sequence", "step", "vis", "asgn", "one_decl", "$@10",
+  "$@11", "decl_lst", "decl", "var_list", "ivar", "param_list", "ch_init",
+  "basetype", "typ_list", "vardcl", "varref", "pfld", "cmpnd", "sfld",
+  "stmnt", "Special", "Stmnt", "options", "option", "real_expr", "OS",
+  "MS", "aname", "expr", "Opt_priority", "full_expr", "Opt_enabler",
+  "Expr", "Probe", "args", "prargs", "margs", "arg", "rarg", "rargs",
+  "nlst", "props", "prop", "prop_expr", "quants", "quant", YY_NULLPTR
 };
-#endif
 
-# ifdef YYPRINT
-/* YYTOKNUM[NUM] -- (External) token number corresponding to the
-   (internal) symbol number NUM (which must be that of a token).  */
-static const yytype_int16 yytoknum[] =
+static const char *
+yysymbol_name (yysymbol_kind_t yysymbol)
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,   327,   328,   329,   330,   331,   332,   333,   334,
-     335,   124,    94,    38,   336,   337,   338,   339,   340,   341,
-     342,   343,    43,    45,    42,    47,    37,   344,   345,   126,
-     346,   347,   348,   349,   350,   351,    40,    41,    91,    93,
-     123,   125,    58,    44,    46,    64
-};
-# endif
+  return yytname[yysymbol];
+}
+#endif
 
 #define YYPACT_NINF (-403)
 
@@ -864,8 +819,8 @@ static const yytype_int16 yytoknum[] =
 #define yytable_value_is_error(Yyn) \
   0
 
-  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-     STATE-NUM.  */
+/* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+   STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
     -403,    39,  1423,  -403,  -403,  -403,    48,    51,    11,  -403,
@@ -918,9 +873,9 @@ static const yytype_int16 yypact[] =
     -403,  -403
 };
 
-  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-     Performed when YYTABLE does not specify something else to do.  Zero
-     means the default is an error.  */
+/* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+   Performed when YYTABLE does not specify something else to do.  Zero
+   means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
        2,     0,    21,     1,    41,    42,     0,     0,     0,    31,
@@ -973,7 +928,7 @@ static const yytype_uint8 yydefact[] =
      181,    80
 };
 
-  /* YYPGOTO[NTERM-NUM].  */
+/* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
     -403,  -403,  -403,  -403,  -403,   516,  -403,  -403,  -403,  -403,
@@ -986,10 +941,10 @@ static const yytype_int16 yypgoto[] =
     -403,   -33,   333,  -403
 };
 
-  /* YYDEFGOTO[NTERM-NUM].  */
+/* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-      -1,     1,     2,    17,    18,    19,    20,   126,   438,    46,
+       0,     1,     2,    17,    18,    19,    20,   126,   438,    46,
       21,    22,    39,    23,    24,    25,   127,    26,    35,    70,
      413,    27,    28,   108,   109,    38,    55,   110,   111,    67,
       62,   112,    63,    64,    69,   336,   129,   130,   225,   343,
@@ -999,9 +954,9 @@ static const yytype_int16 yydefgoto[] =
       42,   214,   215,   216
 };
 
-  /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-     positive, shift that token.  If negative, reduce the rule whose
-     number is the opposite.  If YYTABLE_NINF, syntax error.  */
+/* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+   positive, shift that token.  If negative, reduce the rule whose
+   number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
      124,   113,   149,   175,   237,   173,   265,   235,   272,   272,
@@ -1378,8 +1333,8 @@ static const yytype_int16 yycheck[] =
       94,    95,    96
 };
 
-  /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-     symbol of state STATE-NUM.  */
+/* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
+   state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
        0,   117,   118,     0,    19,    20,    22,    23,    29,    31,
@@ -1432,7 +1387,7 @@ static const yytype_uint8 yystos[] =
      107,   157
 };
 
-  /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
+/* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_uint8 yyr1[] =
 {
        0,   116,   118,   117,   119,   120,   120,   121,   121,   121,
@@ -1462,7 +1417,7 @@ static const yytype_uint8 yyr1[] =
      187,   188,   188,   189,   189
 };
 
-  /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
+/* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     0,     3,     1,     1,     2,     1,     1,     1,
@@ -1493,14 +1448,15 @@ static const yytype_int8 yyr2[] =
 };
 
 
+enum { YYENOMEM = -2 };
+
 #define yyerrok         (yyerrstatus = 0)
 #define yyclearin       (yychar = YYEMPTY)
-#define YYEMPTY         (-2)
-#define YYEOF           0
 
 #define YYACCEPT        goto yyacceptlab
 #define YYABORT         goto yyabortlab
 #define YYERROR         goto yyerrorlab
+#define YYNOMEM         goto yyexhaustedlab
 
 
 #define YYRECOVERING()  (!!yyerrstatus)
@@ -1522,10 +1478,9 @@ static const yytype_int8 yyr2[] =
       }                                                           \
   while (0)
 
-/* Error token number */
-#define YYTERROR        1
-#define YYERRCODE       256
-
+/* Backward compatibility with an undocumented macro.
+   Use YYerror or YYUNDEF. */
+#define YYERRCODE YYUNDEF
 
 
 /* Enable debugging if requested.  */
@@ -1542,19 +1497,16 @@ do {                                            \
     YYFPRINTF Args;                             \
 } while (0)
 
-/* This macro is provided for backward compatibility. */
-#ifndef YY_LOCATION_PRINT
-# define YY_LOCATION_PRINT(File, Loc) ((void) 0)
-#endif
 
 
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)                    \
+
+# define YY_SYMBOL_PRINT(Title, Kind, Value, Location)                    \
 do {                                                                      \
   if (yydebug)                                                            \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Type, Value, globalSymTab, program); \
+                  Kind, Value, globalSymTab, program); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
@@ -1565,20 +1517,17 @@ do {                                                                      \
 `-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, symTable** globalSymTab, stmnt** program)
+yy_symbol_value_print (FILE *yyo,
+                       yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, symTable** globalSymTab, stmnt** program)
 {
   FILE *yyoutput = yyo;
-  YYUSE (yyoutput);
-  YYUSE (globalSymTab);
-  YYUSE (program);
+  YY_USE (yyoutput);
+  YY_USE (globalSymTab);
+  YY_USE (program);
   if (!yyvaluep)
     return;
-# ifdef YYPRINT
-  if (yytype < YYNTOKENS)
-    YYPRINT (yyo, yytoknum[yytype], *yyvaluep);
-# endif
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YYUSE (yytype);
+  YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -1588,12 +1537,13 @@ yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, sy
 `---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep, symTable** globalSymTab, stmnt** program)
+yy_symbol_print (FILE *yyo,
+                 yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, symTable** globalSymTab, stmnt** program)
 {
   YYFPRINTF (yyo, "%s %s (",
-             yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
+             yykind < YYNTOKENS ? "token" : "nterm", yysymbol_name (yykind));
 
-  yy_symbol_value_print (yyo, yytype, yyvaluep, globalSymTab, program);
+  yy_symbol_value_print (yyo, yykind, yyvaluep, globalSymTab, program);
   YYFPRINTF (yyo, ")");
 }
 
@@ -1626,7 +1576,8 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule, symTable** globalSymTab, stmnt** program)
+yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp,
+                 int yyrule, symTable** globalSymTab, stmnt** program)
 {
   int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
@@ -1638,9 +1589,8 @@ yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule, symTable** globa
     {
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr,
-                       yystos[+yyssp[yyi + 1 - yynrhs]],
-                       &yyvsp[(yyi + 1) - (yynrhs)]
-                                              , globalSymTab, program);
+                       YY_ACCESSING_SYMBOL (+yyssp[yyi + 1 - yynrhs]),
+                       &yyvsp[(yyi + 1) - (yynrhs)], globalSymTab, program);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1655,8 +1605,8 @@ do {                                    \
    multiple parsers can coexist.  */
 int yydebug;
 #else /* !YYDEBUG */
-# define YYDPRINTF(Args)
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)
+# define YYDPRINTF(Args) ((void) 0)
+# define YY_SYMBOL_PRINT(Title, Kind, Value, Location)
 # define YY_STACK_PRINT(Bottom, Top)
 # define YY_REDUCE_PRINT(Rule)
 #endif /* !YYDEBUG */
@@ -1679,12 +1629,60 @@ int yydebug;
 #endif
 
 
-#if YYERROR_VERBOSE
+/* Context of a parse error.  */
+typedef struct
+{
+  yy_state_t *yyssp;
+  yysymbol_kind_t yytoken;
+} yypcontext_t;
 
-# ifndef yystrlen
-#  if defined __GLIBC__ && defined _STRING_H
-#   define yystrlen(S) (YY_CAST (YYPTRDIFF_T, strlen (S)))
-#  else
+/* Put in YYARG at most YYARGN of the expected tokens given the
+   current YYCTX, and return the number of tokens stored in YYARG.  If
+   YYARG is null, return the number of expected tokens (guaranteed to
+   be less than YYNTOKENS).  Return YYENOMEM on memory exhaustion.
+   Return 0 if there are more than YYARGN expected tokens, yet fill
+   YYARG up to YYARGN. */
+static int
+yypcontext_expected_tokens (const yypcontext_t *yyctx,
+                            yysymbol_kind_t yyarg[], int yyargn)
+{
+  /* Actual size of YYARG. */
+  int yycount = 0;
+  int yyn = yypact[+*yyctx->yyssp];
+  if (!yypact_value_is_default (yyn))
+    {
+      /* Start YYX at -YYN if negative to avoid negative indexes in
+         YYCHECK.  In other words, skip the first -YYN actions for
+         this state because they are default actions.  */
+      int yyxbegin = yyn < 0 ? -yyn : 0;
+      /* Stay within bounds of both yycheck and yytname.  */
+      int yychecklim = YYLAST - yyn + 1;
+      int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+      int yyx;
+      for (yyx = yyxbegin; yyx < yyxend; ++yyx)
+        if (yycheck[yyx + yyn] == yyx && yyx != YYSYMBOL_YYerror
+            && !yytable_value_is_error (yytable[yyx + yyn]))
+          {
+            if (!yyarg)
+              ++yycount;
+            else if (yycount == yyargn)
+              return 0;
+            else
+              yyarg[yycount++] = YY_CAST (yysymbol_kind_t, yyx);
+          }
+    }
+  if (yyarg && yycount == 0 && 0 < yyargn)
+    yyarg[0] = YYSYMBOL_YYEMPTY;
+  return yycount;
+}
+
+
+
+
+#ifndef yystrlen
+# if defined __GLIBC__ && defined _STRING_H
+#  define yystrlen(S) (YY_CAST (YYPTRDIFF_T, strlen (S)))
+# else
 /* Return the length of YYSTR.  */
 static YYPTRDIFF_T
 yystrlen (const char *yystr)
@@ -1694,13 +1692,13 @@ yystrlen (const char *yystr)
     continue;
   return yylen;
 }
-#  endif
 # endif
+#endif
 
-# ifndef yystpcpy
-#  if defined __GLIBC__ && defined _STRING_H && defined _GNU_SOURCE
-#   define yystpcpy stpcpy
-#  else
+#ifndef yystpcpy
+# if defined __GLIBC__ && defined _STRING_H && defined _GNU_SOURCE
+#  define yystpcpy stpcpy
+# else
 /* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
    YYDEST.  */
 static char *
@@ -1714,10 +1712,10 @@ yystpcpy (char *yydest, const char *yysrc)
 
   return yyd - 1;
 }
-#  endif
 # endif
+#endif
 
-# ifndef yytnamerr
+#ifndef yytnamerr
 /* Copy to YYRES the contents of YYSTR after stripping away unnecessary
    quotes and backslashes, so that it's suitable for yyerror.  The
    heuristic is that double-quoting is unnecessary unless the string
@@ -1732,7 +1730,6 @@ yytnamerr (char *yyres, const char *yystr)
     {
       YYPTRDIFF_T yyn = 0;
       char const *yyp = yystr;
-
       for (;;)
         switch (*++yyp)
           {
@@ -1766,31 +1763,15 @@ yytnamerr (char *yyres, const char *yystr)
   else
     return yystrlen (yystr);
 }
-# endif
+#endif
 
-/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
-   about the unexpected token YYTOKEN for the state stack whose top is
-   YYSSP.
 
-   Return 0 if *YYMSG was successfully written.  Return 1 if *YYMSG is
-   not large enough to hold the message.  In that case, also set
-   *YYMSG_ALLOC to the required number of bytes.  Return 2 if the
-   required number of bytes is too large to store.  */
 static int
-yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
-                yy_state_t *yyssp, int yytoken)
+yy_syntax_error_arguments (const yypcontext_t *yyctx,
+                           yysymbol_kind_t yyarg[], int yyargn)
 {
-  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
-  /* Internationalized format string. */
-  const char *yyformat = YY_NULLPTR;
-  /* Arguments of yyformat: reported tokens (one for the "unexpected",
-     one per "expected"). */
-  char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
   /* Actual size of YYARG. */
   int yycount = 0;
-  /* Cumulated lengths of YYARG.  */
-  YYPTRDIFF_T yysize = 0;
-
   /* There are many possibilities here to consider:
      - If this state is a consistent state with a default action, then
        the only way this function was invoked is if the default action
@@ -1814,52 +1795,54 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
        one exception: it will still contain any token that will not be
        accepted due to an error action in a later state.
   */
-  if (yytoken != YYEMPTY)
+  if (yyctx->yytoken != YYSYMBOL_YYEMPTY)
     {
-      int yyn = yypact[+*yyssp];
-      YYPTRDIFF_T yysize0 = yytnamerr (YY_NULLPTR, yytname[yytoken]);
-      yysize = yysize0;
-      yyarg[yycount++] = yytname[yytoken];
-      if (!yypact_value_is_default (yyn))
-        {
-          /* Start YYX at -YYN if negative to avoid negative indexes in
-             YYCHECK.  In other words, skip the first -YYN actions for
-             this state because they are default actions.  */
-          int yyxbegin = yyn < 0 ? -yyn : 0;
-          /* Stay within bounds of both yycheck and yytname.  */
-          int yychecklim = YYLAST - yyn + 1;
-          int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-          int yyx;
-
-          for (yyx = yyxbegin; yyx < yyxend; ++yyx)
-            if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
-                && !yytable_value_is_error (yytable[yyx + yyn]))
-              {
-                if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
-                  {
-                    yycount = 1;
-                    yysize = yysize0;
-                    break;
-                  }
-                yyarg[yycount++] = yytname[yyx];
-                {
-                  YYPTRDIFF_T yysize1
-                    = yysize + yytnamerr (YY_NULLPTR, yytname[yyx]);
-                  if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
-                    yysize = yysize1;
-                  else
-                    return 2;
-                }
-              }
-        }
+      int yyn;
+      if (yyarg)
+        yyarg[yycount] = yyctx->yytoken;
+      ++yycount;
+      yyn = yypcontext_expected_tokens (yyctx,
+                                        yyarg ? yyarg + 1 : yyarg, yyargn - 1);
+      if (yyn == YYENOMEM)
+        return YYENOMEM;
+      else
+        yycount += yyn;
     }
+  return yycount;
+}
+
+/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
+   about the unexpected token YYTOKEN for the state stack whose top is
+   YYSSP.
+
+   Return 0 if *YYMSG was successfully written.  Return -1 if *YYMSG is
+   not large enough to hold the message.  In that case, also set
+   *YYMSG_ALLOC to the required number of bytes.  Return YYENOMEM if the
+   required number of bytes is too large to store.  */
+static int
+yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
+                const yypcontext_t *yyctx)
+{
+  enum { YYARGS_MAX = 5 };
+  /* Internationalized format string. */
+  const char *yyformat = YY_NULLPTR;
+  /* Arguments of yyformat: reported tokens (one for the "unexpected",
+     one per "expected"). */
+  yysymbol_kind_t yyarg[YYARGS_MAX];
+  /* Cumulated lengths of YYARG.  */
+  YYPTRDIFF_T yysize = 0;
+
+  /* Actual size of YYARG. */
+  int yycount = yy_syntax_error_arguments (yyctx, yyarg, YYARGS_MAX);
+  if (yycount == YYENOMEM)
+    return YYENOMEM;
 
   switch (yycount)
     {
-# define YYCASE_(N, S)                      \
+#define YYCASE_(N, S)                       \
       case N:                               \
         yyformat = S;                       \
-      break
+        break
     default: /* Avoid compiler warnings. */
       YYCASE_(0, YY_("syntax error"));
       YYCASE_(1, YY_("syntax error, unexpected %s"));
@@ -1867,17 +1850,23 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
       YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
       YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
       YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
-# undef YYCASE_
+#undef YYCASE_
     }
 
+  /* Compute error message size.  Don't count the "%s"s, but reserve
+     room for the terminator.  */
+  yysize = yystrlen (yyformat) - 2 * yycount + 1;
   {
-    /* Don't count the "%s"s in the final size, but reserve room for
-       the terminator.  */
-    YYPTRDIFF_T yysize1 = yysize + (yystrlen (yyformat) - 2 * yycount) + 1;
-    if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
-      yysize = yysize1;
-    else
-      return 2;
+    int yyi;
+    for (yyi = 0; yyi < yycount; ++yyi)
+      {
+        YYPTRDIFF_T yysize1
+          = yysize + yytnamerr (YY_NULLPTR, yytname[yyarg[yyi]]);
+        if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+          yysize = yysize1;
+        else
+          return YYENOMEM;
+      }
   }
 
   if (*yymsg_alloc < yysize)
@@ -1886,7 +1875,7 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
       if (! (yysize <= *yymsg_alloc
              && *yymsg_alloc <= YYSTACK_ALLOC_MAXIMUM))
         *yymsg_alloc = YYSTACK_ALLOC_MAXIMUM;
-      return 1;
+      return -1;
     }
 
   /* Avoid sprintf, as that infringes on the user's name space.
@@ -1898,7 +1887,7 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
     while ((*yyp = *yyformat) != '\0')
       if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
         {
-          yyp += yytnamerr (yyp, yyarg[yyi++]);
+          yyp += yytnamerr (yyp, yytname[yyarg[yyi++]]);
           yyformat += 2;
         }
       else
@@ -1909,26 +1898,29 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
   }
   return 0;
 }
-#endif /* YYERROR_VERBOSE */
+
 
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, symTable** globalSymTab, stmnt** program)
+yydestruct (const char *yymsg,
+            yysymbol_kind_t yykind, YYSTYPE *yyvaluep, symTable** globalSymTab, stmnt** program)
 {
-  YYUSE (yyvaluep);
-  YYUSE (globalSymTab);
-  YYUSE (program);
+  YY_USE (yyvaluep);
+  YY_USE (globalSymTab);
+  YY_USE (program);
   if (!yymsg)
     yymsg = "Deleting";
-  YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
+  YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YYUSE (yytype);
+  YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
+
+
 
 
 
@@ -1940,7 +1932,7 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, symTable** globalS
 int
 yyparse (symTable** globalSymTab, stmnt** program)
 {
-/* The lookahead symbol.  */
+/* Lookahead token kind.  */
 int yychar;
 
 
@@ -1951,45 +1943,41 @@ YY_INITIAL_VALUE (static YYSTYPE yyval_default;)
 YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
 
     /* Number of syntax errors so far.  */
-    int yynerrs;
+    int yynerrs = 0;
 
-    yy_state_fast_t yystate;
+    yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
-    int yyerrstatus;
+    int yyerrstatus = 0;
 
-    /* The stacks and their tools:
-       'yyss': related to states.
-       'yyvs': related to semantic values.
-
-       Refer to the stacks through separate pointers, to allow yyoverflow
+    /* Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
-    /* The state stack.  */
+    /* Their size.  */
+    YYPTRDIFF_T yystacksize = YYINITDEPTH;
+
+    /* The state stack: array, bottom, top.  */
     yy_state_t yyssa[YYINITDEPTH];
-    yy_state_t *yyss;
-    yy_state_t *yyssp;
+    yy_state_t *yyss = yyssa;
+    yy_state_t *yyssp = yyss;
 
-    /* The semantic value stack.  */
+    /* The semantic value stack: array, bottom, top.  */
     YYSTYPE yyvsa[YYINITDEPTH];
-    YYSTYPE *yyvs;
-    YYSTYPE *yyvsp;
-
-    YYPTRDIFF_T yystacksize;
+    YYSTYPE *yyvs = yyvsa;
+    YYSTYPE *yyvsp = yyvs;
 
   int yyn;
+  /* The return value of yyparse.  */
   int yyresult;
-  /* Lookahead token as an internal (translated) token number.  */
-  int yytoken = 0;
+  /* Lookahead symbol kind.  */
+  yysymbol_kind_t yytoken = YYSYMBOL_YYEMPTY;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
 
-#if YYERROR_VERBOSE
   /* Buffer for error messages, and its allocated size.  */
   char yymsgbuf[128];
   char *yymsg = yymsgbuf;
   YYPTRDIFF_T yymsg_alloc = sizeof yymsgbuf;
-#endif
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
 
@@ -1997,16 +1985,10 @@ YYSTYPE yylval YY_INITIAL_VALUE (= yyval_default);
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
 
-  yyssp = yyss = yyssa;
-  yyvsp = yyvs = yyvsa;
-  yystacksize = YYINITDEPTH;
-
   YYDPRINTF ((stderr, "Starting parse\n"));
 
-  yystate = 0;
-  yyerrstatus = 0;
-  yynerrs = 0;
   yychar = YYEMPTY; /* Cause a token to be read.  */
+
   goto yysetstate;
 
 
@@ -2028,10 +2010,11 @@ yysetstate:
   YY_IGNORE_USELESS_CAST_BEGIN
   *yyssp = YY_CAST (yy_state_t, yystate);
   YY_IGNORE_USELESS_CAST_END
+  YY_STACK_PRINT (yyss, yyssp);
 
   if (yyss + yystacksize - 1 <= yyssp)
 #if !defined yyoverflow && !defined YYSTACK_RELOCATE
-    goto yyexhaustedlab;
+    YYNOMEM;
 #else
     {
       /* Get the current used size of the three stacks, in elements.  */
@@ -2059,7 +2042,7 @@ yysetstate:
 # else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
-        goto yyexhaustedlab;
+        YYNOMEM;
       yystacksize *= 2;
       if (YYMAXDEPTH < yystacksize)
         yystacksize = YYMAXDEPTH;
@@ -2070,10 +2053,10 @@ yysetstate:
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
-          goto yyexhaustedlab;
+          YYNOMEM;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
-# undef YYSTACK_RELOCATE
+#  undef YYSTACK_RELOCATE
         if (yyss1 != yyssa)
           YYSTACK_FREE (yyss1);
       }
@@ -2091,6 +2074,7 @@ yysetstate:
         YYABORT;
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
+
 
   if (yystate == YYFINAL)
     YYACCEPT;
@@ -2112,17 +2096,28 @@ yybackup:
 
   /* Not known => get a lookahead token if don't already have one.  */
 
-  /* YYCHAR is either YYEMPTY or YYEOF or a valid lookahead symbol.  */
+  /* YYCHAR is either empty, or end-of-input, or a valid lookahead.  */
   if (yychar == YYEMPTY)
     {
-      YYDPRINTF ((stderr, "Reading a token: "));
+      YYDPRINTF ((stderr, "Reading a token\n"));
       yychar = yylex (&yylval, globalSymTab);
     }
 
   if (yychar <= YYEOF)
     {
-      yychar = yytoken = YYEOF;
+      yychar = YYEOF;
+      yytoken = YYSYMBOL_YYEOF;
       YYDPRINTF ((stderr, "Now at end of input.\n"));
+    }
+  else if (yychar == YYerror)
+    {
+      /* The scanner already issued an error message, process directly
+         to error recovery.  But do not keep the error token as
+         lookahead, it is too special and may lead us to an endless
+         loop in error recovery. */
+      yychar = YYUNDEF;
+      yytoken = YYSYMBOL_YYerror;
+      goto yyerrlab1;
     }
   else
     {
@@ -2192,49 +2187,49 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2:
+  case 2: /* $@1: %empty  */
 #line 146 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; }
-#line 2199 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2194 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 4:
+  case 4: /* program: units  */
 #line 151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: units -> program\n")*/}
-#line 2205 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2200 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 5:
+  case 5: /* units: unit  */
 #line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: unit -> units\n")*/ }
-#line 2211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2206 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 6:
+  case 6: /* units: units unit  */
 #line 155 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: units unit -> units\n")*/ }
-#line 2217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2212 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 7:
+  case 7: /* unit: proc  */
 #line 158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { /*DBUG("REDUCE: proc -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2218 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 8:
+  case 8: /* unit: init  */
 #line 159 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: init -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2224 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 9:
+  case 9: /* unit: events  */
 #line 160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { assert(false); std::cout << "The 'events' construct is currently not supported."; }
-#line 2235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2230 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 10:
+  case 10: /* unit: one_decl  */
 #line 161 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { 
 													/*DBUG("REDUCE: one_decl -> unit\n")*/
@@ -2249,34 +2244,34 @@ yyreduce:
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-#line 2253 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2248 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 11:
+  case 11: /* unit: utypedef  */
 #line 174 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: utype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2254 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 12:
+  case 12: /* unit: mtypedef  */
 #line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: mtype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2265 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2260 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 13:
+  case 13: /* unit: c_fcts  */
 #line 176 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Embedded C code is not supported."; 						}
-#line 2271 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2266 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 14:
+  case 14: /* unit: ns  */
 #line 177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: ns -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); 	}
-#line 2277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2272 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 16:
+  case 16: /* $@2: %empty  */
 #line 184 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                 { 
 													nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; 
@@ -2285,16 +2280,16 @@ yyreduce:
 													predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); 
 													currentSymTab->insert(predef);
 												}
-#line 2289 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2284 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 17:
+  case 17: /* $@3: %empty  */
 #line 192 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { currentSymTab = savedSymTab; }
-#line 2295 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2290 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 18:
+  case 18: /* proc: inst proctype NAME $@2 '(' decl ')' $@3 Opt_priority Opt_enabler body  */
 #line 195 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
 		  											/*DBUG("REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n")*/
@@ -2306,40 +2301,40 @@ yyreduce:
 		  											nameSpace = "global";
 		  											free((yyvsp[-8].sVal));
 		  										}
-#line 2310 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2305 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 19:
+  case 19: /* proctype: PROCTYPE  */
 #line 207 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: -> PROCTYPE proctype\n")*/ }
-#line 2316 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2311 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 20:
+  case 20: /* proctype: D_PROCTYPE  */
 #line 208 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Deterministic proctypes are not supported (only useful for simulation)."; }
-#line 2322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2317 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 21:
+  case 21: /* inst: %empty  */
 #line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: void -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(0, nbrLines); 	}
-#line 2328 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 22:
+  case 22: /* inst: ACTIVE  */
 #line 212 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: ACTIVE -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(1, nbrLines); }
-#line 2334 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2329 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 23:
+  case 23: /* inst: ACTIVE '[' CONST ']'  */
 #line 213 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: ACTIVE [ CONST ] -> inst \n")*/ (yyval.pConstExprVal) = new exprConst((yyvsp[-1].iVal), nbrLines); }
-#line 2340 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 24:
+  case 24: /* inst: ACTIVE '[' NAME ']'  */
 #line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
 													/*DBUG("REDUCE: ACTIVE [ NAME ] -> inst\n")*/
@@ -2352,16 +2347,16 @@ yyreduce:
 													}
 													free((yyvsp[-1].sVal));											
 												}
-#line 2356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2351 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 25:
+  case 25: /* $@4: %empty  */
 #line 228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                 { nameSpace = "init"; }
-#line 2362 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 26:
+  case 26: /* init: INIT $@4 Opt_priority body  */
 #line 230 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
 													/*DBUG("REDUCE: INIT Opt_priority body -> init\n")*/
@@ -2374,16 +2369,16 @@ yyreduce:
 													}
 													nameSpace = "global";
 												}
-#line 2378 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 27:
+  case 27: /* events: TRACE body  */
 #line 243 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Event sequences (traces) are not supported."; }
-#line 2384 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2379 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 28:
+  case 28: /* utypedef: TYPEDEF NAME '{' decl_lst '}'  */
 #line 246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         {	
 													/*DBUG("REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n")*/
@@ -2395,16 +2390,16 @@ yyreduce:
 													declSyms.clear();
 													free((yyvsp[-3].sVal));  
 												}
-#line 2399 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2394 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 29:
+  case 29: /* $@5: %empty  */
 #line 258 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         {	mtypeDef = new mtypedefSymNode(nbrLines);	}
-#line 2405 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2400 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 30:
+  case 30: /* mtypedef: vis TYPE asgn $@5 '{' nlst '}'  */
 #line 259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 {
 													assert(mtypeDef->getMTypeList().size() != 0);
@@ -2418,31 +2413,31 @@ yyreduce:
 													(yyval.pStmntVal) = new mtypeDecl(mtypeDef, nbrLines);
 													// The mtype values are added in the nlst rule.
 												}
-#line 2422 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2417 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 31:
+  case 31: /* $@6: %empty  */
 #line 277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                          { inInline = true; }
-#line 2428 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2423 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 32:
+  case 32: /* $@7: %empty  */
 #line 278 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                        { nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); }
-#line 2434 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2429 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 33:
+  case 33: /* $@8: %empty  */
 #line 280 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { for(std::string it : params) 
 		  		currentSymTab->insert(varSymNode::createSymbol(symbol::T_NA, nbrLines, it));
 		    currentSymTab = savedSymTab;
 		  }
-#line 2443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 34:
+  case 34: /* ns: INLINE $@6 NAME $@7 '(' param_list ')' $@8 body  */
 #line 284 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {
 													/*DBUG("REDUCE: INLINE nm ( param_list ) body -> ns\n")*/
@@ -2453,10 +2448,10 @@ yyreduce:
 													inInline = false;
 													free((yyvsp[-6].sVal));
 												}
-#line 2457 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2452 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 44:
+  case 44: /* $@9: %empty  */
 #line 312 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													savedSymTab = currentSymTab; 
@@ -2464,210 +2459,210 @@ yyreduce:
 														currentSymTab = savedSymTab->createSubTable(nameSpace); 
 													nameSpace = "";
 												}
-#line 2468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 45:
+  case 45: /* body: '{' $@9 sequence OS '}'  */
 #line 319 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: '{' sequence OS '}' -> body\n")*/ (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab->setBlock((yyvsp[-2].pStmntVal)); currentSymTab = savedSymTab; }
-#line 2474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 46:
+  case 46: /* sequence: step  */
 #line 322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: step -> sequence\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal);  }
-#line 2480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 47:
+  case 47: /* sequence: sequence MS step  */
 #line 323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: sequence MS step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-2].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 48:
+  case 48: /* sequence: sequence step  */
 #line 324 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: sequence step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2492 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 49:
+  case 49: /* step: one_decl  */
 #line 327 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF); 
 												 	(yyval.pStmntVal) = new varDecl(static_cast<std::list<varSymNode*>>(declSyms), nbrLines);
 												 	declSyms.clear();
 												}
-#line 2502 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2497 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 50:
+  case 50: /* step: NAME ':' one_decl  */
 #line 332 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Declarations with labels are not suported."; }
-#line 2508 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 51:
+  case 51: /* step: NAME ':' XU  */
 #line 333 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Channel assertions are currently not supported."; }
-#line 2514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2509 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 52:
+  case 52: /* step: stmnt  */
 #line 334 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: stmnt -> step\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2520 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 53:
+  case 53: /* step: stmnt UNLESS stmnt  */
 #line 335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Unless statements are currently not supported."; }
-#line 2526 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 55:
+  case 55: /* vis: HIDDEN  */
 #line 344 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'hidden' keyword is not supported."; }
-#line 2532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2527 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 56:
+  case 56: /* vis: SHOW  */
 #line 345 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'show' keyword is not supported."; }
-#line 2538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 57:
+  case 57: /* vis: ISLOCAL  */
 #line 346 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'local' keyword is not supported."; }
-#line 2544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 60:
+  case 60: /* $@10: %empty  */
 #line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                    { declType = (yyvsp[0].iType); }
-#line 2550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 61:
+  case 61: /* one_decl: vis TYPE $@10 var_list  */
 #line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                 { /*DBUG("REDUCE: vis TYPE var_list -> one_decl\n")*/ }
-#line 2556 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 62:
+  case 62: /* $@11: %empty  */
 #line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                             { declType = symbol::T_UTYPE; typeDef = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookup((yyvsp[0].sVal))) : nullptr; assert(typeDef); }
-#line 2562 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2557 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 63:
+  case 63: /* one_decl: vis UNAME $@11 var_list  */
 #line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                                                                                                                         { /*DBUG("REDUCE: vis UNAME var_list -> one_decl\n")*/ free((yyvsp[-2].sVal)); }
-#line 2568 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2563 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 64:
+  case 64: /* decl_lst: one_decl  */
 #line 360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: one_decl -> decl_list\n")*/ }
-#line 2574 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2569 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 65:
+  case 65: /* decl_lst: one_decl SEMI decl_lst  */
 #line 361 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: one_decl SEMI decl_list -> decl_lst\n")*/ }
-#line 2580 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2575 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 66:
+  case 66: /* decl: %empty  */
 #line 365 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: void -> decl\n")*/ }
-#line 2586 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2581 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 67:
+  case 67: /* decl: decl_lst  */
 #line 366 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: decl_list -> decl\n")*/ }
-#line 2592 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2587 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 68:
+  case 68: /* var_list: ivar  */
 #line 373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: ivar -> var_list\n")*/ currentSymTab->insert((yyvsp[0].pVarSymVal)); declSyms.push_front((yyvsp[0].pVarSymVal)); }
-#line 2598 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2593 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 69:
+  case 69: /* var_list: ivar ',' var_list  */
 #line 374 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: ivar , var_list -> var_list\n")*/ currentSymTab->insert((yyvsp[-2].pVarSymVal)); declSyms.push_front((yyvsp[-2].pVarSymVal)); }
-#line 2604 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2599 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 70:
+  case 70: /* ivar: vardcl  */
 #line 377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 												  /*DBUG("REDUCE: var_decl -> ivar\n")*/ (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2614 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2609 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 71:
+  case 71: /* ivar: vardcl ASGN expr  */
 #line 382 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: var_decl ASGN expr -> ivar\n")*/ 
 												  (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal)); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 72:
+  case 72: /* ivar: vardcl ASGN ch_init  */
 #line 387 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: var_decl ASGN ch_init -> ivar\n")*/ (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, typeLst);	
 												  typeLst.clear(); if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal); //double free???if($3.sVal) free($3.sVal); 
 												}
-#line 2632 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2627 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 73:
+  case 73: /* param_list: %empty  */
 #line 392 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { }
-#line 2638 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2633 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 74:
+  case 74: /* param_list: NAME  */
 #line 393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { params.push_front(std::string((yyvsp[0].sVal))); free((yyvsp[0].sVal)); }
-#line 2644 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2639 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 75:
+  case 75: /* param_list: NAME ',' param_list  */
 #line 394 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                             { params.push_front(std::string((yyvsp[-2].sVal))); free((yyvsp[-2].sVal)); }
-#line 2650 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2645 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 76:
+  case 76: /* ch_init: '[' CONST ']' OF '{' typ_list '}'  */
 #line 398 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { /*DBUG("REDUCE: [ CONST ] OF { typ_list } -> ch_init\n")*/ (yyval.pDataVal).iVal = (yyvsp[-5].iVal); }
-#line 2656 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2651 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 77:
+  case 77: /* basetype: TYPE  */
 #line 401 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pDataVal).sVal = nullptr; (yyval.pDataVal).iType = (yyvsp[0].iType); }
-#line 2662 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2657 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 78:
+  case 78: /* basetype: UNAME  */
 #line 402 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iType = symbol::T_UTYPE; }
-#line 2668 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2663 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 79:
+  case 79: /* typ_list: basetype  */
 #line 406 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 {	/*DBUG("REDUCE: basetype -> typ_list\n")*/
 													varSymNode* typ = nullptr;
@@ -2684,10 +2679,10 @@ yyreduce:
 													typeLst.push_back(typ);
 													if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2688 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2683 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 80:
+  case 80: /* typ_list: basetype ',' typ_list  */
 #line 421 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         {	/*DBUG("REDUCE: basetype , typ_list -> typ_list\n")*/
 													varSymNode* typ = nullptr;
@@ -2704,228 +2699,228 @@ yyreduce:
 													typeLst.push_front(typ);
 													if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2708 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2703 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 81:
+  case 81: /* vardcl: NAME  */
 #line 438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*/*DBUG("REDUCE: NAME -> vardcl\n"*)*/ (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iVal = 1; }
-#line 2714 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2709 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 82:
+  case 82: /* vardcl: NAME ':' CONST  */
 #line 439 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "The 'unsigned' data type is not supported."; }
-#line 2720 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2715 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 83:
+  case 83: /* vardcl: NAME '[' CONST ']'  */
 #line 440 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: NAME [ CONST ] -> vardcl\n")*/ (yyval.pDataVal).sVal = (yyvsp[-3].sVal); (yyval.pDataVal).iVal = (yyvsp[-1].iVal); }
-#line 2726 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2721 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 84:
+  case 84: /* varref: cmpnd  */
 #line 443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: cmpnd -> varref\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal); symbol* sym = nullptr; if(!inInline) sym = (yyval.pExprVarRefVal)->resolve(currentSymTab); assert(sym || inInline); }
-#line 2732 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2727 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 85:
+  case 85: /* pfld: NAME  */
 #line 446 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: NAME -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2738 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2733 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 86:
+  case 86: /* pfld: NAME '[' expr ']'  */
 #line 447 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: NAME [ expr ] -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); free((yyvsp[-3].sVal)); }
-#line 2744 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2739 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 87:
+  case 87: /* cmpnd: pfld sfld  */
 #line 450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2750 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2745 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 88:
+  case 88: /* cmpnd: CONTEXT '.' pfld sfld  */
 #line 451 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: CONTEX . pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2756 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2751 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 89:
+  case 89: /* sfld: %empty  */
 #line 454 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: void -> sfld\n")*/ (yyval.pExprVarRefVal) = nullptr; }
-#line 2762 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2757 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 90:
+  case 90: /* sfld: '.' cmpnd  */
 #line 455 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: . cmpnd -> sfld\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal);   }
-#line 2768 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2763 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 91:
+  case 91: /* stmnt: Special  */
 #line 459 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: special -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2774 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2769 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 92:
+  case 92: /* stmnt: Stmnt  */
 #line 460 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: Stmnt -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2780 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2775 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 93:
+  case 93: /* Special: varref RCV rargs  */
 #line 463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntChanRecv((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 2786 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2781 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 94:
+  case 94: /* Special: varref SND margs  */
 #line 464 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntChanSnd((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 2792 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2787 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 95:
+  case 95: /* Special: IF options FI  */
 #line 465 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIf((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2798 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2793 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 96:
+  case 96: /* Special: DO options OD  */
 #line 466 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDo((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2804 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2799 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 97:
+  case 97: /* Special: BREAK  */
 #line 467 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntBreak(nbrLines); }
-#line 2810 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2805 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 98:
+  case 98: /* Special: GOTO NAME  */
 #line 468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2816 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2811 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 99:
+  case 99: /* Special: NAME ':' stmnt  */
 #line 469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>((yyvsp[0].pStmntVal))->getLabelled()->getType() == astNode::E_STMNT_LABEL) 
 													std::cout << "Only two labels per state are supported."; 
 												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); free((yyvsp[-2].sVal)); }
-#line 2824 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2819 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 100:
+  case 100: /* Stmnt: varref ASGN full_expr  */
 #line 473 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAsgn((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 2830 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2825 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 101:
+  case 101: /* Stmnt: varref INCR  */
 #line 474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIncr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2836 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2831 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 102:
+  case 102: /* Stmnt: varref DECR  */
 #line 475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDecr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2842 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2837 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 103:
+  case 103: /* Stmnt: PRINT '(' STRING prargs ')'  */
 #line 476 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntPrint((yyvsp[-2].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 2848 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2843 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 104:
+  case 104: /* Stmnt: PRINTM '(' varref ')'  */
 #line 477 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2854 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2849 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 105:
+  case 105: /* Stmnt: PRINTM '(' CONST ')'  */
 #line 478 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].iVal), nbrLines); }
-#line 2860 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2855 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 106:
+  case 106: /* Stmnt: ASSERT full_expr  */
 #line 479 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntAssert((yyvsp[0].pExprVal), nbrLines); }
-#line 2866 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2861 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 107:
+  case 107: /* Stmnt: ccode  */
 #line 480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 2872 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2867 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 108:
+  case 108: /* Stmnt: varref R_RCV rargs  */
 #line 481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2878 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2873 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 109:
+  case 109: /* Stmnt: varref RCV LT rargs GT  */
 #line 482 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2884 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2879 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 110:
+  case 110: /* Stmnt: varref R_RCV LT rargs GT  */
 #line 483 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2890 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2885 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 111:
+  case 111: /* Stmnt: varref O_SND margs  */
 #line 484 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2896 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2891 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 112:
+  case 112: /* Stmnt: full_expr  */
 #line 485 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntExpr((yyvsp[0].pExprVal), nbrLines); }
-#line 2902 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2897 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 113:
+  case 113: /* Stmnt: ELSE  */
 #line 486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntElse(nbrLines); }
-#line 2908 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2903 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 114:
+  case 114: /* Stmnt: ATOMIC '{' sequence OS '}'  */
 #line 487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAtomic((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2914 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2909 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 115:
+  case 115: /* Stmnt: D_STEP '{' sequence OS '}'  */
 #line 488 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntDStep((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2920 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2915 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 116:
+  case 116: /* Stmnt: '{' sequence OS '}'  */
 #line 489 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntSeq((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2926 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2921 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 117:
+  case 117: /* Stmnt: INAME '(' args ')'  */
 #line 490 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
 													(yyval.pStmntVal) = new stmntCall((yyvsp[-3].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); 
@@ -2937,232 +2932,232 @@ yyreduce:
 														assert(dynamic_cast<inlineSymNode*>(fctSym)->getParams().size() == (yyvsp[-1].pExprArgListVal)->getSize());
 													free((yyvsp[-3].sVal)); 
 												}
-#line 2941 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2936 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 118:
+  case 118: /* options: option  */
 #line 502 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[0].pStmntVal), nbrLines); }
-#line 2947 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2942 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 119:
+  case 119: /* options: option options  */
 #line 503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntOptVal), nbrLines); }
-#line 2953 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2948 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 120:
+  case 120: /* option: SEP sequence OS  */
 #line 506 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); }
-#line 2959 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2954 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 121:
+  case 121: /* option: SEP '[' real_expr ']' sequence OS  */
 #line 507 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); (yyvsp[-1].pStmntVal)->setProb((yyvsp[-3].rVal)); }
-#line 2965 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2960 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 122:
+  case 122: /* real_expr: '(' real_expr ')'  */
 #line 511 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-1].rVal); }
-#line 2971 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2966 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 123:
+  case 123: /* real_expr: real_expr '+' real_expr  */
 #line 512 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) + (yyvsp[0].rVal); }
-#line 2977 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2972 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 124:
+  case 124: /* real_expr: real_expr '-' real_expr  */
 #line 513 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) - (yyvsp[0].rVal); }
-#line 2983 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2978 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 125:
+  case 125: /* real_expr: real_expr '*' real_expr  */
 #line 514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) * (yyvsp[0].rVal); }
-#line 2989 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2984 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 126:
+  case 126: /* real_expr: real_expr '/' real_expr  */
 #line 515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) / (yyvsp[0].rVal); }
-#line 2995 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2990 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 127:
+  case 127: /* real_expr: REAL  */
 #line 516 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].rVal);}
-#line 3001 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2996 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 128:
+  case 128: /* real_expr: CONST  */
 #line 517 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].iVal);}
-#line 3007 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3002 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 130:
+  case 130: /* OS: SEMI  */
 #line 521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* redundant semi at end of sequence */ }
-#line 3013 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3008 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 131:
+  case 131: /* MS: SEMI  */
 #line 524 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* at least one semi-colon */ }
-#line 3019 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3014 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 132:
+  case 132: /* MS: MS SEMI  */
 #line 525 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* but more are okay too   */ }
-#line 3025 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3020 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 133:
+  case 133: /* aname: NAME  */
 #line 528 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3031 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3026 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 134:
+  case 134: /* aname: PNAME  */
 #line 529 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3037 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3032 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 135:
+  case 135: /* expr: '(' expr ')'  */
 #line 532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprPar		((yyvsp[-1].pExprVal), nbrLines); }
-#line 3043 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3038 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 136:
+  case 136: /* expr: expr '+' expr  */
 #line 533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprPlus		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3049 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3044 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 137:
+  case 137: /* expr: expr '-' expr  */
 #line 534 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMinus	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3055 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3050 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 138:
+  case 138: /* expr: expr '*' expr  */
 #line 535 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprTimes	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3061 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3056 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 139:
+  case 139: /* expr: expr '/' expr  */
 #line 536 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprDiv		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3067 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3062 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 140:
+  case 140: /* expr: expr '%' expr  */
 #line 537 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMod		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3073 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3068 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 141:
+  case 141: /* expr: expr '&' expr  */
 #line 538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3079 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3074 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 142:
+  case 142: /* expr: expr '^' expr  */
 #line 539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwXor	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3085 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3080 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 143:
+  case 143: /* expr: expr '|' expr  */
 #line 540 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3091 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3086 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 144:
+  case 144: /* expr: expr GT expr  */
 #line 541 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3097 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3092 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 145:
+  case 145: /* expr: expr LT expr  */
 #line 542 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3103 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3098 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 146:
+  case 146: /* expr: expr GE expr  */
 #line 543 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3109 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3104 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 147:
+  case 147: /* expr: expr LE expr  */
 #line 544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3115 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3110 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 148:
+  case 148: /* expr: expr EQ expr  */
 #line 545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprEQ		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3121 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3116 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 149:
+  case 149: /* expr: expr NE expr  */
 #line 546 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprNE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3127 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3122 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 150:
+  case 150: /* expr: expr AND expr  */
 #line 547 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3133 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3128 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 151:
+  case 151: /* expr: expr OR expr  */
 #line 548 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3139 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3134 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 152:
+  case 152: /* expr: expr LSHIFT expr  */
 #line 549 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3140 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 153:
+  case 153: /* expr: expr RSHIFT expr  */
 #line 550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprRShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3146 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 154:
+  case 154: /* expr: COUNT '(' expr ')'  */
 #line 551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprCount	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3157 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3152 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 155:
+  case 155: /* expr: '~' expr  */
 #line 552 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprBitwNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3163 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 156:
+  case 156: /* expr: '-' expr  */
 #line 553 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 	if((yyvsp[0].pExprVal)->getType() != astNode::E_EXPR_CONST) 
 														(yyval.pExprVal) = new exprUMin((yyvsp[0].pExprVal), nbrLines);
@@ -3172,345 +3167,345 @@ yyreduce:
 														delete tmp;
 													}
 												}
-#line 3176 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3171 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 157:
+  case 157: /* expr: SND expr  */
 #line 561 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3182 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 158:
+  case 158: /* expr: '(' expr SEMI expr ':' expr ')'  */
 #line 562 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pExprVal) = new exprCond	((yyvsp[-5].pExprVal), (yyvsp[-3].pExprVal), (yyvsp[-1].pExprVal), nbrLines); }
-#line 3188 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3183 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 159:
+  case 159: /* expr: RUN aname '(' args ')' Opt_priority  */
 #line 563 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { auto run = new exprRun ((yyvsp[-4].sVal), (yyvsp[-2].pExprArgListVal), nbrLines);
 												  (yyval.pExprVal) = run;
 												  auto procSym = run->resolve(*globalSymTab); 
 												  assert(procSym); free((yyvsp[-4].sVal)); 
 												}
-#line 3198 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3193 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 160:
+  case 160: /* expr: LEN '(' varref ')'  */
 #line 568 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprLen	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3204 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3199 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 161:
+  case 161: /* expr: ENABLED '(' expr ')'  */
 #line 569 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "The enabled keyword is not supported."; }
-#line 3210 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3205 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 162:
+  case 162: /* expr: varref RCV '[' rargs ']'  */
 #line 570 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3216 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 163:
+  case 163: /* expr: varref R_RCV '[' rargs ']'  */
 #line 571 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Sorted send and random receive are not supported."; }
-#line 3222 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 164:
+  case 164: /* expr: varref  */
 #line 572 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprVar	((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 165:
+  case 165: /* expr: cexpr  */
 #line 573 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 3234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 166:
+  case 166: /* expr: CONST  */
 #line 574 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines); }
-#line 3240 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 167:
+  case 167: /* expr: TRUE  */
 #line 575 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprTrue	(nbrLines); }
-#line 3246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3241 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 168:
+  case 168: /* expr: FALSE  */
 #line 576 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprFalse(nbrLines); }
-#line 3252 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3247 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 169:
+  case 169: /* expr: TIMEOUT  */
 #line 577 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprTimeout(nbrLines); }
-#line 3258 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3253 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 170:
+  case 170: /* expr: NONPROGRESS  */
 #line 578 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "The 'np_' variable is not supported."; }
-#line 3264 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 171:
+  case 171: /* expr: PC_VAL '(' expr ')'  */
 #line 579 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "The 'pc_value()' construct is not supported."; }
-#line 3270 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3265 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 172:
+  case 172: /* expr: PNAME '[' expr ']' '@' NAME  */
 #line 580 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3276 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3271 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 173:
+  case 173: /* expr: PNAME '[' expr ']' ':' pfld  */
 #line 581 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3282 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 174:
+  case 174: /* expr: PNAME '@' NAME  */
 #line 582 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3288 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3283 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 175:
+  case 175: /* expr: PNAME ':' pfld  */
 #line 583 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3294 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3289 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 177:
+  case 177: /* Opt_priority: PRIORITY CONST  */
 #line 587 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { assert(false); std::cout << "The 'priority' construct is related to simulation and not supported."; }
-#line 3300 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3295 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 178:
+  case 178: /* full_expr: expr  */
 #line 590 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3306 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3301 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 179:
+  case 179: /* full_expr: Expr  */
 #line 591 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3312 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3307 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 181:
+  case 181: /* Opt_enabler: PROVIDED '(' full_expr ')'  */
 #line 595 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { assert(false); std::cout << "The 'provided' construct is currently not supported."; }
-#line 3318 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3313 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 182:
+  case 182: /* Expr: Probe  */
 #line 600 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3324 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3319 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 183:
+  case 183: /* Expr: '(' Expr ')'  */
 #line 601 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprPar	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3330 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3325 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 184:
+  case 184: /* Expr: Expr AND Expr  */
 #line 602 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3336 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3331 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 185:
+  case 185: /* Expr: Expr AND expr  */
 #line 603 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3342 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3337 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 186:
+  case 186: /* Expr: Expr OR Expr  */
 #line 604 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3348 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3343 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 187:
+  case 187: /* Expr: Expr OR expr  */
 #line 605 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3354 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3349 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 188:
+  case 188: /* Expr: expr AND Expr  */
 #line 606 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3355 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 189:
+  case 189: /* Expr: expr OR Expr  */
 #line 607 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3366 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3361 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 190:
+  case 190: /* Expr: SKIP  */
 #line 608 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprSkip	(nbrLines); }
-#line 3372 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3367 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 191:
+  case 191: /* Probe: FULL '(' varref ')'  */
 #line 611 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pExprVal) = new exprFull	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3378 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 192:
+  case 192: /* Probe: NFULL '(' varref ')'  */
 #line 612 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNFull((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3384 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3379 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 193:
+  case 193: /* Probe: EMPTY '(' varref ')'  */
 #line 613 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3390 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3385 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 194:
+  case 194: /* Probe: NEMPTY '(' varref ')'  */
 #line 614 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3396 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3391 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 195:
+  case 195: /* args: %empty  */
 #line 618 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                 { (yyval.pExprArgListVal) = nullptr; }
-#line 3402 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3397 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 196:
+  case 196: /* args: arg  */
 #line 619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3408 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3403 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 197:
+  case 197: /* prargs: %empty  */
 #line 623 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprArgListVal) = nullptr; }
-#line 3414 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3409 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 198:
+  case 198: /* prargs: ',' arg  */
 #line 624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3420 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3415 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 199:
+  case 199: /* margs: arg  */
 #line 628 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3426 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3421 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 200:
+  case 200: /* margs: expr '(' arg ')'  */
 #line 629 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { assert(false); }
-#line 3432 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3427 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 201:
+  case 201: /* arg: expr  */
 #line 632 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[0].pExprVal), nbrLines), nbrLines); }
-#line 3438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3433 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 202:
+  case 202: /* arg: expr ',' arg  */
 #line 633 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[-2].pExprVal), nbrLines), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 3444 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3439 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 203:
+  case 203: /* rarg: varref  */
 #line 636 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3445 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 204:
+  case 204: /* rarg: EVAL '(' expr ')'  */
 #line 637 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
-#line 3456 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3451 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 205:
+  case 205: /* rarg: CONST  */
 #line 638 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst((yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3462 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3457 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 206:
+  case 206: /* rarg: '-' CONST  */
 #line 639 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst(-(yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 207:
+  case 207: /* rargs: rarg  */
 #line 643 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[0].pExprRArgVal), nbrLines); }
-#line 3474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 208:
+  case 208: /* rargs: rarg ',' rargs  */
 #line 644 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 3480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 209:
+  case 209: /* rargs: rarg '(' rargs ')'  */
 #line 645 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprRArgListVal), nbrLines); }
-#line 3486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 210:
+  case 210: /* rargs: '(' rargs ')'  */
 #line 646 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprRArgListVal) = (yyvsp[-1].pExprRArgListVal); }
-#line 3492 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 211:
+  case 211: /* nlst: NAME  */
 #line 649 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: NAME -> nlst\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3498 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3493 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 212:
+  case 212: /* nlst: nlst NAME  */
 #line 650 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: nlst NAME -> NAME\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3504 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3499 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 213:
+  case 213: /* nlst: nlst ','  */
 #line 651 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: nlst , -> nlst\n")*/ }
-#line 3510 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3505 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
 
-#line 3514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3509 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
       default: break;
     }
@@ -3525,11 +3520,10 @@ yyreduce:
      case of YYERROR or YYBACKUP, subsequent parser actions might lead
      to an incorrect destructor call or verbose syntax error message
      before the lookahead is translated.  */
-  YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
+  YY_SYMBOL_PRINT ("-> $$ =", YY_CAST (yysymbol_kind_t, yyr1[yyn]), &yyval, &yyloc);
 
   YYPOPSTACK (yylen);
   yylen = 0;
-  YY_STACK_PRINT (yyss, yyssp);
 
   *++yyvsp = yyval;
 
@@ -3553,49 +3547,43 @@ yyreduce:
 yyerrlab:
   /* Make sure we have latest lookahead translation.  See comments at
      user semantic actions for why this is necessary.  */
-  yytoken = yychar == YYEMPTY ? YYEMPTY : YYTRANSLATE (yychar);
-
+  yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
       ++yynerrs;
-#if ! YYERROR_VERBOSE
-      yyerror (globalSymTab, program, YY_("syntax error"));
-#else
-# define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
-                                        yyssp, yytoken)
       {
+        yypcontext_t yyctx
+          = {yyssp, yytoken};
         char const *yymsgp = YY_("syntax error");
         int yysyntax_error_status;
-        yysyntax_error_status = YYSYNTAX_ERROR;
+        yysyntax_error_status = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
         if (yysyntax_error_status == 0)
           yymsgp = yymsg;
-        else if (yysyntax_error_status == 1)
+        else if (yysyntax_error_status == -1)
           {
             if (yymsg != yymsgbuf)
               YYSTACK_FREE (yymsg);
-            yymsg = YY_CAST (char *, YYSTACK_ALLOC (YY_CAST (YYSIZE_T, yymsg_alloc)));
-            if (!yymsg)
+            yymsg = YY_CAST (char *,
+                             YYSTACK_ALLOC (YY_CAST (YYSIZE_T, yymsg_alloc)));
+            if (yymsg)
               {
-                yymsg = yymsgbuf;
-                yymsg_alloc = sizeof yymsgbuf;
-                yysyntax_error_status = 2;
+                yysyntax_error_status
+                  = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
+                yymsgp = yymsg;
               }
             else
               {
-                yysyntax_error_status = YYSYNTAX_ERROR;
-                yymsgp = yymsg;
+                yymsg = yymsgbuf;
+                yymsg_alloc = sizeof yymsgbuf;
+                yysyntax_error_status = YYENOMEM;
               }
           }
         yyerror (globalSymTab, program, yymsgp);
-        if (yysyntax_error_status == 2)
-          goto yyexhaustedlab;
+        if (yysyntax_error_status == YYENOMEM)
+          YYNOMEM;
       }
-# undef YYSYNTAX_ERROR
-#endif
     }
-
-
 
   if (yyerrstatus == 3)
     {
@@ -3629,6 +3617,7 @@ yyerrorlab:
      label yyerrorlab therefore never appears in user code.  */
   if (0)
     YYERROR;
+  ++yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -3645,13 +3634,14 @@ yyerrorlab:
 yyerrlab1:
   yyerrstatus = 3;      /* Each real token shifted decrements this.  */
 
+  /* Pop stack until we find a state that shifts the error token.  */
   for (;;)
     {
       yyn = yypact[yystate];
       if (!yypact_value_is_default (yyn))
         {
-          yyn += YYTERROR;
-          if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR)
+          yyn += YYSYMBOL_YYerror;
+          if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYSYMBOL_YYerror)
             {
               yyn = yytable[yyn];
               if (0 < yyn)
@@ -3665,7 +3655,7 @@ yyerrlab1:
 
 
       yydestruct ("Error: popping",
-                  yystos[yystate], yyvsp, globalSymTab, program);
+                  YY_ACCESSING_SYMBOL (yystate), yyvsp, globalSymTab, program);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -3677,7 +3667,7 @@ yyerrlab1:
 
 
   /* Shift the error token.  */
-  YY_SYMBOL_PRINT ("Shifting", yystos[yyn], yyvsp, yylsp);
+  YY_SYMBOL_PRINT ("Shifting", YY_ACCESSING_SYMBOL (yyn), yyvsp, yylsp);
 
   yystate = yyn;
   goto yynewstate;
@@ -3688,7 +3678,7 @@ yyerrlab1:
 `-------------------------------------*/
 yyacceptlab:
   yyresult = 0;
-  goto yyreturn;
+  goto yyreturnlab;
 
 
 /*-----------------------------------.
@@ -3696,24 +3686,22 @@ yyacceptlab:
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
-  goto yyreturn;
+  goto yyreturnlab;
 
 
-#if !defined yyoverflow || YYERROR_VERBOSE
-/*-------------------------------------------------.
-| yyexhaustedlab -- memory exhaustion comes here.  |
-`-------------------------------------------------*/
+/*-----------------------------------------------------------.
+| yyexhaustedlab -- YYNOMEM (memory exhaustion) comes here.  |
+`-----------------------------------------------------------*/
 yyexhaustedlab:
   yyerror (globalSymTab, program, YY_("memory exhausted"));
   yyresult = 2;
-  /* Fall through.  */
-#endif
+  goto yyreturnlab;
 
 
-/*-----------------------------------------------------.
-| yyreturn -- parsing is finished, return the result.  |
-`-----------------------------------------------------*/
-yyreturn:
+/*----------------------------------------------------------.
+| yyreturnlab -- parsing is finished, clean up and return.  |
+`----------------------------------------------------------*/
+yyreturnlab:
   if (yychar != YYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at
@@ -3729,18 +3717,17 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  yystos[+*yyssp], yyvsp, globalSymTab, program);
+                  YY_ACCESSING_SYMBOL (+*yyssp), yyvsp, globalSymTab, program);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
 #endif
-#if YYERROR_VERBOSE
   if (yymsg != yymsgbuf)
     YYSTACK_FREE (yymsg);
-#endif
   return yyresult;
 }
+
 #line 696 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
 

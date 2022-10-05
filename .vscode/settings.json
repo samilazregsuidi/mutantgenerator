@@ -93,6 +93,8 @@
         "binaryexpr.h": "c",
         "std_abs.h": "c",
         "*.p": "cpp",
-        "symtable.hpp": "c"
+        "symtable.hpp": "c",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     },
 }
