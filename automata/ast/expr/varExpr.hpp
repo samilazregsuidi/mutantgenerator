@@ -24,9 +24,7 @@ public:
 
 	expr* getIndex(void) const;
 
-	varSymNode* resolve(symTable *global);
-
-	varSymNode* resolve(symTable *global, symTable* subField);
+	varSymNode* resolve(symTable *global, symTable* subField = nullptr);
 
 	varSymNode* getSymbol(void) const;
 
@@ -38,9 +36,35 @@ public:
 
 	expr* deepCopy(void) const override;
 
-private:
+protected:
 	std::string symName;
 	varSymNode* sym;
+};
+
+class featExprVarRefName : public exprVarRefName 
+{
+public:
+	featExprVarRefName(const std::string& symName, const std::string& variantName, int lineNb);
+
+	featExprVarRefName(const std::string& symName, const std::string& variantName, expr *index, int lineNb);
+
+	featExprVarRefName(const std::string& symName, const std::string& variantName, varSymNode *sym, int lineNb);
+
+	varSymNode* resolve(symTable *global, symTable* subField = nullptr);
+
+	varSymNode* getVariantSymbol(void) const;
+
+	//std::string getName(void) const;
+
+	operator std::string() const override;
+
+	std::string getTypeDescr(void) const override;
+
+	expr* deepCopy(void) const override;
+
+private:
+	std::string variantName;
+	symbol* variantSym;
 };
 
 //E_VARREF,			// child[0] = E_VARREF_NAME, child[1] = E_VARREF (subfield, or NULL)

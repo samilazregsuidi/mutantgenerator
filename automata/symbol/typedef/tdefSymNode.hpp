@@ -22,7 +22,7 @@ public:
 
 	void setSymTable(symTable* symTab) override;
 
-	operator std::string(void) const override ;
+	operator std::string(void) const override;
 
 	void acceptVisitor(symTabVisitor* visitor) override;
 

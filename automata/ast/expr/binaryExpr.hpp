@@ -533,6 +533,44 @@ public:
 	}
 };
 
+//E_EXPR_IMPLIES,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
+class exprImplies : public exprBinary
+{
+public:
+	exprImplies(expr *left, expr *right, int lineNb)
+		: exprBinary(astNode::E_EXPR_IMPLIES, left, right, lineNb)
+	{
+	}
+
+	operator std::string() const override
+	{
+		return std::string(*getLeftExpr()) + " => " + std::string(*getRightExpr());
+	}
+
+	std::string getTypeDescr(void) const override
+	{
+		return "implies (E_EXPR_IMPLIES)";
+	}
+
+	std::vector<astNode*> getMutations(void) const override;
+
+	expr* deepCopy(void) const override {
+		exprImplies* copy = new exprImplies(*this);
+		copy->copyChildren(*this);
+		return copy;
+	}
+
+	int acceptVisitor(ASTConstVisitorInt* visitor) const override {
+		return getLeftExpr()->acceptVisitor(visitor) & getRightExpr()->acceptVisitor(visitor);
+	}
+
+	int acceptVisitor(ASTVisitorInt* visitor) override {
+		return getLeftExpr()->acceptVisitor(visitor) & getRightExpr()->acceptVisitor(visitor);
+	}
+};
+
+
+
 //E_EXPR_BITWOR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
 class exprBitwOr : public exprBinary
 {

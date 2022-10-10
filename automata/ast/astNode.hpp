@@ -79,6 +79,8 @@ public:
 		E_EXPR_NE,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
 		E_EXPR_AND,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
 		E_EXPR_OR,		// child[0] = E_EXPR_*, child[1] = E_EXPR_*
+		E_EXPR_IMPLIES, // child[0] = E_EXPR_*, child[1] = E_EXPR_*
+
 		E_EXPR_COUNT,	// child[0] = E_EXPR_*
 		E_EXPR_UMIN,	// child[0] = E_EXPR_*
 		E_EXPR_NEG,		// child[0] = E_EXPR_*

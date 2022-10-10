@@ -24,9 +24,12 @@ assert(len(properties) > 0)
 for prop in properties:
 	killing_report[prop] = list()
 
+percent = 0
+
 for mutant in mutants:
 	
 	print(separator)
+	print("------------- "+str(percent * 100 / len(mutants))+"% ---------------")
 	
 	res = subprocess.run(['spin','-a', mutant], capture_output=True)
 	to_print = res.stdout.decode('utf-8')
@@ -71,6 +74,8 @@ for mutant in mutants:
 			
 		print(separator_)
 		diag += to_print+'\n'+separator+'\n'
+		
+	percent = percent + 1
 	
 for prop in properties:
 	properties_killings += "*****************************************************\n\n"
@@ -93,6 +98,9 @@ diag += mutation_result
 #print(diag)
 log = open("log.txt", 'w')
 log.write(diag)
+
+for survivor in survivors:
+        subprocess.run(['cp', survivor, 'survivors'])
 
 subprocess.run(['rm', '-f', '*.tmp'])
 subprocess.run(['rm', '-f', '*trail'])

@@ -58,6 +58,8 @@ public:
 		T_INLINE,
 		T_UTYPE,	// Type of variable is a user type (basically, a T_TDEF record is being used as the type): utype points to the type record
 		T_NEVER,	// Never claim
+
+		T_VARIANT
 	};
 
 	static const unsigned int READ_ACCESS = 0x1;

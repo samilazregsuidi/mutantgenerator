@@ -65,12 +65,15 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"spec"		{ DBUG(SPEC);return SPEC; }
 <CODE>"ltl"			{ DBUG(LTL); return LTL; }
 <CODE>"E"			{ DBUG(EVENTUALLY);return EVENTUALLY; }
-<CODE>"<>"			{ DBUG(EVENTUALLY);return EVENTUALLY; }
+<CODE>"F"			{ DBUG(FINALLY);return FINALLY; }
+<CODE>"<>"			{ DBUG(FINALLY);return FINALLY; }
 <CODE>"A"			{ DBUG(ALWAYS);return ALWAYS; }
-<CODE>"[]"			{ DBUG(ALWAYS);return ALWAYS; }
+<CODE>"[]"			{ DBUG(GLOBALLY);return GLOBALLY; }
 <CODE>"U"			{ DBUG(UNTIL);return UNTIL; }
+<CODE>"X"			{ DBUG(NEXT);return NEXT; }
 <CODE>"card"		{ DBUG(COUNT);return COUNT; }
 <CODE>"this"		{ DBUG(CONTEXT);return CONTEXT; }
+<CODE>"base"		{ DBUG(BASE);return BASE;}
 
 <CODE>"active"		{ DBUG(ACTIVE);return ACTIVE; }
 <CODE>"assert"		{ DBUG(ASSERT);return ASSERT; }
@@ -197,6 +200,11 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 							  case symbol::T_INLINE:
 							     DBUG(INAME);
 								 return INAME;
+
+							  case symbol::T_VARIANT:
+							  	DBUG(VNAME)
+								 return VNAME; 
+
 							  default: 
 							  	 break;
 						  }

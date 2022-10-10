@@ -22585,7 +22585,7 @@ settable(void)
 	T = T->nxt	= settr(41,2,34,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(41,2,37,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(41,2,40,0,0,"IF", 1, 2, 0);
-	trans[0][25]	= settr(24,0,171,4614,4614,"(((ABORT!=START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 26 -> 171,0 */
+	trans[0][25]	= settr(24,0,171,4614,4614,"(((ABORT==START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 26 -> 171,0 */
 	reached0[26] = 1;
 	trans[0][26]	= settr(0,0,0,0,0,"assert((states[k]==READY))",0,0,0);
 	trans[0][27]	= settr(0,0,0,0,0,"commands[k] = START",0,0,0);
@@ -22721,7 +22721,7 @@ settable(void)
 	T = T->nxt	= settr(123,2,116,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(123,2,119,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(123,2,122,0,0,"IF", 1, 2, 0);
-	trans[0][107]	= settr(106,0,153,4642,4642,"(((ABORT!=START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 108 -> 153,0 */
+	trans[0][107]	= settr(106,0,153,4642,4642,"(((ABORT==START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 108 -> 153,0 */
 	reached0[108] = 1;
 	trans[0][108]	= settr(0,0,0,0,0,"assert((states[k]==READY))",0,0,0);
 	trans[0][109]	= settr(0,0,0,0,0,"commands[k] = START",0,0,0);
@@ -22769,7 +22769,7 @@ settable(void)
 	reached0[136] = 1;
 	trans[0][136]	= settr(0,0,0,0,0,"assert(((states[k]==STARTING)||(states[k]==PAUSED)))",0,0,0);
 	trans[0][137]	= settr(0,0,0,0,0,"commands[k] = CONTINUE",0,0,0);
-	trans[0][138]	= settr(137,0,153,4653,4653,"(((STOP==STOP)&&((commands[k]==CONTINUE)||(commands[k]==PAUSE))))", 1, 2, 0); /* m: 139 -> 153,0 */
+	trans[0][138]	= settr(137,0,153,4653,4653,"(((STOP==STOP)&&((commands[k]==CONTINUE)||(commands[k]<=PAUSE))))", 1, 2, 0); /* m: 139 -> 153,0 */
 	reached0[139] = 1;
 	trans[0][139]	= settr(0,0,0,0,0,"assert((((states[k]==STARTING)||(states[k]==RUNNING))||(states[k]==PAUSED)))",0,0,0);
 	trans[0][140]	= settr(0,0,0,0,0,"commands[k] = STOP",0,0,0);
@@ -22831,7 +22831,7 @@ settable(void)
 	T = T->nxt	= settr(195,2,188,0,0,"IF", 1, 2, 0);
 	T = T->nxt	= settr(195,2,191,0,0,"IF", 1, 2, 0);
 	    T->nxt	= settr(195,2,194,0,0,"IF", 1, 2, 0);
-	trans[0][179]	= settr(178,0,206,4667,4667,"(((ABORT!=START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 180 -> 206,0 */
+	trans[0][179]	= settr(178,0,206,4667,4667,"(((ABORT==START)&&(commands[k]==CONTINUE)))", 1, 2, 0); /* m: 180 -> 206,0 */
 	reached0[180] = 1;
 	trans[0][180]	= settr(0,0,0,0,0,"assert((states[k]==READY))",0,0,0);
 	trans[0][181]	= settr(0,0,0,0,0,"commands[k] = START",0,0,0);

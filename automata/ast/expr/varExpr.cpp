@@ -95,6 +95,60 @@ expr* exprVarRefName::deepCopy(void) const {
 
 /*******************************************************************************************************************/
 
+featExprVarRefName::featExprVarRefName(const std::string& symName, const std::string& variantName, int lineNb)
+	: exprVarRefName(symName, lineNb)
+	, variantName(variantName)
+	, variantSym(nullptr)
+{
+}
+
+featExprVarRefName::featExprVarRefName(const std::string& symName, const std::string& variantName, expr *index, int lineNb)
+	: exprVarRefName(symName, index, lineNb)
+	, variantName(variantName)
+	, variantSym(nullptr)
+{
+}
+
+featExprVarRefName::featExprVarRefName(const std::string& symName, const std::string& variantName, varSymNode *sym, int lineNb)
+	: exprVarRefName(symName, sym, lineNb)
+{
+}
+
+featExprVarRefName::operator std::string() const {
+	return symName + (getIndex() ? "[" + std::string(*getIndex()) + "]" : "") + "{" + variantName + "}";
+}
+
+std::string featExprVarRefName::getTypeDescr(void) const {
+	return "Featured Variable or field name (E_FEAT_VARREF_NAME)";
+}
+
+varSymNode* featExprVarRefName::resolve(symTable *global, symTable *subField) {
+
+	assert(global);
+
+	do {
+		auto ret = global->lookup(variantName);
+		variantSym = dynamic_cast<variantSymNode*>(global->lookup(variantName));
+		if(ret) assert(variantSym);
+		global = global->prevSymTab();
+	} while(!variantSym && global);
+
+	if(!variantSym) {
+		std::cout<< "unknown variant : "<< variantName << " at line "<<lineNb<<"\n";
+		assert(false);
+	}
+
+	return sym;
+}
+
+expr* featExprVarRefName::deepCopy(void) const {
+	featExprVarRefName* copy = new featExprVarRefName(*this);
+	copy->copyChildren(*this);
+	return copy;
+}
+
+/**********************************************************************************/
+
 exprVarRef::exprVarRef(int lineNb, exprVarRefName *symRef, exprVarRef *subfieldsVar = nullptr)
 	: expr(astNode::E_VARREF, lineNb)
 {

@@ -569,6 +569,7 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 		| ENABLED '(' expr ')'					{ std::cout << "The enabled keyword is not supported."; }
 		| varref RCV '[' rargs ']'				{ std::cout << "Construct not supported."; /* Unclear */ }
 		| varref R_RCV '[' rargs ']'			{ std::cout << "Sorted send and random receive are not supported."; }
+		| varref'{' VNAME '}'					{  }
 		| varref								{ $$ = new exprVar	($1, nbrLines); }
 		| cexpr									{ std::cout << "Embedded C code is not supported."; }
 		| CONST									{ $$ = new exprConst($1, nbrLines); }
@@ -607,7 +608,10 @@ Expr	: Probe									{ $$ = $1; }
 		| expr OR  Expr							{ $$ = new exprOr	($1, $3, nbrLines); }
 		| SKIP									{ $$ = new exprSkip	(nbrLines); }
 		;
-		
+
+feat_expr : Expr 								{ $$ = $1; }
+		  ;
+
 Probe	: FULL '(' varref ')'					{ $$ = new exprFull	($3, nbrLines); }
 		| NFULL '(' varref ')'					{ $$ = new exprNFull($3, nbrLines); }
 		| EMPTY '(' varref ')'					{ $$ = new exprEmpty($3, nbrLines); }
@@ -657,40 +661,46 @@ props	: /* empty */
 		| prop props
 	;
 	
-prop	: LTL NAME '{' prop_expr '}'
-		;
+prop	: LTL NAME '{' ltl_prop '}'
+		; variants_quants '{' ltl_prop '}'
 
 
-prop_expr	: '(' prop_expr ')'
-		| quants prop_expr							
-		| prop_expr '+' prop_expr
-		| prop_expr '-' prop_expr
-		| prop_expr '*' prop_expr
-		| prop_expr '/' prop_expr
-		| prop_expr '%' prop_expr
-		| prop_expr '&' prop_expr
-		| prop_expr '^' prop_expr
-		| prop_expr '|' prop_expr
-		| prop_expr GT prop_expr
-		| prop_expr LT prop_expr
-		| prop_expr GE prop_expr
-		| prop_expr LE prop_expr
-		| prop_expr EQ prop_expr
-		| prop_expr NE prop_expr
-		| prop_expr AND prop_expr
-		| prop_expr OR prop_expr
-		| prop_expr SEMI prop_expr
-		| prop_expr UNTIL prop_expr
-		| SND prop_expr %prec NEG
+ltl_prop	: '(' ltl_prop ')'
+		| GLOBALLY ltl_prop
+		| FINALLY ltl_prop
+		| NEXT ltl_prop
+		| ltl_prop UNTIL ltl_prop
+		| ltl_prop GT ltl_prop
+		| ltl_prop LT ltl_prop
+		| ltl_prop GE ltl_prop
+		| ltl_prop LE ltl_prop
+		| ltl_prop EQ ltl_prop
+		| ltl_prop NE ltl_prop
+		| ltl_prop AND ltl_prop
+		| ltl_prop OR ltl_prop
+		| ltl_prop SEMI ltl_prop
+		| SND ltl_prop %prec NEG
 		| varref
-		| CONST
+		| CONST						
+		| ltl_prop '+' ltl_prop
+		| ltl_prop '-' ltl_prop
+		| ltl_prop '*' ltl_prop
+		| ltl_prop '/' ltl_prop
+		| ltl_prop '%' ltl_prop
+		| ltl_prop '&' ltl_prop
+		| ltl_prop '^' ltl_prop
+		| ltl_prop '|' ltl_prop
 		;
-	
-quants	: quant
-	| quant quants
-	;
+
+variants_quants : variants_quant 
+				| variants_quant variants_quants
+				;
+		
+variants_quant 	: quant '{' NAME '}' '[' feat_expr ']'	{ auto sym = new variantSymNode(nbrLines, $3, $6); (*globalSymTab)->insert(sym); }
+		   		| quant '{' BASE '}'  					{ auto sym = new variantSymNode(nbrLines, $3); (*globalSymTab)->insert(sym); }
+		   		;
 	
 quant	: ALWAYS 
-	| EVENTUALLY
-	;
+		| EVENTUALLY
+		;
 %%

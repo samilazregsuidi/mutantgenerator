@@ -2,7 +2,7 @@
 #define PAN_H
 
 #define SpinVersion	"Spin Version 6.5.1 -- 20 December 2019"
-#define PanSource	"mutant_1.pml"
+#define PanSource	"mutant_75.pml"
 
 #define G_long	8
 #define G_int	4
