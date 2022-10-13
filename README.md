@@ -17,8 +17,18 @@ Where 1 is the number of iteration of mutant generation, #include is the include
 
 install spin model checker first https://spinroot.com/spin/Man/README.html#S1a
 
+for minepump
+
 ```console
 ubuntu@pp10:~/Research/mutantgenerator$ cd ./models/minepump/
 ubuntu@pp10:~/Research/mutantgenerator$ python3 script.py
 ```
+
+for ADAPRO
+
+```console
+ubuntu@pp10:~/Research/mutantgenerator$ cd ./models/adapro/
+ubuntu@pp10:~/Research/mutantgenerator$ python3 script.py
+```
+
 mutation scores are written in log.txt
