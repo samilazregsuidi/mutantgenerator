@@ -62,92 +62,96 @@ extern int yydebug;
     UNAME = 263,                   /* UNAME  */
     PNAME = 264,                   /* PNAME  */
     INAME = 265,                   /* INAME  */
-    STRING = 266,                  /* STRING  */
-    REAL = 267,                    /* REAL  */
-    TRUE = 268,                    /* TRUE  */
-    FALSE = 269,                   /* FALSE  */
-    SKIP = 270,                    /* SKIP  */
-    ASSERT = 271,                  /* ASSERT  */
-    PRINT = 272,                   /* PRINT  */
-    PRINTM = 273,                  /* PRINTM  */
-    C_CODE = 274,                  /* C_CODE  */
-    C_DECL = 275,                  /* C_DECL  */
-    C_EXPR = 276,                  /* C_EXPR  */
-    C_STATE = 277,                 /* C_STATE  */
-    C_TRACK = 278,                 /* C_TRACK  */
-    RUN = 279,                     /* RUN  */
-    LEN = 280,                     /* LEN  */
-    ENABLED = 281,                 /* ENABLED  */
-    EVAL = 282,                    /* EVAL  */
-    PC_VAL = 283,                  /* PC_VAL  */
-    TYPEDEF = 284,                 /* TYPEDEF  */
-    MTYPE = 285,                   /* MTYPE  */
-    INLINE = 286,                  /* INLINE  */
-    LABEL = 287,                   /* LABEL  */
-    OF = 288,                      /* OF  */
-    GOTO = 289,                    /* GOTO  */
-    BREAK = 290,                   /* BREAK  */
-    ELSE = 291,                    /* ELSE  */
-    SEMI = 292,                    /* SEMI  */
-    FI = 293,                      /* FI  */
-    OD = 294,                      /* OD  */
-    SEP = 295,                     /* SEP  */
-    ATOMIC = 296,                  /* ATOMIC  */
-    NON_ATOMIC = 297,              /* NON_ATOMIC  */
-    D_STEP = 298,                  /* D_STEP  */
-    UNLESS = 299,                  /* UNLESS  */
-    TIMEOUT = 300,                 /* TIMEOUT  */
-    NONPROGRESS = 301,             /* NONPROGRESS  */
-    ACTIVE = 302,                  /* ACTIVE  */
-    PROCTYPE = 303,                /* PROCTYPE  */
-    D_PROCTYPE = 304,              /* D_PROCTYPE  */
-    HIDDEN = 305,                  /* HIDDEN  */
-    SHOW = 306,                    /* SHOW  */
-    ISLOCAL = 307,                 /* ISLOCAL  */
-    PRIORITY = 308,                /* PRIORITY  */
-    PROVIDED = 309,                /* PROVIDED  */
-    FULL = 310,                    /* FULL  */
-    EMPTY = 311,                   /* EMPTY  */
-    NFULL = 312,                   /* NFULL  */
-    NEMPTY = 313,                  /* NEMPTY  */
-    XU = 314,                      /* XU  */
-    CLAIM = 315,                   /* CLAIM  */
-    TRACE = 316,                   /* TRACE  */
-    INIT = 317,                    /* INIT  */
-    WHILE = 318,                   /* WHILE  */
-    WHEN = 319,                    /* WHEN  */
-    WAIT = 320,                    /* WAIT  */
-    RESET = 321,                   /* RESET  */
-    SPEC = 322,                    /* SPEC  */
-    EVENTUALLY = 323,              /* EVENTUALLY  */
-    ALWAYS = 324,                  /* ALWAYS  */
-    GLOBALLY = 325,                /* GLOBALLY  */
-    FINALLY = 326,                 /* FINALLY  */
-    UNTIL = 327,                   /* UNTIL  */
-    LTL = 328,                     /* LTL  */
-    ASGN = 329,                    /* ASGN  */
-    SND = 330,                     /* SND  */
-    O_SND = 331,                   /* O_SND  */
-    RCV = 332,                     /* RCV  */
-    R_RCV = 333,                   /* R_RCV  */
-    OR = 334,                      /* OR  */
-    AND = 335,                     /* AND  */
-    EQ = 336,                      /* EQ  */
-    NE = 337,                      /* NE  */
-    GT = 338,                      /* GT  */
-    LT = 339,                      /* LT  */
-    GE = 340,                      /* GE  */
-    LE = 341,                      /* LE  */
-    LSHIFT = 342,                  /* LSHIFT  */
-    RSHIFT = 343,                  /* RSHIFT  */
-    INCR = 344,                    /* INCR  */
-    DECR = 345,                    /* DECR  */
-    UMIN = 346,                    /* UMIN  */
-    NEG = 347,                     /* NEG  */
-    COUNT = 348,                   /* COUNT  */
-    CONTEXT = 349,                 /* CONTEXT  */
-    DOT = 350,                     /* DOT  */
-    IMPLIES = 351                  /* IMPLIES  */
+    VNAME = 266,                   /* VNAME  */
+    BASE = 267,                    /* BASE  */
+    STRING = 268,                  /* STRING  */
+    REAL = 269,                    /* REAL  */
+    TRUE = 270,                    /* TRUE  */
+    FALSE = 271,                   /* FALSE  */
+    SKIP = 272,                    /* SKIP  */
+    ASSERT = 273,                  /* ASSERT  */
+    PRINT = 274,                   /* PRINT  */
+    PRINTM = 275,                  /* PRINTM  */
+    C_CODE = 276,                  /* C_CODE  */
+    C_DECL = 277,                  /* C_DECL  */
+    C_EXPR = 278,                  /* C_EXPR  */
+    C_STATE = 279,                 /* C_STATE  */
+    C_TRACK = 280,                 /* C_TRACK  */
+    RUN = 281,                     /* RUN  */
+    LEN = 282,                     /* LEN  */
+    ENABLED = 283,                 /* ENABLED  */
+    EVAL = 284,                    /* EVAL  */
+    PC_VAL = 285,                  /* PC_VAL  */
+    TYPEDEF = 286,                 /* TYPEDEF  */
+    MTYPE = 287,                   /* MTYPE  */
+    INLINE = 288,                  /* INLINE  */
+    LABEL = 289,                   /* LABEL  */
+    OF = 290,                      /* OF  */
+    GOTO = 291,                    /* GOTO  */
+    BREAK = 292,                   /* BREAK  */
+    ELSE = 293,                    /* ELSE  */
+    SEMI = 294,                    /* SEMI  */
+    FI = 295,                      /* FI  */
+    OD = 296,                      /* OD  */
+    SEP = 297,                     /* SEP  */
+    ATOMIC = 298,                  /* ATOMIC  */
+    NON_ATOMIC = 299,              /* NON_ATOMIC  */
+    D_STEP = 300,                  /* D_STEP  */
+    UNLESS = 301,                  /* UNLESS  */
+    TIMEOUT = 302,                 /* TIMEOUT  */
+    NONPROGRESS = 303,             /* NONPROGRESS  */
+    ACTIVE = 304,                  /* ACTIVE  */
+    PROCTYPE = 305,                /* PROCTYPE  */
+    D_PROCTYPE = 306,              /* D_PROCTYPE  */
+    HIDDEN = 307,                  /* HIDDEN  */
+    SHOW = 308,                    /* SHOW  */
+    ISLOCAL = 309,                 /* ISLOCAL  */
+    PRIORITY = 310,                /* PRIORITY  */
+    PROVIDED = 311,                /* PROVIDED  */
+    FULL = 312,                    /* FULL  */
+    EMPTY = 313,                   /* EMPTY  */
+    NFULL = 314,                   /* NFULL  */
+    NEMPTY = 315,                  /* NEMPTY  */
+    XU = 316,                      /* XU  */
+    CLAIM = 317,                   /* CLAIM  */
+    TRACE = 318,                   /* TRACE  */
+    INIT = 319,                    /* INIT  */
+    WHILE = 320,                   /* WHILE  */
+    WHEN = 321,                    /* WHEN  */
+    WAIT = 322,                    /* WAIT  */
+    RESET = 323,                   /* RESET  */
+    SPEC = 324,                    /* SPEC  */
+    EVENTUALLY = 325,              /* EVENTUALLY  */
+    ALWAYS = 326,                  /* ALWAYS  */
+    GLOBALLY = 327,                /* GLOBALLY  */
+    FINALLY = 328,                 /* FINALLY  */
+    UNTIL = 329,                   /* UNTIL  */
+    NEXT = 330,                    /* NEXT  */
+    LTL = 331,                     /* LTL  */
+    FMULTILTL = 332,               /* FMULTILTL  */
+    ASGN = 333,                    /* ASGN  */
+    SND = 334,                     /* SND  */
+    O_SND = 335,                   /* O_SND  */
+    RCV = 336,                     /* RCV  */
+    R_RCV = 337,                   /* R_RCV  */
+    OR = 338,                      /* OR  */
+    AND = 339,                     /* AND  */
+    EQ = 340,                      /* EQ  */
+    NE = 341,                      /* NE  */
+    GT = 342,                      /* GT  */
+    LT = 343,                      /* LT  */
+    GE = 344,                      /* GE  */
+    LE = 345,                      /* LE  */
+    LSHIFT = 346,                  /* LSHIFT  */
+    RSHIFT = 347,                  /* RSHIFT  */
+    INCR = 348,                    /* INCR  */
+    DECR = 349,                    /* DECR  */
+    UMIN = 350,                    /* UMIN  */
+    NEG = 351,                     /* NEG  */
+    COUNT = 352,                   /* COUNT  */
+    CONTEXT = 353,                 /* CONTEXT  */
+    DOT = 354,                     /* DOT  */
+    IMPLIES = 355                  /* IMPLIES  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -164,98 +168,102 @@ extern int yydebug;
 #define UNAME 263
 #define PNAME 264
 #define INAME 265
-#define STRING 266
-#define REAL 267
-#define TRUE 268
-#define FALSE 269
-#define SKIP 270
-#define ASSERT 271
-#define PRINT 272
-#define PRINTM 273
-#define C_CODE 274
-#define C_DECL 275
-#define C_EXPR 276
-#define C_STATE 277
-#define C_TRACK 278
-#define RUN 279
-#define LEN 280
-#define ENABLED 281
-#define EVAL 282
-#define PC_VAL 283
-#define TYPEDEF 284
-#define MTYPE 285
-#define INLINE 286
-#define LABEL 287
-#define OF 288
-#define GOTO 289
-#define BREAK 290
-#define ELSE 291
-#define SEMI 292
-#define FI 293
-#define OD 294
-#define SEP 295
-#define ATOMIC 296
-#define NON_ATOMIC 297
-#define D_STEP 298
-#define UNLESS 299
-#define TIMEOUT 300
-#define NONPROGRESS 301
-#define ACTIVE 302
-#define PROCTYPE 303
-#define D_PROCTYPE 304
-#define HIDDEN 305
-#define SHOW 306
-#define ISLOCAL 307
-#define PRIORITY 308
-#define PROVIDED 309
-#define FULL 310
-#define EMPTY 311
-#define NFULL 312
-#define NEMPTY 313
-#define XU 314
-#define CLAIM 315
-#define TRACE 316
-#define INIT 317
-#define WHILE 318
-#define WHEN 319
-#define WAIT 320
-#define RESET 321
-#define SPEC 322
-#define EVENTUALLY 323
-#define ALWAYS 324
-#define GLOBALLY 325
-#define FINALLY 326
-#define UNTIL 327
-#define LTL 328
-#define ASGN 329
-#define SND 330
-#define O_SND 331
-#define RCV 332
-#define R_RCV 333
-#define OR 334
-#define AND 335
-#define EQ 336
-#define NE 337
-#define GT 338
-#define LT 339
-#define GE 340
-#define LE 341
-#define LSHIFT 342
-#define RSHIFT 343
-#define INCR 344
-#define DECR 345
-#define UMIN 346
-#define NEG 347
-#define COUNT 348
-#define CONTEXT 349
-#define DOT 350
-#define IMPLIES 351
+#define VNAME 266
+#define BASE 267
+#define STRING 268
+#define REAL 269
+#define TRUE 270
+#define FALSE 271
+#define SKIP 272
+#define ASSERT 273
+#define PRINT 274
+#define PRINTM 275
+#define C_CODE 276
+#define C_DECL 277
+#define C_EXPR 278
+#define C_STATE 279
+#define C_TRACK 280
+#define RUN 281
+#define LEN 282
+#define ENABLED 283
+#define EVAL 284
+#define PC_VAL 285
+#define TYPEDEF 286
+#define MTYPE 287
+#define INLINE 288
+#define LABEL 289
+#define OF 290
+#define GOTO 291
+#define BREAK 292
+#define ELSE 293
+#define SEMI 294
+#define FI 295
+#define OD 296
+#define SEP 297
+#define ATOMIC 298
+#define NON_ATOMIC 299
+#define D_STEP 300
+#define UNLESS 301
+#define TIMEOUT 302
+#define NONPROGRESS 303
+#define ACTIVE 304
+#define PROCTYPE 305
+#define D_PROCTYPE 306
+#define HIDDEN 307
+#define SHOW 308
+#define ISLOCAL 309
+#define PRIORITY 310
+#define PROVIDED 311
+#define FULL 312
+#define EMPTY 313
+#define NFULL 314
+#define NEMPTY 315
+#define XU 316
+#define CLAIM 317
+#define TRACE 318
+#define INIT 319
+#define WHILE 320
+#define WHEN 321
+#define WAIT 322
+#define RESET 323
+#define SPEC 324
+#define EVENTUALLY 325
+#define ALWAYS 326
+#define GLOBALLY 327
+#define FINALLY 328
+#define UNTIL 329
+#define NEXT 330
+#define LTL 331
+#define FMULTILTL 332
+#define ASGN 333
+#define SND 334
+#define O_SND 335
+#define RCV 336
+#define R_RCV 337
+#define OR 338
+#define AND 339
+#define EQ 340
+#define NE 341
+#define GT 342
+#define LT 343
+#define GE 344
+#define LE 345
+#define LSHIFT 346
+#define RSHIFT 347
+#define INCR 348
+#define DECR 349
+#define UMIN 350
+#define NEG 351
+#define COUNT 352
+#define CONTEXT 353
+#define DOT 354
+#define IMPLIES 355
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 63 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 64 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
  
 	int       				iVal;
 	char*    				sVal;
@@ -271,6 +279,7 @@ union YYSTYPE
 	class exprArgList*		pExprArgListVal;
 	class exprRArgList*		pExprRArgListVal;
 	class exprRArg*			pExprRArgVal;
+	class variantQuantifier*pVarQuantVal;
 	
 	class symbol*			pSymTabVal;
 	class varSymNode*		pVarSymVal;
@@ -279,7 +288,7 @@ union YYSTYPE
 	
 	enum symbol::Type   iType;
 
-#line 283 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp"
+#line 292 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

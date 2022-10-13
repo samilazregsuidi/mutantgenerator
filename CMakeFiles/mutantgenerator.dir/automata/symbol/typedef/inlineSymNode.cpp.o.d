@@ -217,6 +217,8 @@ CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o: \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/mtypedefSymNode.hpp \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_map.h \
  /usr/include/c++/11/bits/stl_multimap.h \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/variantSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/logic/fMultiLTLSymNode.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/stmnt/stmnt.hpp \
  /usr/include/c++/11/iostream \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/varExpr.hpp \

@@ -181,8 +181,8 @@ CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp \
  /usr/include/c++/11/cassert /usr/include/assert.h \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbols.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symTable.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbols.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symTable.hpp \
  /usr/include/c++/11/set /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h /usr/include/c++/11/fstream \
  /usr/include/c++/11/istream /usr/include/c++/11/ios \
@@ -209,25 +209,27 @@ CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbol.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/naSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/varSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbol.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/bitSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/boolSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/byteSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/shortSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/intSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/unsgnSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/mtypeSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/utypeSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/pidSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/cidSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/tdefSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symTable.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/chanSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/visitor/symTabVisitor.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/procSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/inlineSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/procSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/mtypedefSymNode.hpp
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbol.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/naSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/varSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbol.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/bitSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/boolSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/byteSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/shortSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/intSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/unsgnSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/mtypeSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/utypeSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/pidSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/cidSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/tdefSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symTable.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/chanSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/visitor/symTabVisitor.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/procSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/inlineSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/procSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/mtypedefSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/variantSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/logic/fMultiLTLSymNode.hpp

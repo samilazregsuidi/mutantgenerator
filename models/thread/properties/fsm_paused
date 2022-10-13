@@ -1,1 +1,0 @@
-[]((states[0] == PAUSED -> ((states[0] == PAUSED) W (states[0] == RUNNING || states[0] == STOPPING))) && (states[1] == PAUSED -> ((states[1] == PAUSED) W (states[1] == RUNNING || states[1] == STOPPING))) && (states[2] == PAUSED -> ((states[2] == PAUSED) W (states[2] == RUNNING || states[2] == STOPPING))))

@@ -202,5 +202,7 @@ CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o: \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/mtypedefSymNode.hpp \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_map.h \
  /usr/include/c++/11/bits/stl_multimap.h \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/variantSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/logic/fMultiLTLSymNode.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/varSymNode.hpp \
  /usr/include/c++/11/iostream

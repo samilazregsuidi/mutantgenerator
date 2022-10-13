@@ -1,3 +1,0 @@
-Remove process when process state is end (solves the issue probabolity normalisation issue trans.prob/state.nbProcs)
-
-remove no effect transition (guard, print, etc) 

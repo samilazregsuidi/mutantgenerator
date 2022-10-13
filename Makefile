@@ -129,869 +129,365 @@ mutantgenerator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/build
 .PHONY : mutantgenerator/fast
 
-automata/ast/astNode.o: automata/ast/astNode.cpp.o
-.PHONY : automata/ast/astNode.o
+ast/astNode.o: ast/astNode.cpp.o
+.PHONY : ast/astNode.o
 
 # target to build an object file
-automata/ast/astNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o
-.PHONY : automata/ast/astNode.cpp.o
+ast/astNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o
+.PHONY : ast/astNode.cpp.o
 
-automata/ast/astNode.i: automata/ast/astNode.cpp.i
-.PHONY : automata/ast/astNode.i
+ast/astNode.i: ast/astNode.cpp.i
+.PHONY : ast/astNode.i
 
 # target to preprocess a source file
-automata/ast/astNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.i
-.PHONY : automata/ast/astNode.cpp.i
+ast/astNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.i
+.PHONY : ast/astNode.cpp.i
 
-automata/ast/astNode.s: automata/ast/astNode.cpp.s
-.PHONY : automata/ast/astNode.s
+ast/astNode.s: ast/astNode.cpp.s
+.PHONY : ast/astNode.s
 
 # target to generate assembly for a file
-automata/ast/astNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.s
-.PHONY : automata/ast/astNode.cpp.s
+ast/astNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.s
+.PHONY : ast/astNode.cpp.s
 
-automata/ast/expr/argExpr.o: automata/ast/expr/argExpr.cpp.o
-.PHONY : automata/ast/expr/argExpr.o
+ast/expr/argExpr.o: ast/expr/argExpr.cpp.o
+.PHONY : ast/expr/argExpr.o
 
 # target to build an object file
-automata/ast/expr/argExpr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o
-.PHONY : automata/ast/expr/argExpr.cpp.o
+ast/expr/argExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o
+.PHONY : ast/expr/argExpr.cpp.o
 
-automata/ast/expr/argExpr.i: automata/ast/expr/argExpr.cpp.i
-.PHONY : automata/ast/expr/argExpr.i
+ast/expr/argExpr.i: ast/expr/argExpr.cpp.i
+.PHONY : ast/expr/argExpr.i
 
 # target to preprocess a source file
-automata/ast/expr/argExpr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.i
-.PHONY : automata/ast/expr/argExpr.cpp.i
+ast/expr/argExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.i
+.PHONY : ast/expr/argExpr.cpp.i
 
-automata/ast/expr/argExpr.s: automata/ast/expr/argExpr.cpp.s
-.PHONY : automata/ast/expr/argExpr.s
+ast/expr/argExpr.s: ast/expr/argExpr.cpp.s
+.PHONY : ast/expr/argExpr.s
 
 # target to generate assembly for a file
-automata/ast/expr/argExpr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.s
-.PHONY : automata/ast/expr/argExpr.cpp.s
+ast/expr/argExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.s
+.PHONY : ast/expr/argExpr.cpp.s
 
-automata/ast/expr/binaryExpr.o: automata/ast/expr/binaryExpr.cpp.o
-.PHONY : automata/ast/expr/binaryExpr.o
+ast/expr/binaryExpr.o: ast/expr/binaryExpr.cpp.o
+.PHONY : ast/expr/binaryExpr.o
 
 # target to build an object file
-automata/ast/expr/binaryExpr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o
-.PHONY : automata/ast/expr/binaryExpr.cpp.o
+ast/expr/binaryExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o
+.PHONY : ast/expr/binaryExpr.cpp.o
 
-automata/ast/expr/binaryExpr.i: automata/ast/expr/binaryExpr.cpp.i
-.PHONY : automata/ast/expr/binaryExpr.i
+ast/expr/binaryExpr.i: ast/expr/binaryExpr.cpp.i
+.PHONY : ast/expr/binaryExpr.i
 
 # target to preprocess a source file
-automata/ast/expr/binaryExpr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.i
-.PHONY : automata/ast/expr/binaryExpr.cpp.i
+ast/expr/binaryExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.i
+.PHONY : ast/expr/binaryExpr.cpp.i
 
-automata/ast/expr/binaryExpr.s: automata/ast/expr/binaryExpr.cpp.s
-.PHONY : automata/ast/expr/binaryExpr.s
+ast/expr/binaryExpr.s: ast/expr/binaryExpr.cpp.s
+.PHONY : ast/expr/binaryExpr.s
 
 # target to generate assembly for a file
-automata/ast/expr/binaryExpr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.s
-.PHONY : automata/ast/expr/binaryExpr.cpp.s
+ast/expr/binaryExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.s
+.PHONY : ast/expr/binaryExpr.cpp.s
 
-automata/ast/expr/constExpr.o: automata/ast/expr/constExpr.cpp.o
-.PHONY : automata/ast/expr/constExpr.o
+ast/expr/constExpr.o: ast/expr/constExpr.cpp.o
+.PHONY : ast/expr/constExpr.o
 
 # target to build an object file
-automata/ast/expr/constExpr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o
-.PHONY : automata/ast/expr/constExpr.cpp.o
+ast/expr/constExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o
+.PHONY : ast/expr/constExpr.cpp.o
 
-automata/ast/expr/constExpr.i: automata/ast/expr/constExpr.cpp.i
-.PHONY : automata/ast/expr/constExpr.i
+ast/expr/constExpr.i: ast/expr/constExpr.cpp.i
+.PHONY : ast/expr/constExpr.i
 
 # target to preprocess a source file
-automata/ast/expr/constExpr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.i
-.PHONY : automata/ast/expr/constExpr.cpp.i
+ast/expr/constExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.i
+.PHONY : ast/expr/constExpr.cpp.i
 
-automata/ast/expr/constExpr.s: automata/ast/expr/constExpr.cpp.s
-.PHONY : automata/ast/expr/constExpr.s
+ast/expr/constExpr.s: ast/expr/constExpr.cpp.s
+.PHONY : ast/expr/constExpr.s
 
 # target to generate assembly for a file
-automata/ast/expr/constExpr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.s
-.PHONY : automata/ast/expr/constExpr.cpp.s
+ast/expr/constExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.s
+.PHONY : ast/expr/constExpr.cpp.s
 
-automata/ast/expr/expr.o: automata/ast/expr/expr.cpp.o
-.PHONY : automata/ast/expr/expr.o
+ast/expr/expr.o: ast/expr/expr.cpp.o
+.PHONY : ast/expr/expr.o
 
 # target to build an object file
-automata/ast/expr/expr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o
-.PHONY : automata/ast/expr/expr.cpp.o
+ast/expr/expr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o
+.PHONY : ast/expr/expr.cpp.o
 
-automata/ast/expr/expr.i: automata/ast/expr/expr.cpp.i
-.PHONY : automata/ast/expr/expr.i
+ast/expr/expr.i: ast/expr/expr.cpp.i
+.PHONY : ast/expr/expr.i
 
 # target to preprocess a source file
-automata/ast/expr/expr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.i
-.PHONY : automata/ast/expr/expr.cpp.i
+ast/expr/expr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.i
+.PHONY : ast/expr/expr.cpp.i
 
-automata/ast/expr/expr.s: automata/ast/expr/expr.cpp.s
-.PHONY : automata/ast/expr/expr.s
+ast/expr/expr.s: ast/expr/expr.cpp.s
+.PHONY : ast/expr/expr.s
 
 # target to generate assembly for a file
-automata/ast/expr/expr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.s
-.PHONY : automata/ast/expr/expr.cpp.s
+ast/expr/expr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.s
+.PHONY : ast/expr/expr.cpp.s
 
-automata/ast/expr/unaryExpr.o: automata/ast/expr/unaryExpr.cpp.o
-.PHONY : automata/ast/expr/unaryExpr.o
+ast/expr/temporalExpr.o: ast/expr/temporalExpr.cpp.o
+.PHONY : ast/expr/temporalExpr.o
 
 # target to build an object file
-automata/ast/expr/unaryExpr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o
-.PHONY : automata/ast/expr/unaryExpr.cpp.o
+ast/expr/temporalExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o
+.PHONY : ast/expr/temporalExpr.cpp.o
 
-automata/ast/expr/unaryExpr.i: automata/ast/expr/unaryExpr.cpp.i
-.PHONY : automata/ast/expr/unaryExpr.i
+ast/expr/temporalExpr.i: ast/expr/temporalExpr.cpp.i
+.PHONY : ast/expr/temporalExpr.i
 
 # target to preprocess a source file
-automata/ast/expr/unaryExpr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.i
-.PHONY : automata/ast/expr/unaryExpr.cpp.i
+ast/expr/temporalExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.i
+.PHONY : ast/expr/temporalExpr.cpp.i
 
-automata/ast/expr/unaryExpr.s: automata/ast/expr/unaryExpr.cpp.s
-.PHONY : automata/ast/expr/unaryExpr.s
+ast/expr/temporalExpr.s: ast/expr/temporalExpr.cpp.s
+.PHONY : ast/expr/temporalExpr.s
 
 # target to generate assembly for a file
-automata/ast/expr/unaryExpr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.s
-.PHONY : automata/ast/expr/unaryExpr.cpp.s
+ast/expr/temporalExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.s
+.PHONY : ast/expr/temporalExpr.cpp.s
 
-automata/ast/expr/varExpr.o: automata/ast/expr/varExpr.cpp.o
-.PHONY : automata/ast/expr/varExpr.o
+ast/expr/unaryExpr.o: ast/expr/unaryExpr.cpp.o
+.PHONY : ast/expr/unaryExpr.o
 
 # target to build an object file
-automata/ast/expr/varExpr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o
-.PHONY : automata/ast/expr/varExpr.cpp.o
+ast/expr/unaryExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o
+.PHONY : ast/expr/unaryExpr.cpp.o
 
-automata/ast/expr/varExpr.i: automata/ast/expr/varExpr.cpp.i
-.PHONY : automata/ast/expr/varExpr.i
+ast/expr/unaryExpr.i: ast/expr/unaryExpr.cpp.i
+.PHONY : ast/expr/unaryExpr.i
 
 # target to preprocess a source file
-automata/ast/expr/varExpr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.i
-.PHONY : automata/ast/expr/varExpr.cpp.i
+ast/expr/unaryExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.i
+.PHONY : ast/expr/unaryExpr.cpp.i
 
-automata/ast/expr/varExpr.s: automata/ast/expr/varExpr.cpp.s
-.PHONY : automata/ast/expr/varExpr.s
+ast/expr/unaryExpr.s: ast/expr/unaryExpr.cpp.s
+.PHONY : ast/expr/unaryExpr.s
 
 # target to generate assembly for a file
-automata/ast/expr/varExpr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.s
-.PHONY : automata/ast/expr/varExpr.cpp.s
+ast/expr/unaryExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.s
+.PHONY : ast/expr/unaryExpr.cpp.s
 
-automata/ast/stmnt/chanStmnt.o: automata/ast/stmnt/chanStmnt.cpp.o
-.PHONY : automata/ast/stmnt/chanStmnt.o
+ast/expr/varExpr.o: ast/expr/varExpr.cpp.o
+.PHONY : ast/expr/varExpr.o
 
 # target to build an object file
-automata/ast/stmnt/chanStmnt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o
-.PHONY : automata/ast/stmnt/chanStmnt.cpp.o
+ast/expr/varExpr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o
+.PHONY : ast/expr/varExpr.cpp.o
 
-automata/ast/stmnt/chanStmnt.i: automata/ast/stmnt/chanStmnt.cpp.i
-.PHONY : automata/ast/stmnt/chanStmnt.i
+ast/expr/varExpr.i: ast/expr/varExpr.cpp.i
+.PHONY : ast/expr/varExpr.i
 
 # target to preprocess a source file
-automata/ast/stmnt/chanStmnt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.i
-.PHONY : automata/ast/stmnt/chanStmnt.cpp.i
+ast/expr/varExpr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.i
+.PHONY : ast/expr/varExpr.cpp.i
 
-automata/ast/stmnt/chanStmnt.s: automata/ast/stmnt/chanStmnt.cpp.s
-.PHONY : automata/ast/stmnt/chanStmnt.s
+ast/expr/varExpr.s: ast/expr/varExpr.cpp.s
+.PHONY : ast/expr/varExpr.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/chanStmnt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.s
-.PHONY : automata/ast/stmnt/chanStmnt.cpp.s
+ast/expr/varExpr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.s
+.PHONY : ast/expr/varExpr.cpp.s
 
-automata/ast/stmnt/clockStmnt.o: automata/ast/stmnt/clockStmnt.cpp.o
-.PHONY : automata/ast/stmnt/clockStmnt.o
+ast/stmnt/chanStmnt.o: ast/stmnt/chanStmnt.cpp.o
+.PHONY : ast/stmnt/chanStmnt.o
 
 # target to build an object file
-automata/ast/stmnt/clockStmnt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o
-.PHONY : automata/ast/stmnt/clockStmnt.cpp.o
+ast/stmnt/chanStmnt.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o
+.PHONY : ast/stmnt/chanStmnt.cpp.o
 
-automata/ast/stmnt/clockStmnt.i: automata/ast/stmnt/clockStmnt.cpp.i
-.PHONY : automata/ast/stmnt/clockStmnt.i
+ast/stmnt/chanStmnt.i: ast/stmnt/chanStmnt.cpp.i
+.PHONY : ast/stmnt/chanStmnt.i
 
 # target to preprocess a source file
-automata/ast/stmnt/clockStmnt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.i
-.PHONY : automata/ast/stmnt/clockStmnt.cpp.i
+ast/stmnt/chanStmnt.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.i
+.PHONY : ast/stmnt/chanStmnt.cpp.i
 
-automata/ast/stmnt/clockStmnt.s: automata/ast/stmnt/clockStmnt.cpp.s
-.PHONY : automata/ast/stmnt/clockStmnt.s
+ast/stmnt/chanStmnt.s: ast/stmnt/chanStmnt.cpp.s
+.PHONY : ast/stmnt/chanStmnt.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/clockStmnt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.s
-.PHONY : automata/ast/stmnt/clockStmnt.cpp.s
+ast/stmnt/chanStmnt.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.s
+.PHONY : ast/stmnt/chanStmnt.cpp.s
 
-automata/ast/stmnt/decl.o: automata/ast/stmnt/decl.cpp.o
-.PHONY : automata/ast/stmnt/decl.o
+ast/stmnt/clockStmnt.o: ast/stmnt/clockStmnt.cpp.o
+.PHONY : ast/stmnt/clockStmnt.o
 
 # target to build an object file
-automata/ast/stmnt/decl.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o
-.PHONY : automata/ast/stmnt/decl.cpp.o
+ast/stmnt/clockStmnt.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o
+.PHONY : ast/stmnt/clockStmnt.cpp.o
 
-automata/ast/stmnt/decl.i: automata/ast/stmnt/decl.cpp.i
-.PHONY : automata/ast/stmnt/decl.i
+ast/stmnt/clockStmnt.i: ast/stmnt/clockStmnt.cpp.i
+.PHONY : ast/stmnt/clockStmnt.i
 
 # target to preprocess a source file
-automata/ast/stmnt/decl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.i
-.PHONY : automata/ast/stmnt/decl.cpp.i
+ast/stmnt/clockStmnt.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.i
+.PHONY : ast/stmnt/clockStmnt.cpp.i
 
-automata/ast/stmnt/decl.s: automata/ast/stmnt/decl.cpp.s
-.PHONY : automata/ast/stmnt/decl.s
+ast/stmnt/clockStmnt.s: ast/stmnt/clockStmnt.cpp.s
+.PHONY : ast/stmnt/clockStmnt.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/decl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.s
-.PHONY : automata/ast/stmnt/decl.cpp.s
+ast/stmnt/clockStmnt.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.s
+.PHONY : ast/stmnt/clockStmnt.cpp.s
 
-automata/ast/stmnt/flowStmnt.o: automata/ast/stmnt/flowStmnt.cpp.o
-.PHONY : automata/ast/stmnt/flowStmnt.o
+ast/stmnt/decl.o: ast/stmnt/decl.cpp.o
+.PHONY : ast/stmnt/decl.o
 
 # target to build an object file
-automata/ast/stmnt/flowStmnt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o
-.PHONY : automata/ast/stmnt/flowStmnt.cpp.o
+ast/stmnt/decl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o
+.PHONY : ast/stmnt/decl.cpp.o
 
-automata/ast/stmnt/flowStmnt.i: automata/ast/stmnt/flowStmnt.cpp.i
-.PHONY : automata/ast/stmnt/flowStmnt.i
+ast/stmnt/decl.i: ast/stmnt/decl.cpp.i
+.PHONY : ast/stmnt/decl.i
 
 # target to preprocess a source file
-automata/ast/stmnt/flowStmnt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.i
-.PHONY : automata/ast/stmnt/flowStmnt.cpp.i
+ast/stmnt/decl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.i
+.PHONY : ast/stmnt/decl.cpp.i
 
-automata/ast/stmnt/flowStmnt.s: automata/ast/stmnt/flowStmnt.cpp.s
-.PHONY : automata/ast/stmnt/flowStmnt.s
+ast/stmnt/decl.s: ast/stmnt/decl.cpp.s
+.PHONY : ast/stmnt/decl.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/flowStmnt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.s
-.PHONY : automata/ast/stmnt/flowStmnt.cpp.s
+ast/stmnt/decl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.s
+.PHONY : ast/stmnt/decl.cpp.s
 
-automata/ast/stmnt/stdlibStmnt.o: automata/ast/stmnt/stdlibStmnt.cpp.o
-.PHONY : automata/ast/stmnt/stdlibStmnt.o
+ast/stmnt/flowStmnt.o: ast/stmnt/flowStmnt.cpp.o
+.PHONY : ast/stmnt/flowStmnt.o
 
 # target to build an object file
-automata/ast/stmnt/stdlibStmnt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o
-.PHONY : automata/ast/stmnt/stdlibStmnt.cpp.o
+ast/stmnt/flowStmnt.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o
+.PHONY : ast/stmnt/flowStmnt.cpp.o
 
-automata/ast/stmnt/stdlibStmnt.i: automata/ast/stmnt/stdlibStmnt.cpp.i
-.PHONY : automata/ast/stmnt/stdlibStmnt.i
+ast/stmnt/flowStmnt.i: ast/stmnt/flowStmnt.cpp.i
+.PHONY : ast/stmnt/flowStmnt.i
 
 # target to preprocess a source file
-automata/ast/stmnt/stdlibStmnt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.i
-.PHONY : automata/ast/stmnt/stdlibStmnt.cpp.i
+ast/stmnt/flowStmnt.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.i
+.PHONY : ast/stmnt/flowStmnt.cpp.i
 
-automata/ast/stmnt/stdlibStmnt.s: automata/ast/stmnt/stdlibStmnt.cpp.s
-.PHONY : automata/ast/stmnt/stdlibStmnt.s
+ast/stmnt/flowStmnt.s: ast/stmnt/flowStmnt.cpp.s
+.PHONY : ast/stmnt/flowStmnt.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/stdlibStmnt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.s
-.PHONY : automata/ast/stmnt/stdlibStmnt.cpp.s
+ast/stmnt/flowStmnt.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.s
+.PHONY : ast/stmnt/flowStmnt.cpp.s
 
-automata/ast/stmnt/stmnt.o: automata/ast/stmnt/stmnt.cpp.o
-.PHONY : automata/ast/stmnt/stmnt.o
+ast/stmnt/logicDecl.o: ast/stmnt/logicDecl.cpp.o
+.PHONY : ast/stmnt/logicDecl.o
 
 # target to build an object file
-automata/ast/stmnt/stmnt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o
-.PHONY : automata/ast/stmnt/stmnt.cpp.o
+ast/stmnt/logicDecl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o
+.PHONY : ast/stmnt/logicDecl.cpp.o
 
-automata/ast/stmnt/stmnt.i: automata/ast/stmnt/stmnt.cpp.i
-.PHONY : automata/ast/stmnt/stmnt.i
+ast/stmnt/logicDecl.i: ast/stmnt/logicDecl.cpp.i
+.PHONY : ast/stmnt/logicDecl.i
 
 # target to preprocess a source file
-automata/ast/stmnt/stmnt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.i
-.PHONY : automata/ast/stmnt/stmnt.cpp.i
+ast/stmnt/logicDecl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.i
+.PHONY : ast/stmnt/logicDecl.cpp.i
 
-automata/ast/stmnt/stmnt.s: automata/ast/stmnt/stmnt.cpp.s
-.PHONY : automata/ast/stmnt/stmnt.s
+ast/stmnt/logicDecl.s: ast/stmnt/logicDecl.cpp.s
+.PHONY : ast/stmnt/logicDecl.s
 
 # target to generate assembly for a file
-automata/ast/stmnt/stmnt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.s
-.PHONY : automata/ast/stmnt/stmnt.cpp.s
+ast/stmnt/logicDecl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.s
+.PHONY : ast/stmnt/logicDecl.cpp.s
 
-automata/fsm/ASTtoFSM.o: automata/fsm/ASTtoFSM.cpp.o
-.PHONY : automata/fsm/ASTtoFSM.o
+ast/stmnt/stdlibStmnt.o: ast/stmnt/stdlibStmnt.cpp.o
+.PHONY : ast/stmnt/stdlibStmnt.o
 
 # target to build an object file
-automata/fsm/ASTtoFSM.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o
-.PHONY : automata/fsm/ASTtoFSM.cpp.o
+ast/stmnt/stdlibStmnt.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o
+.PHONY : ast/stmnt/stdlibStmnt.cpp.o
 
-automata/fsm/ASTtoFSM.i: automata/fsm/ASTtoFSM.cpp.i
-.PHONY : automata/fsm/ASTtoFSM.i
+ast/stmnt/stdlibStmnt.i: ast/stmnt/stdlibStmnt.cpp.i
+.PHONY : ast/stmnt/stdlibStmnt.i
 
 # target to preprocess a source file
-automata/fsm/ASTtoFSM.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.i
-.PHONY : automata/fsm/ASTtoFSM.cpp.i
+ast/stmnt/stdlibStmnt.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.i
+.PHONY : ast/stmnt/stdlibStmnt.cpp.i
 
-automata/fsm/ASTtoFSM.s: automata/fsm/ASTtoFSM.cpp.s
-.PHONY : automata/fsm/ASTtoFSM.s
+ast/stmnt/stdlibStmnt.s: ast/stmnt/stdlibStmnt.cpp.s
+.PHONY : ast/stmnt/stdlibStmnt.s
 
 # target to generate assembly for a file
-automata/fsm/ASTtoFSM.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.s
-.PHONY : automata/fsm/ASTtoFSM.cpp.s
+ast/stmnt/stdlibStmnt.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.s
+.PHONY : ast/stmnt/stdlibStmnt.cpp.s
 
-automata/fsm/fsm.o: automata/fsm/fsm.cpp.o
-.PHONY : automata/fsm/fsm.o
+ast/stmnt/stmnt.o: ast/stmnt/stmnt.cpp.o
+.PHONY : ast/stmnt/stmnt.o
 
 # target to build an object file
-automata/fsm/fsm.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o
-.PHONY : automata/fsm/fsm.cpp.o
+ast/stmnt/stmnt.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o
+.PHONY : ast/stmnt/stmnt.cpp.o
 
-automata/fsm/fsm.i: automata/fsm/fsm.cpp.i
-.PHONY : automata/fsm/fsm.i
-
-# target to preprocess a source file
-automata/fsm/fsm.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.i
-.PHONY : automata/fsm/fsm.cpp.i
-
-automata/fsm/fsm.s: automata/fsm/fsm.cpp.s
-.PHONY : automata/fsm/fsm.s
-
-# target to generate assembly for a file
-automata/fsm/fsm.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.s
-.PHONY : automata/fsm/fsm.cpp.s
-
-automata/fsm/fsmEdge.o: automata/fsm/fsmEdge.cpp.o
-.PHONY : automata/fsm/fsmEdge.o
-
-# target to build an object file
-automata/fsm/fsmEdge.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o
-.PHONY : automata/fsm/fsmEdge.cpp.o
-
-automata/fsm/fsmEdge.i: automata/fsm/fsmEdge.cpp.i
-.PHONY : automata/fsm/fsmEdge.i
+ast/stmnt/stmnt.i: ast/stmnt/stmnt.cpp.i
+.PHONY : ast/stmnt/stmnt.i
 
 # target to preprocess a source file
-automata/fsm/fsmEdge.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.i
-.PHONY : automata/fsm/fsmEdge.cpp.i
+ast/stmnt/stmnt.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.i
+.PHONY : ast/stmnt/stmnt.cpp.i
 
-automata/fsm/fsmEdge.s: automata/fsm/fsmEdge.cpp.s
-.PHONY : automata/fsm/fsmEdge.s
-
-# target to generate assembly for a file
-automata/fsm/fsmEdge.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s
-.PHONY : automata/fsm/fsmEdge.cpp.s
-
-automata/fsm/fsmNode.o: automata/fsm/fsmNode.cpp.o
-.PHONY : automata/fsm/fsmNode.o
-
-# target to build an object file
-automata/fsm/fsmNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o
-.PHONY : automata/fsm/fsmNode.cpp.o
-
-automata/fsm/fsmNode.i: automata/fsm/fsmNode.cpp.i
-.PHONY : automata/fsm/fsmNode.i
-
-# target to preprocess a source file
-automata/fsm/fsmNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.i
-.PHONY : automata/fsm/fsmNode.cpp.i
-
-automata/fsm/fsmNode.s: automata/fsm/fsmNode.cpp.s
-.PHONY : automata/fsm/fsmNode.s
+ast/stmnt/stmnt.s: ast/stmnt/stmnt.cpp.s
+.PHONY : ast/stmnt/stmnt.s
 
 # target to generate assembly for a file
-automata/fsm/fsmNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.s
-.PHONY : automata/fsm/fsmNode.cpp.s
-
-automata/symbol/symTable.o: automata/symbol/symTable.cpp.o
-.PHONY : automata/symbol/symTable.o
-
-# target to build an object file
-automata/symbol/symTable.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o
-.PHONY : automata/symbol/symTable.cpp.o
-
-automata/symbol/symTable.i: automata/symbol/symTable.cpp.i
-.PHONY : automata/symbol/symTable.i
-
-# target to preprocess a source file
-automata/symbol/symTable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.i
-.PHONY : automata/symbol/symTable.cpp.i
-
-automata/symbol/symTable.s: automata/symbol/symTable.cpp.s
-.PHONY : automata/symbol/symTable.s
-
-# target to generate assembly for a file
-automata/symbol/symTable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.s
-.PHONY : automata/symbol/symTable.cpp.s
-
-automata/symbol/symbol.o: automata/symbol/symbol.cpp.o
-.PHONY : automata/symbol/symbol.o
-
-# target to build an object file
-automata/symbol/symbol.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o
-.PHONY : automata/symbol/symbol.cpp.o
-
-automata/symbol/symbol.i: automata/symbol/symbol.cpp.i
-.PHONY : automata/symbol/symbol.i
-
-# target to preprocess a source file
-automata/symbol/symbol.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.i
-.PHONY : automata/symbol/symbol.cpp.i
-
-automata/symbol/symbol.s: automata/symbol/symbol.cpp.s
-.PHONY : automata/symbol/symbol.s
-
-# target to generate assembly for a file
-automata/symbol/symbol.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.s
-.PHONY : automata/symbol/symbol.cpp.s
-
-automata/symbol/typedef/inlineSymNode.o: automata/symbol/typedef/inlineSymNode.cpp.o
-.PHONY : automata/symbol/typedef/inlineSymNode.o
-
-# target to build an object file
-automata/symbol/typedef/inlineSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o
-.PHONY : automata/symbol/typedef/inlineSymNode.cpp.o
-
-automata/symbol/typedef/inlineSymNode.i: automata/symbol/typedef/inlineSymNode.cpp.i
-.PHONY : automata/symbol/typedef/inlineSymNode.i
-
-# target to preprocess a source file
-automata/symbol/typedef/inlineSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.i
-.PHONY : automata/symbol/typedef/inlineSymNode.cpp.i
-
-automata/symbol/typedef/inlineSymNode.s: automata/symbol/typedef/inlineSymNode.cpp.s
-.PHONY : automata/symbol/typedef/inlineSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/typedef/inlineSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.s
-.PHONY : automata/symbol/typedef/inlineSymNode.cpp.s
-
-automata/symbol/typedef/mtypedefSymNode.o: automata/symbol/typedef/mtypedefSymNode.cpp.o
-.PHONY : automata/symbol/typedef/mtypedefSymNode.o
-
-# target to build an object file
-automata/symbol/typedef/mtypedefSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o
-.PHONY : automata/symbol/typedef/mtypedefSymNode.cpp.o
-
-automata/symbol/typedef/mtypedefSymNode.i: automata/symbol/typedef/mtypedefSymNode.cpp.i
-.PHONY : automata/symbol/typedef/mtypedefSymNode.i
-
-# target to preprocess a source file
-automata/symbol/typedef/mtypedefSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.i
-.PHONY : automata/symbol/typedef/mtypedefSymNode.cpp.i
-
-automata/symbol/typedef/mtypedefSymNode.s: automata/symbol/typedef/mtypedefSymNode.cpp.s
-.PHONY : automata/symbol/typedef/mtypedefSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/typedef/mtypedefSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.s
-.PHONY : automata/symbol/typedef/mtypedefSymNode.cpp.s
-
-automata/symbol/typedef/procSymNode.o: automata/symbol/typedef/procSymNode.cpp.o
-.PHONY : automata/symbol/typedef/procSymNode.o
-
-# target to build an object file
-automata/symbol/typedef/procSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o
-.PHONY : automata/symbol/typedef/procSymNode.cpp.o
-
-automata/symbol/typedef/procSymNode.i: automata/symbol/typedef/procSymNode.cpp.i
-.PHONY : automata/symbol/typedef/procSymNode.i
-
-# target to preprocess a source file
-automata/symbol/typedef/procSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.i
-.PHONY : automata/symbol/typedef/procSymNode.cpp.i
-
-automata/symbol/typedef/procSymNode.s: automata/symbol/typedef/procSymNode.cpp.s
-.PHONY : automata/symbol/typedef/procSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/typedef/procSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.s
-.PHONY : automata/symbol/typedef/procSymNode.cpp.s
-
-automata/symbol/typedef/tdefSymNode.o: automata/symbol/typedef/tdefSymNode.cpp.o
-.PHONY : automata/symbol/typedef/tdefSymNode.o
-
-# target to build an object file
-automata/symbol/typedef/tdefSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o
-.PHONY : automata/symbol/typedef/tdefSymNode.cpp.o
-
-automata/symbol/typedef/tdefSymNode.i: automata/symbol/typedef/tdefSymNode.cpp.i
-.PHONY : automata/symbol/typedef/tdefSymNode.i
-
-# target to preprocess a source file
-automata/symbol/typedef/tdefSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.i
-.PHONY : automata/symbol/typedef/tdefSymNode.cpp.i
-
-automata/symbol/typedef/tdefSymNode.s: automata/symbol/typedef/tdefSymNode.cpp.s
-.PHONY : automata/symbol/typedef/tdefSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/typedef/tdefSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.s
-.PHONY : automata/symbol/typedef/tdefSymNode.cpp.s
-
-automata/symbol/vardef/bitSymNode.o: automata/symbol/vardef/bitSymNode.cpp.o
-.PHONY : automata/symbol/vardef/bitSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/bitSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o
-.PHONY : automata/symbol/vardef/bitSymNode.cpp.o
-
-automata/symbol/vardef/bitSymNode.i: automata/symbol/vardef/bitSymNode.cpp.i
-.PHONY : automata/symbol/vardef/bitSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/bitSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.i
-.PHONY : automata/symbol/vardef/bitSymNode.cpp.i
-
-automata/symbol/vardef/bitSymNode.s: automata/symbol/vardef/bitSymNode.cpp.s
-.PHONY : automata/symbol/vardef/bitSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/bitSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.s
-.PHONY : automata/symbol/vardef/bitSymNode.cpp.s
-
-automata/symbol/vardef/boolSymNode.o: automata/symbol/vardef/boolSymNode.cpp.o
-.PHONY : automata/symbol/vardef/boolSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/boolSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o
-.PHONY : automata/symbol/vardef/boolSymNode.cpp.o
-
-automata/symbol/vardef/boolSymNode.i: automata/symbol/vardef/boolSymNode.cpp.i
-.PHONY : automata/symbol/vardef/boolSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/boolSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.i
-.PHONY : automata/symbol/vardef/boolSymNode.cpp.i
-
-automata/symbol/vardef/boolSymNode.s: automata/symbol/vardef/boolSymNode.cpp.s
-.PHONY : automata/symbol/vardef/boolSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/boolSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.s
-.PHONY : automata/symbol/vardef/boolSymNode.cpp.s
-
-automata/symbol/vardef/byteSymNode.o: automata/symbol/vardef/byteSymNode.cpp.o
-.PHONY : automata/symbol/vardef/byteSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/byteSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o
-.PHONY : automata/symbol/vardef/byteSymNode.cpp.o
-
-automata/symbol/vardef/byteSymNode.i: automata/symbol/vardef/byteSymNode.cpp.i
-.PHONY : automata/symbol/vardef/byteSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/byteSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.i
-.PHONY : automata/symbol/vardef/byteSymNode.cpp.i
-
-automata/symbol/vardef/byteSymNode.s: automata/symbol/vardef/byteSymNode.cpp.s
-.PHONY : automata/symbol/vardef/byteSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/byteSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.s
-.PHONY : automata/symbol/vardef/byteSymNode.cpp.s
-
-automata/symbol/vardef/chanSymNode.o: automata/symbol/vardef/chanSymNode.cpp.o
-.PHONY : automata/symbol/vardef/chanSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/chanSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o
-.PHONY : automata/symbol/vardef/chanSymNode.cpp.o
-
-automata/symbol/vardef/chanSymNode.i: automata/symbol/vardef/chanSymNode.cpp.i
-.PHONY : automata/symbol/vardef/chanSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/chanSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.i
-.PHONY : automata/symbol/vardef/chanSymNode.cpp.i
-
-automata/symbol/vardef/chanSymNode.s: automata/symbol/vardef/chanSymNode.cpp.s
-.PHONY : automata/symbol/vardef/chanSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/chanSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.s
-.PHONY : automata/symbol/vardef/chanSymNode.cpp.s
-
-automata/symbol/vardef/cidSymNode.o: automata/symbol/vardef/cidSymNode.cpp.o
-.PHONY : automata/symbol/vardef/cidSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/cidSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o
-.PHONY : automata/symbol/vardef/cidSymNode.cpp.o
-
-automata/symbol/vardef/cidSymNode.i: automata/symbol/vardef/cidSymNode.cpp.i
-.PHONY : automata/symbol/vardef/cidSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/cidSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.i
-.PHONY : automata/symbol/vardef/cidSymNode.cpp.i
-
-automata/symbol/vardef/cidSymNode.s: automata/symbol/vardef/cidSymNode.cpp.s
-.PHONY : automata/symbol/vardef/cidSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/cidSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.s
-.PHONY : automata/symbol/vardef/cidSymNode.cpp.s
-
-automata/symbol/vardef/intSymNode.o: automata/symbol/vardef/intSymNode.cpp.o
-.PHONY : automata/symbol/vardef/intSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/intSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o
-.PHONY : automata/symbol/vardef/intSymNode.cpp.o
-
-automata/symbol/vardef/intSymNode.i: automata/symbol/vardef/intSymNode.cpp.i
-.PHONY : automata/symbol/vardef/intSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/intSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.i
-.PHONY : automata/symbol/vardef/intSymNode.cpp.i
-
-automata/symbol/vardef/intSymNode.s: automata/symbol/vardef/intSymNode.cpp.s
-.PHONY : automata/symbol/vardef/intSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/intSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.s
-.PHONY : automata/symbol/vardef/intSymNode.cpp.s
-
-automata/symbol/vardef/mtypeSymNode.o: automata/symbol/vardef/mtypeSymNode.cpp.o
-.PHONY : automata/symbol/vardef/mtypeSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/mtypeSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o
-.PHONY : automata/symbol/vardef/mtypeSymNode.cpp.o
-
-automata/symbol/vardef/mtypeSymNode.i: automata/symbol/vardef/mtypeSymNode.cpp.i
-.PHONY : automata/symbol/vardef/mtypeSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/mtypeSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.i
-.PHONY : automata/symbol/vardef/mtypeSymNode.cpp.i
-
-automata/symbol/vardef/mtypeSymNode.s: automata/symbol/vardef/mtypeSymNode.cpp.s
-.PHONY : automata/symbol/vardef/mtypeSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/mtypeSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.s
-.PHONY : automata/symbol/vardef/mtypeSymNode.cpp.s
-
-automata/symbol/vardef/naSymNode.o: automata/symbol/vardef/naSymNode.cpp.o
-.PHONY : automata/symbol/vardef/naSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/naSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o
-.PHONY : automata/symbol/vardef/naSymNode.cpp.o
-
-automata/symbol/vardef/naSymNode.i: automata/symbol/vardef/naSymNode.cpp.i
-.PHONY : automata/symbol/vardef/naSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/naSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.i
-.PHONY : automata/symbol/vardef/naSymNode.cpp.i
-
-automata/symbol/vardef/naSymNode.s: automata/symbol/vardef/naSymNode.cpp.s
-.PHONY : automata/symbol/vardef/naSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/naSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.s
-.PHONY : automata/symbol/vardef/naSymNode.cpp.s
-
-automata/symbol/vardef/pidSymNode.o: automata/symbol/vardef/pidSymNode.cpp.o
-.PHONY : automata/symbol/vardef/pidSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/pidSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o
-.PHONY : automata/symbol/vardef/pidSymNode.cpp.o
-
-automata/symbol/vardef/pidSymNode.i: automata/symbol/vardef/pidSymNode.cpp.i
-.PHONY : automata/symbol/vardef/pidSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/pidSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.i
-.PHONY : automata/symbol/vardef/pidSymNode.cpp.i
-
-automata/symbol/vardef/pidSymNode.s: automata/symbol/vardef/pidSymNode.cpp.s
-.PHONY : automata/symbol/vardef/pidSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/pidSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.s
-.PHONY : automata/symbol/vardef/pidSymNode.cpp.s
-
-automata/symbol/vardef/shortSymNode.o: automata/symbol/vardef/shortSymNode.cpp.o
-.PHONY : automata/symbol/vardef/shortSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/shortSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o
-.PHONY : automata/symbol/vardef/shortSymNode.cpp.o
-
-automata/symbol/vardef/shortSymNode.i: automata/symbol/vardef/shortSymNode.cpp.i
-.PHONY : automata/symbol/vardef/shortSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/shortSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.i
-.PHONY : automata/symbol/vardef/shortSymNode.cpp.i
-
-automata/symbol/vardef/shortSymNode.s: automata/symbol/vardef/shortSymNode.cpp.s
-.PHONY : automata/symbol/vardef/shortSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/shortSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.s
-.PHONY : automata/symbol/vardef/shortSymNode.cpp.s
-
-automata/symbol/vardef/unsgnSymNode.o: automata/symbol/vardef/unsgnSymNode.cpp.o
-.PHONY : automata/symbol/vardef/unsgnSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/unsgnSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o
-.PHONY : automata/symbol/vardef/unsgnSymNode.cpp.o
-
-automata/symbol/vardef/unsgnSymNode.i: automata/symbol/vardef/unsgnSymNode.cpp.i
-.PHONY : automata/symbol/vardef/unsgnSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/unsgnSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.i
-.PHONY : automata/symbol/vardef/unsgnSymNode.cpp.i
-
-automata/symbol/vardef/unsgnSymNode.s: automata/symbol/vardef/unsgnSymNode.cpp.s
-.PHONY : automata/symbol/vardef/unsgnSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/unsgnSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.s
-.PHONY : automata/symbol/vardef/unsgnSymNode.cpp.s
-
-automata/symbol/vardef/utypeSymNode.o: automata/symbol/vardef/utypeSymNode.cpp.o
-.PHONY : automata/symbol/vardef/utypeSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/utypeSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o
-.PHONY : automata/symbol/vardef/utypeSymNode.cpp.o
-
-automata/symbol/vardef/utypeSymNode.i: automata/symbol/vardef/utypeSymNode.cpp.i
-.PHONY : automata/symbol/vardef/utypeSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/utypeSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.i
-.PHONY : automata/symbol/vardef/utypeSymNode.cpp.i
-
-automata/symbol/vardef/utypeSymNode.s: automata/symbol/vardef/utypeSymNode.cpp.s
-.PHONY : automata/symbol/vardef/utypeSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/utypeSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.s
-.PHONY : automata/symbol/vardef/utypeSymNode.cpp.s
-
-automata/symbol/vardef/varSymNode.o: automata/symbol/vardef/varSymNode.cpp.o
-.PHONY : automata/symbol/vardef/varSymNode.o
-
-# target to build an object file
-automata/symbol/vardef/varSymNode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o
-.PHONY : automata/symbol/vardef/varSymNode.cpp.o
-
-automata/symbol/vardef/varSymNode.i: automata/symbol/vardef/varSymNode.cpp.i
-.PHONY : automata/symbol/vardef/varSymNode.i
-
-# target to preprocess a source file
-automata/symbol/vardef/varSymNode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.i
-.PHONY : automata/symbol/vardef/varSymNode.cpp.i
-
-automata/symbol/vardef/varSymNode.s: automata/symbol/vardef/varSymNode.cpp.s
-.PHONY : automata/symbol/vardef/varSymNode.s
-
-# target to generate assembly for a file
-automata/symbol/vardef/varSymNode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.s
-.PHONY : automata/symbol/vardef/varSymNode.cpp.s
+ast/stmnt/stmnt.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.s
+.PHONY : ast/stmnt/stmnt.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -1065,293 +561,509 @@ parser/y.tab.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.s
 .PHONY : parser/y.tab.cpp.s
 
-semantic/channel.o: semantic/channel.cpp.o
-.PHONY : semantic/channel.o
+symbol/logic/fMultiLTLSymNode.o: symbol/logic/fMultiLTLSymNode.cpp.o
+.PHONY : symbol/logic/fMultiLTLSymNode.o
 
 # target to build an object file
-semantic/channel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o
-.PHONY : semantic/channel.cpp.o
+symbol/logic/fMultiLTLSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o
+.PHONY : symbol/logic/fMultiLTLSymNode.cpp.o
 
-semantic/channel.i: semantic/channel.cpp.i
-.PHONY : semantic/channel.i
+symbol/logic/fMultiLTLSymNode.i: symbol/logic/fMultiLTLSymNode.cpp.i
+.PHONY : symbol/logic/fMultiLTLSymNode.i
 
 # target to preprocess a source file
-semantic/channel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.i
-.PHONY : semantic/channel.cpp.i
+symbol/logic/fMultiLTLSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.i
+.PHONY : symbol/logic/fMultiLTLSymNode.cpp.i
 
-semantic/channel.s: semantic/channel.cpp.s
-.PHONY : semantic/channel.s
+symbol/logic/fMultiLTLSymNode.s: symbol/logic/fMultiLTLSymNode.cpp.s
+.PHONY : symbol/logic/fMultiLTLSymNode.s
 
 # target to generate assembly for a file
-semantic/channel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s
-.PHONY : semantic/channel.cpp.s
+symbol/logic/fMultiLTLSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.s
+.PHONY : symbol/logic/fMultiLTLSymNode.cpp.s
 
-semantic/compositeState.o: semantic/compositeState.cpp.o
-.PHONY : semantic/compositeState.o
+symbol/symTable.o: symbol/symTable.cpp.o
+.PHONY : symbol/symTable.o
 
 # target to build an object file
-semantic/compositeState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o
-.PHONY : semantic/compositeState.cpp.o
+symbol/symTable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o
+.PHONY : symbol/symTable.cpp.o
 
-semantic/compositeState.i: semantic/compositeState.cpp.i
-.PHONY : semantic/compositeState.i
+symbol/symTable.i: symbol/symTable.cpp.i
+.PHONY : symbol/symTable.i
 
 # target to preprocess a source file
-semantic/compositeState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.i
-.PHONY : semantic/compositeState.cpp.i
+symbol/symTable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.i
+.PHONY : symbol/symTable.cpp.i
 
-semantic/compositeState.s: semantic/compositeState.cpp.s
-.PHONY : semantic/compositeState.s
+symbol/symTable.s: symbol/symTable.cpp.s
+.PHONY : symbol/symTable.s
 
 # target to generate assembly for a file
-semantic/compositeState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.s
-.PHONY : semantic/compositeState.cpp.s
+symbol/symTable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.s
+.PHONY : symbol/symTable.cpp.s
 
-semantic/compositeTransition.o: semantic/compositeTransition.cpp.o
-.PHONY : semantic/compositeTransition.o
+symbol/symbol.o: symbol/symbol.cpp.o
+.PHONY : symbol/symbol.o
 
 # target to build an object file
-semantic/compositeTransition.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o
-.PHONY : semantic/compositeTransition.cpp.o
+symbol/symbol.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o
+.PHONY : symbol/symbol.cpp.o
 
-semantic/compositeTransition.i: semantic/compositeTransition.cpp.i
-.PHONY : semantic/compositeTransition.i
+symbol/symbol.i: symbol/symbol.cpp.i
+.PHONY : symbol/symbol.i
 
 # target to preprocess a source file
-semantic/compositeTransition.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.i
-.PHONY : semantic/compositeTransition.cpp.i
+symbol/symbol.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.i
+.PHONY : symbol/symbol.cpp.i
 
-semantic/compositeTransition.s: semantic/compositeTransition.cpp.s
-.PHONY : semantic/compositeTransition.s
+symbol/symbol.s: symbol/symbol.cpp.s
+.PHONY : symbol/symbol.s
 
 # target to generate assembly for a file
-semantic/compositeTransition.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.s
-.PHONY : semantic/compositeTransition.cpp.s
+symbol/symbol.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.s
+.PHONY : symbol/symbol.cpp.s
 
-semantic/payload.o: semantic/payload.cpp.o
-.PHONY : semantic/payload.o
+symbol/typedef/inlineSymNode.o: symbol/typedef/inlineSymNode.cpp.o
+.PHONY : symbol/typedef/inlineSymNode.o
 
 # target to build an object file
-semantic/payload.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o
-.PHONY : semantic/payload.cpp.o
+symbol/typedef/inlineSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o
+.PHONY : symbol/typedef/inlineSymNode.cpp.o
 
-semantic/payload.i: semantic/payload.cpp.i
-.PHONY : semantic/payload.i
+symbol/typedef/inlineSymNode.i: symbol/typedef/inlineSymNode.cpp.i
+.PHONY : symbol/typedef/inlineSymNode.i
 
 # target to preprocess a source file
-semantic/payload.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.i
-.PHONY : semantic/payload.cpp.i
+symbol/typedef/inlineSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.i
+.PHONY : symbol/typedef/inlineSymNode.cpp.i
 
-semantic/payload.s: semantic/payload.cpp.s
-.PHONY : semantic/payload.s
+symbol/typedef/inlineSymNode.s: symbol/typedef/inlineSymNode.cpp.s
+.PHONY : symbol/typedef/inlineSymNode.s
 
 # target to generate assembly for a file
-semantic/payload.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.s
-.PHONY : semantic/payload.cpp.s
+symbol/typedef/inlineSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.s
+.PHONY : symbol/typedef/inlineSymNode.cpp.s
 
-semantic/process.o: semantic/process.cpp.o
-.PHONY : semantic/process.o
+symbol/typedef/mtypedefSymNode.o: symbol/typedef/mtypedefSymNode.cpp.o
+.PHONY : symbol/typedef/mtypedefSymNode.o
 
 # target to build an object file
-semantic/process.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o
-.PHONY : semantic/process.cpp.o
+symbol/typedef/mtypedefSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o
+.PHONY : symbol/typedef/mtypedefSymNode.cpp.o
 
-semantic/process.i: semantic/process.cpp.i
-.PHONY : semantic/process.i
+symbol/typedef/mtypedefSymNode.i: symbol/typedef/mtypedefSymNode.cpp.i
+.PHONY : symbol/typedef/mtypedefSymNode.i
 
 # target to preprocess a source file
-semantic/process.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.i
-.PHONY : semantic/process.cpp.i
+symbol/typedef/mtypedefSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.i
+.PHONY : symbol/typedef/mtypedefSymNode.cpp.i
 
-semantic/process.s: semantic/process.cpp.s
-.PHONY : semantic/process.s
+symbol/typedef/mtypedefSymNode.s: symbol/typedef/mtypedefSymNode.cpp.s
+.PHONY : symbol/typedef/mtypedefSymNode.s
 
 # target to generate assembly for a file
-semantic/process.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s
-.PHONY : semantic/process.cpp.s
+symbol/typedef/mtypedefSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.s
+.PHONY : symbol/typedef/mtypedefSymNode.cpp.s
 
-semantic/programState.o: semantic/programState.cpp.o
-.PHONY : semantic/programState.o
+symbol/typedef/procSymNode.o: symbol/typedef/procSymNode.cpp.o
+.PHONY : symbol/typedef/procSymNode.o
 
 # target to build an object file
-semantic/programState.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o
-.PHONY : semantic/programState.cpp.o
+symbol/typedef/procSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o
+.PHONY : symbol/typedef/procSymNode.cpp.o
 
-semantic/programState.i: semantic/programState.cpp.i
-.PHONY : semantic/programState.i
+symbol/typedef/procSymNode.i: symbol/typedef/procSymNode.cpp.i
+.PHONY : symbol/typedef/procSymNode.i
 
 # target to preprocess a source file
-semantic/programState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.i
-.PHONY : semantic/programState.cpp.i
+symbol/typedef/procSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.i
+.PHONY : symbol/typedef/procSymNode.cpp.i
 
-semantic/programState.s: semantic/programState.cpp.s
-.PHONY : semantic/programState.s
+symbol/typedef/procSymNode.s: symbol/typedef/procSymNode.cpp.s
+.PHONY : symbol/typedef/procSymNode.s
 
 # target to generate assembly for a file
-semantic/programState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.s
-.PHONY : semantic/programState.cpp.s
+symbol/typedef/procSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.s
+.PHONY : symbol/typedef/procSymNode.cpp.s
 
-semantic/programTransition.o: semantic/programTransition.cpp.o
-.PHONY : semantic/programTransition.o
+symbol/typedef/tdefSymNode.o: symbol/typedef/tdefSymNode.cpp.o
+.PHONY : symbol/typedef/tdefSymNode.o
 
 # target to build an object file
-semantic/programTransition.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o
-.PHONY : semantic/programTransition.cpp.o
+symbol/typedef/tdefSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o
+.PHONY : symbol/typedef/tdefSymNode.cpp.o
 
-semantic/programTransition.i: semantic/programTransition.cpp.i
-.PHONY : semantic/programTransition.i
+symbol/typedef/tdefSymNode.i: symbol/typedef/tdefSymNode.cpp.i
+.PHONY : symbol/typedef/tdefSymNode.i
 
 # target to preprocess a source file
-semantic/programTransition.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.i
-.PHONY : semantic/programTransition.cpp.i
+symbol/typedef/tdefSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.i
+.PHONY : symbol/typedef/tdefSymNode.cpp.i
 
-semantic/programTransition.s: semantic/programTransition.cpp.s
-.PHONY : semantic/programTransition.s
+symbol/typedef/tdefSymNode.s: symbol/typedef/tdefSymNode.cpp.s
+.PHONY : symbol/typedef/tdefSymNode.s
 
 # target to generate assembly for a file
-semantic/programTransition.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.s
-.PHONY : semantic/programTransition.cpp.s
+symbol/typedef/tdefSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.s
+.PHONY : symbol/typedef/tdefSymNode.cpp.s
 
-semantic/rendezVousTransition.o: semantic/rendezVousTransition.cpp.o
-.PHONY : semantic/rendezVousTransition.o
+symbol/vardef/bitSymNode.o: symbol/vardef/bitSymNode.cpp.o
+.PHONY : symbol/vardef/bitSymNode.o
 
 # target to build an object file
-semantic/rendezVousTransition.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o
-.PHONY : semantic/rendezVousTransition.cpp.o
+symbol/vardef/bitSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o
+.PHONY : symbol/vardef/bitSymNode.cpp.o
 
-semantic/rendezVousTransition.i: semantic/rendezVousTransition.cpp.i
-.PHONY : semantic/rendezVousTransition.i
+symbol/vardef/bitSymNode.i: symbol/vardef/bitSymNode.cpp.i
+.PHONY : symbol/vardef/bitSymNode.i
 
 # target to preprocess a source file
-semantic/rendezVousTransition.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.i
-.PHONY : semantic/rendezVousTransition.cpp.i
+symbol/vardef/bitSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.i
+.PHONY : symbol/vardef/bitSymNode.cpp.i
 
-semantic/rendezVousTransition.s: semantic/rendezVousTransition.cpp.s
-.PHONY : semantic/rendezVousTransition.s
+symbol/vardef/bitSymNode.s: symbol/vardef/bitSymNode.cpp.s
+.PHONY : symbol/vardef/bitSymNode.s
 
 # target to generate assembly for a file
-semantic/rendezVousTransition.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.s
-.PHONY : semantic/rendezVousTransition.cpp.s
+symbol/vardef/bitSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.s
+.PHONY : symbol/vardef/bitSymNode.cpp.s
 
-semantic/scope.o: semantic/scope.cpp.o
-.PHONY : semantic/scope.o
+symbol/vardef/boolSymNode.o: symbol/vardef/boolSymNode.cpp.o
+.PHONY : symbol/vardef/boolSymNode.o
 
 # target to build an object file
-semantic/scope.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o
-.PHONY : semantic/scope.cpp.o
+symbol/vardef/boolSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o
+.PHONY : symbol/vardef/boolSymNode.cpp.o
 
-semantic/scope.i: semantic/scope.cpp.i
-.PHONY : semantic/scope.i
+symbol/vardef/boolSymNode.i: symbol/vardef/boolSymNode.cpp.i
+.PHONY : symbol/vardef/boolSymNode.i
 
 # target to preprocess a source file
-semantic/scope.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.i
-.PHONY : semantic/scope.cpp.i
+symbol/vardef/boolSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.i
+.PHONY : symbol/vardef/boolSymNode.cpp.i
 
-semantic/scope.s: semantic/scope.cpp.s
-.PHONY : semantic/scope.s
+symbol/vardef/boolSymNode.s: symbol/vardef/boolSymNode.cpp.s
+.PHONY : symbol/vardef/boolSymNode.s
 
 # target to generate assembly for a file
-semantic/scope.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.s
-.PHONY : semantic/scope.cpp.s
+symbol/vardef/boolSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.s
+.PHONY : symbol/vardef/boolSymNode.cpp.s
 
-semantic/state.o: semantic/state.cpp.o
-.PHONY : semantic/state.o
+symbol/vardef/byteSymNode.o: symbol/vardef/byteSymNode.cpp.o
+.PHONY : symbol/vardef/byteSymNode.o
 
 # target to build an object file
-semantic/state.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
-.PHONY : semantic/state.cpp.o
+symbol/vardef/byteSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o
+.PHONY : symbol/vardef/byteSymNode.cpp.o
 
-semantic/state.i: semantic/state.cpp.i
-.PHONY : semantic/state.i
+symbol/vardef/byteSymNode.i: symbol/vardef/byteSymNode.cpp.i
+.PHONY : symbol/vardef/byteSymNode.i
 
 # target to preprocess a source file
-semantic/state.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i
-.PHONY : semantic/state.cpp.i
+symbol/vardef/byteSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.i
+.PHONY : symbol/vardef/byteSymNode.cpp.i
 
-semantic/state.s: semantic/state.cpp.s
-.PHONY : semantic/state.s
+symbol/vardef/byteSymNode.s: symbol/vardef/byteSymNode.cpp.s
+.PHONY : symbol/vardef/byteSymNode.s
 
 # target to generate assembly for a file
-semantic/state.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s
-.PHONY : semantic/state.cpp.s
+symbol/vardef/byteSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.s
+.PHONY : symbol/vardef/byteSymNode.cpp.s
 
-semantic/transition.o: semantic/transition.cpp.o
-.PHONY : semantic/transition.o
+symbol/vardef/chanSymNode.o: symbol/vardef/chanSymNode.cpp.o
+.PHONY : symbol/vardef/chanSymNode.o
 
 # target to build an object file
-semantic/transition.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o
-.PHONY : semantic/transition.cpp.o
+symbol/vardef/chanSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o
+.PHONY : symbol/vardef/chanSymNode.cpp.o
 
-semantic/transition.i: semantic/transition.cpp.i
-.PHONY : semantic/transition.i
+symbol/vardef/chanSymNode.i: symbol/vardef/chanSymNode.cpp.i
+.PHONY : symbol/vardef/chanSymNode.i
 
 # target to preprocess a source file
-semantic/transition.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.i
-.PHONY : semantic/transition.cpp.i
+symbol/vardef/chanSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.i
+.PHONY : symbol/vardef/chanSymNode.cpp.i
 
-semantic/transition.s: semantic/transition.cpp.s
-.PHONY : semantic/transition.s
+symbol/vardef/chanSymNode.s: symbol/vardef/chanSymNode.cpp.s
+.PHONY : symbol/vardef/chanSymNode.s
 
 # target to generate assembly for a file
-semantic/transition.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.s
-.PHONY : semantic/transition.cpp.s
+symbol/vardef/chanSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.s
+.PHONY : symbol/vardef/chanSymNode.cpp.s
 
-semantic/variable.o: semantic/variable.cpp.o
-.PHONY : semantic/variable.o
+symbol/vardef/cidSymNode.o: symbol/vardef/cidSymNode.cpp.o
+.PHONY : symbol/vardef/cidSymNode.o
 
 # target to build an object file
-semantic/variable.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o
-.PHONY : semantic/variable.cpp.o
+symbol/vardef/cidSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o
+.PHONY : symbol/vardef/cidSymNode.cpp.o
 
-semantic/variable.i: semantic/variable.cpp.i
-.PHONY : semantic/variable.i
+symbol/vardef/cidSymNode.i: symbol/vardef/cidSymNode.cpp.i
+.PHONY : symbol/vardef/cidSymNode.i
 
 # target to preprocess a source file
-semantic/variable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.i
-.PHONY : semantic/variable.cpp.i
+symbol/vardef/cidSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.i
+.PHONY : symbol/vardef/cidSymNode.cpp.i
 
-semantic/variable.s: semantic/variable.cpp.s
-.PHONY : semantic/variable.s
+symbol/vardef/cidSymNode.s: symbol/vardef/cidSymNode.cpp.s
+.PHONY : symbol/vardef/cidSymNode.s
 
 # target to generate assembly for a file
-semantic/variable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s
-.PHONY : semantic/variable.cpp.s
+symbol/vardef/cidSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.s
+.PHONY : symbol/vardef/cidSymNode.cpp.s
+
+symbol/vardef/intSymNode.o: symbol/vardef/intSymNode.cpp.o
+.PHONY : symbol/vardef/intSymNode.o
+
+# target to build an object file
+symbol/vardef/intSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o
+.PHONY : symbol/vardef/intSymNode.cpp.o
+
+symbol/vardef/intSymNode.i: symbol/vardef/intSymNode.cpp.i
+.PHONY : symbol/vardef/intSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/intSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.i
+.PHONY : symbol/vardef/intSymNode.cpp.i
+
+symbol/vardef/intSymNode.s: symbol/vardef/intSymNode.cpp.s
+.PHONY : symbol/vardef/intSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/intSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.s
+.PHONY : symbol/vardef/intSymNode.cpp.s
+
+symbol/vardef/mtypeSymNode.o: symbol/vardef/mtypeSymNode.cpp.o
+.PHONY : symbol/vardef/mtypeSymNode.o
+
+# target to build an object file
+symbol/vardef/mtypeSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o
+.PHONY : symbol/vardef/mtypeSymNode.cpp.o
+
+symbol/vardef/mtypeSymNode.i: symbol/vardef/mtypeSymNode.cpp.i
+.PHONY : symbol/vardef/mtypeSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/mtypeSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.i
+.PHONY : symbol/vardef/mtypeSymNode.cpp.i
+
+symbol/vardef/mtypeSymNode.s: symbol/vardef/mtypeSymNode.cpp.s
+.PHONY : symbol/vardef/mtypeSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/mtypeSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.s
+.PHONY : symbol/vardef/mtypeSymNode.cpp.s
+
+symbol/vardef/naSymNode.o: symbol/vardef/naSymNode.cpp.o
+.PHONY : symbol/vardef/naSymNode.o
+
+# target to build an object file
+symbol/vardef/naSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o
+.PHONY : symbol/vardef/naSymNode.cpp.o
+
+symbol/vardef/naSymNode.i: symbol/vardef/naSymNode.cpp.i
+.PHONY : symbol/vardef/naSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/naSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.i
+.PHONY : symbol/vardef/naSymNode.cpp.i
+
+symbol/vardef/naSymNode.s: symbol/vardef/naSymNode.cpp.s
+.PHONY : symbol/vardef/naSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/naSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.s
+.PHONY : symbol/vardef/naSymNode.cpp.s
+
+symbol/vardef/pidSymNode.o: symbol/vardef/pidSymNode.cpp.o
+.PHONY : symbol/vardef/pidSymNode.o
+
+# target to build an object file
+symbol/vardef/pidSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o
+.PHONY : symbol/vardef/pidSymNode.cpp.o
+
+symbol/vardef/pidSymNode.i: symbol/vardef/pidSymNode.cpp.i
+.PHONY : symbol/vardef/pidSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/pidSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.i
+.PHONY : symbol/vardef/pidSymNode.cpp.i
+
+symbol/vardef/pidSymNode.s: symbol/vardef/pidSymNode.cpp.s
+.PHONY : symbol/vardef/pidSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/pidSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.s
+.PHONY : symbol/vardef/pidSymNode.cpp.s
+
+symbol/vardef/shortSymNode.o: symbol/vardef/shortSymNode.cpp.o
+.PHONY : symbol/vardef/shortSymNode.o
+
+# target to build an object file
+symbol/vardef/shortSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o
+.PHONY : symbol/vardef/shortSymNode.cpp.o
+
+symbol/vardef/shortSymNode.i: symbol/vardef/shortSymNode.cpp.i
+.PHONY : symbol/vardef/shortSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/shortSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.i
+.PHONY : symbol/vardef/shortSymNode.cpp.i
+
+symbol/vardef/shortSymNode.s: symbol/vardef/shortSymNode.cpp.s
+.PHONY : symbol/vardef/shortSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/shortSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.s
+.PHONY : symbol/vardef/shortSymNode.cpp.s
+
+symbol/vardef/unsgnSymNode.o: symbol/vardef/unsgnSymNode.cpp.o
+.PHONY : symbol/vardef/unsgnSymNode.o
+
+# target to build an object file
+symbol/vardef/unsgnSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o
+.PHONY : symbol/vardef/unsgnSymNode.cpp.o
+
+symbol/vardef/unsgnSymNode.i: symbol/vardef/unsgnSymNode.cpp.i
+.PHONY : symbol/vardef/unsgnSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/unsgnSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.i
+.PHONY : symbol/vardef/unsgnSymNode.cpp.i
+
+symbol/vardef/unsgnSymNode.s: symbol/vardef/unsgnSymNode.cpp.s
+.PHONY : symbol/vardef/unsgnSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/unsgnSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.s
+.PHONY : symbol/vardef/unsgnSymNode.cpp.s
+
+symbol/vardef/utypeSymNode.o: symbol/vardef/utypeSymNode.cpp.o
+.PHONY : symbol/vardef/utypeSymNode.o
+
+# target to build an object file
+symbol/vardef/utypeSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o
+.PHONY : symbol/vardef/utypeSymNode.cpp.o
+
+symbol/vardef/utypeSymNode.i: symbol/vardef/utypeSymNode.cpp.i
+.PHONY : symbol/vardef/utypeSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/utypeSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.i
+.PHONY : symbol/vardef/utypeSymNode.cpp.i
+
+symbol/vardef/utypeSymNode.s: symbol/vardef/utypeSymNode.cpp.s
+.PHONY : symbol/vardef/utypeSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/utypeSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.s
+.PHONY : symbol/vardef/utypeSymNode.cpp.s
+
+symbol/vardef/varSymNode.o: symbol/vardef/varSymNode.cpp.o
+.PHONY : symbol/vardef/varSymNode.o
+
+# target to build an object file
+symbol/vardef/varSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o
+.PHONY : symbol/vardef/varSymNode.cpp.o
+
+symbol/vardef/varSymNode.i: symbol/vardef/varSymNode.cpp.i
+.PHONY : symbol/vardef/varSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/varSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.i
+.PHONY : symbol/vardef/varSymNode.cpp.i
+
+symbol/vardef/varSymNode.s: symbol/vardef/varSymNode.cpp.s
+.PHONY : symbol/vardef/varSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/varSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.s
+.PHONY : symbol/vardef/varSymNode.cpp.s
+
+symbol/vardef/variantSymNode.o: symbol/vardef/variantSymNode.cpp.o
+.PHONY : symbol/vardef/variantSymNode.o
+
+# target to build an object file
+symbol/vardef/variantSymNode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o
+.PHONY : symbol/vardef/variantSymNode.cpp.o
+
+symbol/vardef/variantSymNode.i: symbol/vardef/variantSymNode.cpp.i
+.PHONY : symbol/vardef/variantSymNode.i
+
+# target to preprocess a source file
+symbol/vardef/variantSymNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.i
+.PHONY : symbol/vardef/variantSymNode.cpp.i
+
+symbol/vardef/variantSymNode.s: symbol/vardef/variantSymNode.cpp.s
+.PHONY : symbol/vardef/variantSymNode.s
+
+# target to generate assembly for a file
+symbol/vardef/variantSymNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mutantgenerator.dir/build.make CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.s
+.PHONY : symbol/vardef/variantSymNode.cpp.s
 
 # Help Target
 help:
@@ -1362,114 +1074,51 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... mutantgenerator"
-	@echo "... automata/ast/astNode.o"
-	@echo "... automata/ast/astNode.i"
-	@echo "... automata/ast/astNode.s"
-	@echo "... automata/ast/expr/argExpr.o"
-	@echo "... automata/ast/expr/argExpr.i"
-	@echo "... automata/ast/expr/argExpr.s"
-	@echo "... automata/ast/expr/binaryExpr.o"
-	@echo "... automata/ast/expr/binaryExpr.i"
-	@echo "... automata/ast/expr/binaryExpr.s"
-	@echo "... automata/ast/expr/constExpr.o"
-	@echo "... automata/ast/expr/constExpr.i"
-	@echo "... automata/ast/expr/constExpr.s"
-	@echo "... automata/ast/expr/expr.o"
-	@echo "... automata/ast/expr/expr.i"
-	@echo "... automata/ast/expr/expr.s"
-	@echo "... automata/ast/expr/unaryExpr.o"
-	@echo "... automata/ast/expr/unaryExpr.i"
-	@echo "... automata/ast/expr/unaryExpr.s"
-	@echo "... automata/ast/expr/varExpr.o"
-	@echo "... automata/ast/expr/varExpr.i"
-	@echo "... automata/ast/expr/varExpr.s"
-	@echo "... automata/ast/stmnt/chanStmnt.o"
-	@echo "... automata/ast/stmnt/chanStmnt.i"
-	@echo "... automata/ast/stmnt/chanStmnt.s"
-	@echo "... automata/ast/stmnt/clockStmnt.o"
-	@echo "... automata/ast/stmnt/clockStmnt.i"
-	@echo "... automata/ast/stmnt/clockStmnt.s"
-	@echo "... automata/ast/stmnt/decl.o"
-	@echo "... automata/ast/stmnt/decl.i"
-	@echo "... automata/ast/stmnt/decl.s"
-	@echo "... automata/ast/stmnt/flowStmnt.o"
-	@echo "... automata/ast/stmnt/flowStmnt.i"
-	@echo "... automata/ast/stmnt/flowStmnt.s"
-	@echo "... automata/ast/stmnt/stdlibStmnt.o"
-	@echo "... automata/ast/stmnt/stdlibStmnt.i"
-	@echo "... automata/ast/stmnt/stdlibStmnt.s"
-	@echo "... automata/ast/stmnt/stmnt.o"
-	@echo "... automata/ast/stmnt/stmnt.i"
-	@echo "... automata/ast/stmnt/stmnt.s"
-	@echo "... automata/fsm/ASTtoFSM.o"
-	@echo "... automata/fsm/ASTtoFSM.i"
-	@echo "... automata/fsm/ASTtoFSM.s"
-	@echo "... automata/fsm/fsm.o"
-	@echo "... automata/fsm/fsm.i"
-	@echo "... automata/fsm/fsm.s"
-	@echo "... automata/fsm/fsmEdge.o"
-	@echo "... automata/fsm/fsmEdge.i"
-	@echo "... automata/fsm/fsmEdge.s"
-	@echo "... automata/fsm/fsmNode.o"
-	@echo "... automata/fsm/fsmNode.i"
-	@echo "... automata/fsm/fsmNode.s"
-	@echo "... automata/symbol/symTable.o"
-	@echo "... automata/symbol/symTable.i"
-	@echo "... automata/symbol/symTable.s"
-	@echo "... automata/symbol/symbol.o"
-	@echo "... automata/symbol/symbol.i"
-	@echo "... automata/symbol/symbol.s"
-	@echo "... automata/symbol/typedef/inlineSymNode.o"
-	@echo "... automata/symbol/typedef/inlineSymNode.i"
-	@echo "... automata/symbol/typedef/inlineSymNode.s"
-	@echo "... automata/symbol/typedef/mtypedefSymNode.o"
-	@echo "... automata/symbol/typedef/mtypedefSymNode.i"
-	@echo "... automata/symbol/typedef/mtypedefSymNode.s"
-	@echo "... automata/symbol/typedef/procSymNode.o"
-	@echo "... automata/symbol/typedef/procSymNode.i"
-	@echo "... automata/symbol/typedef/procSymNode.s"
-	@echo "... automata/symbol/typedef/tdefSymNode.o"
-	@echo "... automata/symbol/typedef/tdefSymNode.i"
-	@echo "... automata/symbol/typedef/tdefSymNode.s"
-	@echo "... automata/symbol/vardef/bitSymNode.o"
-	@echo "... automata/symbol/vardef/bitSymNode.i"
-	@echo "... automata/symbol/vardef/bitSymNode.s"
-	@echo "... automata/symbol/vardef/boolSymNode.o"
-	@echo "... automata/symbol/vardef/boolSymNode.i"
-	@echo "... automata/symbol/vardef/boolSymNode.s"
-	@echo "... automata/symbol/vardef/byteSymNode.o"
-	@echo "... automata/symbol/vardef/byteSymNode.i"
-	@echo "... automata/symbol/vardef/byteSymNode.s"
-	@echo "... automata/symbol/vardef/chanSymNode.o"
-	@echo "... automata/symbol/vardef/chanSymNode.i"
-	@echo "... automata/symbol/vardef/chanSymNode.s"
-	@echo "... automata/symbol/vardef/cidSymNode.o"
-	@echo "... automata/symbol/vardef/cidSymNode.i"
-	@echo "... automata/symbol/vardef/cidSymNode.s"
-	@echo "... automata/symbol/vardef/intSymNode.o"
-	@echo "... automata/symbol/vardef/intSymNode.i"
-	@echo "... automata/symbol/vardef/intSymNode.s"
-	@echo "... automata/symbol/vardef/mtypeSymNode.o"
-	@echo "... automata/symbol/vardef/mtypeSymNode.i"
-	@echo "... automata/symbol/vardef/mtypeSymNode.s"
-	@echo "... automata/symbol/vardef/naSymNode.o"
-	@echo "... automata/symbol/vardef/naSymNode.i"
-	@echo "... automata/symbol/vardef/naSymNode.s"
-	@echo "... automata/symbol/vardef/pidSymNode.o"
-	@echo "... automata/symbol/vardef/pidSymNode.i"
-	@echo "... automata/symbol/vardef/pidSymNode.s"
-	@echo "... automata/symbol/vardef/shortSymNode.o"
-	@echo "... automata/symbol/vardef/shortSymNode.i"
-	@echo "... automata/symbol/vardef/shortSymNode.s"
-	@echo "... automata/symbol/vardef/unsgnSymNode.o"
-	@echo "... automata/symbol/vardef/unsgnSymNode.i"
-	@echo "... automata/symbol/vardef/unsgnSymNode.s"
-	@echo "... automata/symbol/vardef/utypeSymNode.o"
-	@echo "... automata/symbol/vardef/utypeSymNode.i"
-	@echo "... automata/symbol/vardef/utypeSymNode.s"
-	@echo "... automata/symbol/vardef/varSymNode.o"
-	@echo "... automata/symbol/vardef/varSymNode.i"
-	@echo "... automata/symbol/vardef/varSymNode.s"
+	@echo "... ast/astNode.o"
+	@echo "... ast/astNode.i"
+	@echo "... ast/astNode.s"
+	@echo "... ast/expr/argExpr.o"
+	@echo "... ast/expr/argExpr.i"
+	@echo "... ast/expr/argExpr.s"
+	@echo "... ast/expr/binaryExpr.o"
+	@echo "... ast/expr/binaryExpr.i"
+	@echo "... ast/expr/binaryExpr.s"
+	@echo "... ast/expr/constExpr.o"
+	@echo "... ast/expr/constExpr.i"
+	@echo "... ast/expr/constExpr.s"
+	@echo "... ast/expr/expr.o"
+	@echo "... ast/expr/expr.i"
+	@echo "... ast/expr/expr.s"
+	@echo "... ast/expr/temporalExpr.o"
+	@echo "... ast/expr/temporalExpr.i"
+	@echo "... ast/expr/temporalExpr.s"
+	@echo "... ast/expr/unaryExpr.o"
+	@echo "... ast/expr/unaryExpr.i"
+	@echo "... ast/expr/unaryExpr.s"
+	@echo "... ast/expr/varExpr.o"
+	@echo "... ast/expr/varExpr.i"
+	@echo "... ast/expr/varExpr.s"
+	@echo "... ast/stmnt/chanStmnt.o"
+	@echo "... ast/stmnt/chanStmnt.i"
+	@echo "... ast/stmnt/chanStmnt.s"
+	@echo "... ast/stmnt/clockStmnt.o"
+	@echo "... ast/stmnt/clockStmnt.i"
+	@echo "... ast/stmnt/clockStmnt.s"
+	@echo "... ast/stmnt/decl.o"
+	@echo "... ast/stmnt/decl.i"
+	@echo "... ast/stmnt/decl.s"
+	@echo "... ast/stmnt/flowStmnt.o"
+	@echo "... ast/stmnt/flowStmnt.i"
+	@echo "... ast/stmnt/flowStmnt.s"
+	@echo "... ast/stmnt/logicDecl.o"
+	@echo "... ast/stmnt/logicDecl.i"
+	@echo "... ast/stmnt/logicDecl.s"
+	@echo "... ast/stmnt/stdlibStmnt.o"
+	@echo "... ast/stmnt/stdlibStmnt.i"
+	@echo "... ast/stmnt/stdlibStmnt.s"
+	@echo "... ast/stmnt/stmnt.o"
+	@echo "... ast/stmnt/stmnt.i"
+	@echo "... ast/stmnt/stmnt.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
@@ -1479,42 +1128,69 @@ help:
 	@echo "... parser/y.tab.o"
 	@echo "... parser/y.tab.i"
 	@echo "... parser/y.tab.s"
-	@echo "... semantic/channel.o"
-	@echo "... semantic/channel.i"
-	@echo "... semantic/channel.s"
-	@echo "... semantic/compositeState.o"
-	@echo "... semantic/compositeState.i"
-	@echo "... semantic/compositeState.s"
-	@echo "... semantic/compositeTransition.o"
-	@echo "... semantic/compositeTransition.i"
-	@echo "... semantic/compositeTransition.s"
-	@echo "... semantic/payload.o"
-	@echo "... semantic/payload.i"
-	@echo "... semantic/payload.s"
-	@echo "... semantic/process.o"
-	@echo "... semantic/process.i"
-	@echo "... semantic/process.s"
-	@echo "... semantic/programState.o"
-	@echo "... semantic/programState.i"
-	@echo "... semantic/programState.s"
-	@echo "... semantic/programTransition.o"
-	@echo "... semantic/programTransition.i"
-	@echo "... semantic/programTransition.s"
-	@echo "... semantic/rendezVousTransition.o"
-	@echo "... semantic/rendezVousTransition.i"
-	@echo "... semantic/rendezVousTransition.s"
-	@echo "... semantic/scope.o"
-	@echo "... semantic/scope.i"
-	@echo "... semantic/scope.s"
-	@echo "... semantic/state.o"
-	@echo "... semantic/state.i"
-	@echo "... semantic/state.s"
-	@echo "... semantic/transition.o"
-	@echo "... semantic/transition.i"
-	@echo "... semantic/transition.s"
-	@echo "... semantic/variable.o"
-	@echo "... semantic/variable.i"
-	@echo "... semantic/variable.s"
+	@echo "... symbol/logic/fMultiLTLSymNode.o"
+	@echo "... symbol/logic/fMultiLTLSymNode.i"
+	@echo "... symbol/logic/fMultiLTLSymNode.s"
+	@echo "... symbol/symTable.o"
+	@echo "... symbol/symTable.i"
+	@echo "... symbol/symTable.s"
+	@echo "... symbol/symbol.o"
+	@echo "... symbol/symbol.i"
+	@echo "... symbol/symbol.s"
+	@echo "... symbol/typedef/inlineSymNode.o"
+	@echo "... symbol/typedef/inlineSymNode.i"
+	@echo "... symbol/typedef/inlineSymNode.s"
+	@echo "... symbol/typedef/mtypedefSymNode.o"
+	@echo "... symbol/typedef/mtypedefSymNode.i"
+	@echo "... symbol/typedef/mtypedefSymNode.s"
+	@echo "... symbol/typedef/procSymNode.o"
+	@echo "... symbol/typedef/procSymNode.i"
+	@echo "... symbol/typedef/procSymNode.s"
+	@echo "... symbol/typedef/tdefSymNode.o"
+	@echo "... symbol/typedef/tdefSymNode.i"
+	@echo "... symbol/typedef/tdefSymNode.s"
+	@echo "... symbol/vardef/bitSymNode.o"
+	@echo "... symbol/vardef/bitSymNode.i"
+	@echo "... symbol/vardef/bitSymNode.s"
+	@echo "... symbol/vardef/boolSymNode.o"
+	@echo "... symbol/vardef/boolSymNode.i"
+	@echo "... symbol/vardef/boolSymNode.s"
+	@echo "... symbol/vardef/byteSymNode.o"
+	@echo "... symbol/vardef/byteSymNode.i"
+	@echo "... symbol/vardef/byteSymNode.s"
+	@echo "... symbol/vardef/chanSymNode.o"
+	@echo "... symbol/vardef/chanSymNode.i"
+	@echo "... symbol/vardef/chanSymNode.s"
+	@echo "... symbol/vardef/cidSymNode.o"
+	@echo "... symbol/vardef/cidSymNode.i"
+	@echo "... symbol/vardef/cidSymNode.s"
+	@echo "... symbol/vardef/intSymNode.o"
+	@echo "... symbol/vardef/intSymNode.i"
+	@echo "... symbol/vardef/intSymNode.s"
+	@echo "... symbol/vardef/mtypeSymNode.o"
+	@echo "... symbol/vardef/mtypeSymNode.i"
+	@echo "... symbol/vardef/mtypeSymNode.s"
+	@echo "... symbol/vardef/naSymNode.o"
+	@echo "... symbol/vardef/naSymNode.i"
+	@echo "... symbol/vardef/naSymNode.s"
+	@echo "... symbol/vardef/pidSymNode.o"
+	@echo "... symbol/vardef/pidSymNode.i"
+	@echo "... symbol/vardef/pidSymNode.s"
+	@echo "... symbol/vardef/shortSymNode.o"
+	@echo "... symbol/vardef/shortSymNode.i"
+	@echo "... symbol/vardef/shortSymNode.s"
+	@echo "... symbol/vardef/unsgnSymNode.o"
+	@echo "... symbol/vardef/unsgnSymNode.i"
+	@echo "... symbol/vardef/unsgnSymNode.s"
+	@echo "... symbol/vardef/utypeSymNode.o"
+	@echo "... symbol/vardef/utypeSymNode.i"
+	@echo "... symbol/vardef/utypeSymNode.s"
+	@echo "... symbol/vardef/varSymNode.o"
+	@echo "... symbol/vardef/varSymNode.i"
+	@echo "... symbol/vardef/varSymNode.s"
+	@echo "... symbol/vardef/variantSymNode.o"
+	@echo "... symbol/vardef/variantSymNode.i"
+	@echo "... symbol/vardef/variantSymNode.s"
 .PHONY : help
 
 

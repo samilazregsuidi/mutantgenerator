@@ -64,6 +64,7 @@ symbol    [*+/%^!&~\|?:,.()\-\[\]\{\}]
 <CODE>"||"       	{ DBUG(OR);return OR; }
 <CODE>"spec"		{ DBUG(SPEC);return SPEC; }
 <CODE>"ltl"			{ DBUG(LTL); return LTL; }
+<CODE>"fMultiLtl"	{ DBUG(FMULTILTL); return FMULTILTL; }
 <CODE>"E"			{ DBUG(EVENTUALLY);return EVENTUALLY; }
 <CODE>"F"			{ DBUG(FINALLY);return FINALLY; }
 <CODE>"<>"			{ DBUG(FINALLY);return FINALLY; }

@@ -134,8 +134,8 @@ CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: \
  /usr/include/c++/11/bits/allocated_ptr.h \
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/list.tcc \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbols.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symTable.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbols.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symTable.hpp \
  /usr/include/c++/11/cassert /usr/include/assert.h \
  /usr/include/c++/11/unordered_map /usr/include/c++/11/bits/hashtable.h \
  /usr/include/c++/11/bits/hashtable_policy.h /usr/include/c++/11/tuple \
@@ -172,31 +172,33 @@ CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbol.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/naSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/varSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symbol.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/bitSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/boolSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/byteSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/shortSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/intSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/unsgnSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/mtypeSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/utypeSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/pidSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/cidSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/tdefSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/symTable.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/chanSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/visitor/symTabVisitor.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/procSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/inlineSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/procSymNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/mtypedefSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbol.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/naSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/varSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symbol.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/bitSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/boolSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/byteSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/shortSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/intSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/unsgnSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/mtypeSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/utypeSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/pidSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/cidSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/tdefSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/symTable.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/chanSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/visitor/symTabVisitor.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/procSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/inlineSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/procSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/typedef/mtypedefSymNode.hpp \
  /usr/include/c++/11/map /usr/include/c++/11/bits/stl_map.h \
- /usr/include/c++/11/bits/stl_multimap.h /usr/include/c++/11/iterator \
- /usr/include/c++/11/bits/stream_iterator.h \
+ /usr/include/c++/11/bits/stl_multimap.h \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/vardef/variantSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./symbol/logic/fMultiLTLSymNode.hpp \
+ /usr/include/c++/11/iterator /usr/include/c++/11/bits/stream_iterator.h \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.hpp \
@@ -211,8 +213,8 @@ CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: \
  /usr/include/c++/11/bits/stl_heap.h \
  /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/uniform_int_dist.h \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/argExpr.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/expr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./ast/expr/argExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./ast/expr/expr.hpp \
  /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
@@ -226,8 +228,8 @@ CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/astNode.hpp \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/constExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./ast/astNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./ast/expr/constExpr.hpp \
  /usr/include/c++/11/limits \
- /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/varExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./ast/expr/varExpr.hpp \
  /usr/include/c++/11/iostream

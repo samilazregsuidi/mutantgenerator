@@ -47,6 +47,7 @@ symTable* savedSymTab = nullptr;
 std::list<varSymNode*> declSyms;
 std::list<varSymNode*> typeLst;
 std::list<std::string> params;
+std::list<variantQuantifier*> variants;
 
 int mtypeId = 1;
 bool inInline = false;
@@ -75,6 +76,7 @@ bool inInline = false;
 	class exprArgList*		pExprArgListVal;
 	class exprRArgList*		pExprRArgListVal;
 	class exprRArg*			pExprRArgVal;
+	class variantQuantifier*pVarQuantVal;
 	
 	class symbol*			pSymTabVal;
 	class varSymNode*		pVarSymVal;
@@ -87,7 +89,7 @@ bool inInline = false;
 //%token <iVal> CONST TYPE IF DO
 %token <iVal> CONST IF DO
 %token <iType> TYPE 
-%token <sVal> NAME UNAME PNAME INAME STRING
+%token <sVal> NAME UNAME PNAME INAME VNAME BASE STRING
 %token <rVal> REAL
 %token	TRUE FALSE SKIP ASSERT PRINT PRINTM
 %token	C_CODE C_DECL C_EXPR C_STATE C_TRACK
@@ -104,7 +106,7 @@ bool inInline = false;
 %token	XU							/* val */
 %token	CLAIM TRACE INIT		/* sym */
 %token  WHILE WHEN WAIT RESET /* time */
-%token  SPEC EVENTUALLY ALWAYS GLOBALLY FINALLY UNTIL LTL/* TCTL */
+%token  SPEC EVENTUALLY ALWAYS GLOBALLY FINALLY UNTIL NEXT LTL FMULTILTL /* TCTL */
 
 %right	ASGN
 %left	SND O_SND RCV R_RCV /* SND doubles as boolean negation */
@@ -127,14 +129,15 @@ bool inInline = false;
 %type  <rVal> real_expr
 %type  <pStmntVal> step stmnt timed_stmnt Special Stmnt proc init utypedef mtypedef body sequence option ns
 %type  <pStmntOptVal> options
-%type  <pExprVal> Expr expr full_expr Probe
+%type  <pExprVal> Expr expr full_expr Probe ltl_prop feat_expr
 %type  <pConstExprVal> inst
 %type  <pExprVarRefVal> varref cmpnd sfld  
-%type  <pExprVarRefNameVal> pfld
+%type  <pExprVarRefNameVal> pfld variant_expr
 %type  <pExprRArgListVal> rargs
 %type  <pExprRArgVal> rarg
 %type  <pExprArgListVal> arg args margs prargs
 %type  <pDataVal> vardcl basetype ch_init
+%type  <pVarQuantVal> variant_quant
 %type  <pVarSymVal> ivar
 
 
@@ -490,7 +493,7 @@ Stmnt	: varref ASGN full_expr					{ $$ = new stmntAsgn($1, $3, nbrLines); }
 		| INAME '(' args ')' 					{ 
 													$$ = new stmntCall($1, $3, nbrLines); 
 													auto fctSym = (*globalSymTab)->lookup($1);
-													std::cout << "Inline call "<< $1 <<" at line "<< nbrLines <<"\n";
+													//std::cout << "Inline call "<< $1 <<" at line "<< nbrLines <<"\n";
 													assert(fctSym->getType() == symbol::T_INLINE);
 													assert(dynamic_cast<inlineSymNode*>(fctSym) != nullptr);
 													if($3)
@@ -569,7 +572,9 @@ expr    : '(' expr ')'							{ $$ = new exprPar		($2, nbrLines); }
 		| ENABLED '(' expr ')'					{ std::cout << "The enabled keyword is not supported."; }
 		| varref RCV '[' rargs ']'				{ std::cout << "Construct not supported."; /* Unclear */ }
 		| varref R_RCV '[' rargs ']'			{ std::cout << "Sorted send and random receive are not supported."; }
-		| varref'{' VNAME '}'					{  }
+		| varref'{' varref '}'					{ $$ = new exprProjVar($1, $3, nbrLines); 
+													assert($1->getFinalSymbol()->getType() != symbol::T_VARIANT && $3->getFinalSymbol()->getType() == symbol::T_VARIANT) ; 
+												}
 		| varref								{ $$ = new exprVar	($1, nbrLines); }
 		| cexpr									{ std::cout << "Embedded C code is not supported."; }
 		| CONST									{ $$ = new exprConst($1, nbrLines); }
@@ -662,45 +667,56 @@ props	: /* empty */
 	;
 	
 prop	: LTL NAME '{' ltl_prop '}'
-		; variants_quants '{' ltl_prop '}'
-
-
-ltl_prop	: '(' ltl_prop ')'
-		| GLOBALLY ltl_prop
-		| FINALLY ltl_prop
-		| NEXT ltl_prop
-		| ltl_prop UNTIL ltl_prop
-		| ltl_prop GT ltl_prop
-		| ltl_prop LT ltl_prop
-		| ltl_prop GE ltl_prop
-		| ltl_prop LE ltl_prop
-		| ltl_prop EQ ltl_prop
-		| ltl_prop NE ltl_prop
-		| ltl_prop AND ltl_prop
-		| ltl_prop OR ltl_prop
-		| ltl_prop SEMI ltl_prop
-		| SND ltl_prop %prec NEG
-		| varref
-		| CONST						
-		| ltl_prop '+' ltl_prop
-		| ltl_prop '-' ltl_prop
-		| ltl_prop '*' ltl_prop
-		| ltl_prop '/' ltl_prop
-		| ltl_prop '%' ltl_prop
-		| ltl_prop '&' ltl_prop
-		| ltl_prop '^' ltl_prop
-		| ltl_prop '|' ltl_prop
+		| FMULTILTL NAME variant_quants '{' ltl_prop '}' { /*DBUG("REDUCE: one_decl -> unit\n")*/
+															auto sym = new fMultiLTLSymNode($2, variants, $5, nbrLines);
+															(*globalSymTab)->insert(sym);
+															variants.clear();
+															stmnt* decl = new fMultiLTLDecl(sym, nbrLines);
+															assert(decl);
+															*program = stmnt::merge(*program, decl);
+														  }
 		;
 
-variants_quants : variants_quant 
-				| variants_quant variants_quants
+
+ltl_prop	: '(' ltl_prop ')'				{ $$ = new exprPar($2, nbrLines); 		}
+			| GLOBALLY ltl_prop				{ $$ = new exprGlobally($2, nbrLines); 	}
+			| FINALLY ltl_prop				{ $$ = new exprFinally($2, nbrLines); 	}
+			| NEXT ltl_prop					{ $$ = new exprNext($2, nbrLines); 		}
+			| ltl_prop UNTIL ltl_prop		{ $$ = new exprUntil($1, $3, nbrLines); }
+			| ltl_prop GT ltl_prop			{ $$ = new exprGT($1, $3, nbrLines); 	}
+			| ltl_prop LT ltl_prop			{ $$ = new exprLT($1, $3, nbrLines); 	}
+			| ltl_prop GE ltl_prop			{ $$ = new exprGE($1, $3, nbrLines); 	}
+			| ltl_prop LE ltl_prop			{ $$ = new exprLE($1, $3, nbrLines); 	}
+			| ltl_prop EQ ltl_prop			{ $$ = new exprEQ($1, $3, nbrLines); 	}
+			| ltl_prop NE ltl_prop			{ $$ = new exprNE($1, $3, nbrLines); 	}
+			| ltl_prop AND ltl_prop			{ $$ = new exprAnd($1, $3, nbrLines); 	}
+			| ltl_prop OR  ltl_prop			{ $$ = new exprOr($1, $3, nbrLines); 	}
+			| ltl_prop IMPLIES ltl_prop		{ $$ = new exprImplies($1, $3, nbrLines); }
+			| SND ltl_prop %prec NEG		{ $$ = new exprNeg($2, nbrLines); 		}
+			| varref						{ $$ = new exprVar($1, nbrLines);		}
+			| CONST							{ $$ = new exprConst($1, nbrLines);		}
+			| ltl_prop '+' ltl_prop			{ $$ = new exprPlus($1, $3, nbrLines); 	}
+			| ltl_prop '-' ltl_prop			{ $$ = new exprMinus($1, $3, nbrLines); }
+			| ltl_prop '*' ltl_prop			{ $$ = new exprTimes($1, $3, nbrLines); }
+			| ltl_prop '/' ltl_prop			{ $$ = new exprDiv($1, $3, nbrLines); 	}
+			| ltl_prop '%' ltl_prop			{ $$ = new exprMod($1, $3, nbrLines); 	}
+			| ltl_prop '&' ltl_prop			{ $$ = new exprBitwAnd($1, $3, nbrLines); }
+			| ltl_prop '^' ltl_prop			{ $$ = new exprBitwXor($1, $3, nbrLines); }
+			| ltl_prop '|' ltl_prop			{ $$ = new exprBitwOr($1, $3, nbrLines);}
+		;
+
+variant_quants 	: variant_quant 					{ variants.push_front($1); }
+				| variant_quant variant_quants	{ variants.push_front($1); }
 				;
 		
-variants_quant 	: quant '{' NAME '}' '[' feat_expr ']'	{ auto sym = new variantSymNode(nbrLines, $3, $6); (*globalSymTab)->insert(sym); }
-		   		| quant '{' BASE '}'  					{ auto sym = new variantSymNode(nbrLines, $3); (*globalSymTab)->insert(sym); }
+variant_quant 	: ALWAYS variant_expr 					{ $$ = new exprAlways($2, nbrLines); }
+				| EVENTUALLY variant_expr				{ $$ = new exprEventually($2, nbrLines); }
 		   		;
-	
-quant	: ALWAYS 
-		| EVENTUALLY
-		;
+
+variant_expr	: '{' NAME '}' '[' feat_expr ']'	{ auto sym = new variantSymNode(nbrLines, $2, $5); (*globalSymTab)->insert(sym); $$ = new exprVarRefName($2, sym, nbrLines); }
+				| '{' NAME '}' EQ '[' feat_expr ']'	{ auto sym = new variantSymNode(nbrLines, $2, $6); (*globalSymTab)->insert(sym); $$ = new exprVarRefName($2, sym, nbrLines); }
+				| NAME								{ assert(false); /*find symbol in symbol table -> assert if null*/		         }
+				| NAME EQ feat_expr					{ assert(false); /*find symbol in symbol table and assigh expr -> assert if null*/ }
+				| BASE								{ assert(false); /*auto sym = new variantSymNode(nbrLines, $3); (*globalSymTab)->insert(sym);*/ }
+				;
 %%

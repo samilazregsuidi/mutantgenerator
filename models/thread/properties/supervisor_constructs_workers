@@ -1,1 +1,0 @@
-[]((states[1] == READY || states[2] == READY) -> !(states[0] == 0))

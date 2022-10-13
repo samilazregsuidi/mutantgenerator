@@ -1,1 +1,0 @@
- [](((states[0] == STOPPED) -> ((states[0] == STOPPED) W [](states[0] == 0))) && ((states[1] == STOPPED) -> ((states[1] == STOPPED) W [](states[1] == 0))) && ((states[2] == STOPPED) -> ((states[2] == STOPPED) W [](states[2] == 0))))

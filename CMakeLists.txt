@@ -35,57 +35,43 @@ add_link_options(
 
 add_executable(mutantgenerator
     main.cpp
-	./automata/symbol/symbol.cpp
-	./automata/symbol/symTable.cpp
-	./automata/symbol/typedef/procSymNode.cpp
-	./automata/symbol/typedef/tdefSymNode.cpp
-	./automata/symbol/typedef/mtypedefSymNode.cpp
-	./automata/symbol/typedef/inlineSymNode.cpp
-	./automata/symbol/vardef/bitSymNode.cpp
-	./automata/symbol/vardef/boolSymNode.cpp
-	./automata/symbol/vardef/byteSymNode.cpp
-	./automata/symbol/vardef/shortSymNode.cpp
-	./automata/symbol/vardef/intSymNode.cpp
-	./automata/symbol/vardef/unsgnSymNode.cpp
-	./automata/symbol/vardef/utypeSymNode.cpp
-	./automata/symbol/vardef/mtypeSymNode.cpp
-	./automata/symbol/vardef/cidSymNode.cpp
-	./automata/symbol/vardef/chanSymNode.cpp
-	./automata/symbol/vardef/varSymNode.cpp
-	./automata/symbol/vardef/naSymNode.cpp
-	./automata/symbol/vardef/pidSymNode.cpp
+	./symbol/symbol.cpp
+	./symbol/symTable.cpp
+	./symbol/typedef/procSymNode.cpp
+	./symbol/typedef/tdefSymNode.cpp
+	./symbol/typedef/mtypedefSymNode.cpp
+	./symbol/typedef/inlineSymNode.cpp
+	./symbol/vardef/bitSymNode.cpp
+	./symbol/vardef/boolSymNode.cpp
+	./symbol/vardef/byteSymNode.cpp
+	./symbol/vardef/shortSymNode.cpp
+	./symbol/vardef/intSymNode.cpp
+	./symbol/vardef/unsgnSymNode.cpp
+	./symbol/vardef/utypeSymNode.cpp
+	./symbol/vardef/mtypeSymNode.cpp
+	./symbol/vardef/cidSymNode.cpp
+	./symbol/vardef/chanSymNode.cpp
+	./symbol/vardef/varSymNode.cpp
+	./symbol/vardef/naSymNode.cpp
+	./symbol/vardef/pidSymNode.cpp
+	./symbol/vardef/variantSymNode.cpp
+	./symbol/logic/fMultiLTLSymNode.cpp
 
-	./automata/ast/astNode.cpp
-	./automata/ast/stmnt/stmnt.cpp
-	./automata/ast/stmnt/chanStmnt.cpp
-	./automata/ast/stmnt/flowStmnt.cpp
-	./automata/ast/stmnt/stdlibStmnt.cpp
-	./automata/ast/stmnt/clockStmnt.cpp
-	./automata/ast/stmnt/decl.cpp
-	./automata/ast/expr/expr.cpp
-	./automata/ast/expr/unaryExpr.cpp
-	./automata/ast/expr/binaryExpr.cpp
-	./automata/ast/expr/varExpr.cpp
-	./automata/ast/expr/constExpr.cpp
-	./automata/ast/expr/argExpr.cpp
-	
-	./automata/fsm/ASTtoFSM.cpp
-	./automata/fsm/fsm.cpp
-	./automata/fsm/fsmNode.cpp
-	./automata/fsm/fsmEdge.cpp
-	
-	./semantic/state.cpp
-	./semantic/programState
-	./semantic/compositeState.cpp
-	./semantic/scope.cpp
-	./semantic/process.cpp
-	./semantic/variable.cpp
-	./semantic/channel.cpp
-	./semantic/payload.cpp
-	./semantic/transition.cpp
-	./semantic/programTransition.cpp
-	./semantic/rendezVousTransition.cpp
-	./semantic/compositeTransition.cpp
+	./ast/astNode.cpp
+	./ast/stmnt/stmnt.cpp
+	./ast/stmnt/chanStmnt.cpp
+	./ast/stmnt/flowStmnt.cpp
+	./ast/stmnt/stdlibStmnt.cpp
+	./ast/stmnt/clockStmnt.cpp
+	./ast/stmnt/decl.cpp
+	./ast/stmnt/logicDecl.cpp
+	./ast/expr/expr.cpp
+	./ast/expr/unaryExpr.cpp
+	./ast/expr/binaryExpr.cpp
+	./ast/expr/varExpr.cpp
+	./ast/expr/constExpr.cpp
+	./ast/expr/argExpr.cpp
+	./ast/expr/temporalExpr.cpp
 
 ${CMAKE_SOURCE_DIR}/parser/${Parser}
 ${CMAKE_SOURCE_DIR}/parser/${Lexer}
@@ -94,36 +80,22 @@ ${CMAKE_SOURCE_DIR}/parser/${Lexer}
 
 target_include_directories(mutantgenerator
     PUBLIC
-    ./automata/symbol
-    ./automata/symbol/typedef
-    ./automata/symbol/vardef
-    ./automata/symbol/visitor
+
+    ./symbol
+    ./symbol/typedef
+    ./symbol/vardef
+    ./symbol/logic
+    ./symbol/visitor
     
-    ./automata/ast
-    ./automata/ast/stmnt
-    ./automata/ast/expr
-    ./automata/ast/visitor
-    
-    ./automata/fsm
-    
-    ./semantic
+    ./ast
+    ./ast/stmnt
+    ./ast/expr
+    ./ast/visitor
     
     ./parser
 
-    ./libs/cudd/cplusplus
-
     ${CMAKE_CURRENT_BINARY_DIR}
 	)
-
-
-target_link_directories(mutantgenerator
-	PUBLIC
-
-	./libs/cudd/cplusplus/.libs
-	./libs/cudd/cudd/.libs
-	)
-
-target_link_libraries(mutantgenerator libobj.a libcudd.a)
 
 
 

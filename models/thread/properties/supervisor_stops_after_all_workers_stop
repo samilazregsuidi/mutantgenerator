@@ -1,1 +1,0 @@
-[]((states[1] == STOPPED && states[2] == STOPPED) -> ([]<>(states[0] == PAUSED) || <>(states[0] == STOPPED)))

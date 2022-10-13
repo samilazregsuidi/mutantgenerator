@@ -91,682 +91,514 @@ CMakeFiles/mutantgenerator.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/main.cpp -o CMakeFiles/mutantgenerator.dir/main.cpp.s
 
-CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o: automata/symbol/symbol.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symbol.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symbol.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symbol.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o: automata/symbol/symTable.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symTable.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symTable.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/symTable.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o: automata/symbol/typedef/procSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/procSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/procSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/procSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o: automata/symbol/typedef/tdefSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/tdefSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/tdefSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/tdefSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: automata/symbol/typedef/mtypedefSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/mtypedefSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/mtypedefSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/mtypedefSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o: automata/symbol/typedef/inlineSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/inlineSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/inlineSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/typedef/inlineSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o: automata/symbol/vardef/bitSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/bitSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/bitSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/bitSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o: automata/symbol/vardef/boolSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/boolSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/boolSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/boolSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o: automata/symbol/vardef/byteSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/byteSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/byteSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/byteSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o: automata/symbol/vardef/shortSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/shortSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/shortSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/shortSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o: automata/symbol/vardef/intSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/intSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/intSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/intSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o: automata/symbol/vardef/unsgnSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/unsgnSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/unsgnSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/unsgnSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o: automata/symbol/vardef/utypeSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/utypeSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/utypeSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/utypeSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o: automata/symbol/vardef/mtypeSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/mtypeSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/mtypeSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/mtypeSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o: automata/symbol/vardef/cidSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/cidSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/cidSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/cidSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o: automata/symbol/vardef/chanSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/chanSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/chanSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/chanSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: automata/symbol/vardef/varSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/varSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/varSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/varSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o: automata/symbol/vardef/naSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/naSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/naSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/naSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o: automata/symbol/vardef/pidSymNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/pidSymNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/pidSymNode.cpp > CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/symbol/vardef/pidSymNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o: automata/ast/astNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/astNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/astNode.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/astNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o: automata/ast/stmnt/stmnt.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stmnt.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stmnt.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stmnt.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o: automata/ast/stmnt/chanStmnt.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/chanStmnt.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/chanStmnt.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/chanStmnt.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o: automata/ast/stmnt/flowStmnt.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/flowStmnt.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/flowStmnt.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/flowStmnt.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o: automata/ast/stmnt/stdlibStmnt.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stdlibStmnt.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stdlibStmnt.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/stdlibStmnt.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o: automata/ast/stmnt/clockStmnt.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/clockStmnt.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/clockStmnt.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/clockStmnt.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o: automata/ast/stmnt/decl.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/decl.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/decl.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/stmnt/decl.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o: automata/ast/expr/expr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/expr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/expr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/expr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o: automata/ast/expr/unaryExpr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/unaryExpr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/unaryExpr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/unaryExpr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o: automata/ast/expr/binaryExpr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/binaryExpr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/binaryExpr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/binaryExpr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o: automata/ast/expr/varExpr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/varExpr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/varExpr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/varExpr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o: automata/ast/expr/constExpr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/constExpr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/constExpr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/constExpr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o: automata/ast/expr/argExpr.cpp
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/argExpr.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/argExpr.cpp > CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/ast/expr/argExpr.cpp -o CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o: automata/fsm/ASTtoFSM.cpp
-CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/ASTtoFSM.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/ASTtoFSM.cpp > CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/ASTtoFSM.cpp -o CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o: automata/fsm/fsm.cpp
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.cpp > CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.cpp -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o: automata/fsm/fsmNode.cpp
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmNode.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmNode.cpp > CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmNode.cpp -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.s
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o: automata/fsm/fsmEdge.cpp
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o -MF CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o.d -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmEdge.cpp
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmEdge.cpp > CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.i
-
-CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmEdge.cpp -o CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: semantic/state.cpp
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp > CMakeFiles/mutantgenerator.dir/semantic/state.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/state.cpp -o CMakeFiles/mutantgenerator.dir/semantic/state.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o: semantic/programState.cpp
-CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.cpp > CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programState.cpp -o CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o: semantic/compositeState.cpp
-CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeState.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeState.cpp > CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeState.cpp -o CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: semantic/scope.cpp
-CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.cpp > CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/scope.cpp -o CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o: semantic/process.cpp
-CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/process.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/process.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.cpp > CMakeFiles/mutantgenerator.dir/semantic/process.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/process.cpp -o CMakeFiles/mutantgenerator.dir/semantic/process.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: semantic/variable.cpp
-CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.cpp > CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/variable.cpp -o CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o: semantic/channel.cpp
-CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.cpp > CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/channel.cpp -o CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o: semantic/payload.cpp
-CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.cpp > CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/payload.cpp -o CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: semantic/transition.cpp
-CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.cpp > CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/transition.cpp -o CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o: semantic/programTransition.cpp
-CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.cpp > CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/programTransition.cpp -o CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o: semantic/rendezVousTransition.cpp
-CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.cpp > CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/rendezVousTransition.cpp -o CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.s
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
-CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o: semantic/compositeTransition.cpp
-CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o -MF CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o.d -o CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.cpp
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.cpp > CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.i
-
-CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/semantic/compositeTransition.cpp -o CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.s
+CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o: symbol/symbol.cpp
+CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symbol.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symbol.cpp > CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symbol.cpp -o CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o: symbol/symTable.cpp
+CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symTable.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symTable.cpp > CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/symTable.cpp -o CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o: symbol/typedef/procSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/procSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/procSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/procSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o: symbol/typedef/tdefSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/tdefSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/tdefSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/tdefSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o: symbol/typedef/mtypedefSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/mtypedefSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/mtypedefSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/mtypedefSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o: symbol/typedef/inlineSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/inlineSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/inlineSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/typedef/inlineSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o: symbol/vardef/bitSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/bitSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/bitSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/bitSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o: symbol/vardef/boolSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/boolSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/boolSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/boolSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o: symbol/vardef/byteSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/byteSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/byteSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/byteSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o: symbol/vardef/shortSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/shortSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/shortSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/shortSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o: symbol/vardef/intSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/intSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/intSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/intSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o: symbol/vardef/unsgnSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/unsgnSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/unsgnSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/unsgnSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o: symbol/vardef/utypeSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/utypeSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/utypeSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/utypeSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o: symbol/vardef/mtypeSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/mtypeSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/mtypeSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/mtypeSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o: symbol/vardef/cidSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/cidSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/cidSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/cidSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o: symbol/vardef/chanSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/chanSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/chanSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/chanSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o: symbol/vardef/varSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/varSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/varSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/varSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o: symbol/vardef/naSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/naSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/naSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/naSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o: symbol/vardef/pidSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/pidSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/pidSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/pidSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o: symbol/vardef/variantSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/variantSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/variantSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/vardef/variantSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o: symbol/logic/fMultiLTLSymNode.cpp
+CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/logic/fMultiLTLSymNode.cpp
+
+CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/logic/fMultiLTLSymNode.cpp > CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/symbol/logic/fMultiLTLSymNode.cpp -o CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o: ast/astNode.cpp
+CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/astNode.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/astNode.cpp > CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/astNode.cpp -o CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o: ast/stmnt/stmnt.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stmnt.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stmnt.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stmnt.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o: ast/stmnt/chanStmnt.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/chanStmnt.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/chanStmnt.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/chanStmnt.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o: ast/stmnt/flowStmnt.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/flowStmnt.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/flowStmnt.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/flowStmnt.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o: ast/stmnt/stdlibStmnt.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stdlibStmnt.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stdlibStmnt.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/stdlibStmnt.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o: ast/stmnt/clockStmnt.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/clockStmnt.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/clockStmnt.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/clockStmnt.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o: ast/stmnt/decl.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/decl.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/decl.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/decl.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o: ast/stmnt/logicDecl.cpp
+CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/logicDecl.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/logicDecl.cpp > CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/stmnt/logicDecl.cpp -o CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o: ast/expr/expr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/expr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/expr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/expr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o: ast/expr/unaryExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/unaryExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/unaryExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/unaryExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o: ast/expr/binaryExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/binaryExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/binaryExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/binaryExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o: ast/expr/varExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/varExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/varExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/varExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o: ast/expr/constExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/constExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/constExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/constExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o: ast/expr/argExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/argExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/argExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/argExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.s
+
+CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
+CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o: ast/expr/temporalExpr.cpp
+CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o -MF CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o.d -o CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/temporalExpr.cpp
+
+CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/temporalExpr.cpp > CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.i
+
+CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slazreg/Work/Research/Mutation/mutantgenerator/ast/expr/temporalExpr.cpp -o CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.s
 
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: parser/y.tab.cpp
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o -MF CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o.d -o CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp
 
 CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.i: cmake_force
@@ -780,7 +612,7 @@ CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.s: cmake_force
 CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o: CMakeFiles/mutantgenerator.dir/flags.make
 CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o: parser/lex.yy.cpp
 CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o: CMakeFiles/mutantgenerator.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o -MF CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o.d -o CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o -c /home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp
 
 CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.i: cmake_force
@@ -794,54 +626,42 @@ CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.s: cmake_force
 # Object files for target mutantgenerator
 mutantgenerator_OBJECTS = \
 "CMakeFiles/mutantgenerator.dir/main.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o" \
-"CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o" \
+"CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o" \
 "CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o"
 
@@ -849,59 +669,47 @@ mutantgenerator_OBJECTS = \
 mutantgenerator_EXTERNAL_OBJECTS =
 
 mutantgenerator: CMakeFiles/mutantgenerator.dir/main.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/symbol.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/symTable.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/procSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/tdefSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/mtypedefSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/typedef/inlineSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/bitSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/boolSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/byteSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/shortSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/intSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/unsgnSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/utypeSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/mtypeSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/cidSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/chanSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/varSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/naSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/symbol/vardef/pidSymNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/astNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stmnt.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/chanStmnt.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/flowStmnt.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/stdlibStmnt.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/clockStmnt.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/stmnt/decl.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/expr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/unaryExpr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/binaryExpr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/varExpr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/constExpr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/ast/expr/argExpr.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsm.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsmNode.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/automata/fsm/fsmEdge.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/state.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/programState.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/compositeState.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/scope.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/process.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/variable.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/channel.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/payload.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/transition.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/programTransition.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/rendezVousTransition.cpp.o
-mutantgenerator: CMakeFiles/mutantgenerator.dir/semantic/compositeTransition.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/symbol.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/symTable.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/typedef/procSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/typedef/tdefSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/typedef/mtypedefSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/typedef/inlineSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/bitSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/boolSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/byteSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/shortSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/intSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/unsgnSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/utypeSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/mtypeSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/cidSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/chanSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/varSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/naSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/pidSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/vardef/variantSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/symbol/logic/fMultiLTLSymNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/astNode.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/stmnt.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/chanStmnt.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/flowStmnt.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/stdlibStmnt.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/clockStmnt.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/decl.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/stmnt/logicDecl.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/expr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/unaryExpr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/binaryExpr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/varExpr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/constExpr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/argExpr.cpp.o
+mutantgenerator: CMakeFiles/mutantgenerator.dir/ast/expr/temporalExpr.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/parser/y.tab.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/parser/lex.yy.cpp.o
 mutantgenerator: CMakeFiles/mutantgenerator.dir/build.make
 mutantgenerator: CMakeFiles/mutantgenerator.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Linking CXX executable mutantgenerator"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slazreg/Work/Research/Mutation/mutantgenerator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking CXX executable mutantgenerator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mutantgenerator.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

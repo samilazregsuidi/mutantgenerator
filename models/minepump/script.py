@@ -57,7 +57,7 @@ properties = {
 #'user_cmd_consistency'
 #}
 
-mutants = #glob.glob('*.pml')
+mutants = glob.glob('*.pml')
 #mutants = {'original.pml', 'mutant_1.pml', 'mutant_10.pml', 'mutant_20.pml', 'mutant_30.pml', 'mutant_40.pml', 'mutant_50.pml', 'mutant_60.pml', 'mutant_70.pml', 'mutant_80.pml', 'mutant_90.pml'} 
 #survivors = {'original.pml', 'mutant_1.pml', 'mutant_10.pml', 'mutant_20.pml', 'mutant_30.pml', 'mutant_40.pml', 'mutant_50.pml', 'mutant_60.pml', 'mutant_70.pml', 'mutant_80.pml', 'mutant_90.pml'} 
 survivors = glob.glob('*.pml')

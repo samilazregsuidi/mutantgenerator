@@ -117,12 +117,13 @@ symTable* savedSymTab = nullptr;
 std::list<varSymNode*> declSyms;
 std::list<varSymNode*> typeLst;
 std::list<std::string> params;
+std::list<variantQuantifier*> variants;
 
 int mtypeId = 1;
 bool inInline = false;
 
 
-#line 126 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 127 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -161,185 +162,191 @@ enum yysymbol_kind_t
   YYSYMBOL_UNAME = 8,                      /* UNAME  */
   YYSYMBOL_PNAME = 9,                      /* PNAME  */
   YYSYMBOL_INAME = 10,                     /* INAME  */
-  YYSYMBOL_STRING = 11,                    /* STRING  */
-  YYSYMBOL_REAL = 12,                      /* REAL  */
-  YYSYMBOL_TRUE = 13,                      /* TRUE  */
-  YYSYMBOL_FALSE = 14,                     /* FALSE  */
-  YYSYMBOL_SKIP = 15,                      /* SKIP  */
-  YYSYMBOL_ASSERT = 16,                    /* ASSERT  */
-  YYSYMBOL_PRINT = 17,                     /* PRINT  */
-  YYSYMBOL_PRINTM = 18,                    /* PRINTM  */
-  YYSYMBOL_C_CODE = 19,                    /* C_CODE  */
-  YYSYMBOL_C_DECL = 20,                    /* C_DECL  */
-  YYSYMBOL_C_EXPR = 21,                    /* C_EXPR  */
-  YYSYMBOL_C_STATE = 22,                   /* C_STATE  */
-  YYSYMBOL_C_TRACK = 23,                   /* C_TRACK  */
-  YYSYMBOL_RUN = 24,                       /* RUN  */
-  YYSYMBOL_LEN = 25,                       /* LEN  */
-  YYSYMBOL_ENABLED = 26,                   /* ENABLED  */
-  YYSYMBOL_EVAL = 27,                      /* EVAL  */
-  YYSYMBOL_PC_VAL = 28,                    /* PC_VAL  */
-  YYSYMBOL_TYPEDEF = 29,                   /* TYPEDEF  */
-  YYSYMBOL_MTYPE = 30,                     /* MTYPE  */
-  YYSYMBOL_INLINE = 31,                    /* INLINE  */
-  YYSYMBOL_LABEL = 32,                     /* LABEL  */
-  YYSYMBOL_OF = 33,                        /* OF  */
-  YYSYMBOL_GOTO = 34,                      /* GOTO  */
-  YYSYMBOL_BREAK = 35,                     /* BREAK  */
-  YYSYMBOL_ELSE = 36,                      /* ELSE  */
-  YYSYMBOL_SEMI = 37,                      /* SEMI  */
-  YYSYMBOL_FI = 38,                        /* FI  */
-  YYSYMBOL_OD = 39,                        /* OD  */
-  YYSYMBOL_SEP = 40,                       /* SEP  */
-  YYSYMBOL_ATOMIC = 41,                    /* ATOMIC  */
-  YYSYMBOL_NON_ATOMIC = 42,                /* NON_ATOMIC  */
-  YYSYMBOL_D_STEP = 43,                    /* D_STEP  */
-  YYSYMBOL_UNLESS = 44,                    /* UNLESS  */
-  YYSYMBOL_TIMEOUT = 45,                   /* TIMEOUT  */
-  YYSYMBOL_NONPROGRESS = 46,               /* NONPROGRESS  */
-  YYSYMBOL_ACTIVE = 47,                    /* ACTIVE  */
-  YYSYMBOL_PROCTYPE = 48,                  /* PROCTYPE  */
-  YYSYMBOL_D_PROCTYPE = 49,                /* D_PROCTYPE  */
-  YYSYMBOL_HIDDEN = 50,                    /* HIDDEN  */
-  YYSYMBOL_SHOW = 51,                      /* SHOW  */
-  YYSYMBOL_ISLOCAL = 52,                   /* ISLOCAL  */
-  YYSYMBOL_PRIORITY = 53,                  /* PRIORITY  */
-  YYSYMBOL_PROVIDED = 54,                  /* PROVIDED  */
-  YYSYMBOL_FULL = 55,                      /* FULL  */
-  YYSYMBOL_EMPTY = 56,                     /* EMPTY  */
-  YYSYMBOL_NFULL = 57,                     /* NFULL  */
-  YYSYMBOL_NEMPTY = 58,                    /* NEMPTY  */
-  YYSYMBOL_XU = 59,                        /* XU  */
-  YYSYMBOL_CLAIM = 60,                     /* CLAIM  */
-  YYSYMBOL_TRACE = 61,                     /* TRACE  */
-  YYSYMBOL_INIT = 62,                      /* INIT  */
-  YYSYMBOL_WHILE = 63,                     /* WHILE  */
-  YYSYMBOL_WHEN = 64,                      /* WHEN  */
-  YYSYMBOL_WAIT = 65,                      /* WAIT  */
-  YYSYMBOL_RESET = 66,                     /* RESET  */
-  YYSYMBOL_SPEC = 67,                      /* SPEC  */
-  YYSYMBOL_EVENTUALLY = 68,                /* EVENTUALLY  */
-  YYSYMBOL_ALWAYS = 69,                    /* ALWAYS  */
-  YYSYMBOL_GLOBALLY = 70,                  /* GLOBALLY  */
-  YYSYMBOL_FINALLY = 71,                   /* FINALLY  */
-  YYSYMBOL_UNTIL = 72,                     /* UNTIL  */
-  YYSYMBOL_LTL = 73,                       /* LTL  */
-  YYSYMBOL_ASGN = 74,                      /* ASGN  */
-  YYSYMBOL_SND = 75,                       /* SND  */
-  YYSYMBOL_O_SND = 76,                     /* O_SND  */
-  YYSYMBOL_RCV = 77,                       /* RCV  */
-  YYSYMBOL_R_RCV = 78,                     /* R_RCV  */
-  YYSYMBOL_OR = 79,                        /* OR  */
-  YYSYMBOL_AND = 80,                       /* AND  */
-  YYSYMBOL_81_ = 81,                       /* '|'  */
-  YYSYMBOL_82_ = 82,                       /* '^'  */
-  YYSYMBOL_83_ = 83,                       /* '&'  */
-  YYSYMBOL_EQ = 84,                        /* EQ  */
-  YYSYMBOL_NE = 85,                        /* NE  */
-  YYSYMBOL_GT = 86,                        /* GT  */
-  YYSYMBOL_LT = 87,                        /* LT  */
-  YYSYMBOL_GE = 88,                        /* GE  */
-  YYSYMBOL_LE = 89,                        /* LE  */
-  YYSYMBOL_LSHIFT = 90,                    /* LSHIFT  */
-  YYSYMBOL_RSHIFT = 91,                    /* RSHIFT  */
-  YYSYMBOL_92_ = 92,                       /* '+'  */
-  YYSYMBOL_93_ = 93,                       /* '-'  */
-  YYSYMBOL_94_ = 94,                       /* '*'  */
-  YYSYMBOL_95_ = 95,                       /* '/'  */
-  YYSYMBOL_96_ = 96,                       /* '%'  */
-  YYSYMBOL_INCR = 97,                      /* INCR  */
-  YYSYMBOL_DECR = 98,                      /* DECR  */
-  YYSYMBOL_99_ = 99,                       /* '~'  */
-  YYSYMBOL_UMIN = 100,                     /* UMIN  */
-  YYSYMBOL_NEG = 101,                      /* NEG  */
-  YYSYMBOL_COUNT = 102,                    /* COUNT  */
-  YYSYMBOL_CONTEXT = 103,                  /* CONTEXT  */
-  YYSYMBOL_DOT = 104,                      /* DOT  */
-  YYSYMBOL_IMPLIES = 105,                  /* IMPLIES  */
-  YYSYMBOL_106_ = 106,                     /* '('  */
-  YYSYMBOL_107_ = 107,                     /* ')'  */
-  YYSYMBOL_108_ = 108,                     /* '['  */
-  YYSYMBOL_109_ = 109,                     /* ']'  */
-  YYSYMBOL_110_ = 110,                     /* '{'  */
-  YYSYMBOL_111_ = 111,                     /* '}'  */
-  YYSYMBOL_112_ = 112,                     /* ':'  */
-  YYSYMBOL_113_ = 113,                     /* ','  */
-  YYSYMBOL_114_ = 114,                     /* '.'  */
-  YYSYMBOL_115_ = 115,                     /* '@'  */
-  YYSYMBOL_YYACCEPT = 116,                 /* $accept  */
-  YYSYMBOL_start_parsing = 117,            /* start_parsing  */
-  YYSYMBOL_118_1 = 118,                    /* $@1  */
-  YYSYMBOL_program = 119,                  /* program  */
-  YYSYMBOL_units = 120,                    /* units  */
-  YYSYMBOL_unit = 121,                     /* unit  */
-  YYSYMBOL_proc = 122,                     /* proc  */
-  YYSYMBOL_123_2 = 123,                    /* $@2  */
-  YYSYMBOL_124_3 = 124,                    /* $@3  */
-  YYSYMBOL_proctype = 125,                 /* proctype  */
-  YYSYMBOL_inst = 126,                     /* inst  */
-  YYSYMBOL_init = 127,                     /* init  */
-  YYSYMBOL_128_4 = 128,                    /* $@4  */
-  YYSYMBOL_events = 129,                   /* events  */
-  YYSYMBOL_utypedef = 130,                 /* utypedef  */
-  YYSYMBOL_mtypedef = 131,                 /* mtypedef  */
-  YYSYMBOL_132_5 = 132,                    /* $@5  */
-  YYSYMBOL_ns = 133,                       /* ns  */
-  YYSYMBOL_134_6 = 134,                    /* $@6  */
-  YYSYMBOL_135_7 = 135,                    /* $@7  */
-  YYSYMBOL_136_8 = 136,                    /* $@8  */
-  YYSYMBOL_c_fcts = 137,                   /* c_fcts  */
-  YYSYMBOL_cstate = 138,                   /* cstate  */
-  YYSYMBOL_ccode = 139,                    /* ccode  */
-  YYSYMBOL_cexpr = 140,                    /* cexpr  */
-  YYSYMBOL_body = 141,                     /* body  */
-  YYSYMBOL_142_9 = 142,                    /* $@9  */
-  YYSYMBOL_sequence = 143,                 /* sequence  */
-  YYSYMBOL_step = 144,                     /* step  */
-  YYSYMBOL_vis = 145,                      /* vis  */
-  YYSYMBOL_asgn = 146,                     /* asgn  */
-  YYSYMBOL_one_decl = 147,                 /* one_decl  */
-  YYSYMBOL_148_10 = 148,                   /* $@10  */
-  YYSYMBOL_149_11 = 149,                   /* $@11  */
-  YYSYMBOL_decl_lst = 150,                 /* decl_lst  */
-  YYSYMBOL_decl = 151,                     /* decl  */
-  YYSYMBOL_var_list = 152,                 /* var_list  */
-  YYSYMBOL_ivar = 153,                     /* ivar  */
-  YYSYMBOL_param_list = 154,               /* param_list  */
-  YYSYMBOL_ch_init = 155,                  /* ch_init  */
-  YYSYMBOL_basetype = 156,                 /* basetype  */
-  YYSYMBOL_typ_list = 157,                 /* typ_list  */
-  YYSYMBOL_vardcl = 158,                   /* vardcl  */
-  YYSYMBOL_varref = 159,                   /* varref  */
-  YYSYMBOL_pfld = 160,                     /* pfld  */
-  YYSYMBOL_cmpnd = 161,                    /* cmpnd  */
-  YYSYMBOL_sfld = 162,                     /* sfld  */
-  YYSYMBOL_stmnt = 163,                    /* stmnt  */
-  YYSYMBOL_Special = 164,                  /* Special  */
-  YYSYMBOL_Stmnt = 165,                    /* Stmnt  */
-  YYSYMBOL_options = 166,                  /* options  */
-  YYSYMBOL_option = 167,                   /* option  */
-  YYSYMBOL_real_expr = 168,                /* real_expr  */
-  YYSYMBOL_OS = 169,                       /* OS  */
-  YYSYMBOL_MS = 170,                       /* MS  */
-  YYSYMBOL_aname = 171,                    /* aname  */
-  YYSYMBOL_expr = 172,                     /* expr  */
-  YYSYMBOL_Opt_priority = 173,             /* Opt_priority  */
-  YYSYMBOL_full_expr = 174,                /* full_expr  */
-  YYSYMBOL_Opt_enabler = 175,              /* Opt_enabler  */
-  YYSYMBOL_Expr = 176,                     /* Expr  */
-  YYSYMBOL_Probe = 177,                    /* Probe  */
-  YYSYMBOL_args = 178,                     /* args  */
-  YYSYMBOL_prargs = 179,                   /* prargs  */
-  YYSYMBOL_margs = 180,                    /* margs  */
-  YYSYMBOL_arg = 181,                      /* arg  */
-  YYSYMBOL_rarg = 182,                     /* rarg  */
-  YYSYMBOL_rargs = 183,                    /* rargs  */
-  YYSYMBOL_nlst = 184,                     /* nlst  */
-  YYSYMBOL_props = 185,                    /* props  */
-  YYSYMBOL_prop = 186,                     /* prop  */
-  YYSYMBOL_prop_expr = 187,                /* prop_expr  */
-  YYSYMBOL_quants = 188,                   /* quants  */
-  YYSYMBOL_quant = 189                     /* quant  */
+  YYSYMBOL_VNAME = 11,                     /* VNAME  */
+  YYSYMBOL_BASE = 12,                      /* BASE  */
+  YYSYMBOL_STRING = 13,                    /* STRING  */
+  YYSYMBOL_REAL = 14,                      /* REAL  */
+  YYSYMBOL_TRUE = 15,                      /* TRUE  */
+  YYSYMBOL_FALSE = 16,                     /* FALSE  */
+  YYSYMBOL_SKIP = 17,                      /* SKIP  */
+  YYSYMBOL_ASSERT = 18,                    /* ASSERT  */
+  YYSYMBOL_PRINT = 19,                     /* PRINT  */
+  YYSYMBOL_PRINTM = 20,                    /* PRINTM  */
+  YYSYMBOL_C_CODE = 21,                    /* C_CODE  */
+  YYSYMBOL_C_DECL = 22,                    /* C_DECL  */
+  YYSYMBOL_C_EXPR = 23,                    /* C_EXPR  */
+  YYSYMBOL_C_STATE = 24,                   /* C_STATE  */
+  YYSYMBOL_C_TRACK = 25,                   /* C_TRACK  */
+  YYSYMBOL_RUN = 26,                       /* RUN  */
+  YYSYMBOL_LEN = 27,                       /* LEN  */
+  YYSYMBOL_ENABLED = 28,                   /* ENABLED  */
+  YYSYMBOL_EVAL = 29,                      /* EVAL  */
+  YYSYMBOL_PC_VAL = 30,                    /* PC_VAL  */
+  YYSYMBOL_TYPEDEF = 31,                   /* TYPEDEF  */
+  YYSYMBOL_MTYPE = 32,                     /* MTYPE  */
+  YYSYMBOL_INLINE = 33,                    /* INLINE  */
+  YYSYMBOL_LABEL = 34,                     /* LABEL  */
+  YYSYMBOL_OF = 35,                        /* OF  */
+  YYSYMBOL_GOTO = 36,                      /* GOTO  */
+  YYSYMBOL_BREAK = 37,                     /* BREAK  */
+  YYSYMBOL_ELSE = 38,                      /* ELSE  */
+  YYSYMBOL_SEMI = 39,                      /* SEMI  */
+  YYSYMBOL_FI = 40,                        /* FI  */
+  YYSYMBOL_OD = 41,                        /* OD  */
+  YYSYMBOL_SEP = 42,                       /* SEP  */
+  YYSYMBOL_ATOMIC = 43,                    /* ATOMIC  */
+  YYSYMBOL_NON_ATOMIC = 44,                /* NON_ATOMIC  */
+  YYSYMBOL_D_STEP = 45,                    /* D_STEP  */
+  YYSYMBOL_UNLESS = 46,                    /* UNLESS  */
+  YYSYMBOL_TIMEOUT = 47,                   /* TIMEOUT  */
+  YYSYMBOL_NONPROGRESS = 48,               /* NONPROGRESS  */
+  YYSYMBOL_ACTIVE = 49,                    /* ACTIVE  */
+  YYSYMBOL_PROCTYPE = 50,                  /* PROCTYPE  */
+  YYSYMBOL_D_PROCTYPE = 51,                /* D_PROCTYPE  */
+  YYSYMBOL_HIDDEN = 52,                    /* HIDDEN  */
+  YYSYMBOL_SHOW = 53,                      /* SHOW  */
+  YYSYMBOL_ISLOCAL = 54,                   /* ISLOCAL  */
+  YYSYMBOL_PRIORITY = 55,                  /* PRIORITY  */
+  YYSYMBOL_PROVIDED = 56,                  /* PROVIDED  */
+  YYSYMBOL_FULL = 57,                      /* FULL  */
+  YYSYMBOL_EMPTY = 58,                     /* EMPTY  */
+  YYSYMBOL_NFULL = 59,                     /* NFULL  */
+  YYSYMBOL_NEMPTY = 60,                    /* NEMPTY  */
+  YYSYMBOL_XU = 61,                        /* XU  */
+  YYSYMBOL_CLAIM = 62,                     /* CLAIM  */
+  YYSYMBOL_TRACE = 63,                     /* TRACE  */
+  YYSYMBOL_INIT = 64,                      /* INIT  */
+  YYSYMBOL_WHILE = 65,                     /* WHILE  */
+  YYSYMBOL_WHEN = 66,                      /* WHEN  */
+  YYSYMBOL_WAIT = 67,                      /* WAIT  */
+  YYSYMBOL_RESET = 68,                     /* RESET  */
+  YYSYMBOL_SPEC = 69,                      /* SPEC  */
+  YYSYMBOL_EVENTUALLY = 70,                /* EVENTUALLY  */
+  YYSYMBOL_ALWAYS = 71,                    /* ALWAYS  */
+  YYSYMBOL_GLOBALLY = 72,                  /* GLOBALLY  */
+  YYSYMBOL_FINALLY = 73,                   /* FINALLY  */
+  YYSYMBOL_UNTIL = 74,                     /* UNTIL  */
+  YYSYMBOL_NEXT = 75,                      /* NEXT  */
+  YYSYMBOL_LTL = 76,                       /* LTL  */
+  YYSYMBOL_FMULTILTL = 77,                 /* FMULTILTL  */
+  YYSYMBOL_ASGN = 78,                      /* ASGN  */
+  YYSYMBOL_SND = 79,                       /* SND  */
+  YYSYMBOL_O_SND = 80,                     /* O_SND  */
+  YYSYMBOL_RCV = 81,                       /* RCV  */
+  YYSYMBOL_R_RCV = 82,                     /* R_RCV  */
+  YYSYMBOL_OR = 83,                        /* OR  */
+  YYSYMBOL_AND = 84,                       /* AND  */
+  YYSYMBOL_85_ = 85,                       /* '|'  */
+  YYSYMBOL_86_ = 86,                       /* '^'  */
+  YYSYMBOL_87_ = 87,                       /* '&'  */
+  YYSYMBOL_EQ = 88,                        /* EQ  */
+  YYSYMBOL_NE = 89,                        /* NE  */
+  YYSYMBOL_GT = 90,                        /* GT  */
+  YYSYMBOL_LT = 91,                        /* LT  */
+  YYSYMBOL_GE = 92,                        /* GE  */
+  YYSYMBOL_LE = 93,                        /* LE  */
+  YYSYMBOL_LSHIFT = 94,                    /* LSHIFT  */
+  YYSYMBOL_RSHIFT = 95,                    /* RSHIFT  */
+  YYSYMBOL_96_ = 96,                       /* '+'  */
+  YYSYMBOL_97_ = 97,                       /* '-'  */
+  YYSYMBOL_98_ = 98,                       /* '*'  */
+  YYSYMBOL_99_ = 99,                       /* '/'  */
+  YYSYMBOL_100_ = 100,                     /* '%'  */
+  YYSYMBOL_INCR = 101,                     /* INCR  */
+  YYSYMBOL_DECR = 102,                     /* DECR  */
+  YYSYMBOL_103_ = 103,                     /* '~'  */
+  YYSYMBOL_UMIN = 104,                     /* UMIN  */
+  YYSYMBOL_NEG = 105,                      /* NEG  */
+  YYSYMBOL_COUNT = 106,                    /* COUNT  */
+  YYSYMBOL_CONTEXT = 107,                  /* CONTEXT  */
+  YYSYMBOL_DOT = 108,                      /* DOT  */
+  YYSYMBOL_IMPLIES = 109,                  /* IMPLIES  */
+  YYSYMBOL_110_ = 110,                     /* '('  */
+  YYSYMBOL_111_ = 111,                     /* ')'  */
+  YYSYMBOL_112_ = 112,                     /* '['  */
+  YYSYMBOL_113_ = 113,                     /* ']'  */
+  YYSYMBOL_114_ = 114,                     /* '{'  */
+  YYSYMBOL_115_ = 115,                     /* '}'  */
+  YYSYMBOL_116_ = 116,                     /* ':'  */
+  YYSYMBOL_117_ = 117,                     /* ','  */
+  YYSYMBOL_118_ = 118,                     /* '.'  */
+  YYSYMBOL_119_ = 119,                     /* '@'  */
+  YYSYMBOL_YYACCEPT = 120,                 /* $accept  */
+  YYSYMBOL_start_parsing = 121,            /* start_parsing  */
+  YYSYMBOL_122_1 = 122,                    /* $@1  */
+  YYSYMBOL_program = 123,                  /* program  */
+  YYSYMBOL_units = 124,                    /* units  */
+  YYSYMBOL_unit = 125,                     /* unit  */
+  YYSYMBOL_proc = 126,                     /* proc  */
+  YYSYMBOL_127_2 = 127,                    /* $@2  */
+  YYSYMBOL_128_3 = 128,                    /* $@3  */
+  YYSYMBOL_proctype = 129,                 /* proctype  */
+  YYSYMBOL_inst = 130,                     /* inst  */
+  YYSYMBOL_init = 131,                     /* init  */
+  YYSYMBOL_132_4 = 132,                    /* $@4  */
+  YYSYMBOL_events = 133,                   /* events  */
+  YYSYMBOL_utypedef = 134,                 /* utypedef  */
+  YYSYMBOL_mtypedef = 135,                 /* mtypedef  */
+  YYSYMBOL_136_5 = 136,                    /* $@5  */
+  YYSYMBOL_ns = 137,                       /* ns  */
+  YYSYMBOL_138_6 = 138,                    /* $@6  */
+  YYSYMBOL_139_7 = 139,                    /* $@7  */
+  YYSYMBOL_140_8 = 140,                    /* $@8  */
+  YYSYMBOL_c_fcts = 141,                   /* c_fcts  */
+  YYSYMBOL_cstate = 142,                   /* cstate  */
+  YYSYMBOL_ccode = 143,                    /* ccode  */
+  YYSYMBOL_cexpr = 144,                    /* cexpr  */
+  YYSYMBOL_body = 145,                     /* body  */
+  YYSYMBOL_146_9 = 146,                    /* $@9  */
+  YYSYMBOL_sequence = 147,                 /* sequence  */
+  YYSYMBOL_step = 148,                     /* step  */
+  YYSYMBOL_vis = 149,                      /* vis  */
+  YYSYMBOL_asgn = 150,                     /* asgn  */
+  YYSYMBOL_one_decl = 151,                 /* one_decl  */
+  YYSYMBOL_152_10 = 152,                   /* $@10  */
+  YYSYMBOL_153_11 = 153,                   /* $@11  */
+  YYSYMBOL_decl_lst = 154,                 /* decl_lst  */
+  YYSYMBOL_decl = 155,                     /* decl  */
+  YYSYMBOL_var_list = 156,                 /* var_list  */
+  YYSYMBOL_ivar = 157,                     /* ivar  */
+  YYSYMBOL_param_list = 158,               /* param_list  */
+  YYSYMBOL_ch_init = 159,                  /* ch_init  */
+  YYSYMBOL_basetype = 160,                 /* basetype  */
+  YYSYMBOL_typ_list = 161,                 /* typ_list  */
+  YYSYMBOL_vardcl = 162,                   /* vardcl  */
+  YYSYMBOL_varref = 163,                   /* varref  */
+  YYSYMBOL_pfld = 164,                     /* pfld  */
+  YYSYMBOL_cmpnd = 165,                    /* cmpnd  */
+  YYSYMBOL_sfld = 166,                     /* sfld  */
+  YYSYMBOL_stmnt = 167,                    /* stmnt  */
+  YYSYMBOL_Special = 168,                  /* Special  */
+  YYSYMBOL_Stmnt = 169,                    /* Stmnt  */
+  YYSYMBOL_options = 170,                  /* options  */
+  YYSYMBOL_option = 171,                   /* option  */
+  YYSYMBOL_real_expr = 172,                /* real_expr  */
+  YYSYMBOL_OS = 173,                       /* OS  */
+  YYSYMBOL_MS = 174,                       /* MS  */
+  YYSYMBOL_aname = 175,                    /* aname  */
+  YYSYMBOL_expr = 176,                     /* expr  */
+  YYSYMBOL_Opt_priority = 177,             /* Opt_priority  */
+  YYSYMBOL_full_expr = 178,                /* full_expr  */
+  YYSYMBOL_Opt_enabler = 179,              /* Opt_enabler  */
+  YYSYMBOL_Expr = 180,                     /* Expr  */
+  YYSYMBOL_feat_expr = 181,                /* feat_expr  */
+  YYSYMBOL_Probe = 182,                    /* Probe  */
+  YYSYMBOL_args = 183,                     /* args  */
+  YYSYMBOL_prargs = 184,                   /* prargs  */
+  YYSYMBOL_margs = 185,                    /* margs  */
+  YYSYMBOL_arg = 186,                      /* arg  */
+  YYSYMBOL_rarg = 187,                     /* rarg  */
+  YYSYMBOL_rargs = 188,                    /* rargs  */
+  YYSYMBOL_nlst = 189,                     /* nlst  */
+  YYSYMBOL_props = 190,                    /* props  */
+  YYSYMBOL_prop = 191,                     /* prop  */
+  YYSYMBOL_ltl_prop = 192,                 /* ltl_prop  */
+  YYSYMBOL_variant_quants = 193,           /* variant_quants  */
+  YYSYMBOL_variant_quant = 194,            /* variant_quant  */
+  YYSYMBOL_variant_expr = 195              /* variant_expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -667,19 +674,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   1832
+#define YYLAST   1830
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  116
+#define YYNTOKENS  120
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  74
+#define YYNNTS  76
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  244
+#define YYNRULES  254
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  472
+#define YYNSTATES  503
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   351
+#define YYMAXUTOK   355
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -696,16 +703,16 @@ static const yytype_int8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,    96,    83,     2,
-     106,   107,    94,    92,   113,    93,   114,    95,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,   112,     2,
-       2,     2,     2,     2,   115,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,   100,    87,     2,
+     110,   111,    98,    96,   117,    97,   118,    99,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,   116,     2,
+       2,     2,     2,     2,   119,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,   108,     2,   109,    82,     2,     2,     2,     2,     2,
+       2,   112,     2,   113,    86,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,   110,    81,   111,    99,     2,     2,     2,
+       2,     2,     2,   114,    85,   115,   103,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -726,40 +733,41 @@ static const yytype_int8 yytranslate[] =
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
       65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
-      75,    76,    77,    78,    79,    80,    84,    85,    86,    87,
-      88,    89,    90,    91,    97,    98,   100,   101,   102,   103,
-     104,   105
+      75,    76,    77,    78,    79,    80,    81,    82,    83,    84,
+      88,    89,    90,    91,    92,    93,    94,    95,   101,   102,
+     104,   105,   106,   107,   108,   109
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   146,   146,   146,   151,   154,   155,   158,   159,   160,
-     161,   174,   175,   176,   177,   178,   184,   192,   182,   207,
-     208,   211,   212,   213,   214,   228,   227,   243,   246,   258,
-     258,   277,   278,   280,   277,   295,   296,   299,   300,   301,
-     302,   305,   306,   309,   312,   312,   322,   323,   324,   327,
-     332,   333,   334,   335,   343,   344,   345,   346,   349,   350,
-     356,   356,   357,   357,   360,   361,   365,   366,   373,   374,
-     377,   382,   387,   392,   393,   394,   398,   401,   402,   406,
-     421,   438,   439,   440,   443,   446,   447,   450,   451,   454,
-     455,   459,   460,   463,   464,   465,   466,   467,   468,   469,
-     473,   474,   475,   476,   477,   478,   479,   480,   481,   482,
-     483,   484,   485,   486,   487,   488,   489,   490,   502,   503,
-     506,   507,   511,   512,   513,   514,   515,   516,   517,   520,
-     521,   524,   525,   528,   529,   532,   533,   534,   535,   536,
-     537,   538,   539,   540,   541,   542,   543,   544,   545,   546,
-     547,   548,   549,   550,   551,   552,   553,   561,   562,   563,
-     568,   569,   570,   571,   572,   573,   574,   575,   576,   577,
-     578,   579,   580,   581,   582,   583,   586,   587,   590,   591,
-     594,   595,   600,   601,   602,   603,   604,   605,   606,   607,
-     608,   611,   612,   613,   614,   618,   619,   623,   624,   628,
-     629,   632,   633,   636,   637,   638,   639,   643,   644,   645,
-     646,   649,   650,   651,   655,   656,   657,   660,   664,   665,
-     666,   667,   668,   669,   670,   671,   672,   673,   674,   675,
-     676,   677,   678,   679,   680,   681,   682,   683,   684,   685,
-     686,   689,   690,   693,   694
+       0,   149,   149,   149,   154,   157,   158,   161,   162,   163,
+     164,   177,   178,   179,   180,   181,   187,   195,   185,   210,
+     211,   214,   215,   216,   217,   231,   230,   246,   249,   261,
+     261,   280,   281,   283,   280,   298,   299,   302,   303,   304,
+     305,   308,   309,   312,   315,   315,   325,   326,   327,   330,
+     335,   336,   337,   338,   346,   347,   348,   349,   352,   353,
+     359,   359,   360,   360,   363,   364,   368,   369,   376,   377,
+     380,   385,   390,   395,   396,   397,   401,   404,   405,   409,
+     424,   441,   442,   443,   446,   449,   450,   453,   454,   457,
+     458,   462,   463,   466,   467,   468,   469,   470,   471,   472,
+     476,   477,   478,   479,   480,   481,   482,   483,   484,   485,
+     486,   487,   488,   489,   490,   491,   492,   493,   505,   506,
+     509,   510,   514,   515,   516,   517,   518,   519,   520,   523,
+     524,   527,   528,   531,   532,   535,   536,   537,   538,   539,
+     540,   541,   542,   543,   544,   545,   546,   547,   548,   549,
+     550,   551,   552,   553,   554,   555,   556,   564,   565,   566,
+     571,   572,   573,   574,   575,   578,   579,   580,   581,   582,
+     583,   584,   585,   586,   587,   588,   589,   592,   593,   596,
+     597,   600,   601,   606,   607,   608,   609,   610,   611,   612,
+     613,   614,   617,   620,   621,   622,   623,   627,   628,   632,
+     633,   637,   638,   641,   642,   645,   646,   647,   648,   652,
+     653,   654,   655,   658,   659,   660,   664,   665,   666,   669,
+     670,   681,   682,   683,   684,   685,   686,   687,   688,   689,
+     690,   691,   692,   693,   694,   695,   696,   697,   698,   699,
+     700,   701,   702,   703,   704,   705,   708,   709,   712,   713,
+     716,   717,   718,   719,   720
 };
 #endif
 
@@ -776,30 +784,31 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "CONST", "IF", "DO",
-  "TYPE", "NAME", "UNAME", "PNAME", "INAME", "STRING", "REAL", "TRUE",
-  "FALSE", "SKIP", "ASSERT", "PRINT", "PRINTM", "C_CODE", "C_DECL",
-  "C_EXPR", "C_STATE", "C_TRACK", "RUN", "LEN", "ENABLED", "EVAL",
-  "PC_VAL", "TYPEDEF", "MTYPE", "INLINE", "LABEL", "OF", "GOTO", "BREAK",
-  "ELSE", "SEMI", "FI", "OD", "SEP", "ATOMIC", "NON_ATOMIC", "D_STEP",
-  "UNLESS", "TIMEOUT", "NONPROGRESS", "ACTIVE", "PROCTYPE", "D_PROCTYPE",
-  "HIDDEN", "SHOW", "ISLOCAL", "PRIORITY", "PROVIDED", "FULL", "EMPTY",
-  "NFULL", "NEMPTY", "XU", "CLAIM", "TRACE", "INIT", "WHILE", "WHEN",
-  "WAIT", "RESET", "SPEC", "EVENTUALLY", "ALWAYS", "GLOBALLY", "FINALLY",
-  "UNTIL", "LTL", "ASGN", "SND", "O_SND", "RCV", "R_RCV", "OR", "AND",
-  "'|'", "'^'", "'&'", "EQ", "NE", "GT", "LT", "GE", "LE", "LSHIFT",
-  "RSHIFT", "'+'", "'-'", "'*'", "'/'", "'%'", "INCR", "DECR", "'~'",
-  "UMIN", "NEG", "COUNT", "CONTEXT", "DOT", "IMPLIES", "'('", "')'", "'['",
-  "']'", "'{'", "'}'", "':'", "','", "'.'", "'@'", "$accept",
-  "start_parsing", "$@1", "program", "units", "unit", "proc", "$@2", "$@3",
-  "proctype", "inst", "init", "$@4", "events", "utypedef", "mtypedef",
-  "$@5", "ns", "$@6", "$@7", "$@8", "c_fcts", "cstate", "ccode", "cexpr",
-  "body", "$@9", "sequence", "step", "vis", "asgn", "one_decl", "$@10",
-  "$@11", "decl_lst", "decl", "var_list", "ivar", "param_list", "ch_init",
-  "basetype", "typ_list", "vardcl", "varref", "pfld", "cmpnd", "sfld",
-  "stmnt", "Special", "Stmnt", "options", "option", "real_expr", "OS",
-  "MS", "aname", "expr", "Opt_priority", "full_expr", "Opt_enabler",
-  "Expr", "Probe", "args", "prargs", "margs", "arg", "rarg", "rargs",
-  "nlst", "props", "prop", "prop_expr", "quants", "quant", YY_NULLPTR
+  "TYPE", "NAME", "UNAME", "PNAME", "INAME", "VNAME", "BASE", "STRING",
+  "REAL", "TRUE", "FALSE", "SKIP", "ASSERT", "PRINT", "PRINTM", "C_CODE",
+  "C_DECL", "C_EXPR", "C_STATE", "C_TRACK", "RUN", "LEN", "ENABLED",
+  "EVAL", "PC_VAL", "TYPEDEF", "MTYPE", "INLINE", "LABEL", "OF", "GOTO",
+  "BREAK", "ELSE", "SEMI", "FI", "OD", "SEP", "ATOMIC", "NON_ATOMIC",
+  "D_STEP", "UNLESS", "TIMEOUT", "NONPROGRESS", "ACTIVE", "PROCTYPE",
+  "D_PROCTYPE", "HIDDEN", "SHOW", "ISLOCAL", "PRIORITY", "PROVIDED",
+  "FULL", "EMPTY", "NFULL", "NEMPTY", "XU", "CLAIM", "TRACE", "INIT",
+  "WHILE", "WHEN", "WAIT", "RESET", "SPEC", "EVENTUALLY", "ALWAYS",
+  "GLOBALLY", "FINALLY", "UNTIL", "NEXT", "LTL", "FMULTILTL", "ASGN",
+  "SND", "O_SND", "RCV", "R_RCV", "OR", "AND", "'|'", "'^'", "'&'", "EQ",
+  "NE", "GT", "LT", "GE", "LE", "LSHIFT", "RSHIFT", "'+'", "'-'", "'*'",
+  "'/'", "'%'", "INCR", "DECR", "'~'", "UMIN", "NEG", "COUNT", "CONTEXT",
+  "DOT", "IMPLIES", "'('", "')'", "'['", "']'", "'{'", "'}'", "':'", "','",
+  "'.'", "'@'", "$accept", "start_parsing", "$@1", "program", "units",
+  "unit", "proc", "$@2", "$@3", "proctype", "inst", "init", "$@4",
+  "events", "utypedef", "mtypedef", "$@5", "ns", "$@6", "$@7", "$@8",
+  "c_fcts", "cstate", "ccode", "cexpr", "body", "$@9", "sequence", "step",
+  "vis", "asgn", "one_decl", "$@10", "$@11", "decl_lst", "decl",
+  "var_list", "ivar", "param_list", "ch_init", "basetype", "typ_list",
+  "vardcl", "varref", "pfld", "cmpnd", "sfld", "stmnt", "Special", "Stmnt",
+  "options", "option", "real_expr", "OS", "MS", "aname", "expr",
+  "Opt_priority", "full_expr", "Opt_enabler", "Expr", "feat_expr", "Probe",
+  "args", "prargs", "margs", "arg", "rarg", "rargs", "nlst", "props",
+  "prop", "ltl_prop", "variant_quants", "variant_quant", "variant_expr", YY_NULLPTR
 };
 
 static const char *
@@ -809,7 +818,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-403)
+#define YYPACT_NINF (-436)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -823,54 +832,57 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-    -403,    39,  1423,  -403,  -403,  -403,    48,    51,    11,  -403,
-    -403,   -79,  -403,  -403,  -403,   -43,  -403,    -1,  1389,  -403,
-    -403,   106,  -403,  -403,  -403,  -403,  -403,  -403,  -403,  -403,
-     154,  -403,   115,   120,    27,   139,    87,  -403,  -403,   117,
-     168,  -403,    -1,  -403,  -403,  -403,   178,     7,  -403,   177,
-     185,   143,  -403,    96,   102,   992,   214,   -43,   113,  -403,
-    -403,  -403,  -403,   221,   221,  -403,  -403,   157,   200,   127,
-     172,  -403,  -403,  -403,   281,   281,    30,   -26,   216,  -403,
-    -403,  -403,  1210,   251,   253,  -403,   174,   255,   256,   258,
-     331,  -403,  -403,   257,   260,  -403,  -403,   262,   263,   265,
-     266,  1269,  1269,  1269,   269,   252,  1210,   992,  -403,  -403,
-     437,  -403,  -403,   138,   264,  -403,   332,  -403,  -403,  1718,
-    -403,   121,  -403,  -403,  -403,    61,   271,   270,    35,  -403,
-     272,   305,  -403,  -403,   143,  -403,   376,   676,   346,   281,
-     348,  1269,   784,  1269,   381,   382,  1269,   282,   149,  -403,
-     380,    21,  -403,  -403,   287,    18,  1269,  1269,  -403,   992,
-     992,    18,    18,    18,    18,  1269,  -403,  -403,  -403,  1269,
-     381,  1238,   -46,   437,     2,  -403,   283,   888,  1210,  1269,
-    1269,    66,    84,  -403,  -403,    18,  -403,  1096,  1210,  1210,
-    1269,  1269,  1269,  1269,  1269,  1269,  1269,  1269,  1269,  1269,
-    1269,  1269,  1269,  1269,  1269,  1269,  1210,  1210,  -403,  -403,
-    -403,    61,    61,  -403,   472,    61,   164,   152,   388,   395,
-     396,   221,  1155,  -403,   288,   293,     9,   572,  -403,  -403,
-    -403,  1511,    68,  -403,  -403,  -403,  1542,  -403,  -403,  1442,
-     296,  -403,   335,   337,   291,   341,   352,  1269,   353,  1573,
-    1602,   437,   437,   359,   360,   361,   362,  1298,  1269,  1269,
-    1631,   264,  1269,  -403,  -403,   338,  -403,  -403,  -403,  -403,
-    1407,  -403,  -403,  -403,  -403,   371,    19,   478,    19,    19,
-    -403,   -69,  -403,    19,    19,  -403,  -403,  -403,   220,   404,
-     259,  -403,   969,   342,  1262,  1453,  1453,   241,   241,   241,
-     241,   232,   232,   125,   125,  -403,  -403,  -403,   220,   404,
-     259,  -403,   -17,   678,    61,    61,    61,    61,    61,    61,
-      61,    61,    61,    61,    61,    61,    61,    61,    61,    61,
-      61,    61,  -403,   162,  -403,  -403,   378,  -403,     3,   377,
-    -403,  -403,   487,  -403,  1736,   376,  -403,  -403,  -403,     9,
-      57,  -403,  -403,  1096,   -20,  1269,  -403,  1269,   384,  -403,
-    -403,   389,  -403,  -403,  -403,   386,   387,  -403,  -403,  -403,
-    -403,   988,   259,  -403,  -403,  1477,  -403,  1269,  1269,   413,
-    -403,   393,   392,    19,    19,   416,   394,  -403,   162,   162,
-     433,   567,   778,   881,   651,   759,   759,   -18,   -18,   -18,
-     -18,     8,     8,   -17,   -17,   -17,  -403,  -403,  -403,  -403,
-    -403,   397,  -403,   -43,   -44,     9,     9,     9,     9,   992,
-     381,   497,  -403,  -403,  -403,   117,  -403,  -403,  1269,   400,
-    1660,  -403,  -403,  -403,   401,  -403,  -403,  -403,   117,   477,
-    -403,  -403,   158,   158,  -403,  -403,   572,  -403,  -403,  -403,
-    1689,  -403,  -403,  -403,   457,   414,  -403,  -403,   417,   -43,
-     183,  1210,  -403,  -403,  -403,   418,   421,   426,   183,  -403,
-    -403,  -403
+    -436,    79,  1349,  -436,  -436,  -436,    16,   105,   146,  -436,
+    -436,   -28,  -436,  -436,  -436,     8,  -436,    -6,  1315,  -436,
+    -436,   201,  -436,  -436,  -436,  -436,  -436,  -436,  -436,  -436,
+      29,  -436,   182,   192,    46,   161,   137,  -436,  -436,   131,
+     209,   220,  -436,    -6,  -436,  -436,  -436,   222,    12,  -436,
+     219,   225,   147,  -436,   148,   183,   999,   291,     8,   186,
+     104,  -436,  -436,  -436,  -436,   288,   288,  -436,  -436,   200,
+     258,   188,   191,  -436,  -436,  -436,   263,   263,    33,    72,
+     196,  -436,  -436,  -436,  1168,   203,   204,  -436,    39,   205,
+     214,   215,   320,  -436,  -436,   218,   221,  -436,  -436,   223,
+     224,   227,   228,  1253,  1253,  1253,   229,   210,  1168,   999,
+    -436,  -436,   450,  -436,  -436,   101,   226,  -436,   283,  -436,
+    -436,  1665,  -436,   181,  -436,  -436,  -436,    97,     6,     6,
+     231,   104,   232,   234,    42,  -436,   253,   265,  -436,  -436,
+     147,  -436,   364,   671,   332,   263,   335,  1253,   783,  1253,
+     366,   370,  1253,   266,   -32,  -436,   367,    31,  -436,  -436,
+     271,    10,  1253,  1253,  -436,   999,   999,    10,    10,    10,
+      10,  1253,  -436,  -436,  -436,  1253,   366,   310,   -51,   450,
+     -17,  -436,   267,   891,  1168,  1253,  1253,    40,    80,  -436,
+    -436,    10,    10,  -436,  1107,  1168,  1168,  1253,  1253,  1253,
+    1253,  1253,  1253,  1253,  1253,  1253,  1253,  1253,  1253,  1253,
+    1253,  1253,  1253,  1168,  1168,  -436,    97,    97,    97,    97,
+      97,  -436,  1331,   295,  -436,   377,  -436,  -436,    97,  -436,
+     -12,   378,   383,   384,   288,  1133,  -436,   272,   280,    13,
+     563,  -436,  -436,  -436,  1458,    77,  -436,  -436,  -436,  1489,
+    -436,  -436,   977,   301,  -436,   302,   304,   296,   307,   308,
+    1253,   309,  1520,  1549,   450,   450,   311,   312,   313,   314,
+    1219,  1253,  1253,  1578,   226,  1253,  -436,  -436,   317,  -436,
+    -436,  -436,  -436,   869,  -436,  -436,  -436,  -436,   318,    49,
+     426,    49,    49,  -436,    38,  -436,    49,    49,  -436,   337,
+    -436,  -436,  1700,   349,  1199,  -436,   993,  1438,  1730,  1469,
+    1469,   173,   173,   173,   173,   212,   212,   126,   126,  -436,
+    -436,  -436,  1700,   349,  1199,  -436,  1397,  1397,  1397,   -43,
+     673,    97,    97,    97,    97,    97,    97,    97,    97,    97,
+      97,    97,    97,    97,    97,    97,    97,    97,    97,  -436,
+    1168,   341,  1364,  -436,   347,  -436,     4,   348,  -436,  -436,
+     459,  -436,  1683,   364,  -436,  -436,  -436,    13,   115,  -436,
+    -436,  1107,    78,  1253,  -436,  1253,   352,  -436,  -436,   353,
+    -436,  -436,  -436,   359,   360,  -436,  -436,  -436,  -436,  1717,
+    1199,  -436,  -436,  1424,  -436,  1253,  1253,   389,  -436,   371,
+     368,    49,    49,   393,   372,  -436,  -436,  1397,   427,   540,
+     157,   646,   758,   778,   778,   -35,   -35,   -35,   -35,   -23,
+     -23,   -43,   -43,   -43,   -43,  1665,   181,  -436,   -44,  -436,
+    -436,  -436,  -436,  -436,  -436,   379,  -436,     8,   124,    13,
+      13,    13,    13,   999,   366,   477,  -436,  -436,  -436,   131,
+    -436,  -436,  1253,   380,  1607,  -436,  -436,  -436,   385,  -436,
+    -436,  -436,   382,  1168,   131,   455,  -436,  -436,   176,   176,
+    -436,  -436,   563,  -436,  -436,  -436,  1636,  -436,  -436,  -436,
+    1168,   386,   444,   392,  -436,  -436,   408,  -436,   412,     8,
+     211,  -436,  1168,  -436,  -436,  -436,   414,   417,   422,   211,
+    -436,  -436,  -436
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -879,79 +891,82 @@ static const yytype_int16 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        2,     0,    21,     1,    41,    42,     0,     0,     0,    31,
-      15,    22,    55,    56,    57,     0,    25,   214,     4,     5,
+      15,    22,    55,    56,    57,     0,    25,   216,     4,     5,
        7,     0,     8,     9,    11,    12,    14,    13,    36,    35,
-       0,    10,     0,     0,     0,     0,     0,    44,    27,   176,
-       0,     3,   214,     6,    19,    20,     0,    58,    62,    37,
-      38,    54,    32,     0,     0,    54,     0,     0,     0,   216,
-      16,    59,    29,     0,     0,    39,    40,     0,    64,     0,
-       0,    23,    24,   166,     0,     0,    85,     0,     0,   167,
-     168,   190,     0,     0,     0,    43,     0,     0,     0,     0,
-       0,    97,   113,     0,     0,   169,   170,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    54,   107,   165,
-      54,    46,    49,   164,    89,    84,    52,    91,    92,   178,
-     112,   179,   182,   177,    26,     0,     0,     0,    81,    61,
-      68,    70,    63,    60,    54,    28,    73,    54,     0,   118,
-       0,     0,    54,     0,     0,     0,   195,    85,   164,   106,
-       0,     0,   133,   134,     0,     0,     0,     0,    98,    54,
-      54,     0,     0,     0,     0,     0,   157,   156,   155,     0,
-       0,     0,     0,    54,   131,    48,     0,    54,     0,     0,
-       0,     0,     0,   101,   102,     0,    87,     0,     0,     0,
+       0,    10,     0,     0,     0,     0,     0,    44,    27,   177,
+       0,     0,     3,   216,     6,    19,    20,     0,    58,    62,
+      37,    38,    54,    32,     0,     0,    54,     0,     0,     0,
+       0,   218,    16,    59,    29,     0,     0,    39,    40,     0,
+      64,     0,     0,    23,    24,   167,     0,     0,    85,     0,
+       0,   168,   169,   191,     0,     0,     0,    43,     0,     0,
+       0,     0,     0,    97,   113,     0,     0,   170,   171,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    54,
+     107,   166,    54,    46,    49,   165,    89,    84,    52,    91,
+      92,   179,   112,   180,   183,   178,    26,     0,     0,     0,
+       0,   246,     0,     0,    81,    61,    68,    70,    63,    60,
+      54,    28,    73,    54,     0,   118,     0,     0,    54,     0,
+       0,     0,   197,    85,   165,   106,     0,     0,   133,   134,
+       0,     0,     0,     0,    98,    54,    54,     0,     0,     0,
+       0,     0,   157,   156,   155,     0,     0,     0,     0,    54,
+     131,    48,     0,    54,     0,     0,     0,     0,     0,   101,
+     102,     0,     0,    87,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   240,   244,
-     243,     0,     0,   239,     0,     0,   241,    54,     0,     0,
-       0,     0,     0,    65,    74,     0,     0,   129,    95,   119,
-      96,     0,    85,    51,    50,    99,     0,   175,   174,   201,
-       0,   196,     0,     0,   197,     0,     0,   195,     0,     0,
-       0,    54,    54,     0,     0,     0,     0,     0,     0,     0,
-       0,    89,     0,   135,   183,     0,    45,   132,    47,   100,
-     201,    94,   199,   111,   205,     0,     0,     0,     0,     0,
-     203,   207,    93,     0,     0,   108,    90,    53,   151,   189,
-     150,   188,   143,   142,   141,   148,   149,   144,   145,   146,
-     147,   152,   153,   136,   137,   138,   139,   140,   187,   186,
-     185,   184,   238,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,   237,     0,     0,     0,     0,
+       0,   236,     0,   252,   254,     0,   249,   248,     0,   247,
+      54,     0,     0,     0,     0,     0,    65,    74,     0,     0,
+     129,    95,   119,    96,     0,    85,    51,    50,    99,     0,
+     176,   175,   203,     0,   198,     0,     0,   199,     0,     0,
+     197,     0,     0,     0,    54,    54,     0,     0,     0,     0,
+       0,     0,     0,     0,    89,     0,   135,   184,     0,    45,
+     132,    47,   100,   203,    94,   201,   111,   207,     0,     0,
+       0,     0,     0,   205,   209,    93,     0,     0,   108,     0,
+      90,    53,   151,   190,   150,   189,   143,   142,   141,   148,
+     149,   144,   145,   146,   147,   152,   153,   136,   137,   138,
+     139,   140,   188,   187,   186,   185,   222,   223,   224,   235,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,   217,   219,   242,    67,     0,   211,     0,     0,
-      82,    69,     0,    72,    71,    73,    33,   128,   127,     0,
-       0,   120,    86,     0,     0,     0,   117,     0,     0,   105,
-     104,     0,   160,   161,   171,     0,     0,   191,   193,   192,
-     194,   151,   150,   154,    88,     0,   116,     0,     0,     0,
-     206,     0,     0,     0,     0,     0,     0,   218,   236,   237,
-     235,   234,   227,   226,   225,   232,   233,   228,   229,   230,
-     231,   220,   221,   222,   223,   224,    17,   212,    30,   213,
-      83,     0,    75,     0,     0,     0,     0,     0,     0,    54,
-       0,     0,   202,   198,   103,   176,   114,   115,     0,     0,
-       0,   109,   210,   162,     0,   208,   110,   163,   176,     0,
-      34,   122,   123,   124,   125,   126,   129,   173,   172,   159,
-       0,   200,   204,   209,   180,     0,   121,   158,     0,     0,
-       0,     0,    18,    77,    78,    79,     0,     0,     0,    76,
-     181,    80
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   219,
+       0,     0,     0,    67,     0,   213,     0,     0,    82,    69,
+       0,    72,    71,    73,    33,   128,   127,     0,     0,   120,
+      86,     0,     0,     0,   117,     0,     0,   105,   104,     0,
+     160,   161,   172,     0,     0,   193,   195,   194,   196,   151,
+     150,   154,    88,     0,   116,     0,     0,     0,   208,     0,
+       0,     0,     0,     0,     0,   164,   221,   225,   233,   232,
+     245,   244,   243,   230,   231,   226,   227,   228,   229,   238,
+     239,   240,   241,   242,   234,     0,   192,   253,     0,   220,
+      17,   214,    30,   215,    83,     0,    75,     0,     0,     0,
+       0,     0,     0,    54,     0,     0,   204,   200,   103,   177,
+     114,   115,     0,     0,     0,   109,   212,   162,     0,   210,
+     110,   163,     0,     0,   177,     0,    34,   122,   123,   124,
+     125,   126,   129,   174,   173,   159,     0,   202,   206,   211,
+       0,     0,   181,     0,   121,   158,     0,   250,     0,     0,
+       0,   251,     0,    18,    77,    78,    79,     0,     0,     0,
+      76,   182,    80
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -403,  -403,  -403,  -403,  -403,   516,  -403,  -403,  -403,  -403,
-    -403,  -403,  -403,  -403,  -403,  -403,  -403,  -403,  -403,  -403,
-    -403,  -403,  -403,    25,  -403,   -57,  -403,  -102,  -107,    29,
-    -403,    14,  -403,  -403,  -121,  -403,   -53,  -403,   190,  -403,
-    -403,    69,  -403,   -54,  -140,   356,   277,  -135,  -403,  -403,
-     -60,  -403,  -208,  -167,  -403,  -403,   217,  -402,   -80,  -403,
-     -89,  -403,   295,  -403,   365,  -171,  -403,  -144,  -403,   504,
-    -403,   -33,   333,  -403
+    -436,  -436,  -436,  -436,  -436,   516,  -436,  -436,  -436,  -436,
+    -436,  -436,  -436,  -436,  -436,  -436,  -436,  -436,  -436,  -436,
+    -436,  -436,  -436,    71,  -436,   -58,  -436,  -107,   -98,   139,
+    -436,     3,  -436,  -436,  -125,  -436,   -56,  -436,   172,  -436,
+    -436,    41,  -436,   -55,  -146,   345,   264,  -141,  -436,  -436,
+     -65,  -436,  -345,  -173,  -436,  -436,   155,  -348,   -81,  -436,
+     -88,  -435,  -436,   279,  -436,   355,  -177,  -436,  -162,  -436,
+     499,  -436,   103,   413,  -436,   416
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-       0,     1,     2,    17,    18,    19,    20,   126,   438,    46,
-      21,    22,    39,    23,    24,    25,   127,    26,    35,    70,
-     413,    27,    28,   108,   109,    38,    55,   110,   111,    67,
-      62,   112,    63,    64,    69,   336,   129,   130,   225,   343,
-     465,   466,   131,   148,   114,   115,   186,   116,   117,   118,
-     138,   139,   350,   176,   177,   154,   119,    57,   120,   459,
-     121,   122,   240,   358,   271,   241,   281,   282,   338,    41,
-      42,   214,   215,   216
+       0,     1,     2,    17,    18,    19,    20,   132,   464,    47,
+      21,    22,    39,    23,    24,    25,   133,    26,    35,    72,
+     437,    27,    28,   110,   111,    38,    56,   112,   113,    69,
+      64,   114,    65,    66,    71,   354,   135,   136,   238,   361,
+     496,   497,   137,   154,   116,   117,   193,   118,   119,   120,
+     144,   145,   368,   182,   183,   160,   121,    58,   122,   489,
+     123,   427,   124,   253,   376,   284,   254,   294,   295,   356,
+      42,    43,   222,   130,   131,   226
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -959,462 +974,466 @@ static const yytype_int16 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-     124,   113,   149,   175,   237,   173,   265,   235,   272,   272,
-     407,   132,   347,   223,   -60,   140,    31,   172,    34,   314,
-     314,   348,   274,   449,   245,   147,   147,    29,   147,    36,
-     261,    30,    31,   206,   207,   227,   454,   383,   285,     3,
-    -130,  -130,  -130,    29,   384,   314,   275,    30,   415,   416,
-     417,   418,   287,   113,   315,   315,   113,   251,   252,    32,
-     351,   264,    33,   441,   208,    68,   175,    37,   147,   274,
-     268,   213,    40,   147,   327,   328,   329,   330,   331,   229,
-     315,    61,   143,   113,   365,   366,   144,   274,   113,   145,
-      53,   147,   420,   275,    54,   421,   335,   246,   269,   289,
-     291,   248,   329,   330,   331,   113,   113,   253,   254,   255,
-     256,   275,   277,  -130,   408,   349,   409,   309,   311,   113,
-     175,   105,   105,   113,   105,   278,    49,   280,   280,   209,
-     210,    50,   379,   113,   381,   382,   211,    51,   141,   385,
-     386,   414,   142,   219,   175,   175,    52,   220,    68,   415,
-     416,   417,   418,   276,    44,    45,   234,   213,   213,   277,
-      47,   213,    48,   133,   105,    48,   419,   212,   341,   105,
-      56,   283,   278,   113,   279,    58,   141,   277,   312,   313,
-     353,   152,   333,   153,   422,    60,   423,   105,    65,   463,
-     278,   464,   284,    12,    13,    14,    66,   113,   113,   314,
-     206,   207,    12,    13,    14,    71,   429,   442,   443,   444,
-     445,    72,   178,   179,   180,   181,   182,   123,   235,   203,
-     204,   205,   280,   125,   280,   280,   242,   243,   128,   280,
-     280,    68,   209,   210,   315,   183,   184,   134,   135,   434,
-     435,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,   417,   418,   327,   328,   329,   330,   331,   -66,
-     213,   213,   213,   213,   213,   213,   213,   213,   213,   213,
-     213,   213,   213,   213,   213,   213,   213,   213,   136,   456,
-     447,   388,   389,   390,   391,   392,   393,   394,   395,   396,
-     397,   398,   399,   400,   401,   402,   403,   404,   405,   113,
-     189,   190,   191,   192,   193,   194,   195,   196,   197,   198,
-     199,   200,   201,   202,   203,   204,   205,   446,   166,   167,
-     168,   137,   146,   171,   201,   202,   203,   204,   205,   280,
-     280,   199,   200,   201,   202,   203,   204,   205,   158,   175,
-     190,   191,   192,   193,   194,   195,   196,   197,   198,   199,
-     200,   201,   202,   203,   204,   205,   440,   150,   231,   151,
-     236,   155,   156,   239,   157,   113,   170,   159,   161,   162,
-     160,   163,   164,   249,   250,   169,   187,   217,   185,   222,
-     218,   467,   257,   224,   228,   221,   260,   230,   147,   238,
-     141,   244,   113,   247,   266,   337,   270,   270,   339,   340,
-     346,   345,   462,   356,   357,   288,   290,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   310,   192,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,   344,
-      73,    74,    75,   279,    76,   284,    77,    78,   359,   376,
-      79,    80,    81,    82,    83,    84,     4,     5,    85,   360,
-     362,    86,    87,    88,   239,    89,   367,   368,   369,   370,
-     314,    90,    91,    92,   174,   371,   372,   378,    93,   375,
-      94,   380,    95,    96,   207,   406,   410,    12,    13,    14,
-     411,   424,    97,    98,    99,   100,   425,   426,   427,   431,
-     432,   433,   436,   437,   448,   315,   439,   451,   453,   314,
-     455,   458,   101,   317,   318,   319,   320,   321,   322,   323,
-     324,   325,   326,   461,   460,   327,   328,   329,   330,   331,
-     102,   468,   469,   470,    43,   412,   103,   471,   374,   104,
-     105,   286,   361,   106,   315,   273,    59,   107,  -129,   334,
-       0,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,     0,     0,   327,   328,   329,   330,   331,     0,
-       0,     0,   239,     0,   239,    73,    74,    75,   -54,    76,
-     -54,    77,    78,   332,     0,    79,    80,    81,    82,    83,
-      84,     4,     5,    85,   239,   430,    86,    87,    88,     0,
-      89,     0,     0,     0,   314,     0,    90,    91,    92,   174,
-       0,     0,     0,    93,     0,    94,     0,    95,    96,     0,
-       0,     0,    12,    13,    14,     0,     0,    97,    98,    99,
-     100,     0,     0,     0,     0,     0,     0,     0,     0,   315,
-       0,     0,     0,     0,     0,   450,     0,   101,   318,   319,
-     320,   321,   322,   323,   324,   325,   326,     0,     0,   327,
-     328,   329,   330,   331,     0,   102,     0,     0,     0,     0,
-       0,   103,     0,     0,   104,   105,     0,     0,   106,    73,
-      74,    75,   107,    76,     0,    77,    78,     0,   314,    79,
-      80,    81,    82,    83,    84,     4,     5,    85,     0,     0,
-      86,    87,    88,     0,    89,     0,     0,     0,     0,     0,
-      90,    91,    92,     0,     0,   314,     0,    93,     0,    94,
-       0,    95,    96,   315,     0,     0,    12,    13,    14,     0,
-       0,    97,    98,    99,   100,   321,   322,   323,   324,   325,
-     326,     0,     0,   327,   328,   329,   330,   331,     0,     0,
-     315,   101,     0,     0,     0,     0,     0,   316,   317,   318,
-     319,   320,   321,   322,   323,   324,   325,   326,     0,   102,
-     327,   328,   329,   330,   331,   103,     0,     0,   104,   105,
-       0,     0,   106,     0,   226,   387,   107,    73,    74,    75,
-       0,   232,     0,    77,    78,     0,   314,    79,    80,    81,
-      82,    83,    84,     4,     5,    85,     0,     0,    86,    87,
-      88,     0,    89,     0,     0,   314,     0,     0,    90,    91,
-      92,     0,     0,     0,     0,    93,     0,    94,     0,    95,
-      96,   315,     0,     0,    12,    13,    14,     0,     0,    97,
-      98,    99,   100,   233,     0,   323,   324,   325,   326,     0,
-     315,   327,   328,   329,   330,   331,     0,     0,     0,   101,
-     319,   320,   321,   322,   323,   324,   325,   326,     0,     0,
-     327,   328,   329,   330,   331,     0,     0,   102,     0,     0,
-       0,     0,     0,   103,     0,     0,   104,   105,     0,     0,
-     106,    73,    74,    75,   107,    76,     0,    77,    78,     0,
-       0,    79,    80,    81,    82,    83,    84,     4,     5,    85,
-       0,     0,    86,    87,    88,     0,    89,     0,   314,     0,
-       0,     0,    90,    91,    92,   267,     0,     0,     0,    93,
-       0,    94,     0,    95,    96,     0,     0,     0,    12,    13,
-      14,     0,     0,    97,    98,    99,   100,     0,     0,     0,
-       0,     0,     0,   315,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   101,   320,   321,   322,   323,   324,   325,
-     326,     0,     0,   327,   328,   329,   330,   331,     0,     0,
-       0,   102,     0,     0,     0,     0,     0,   103,     0,     0,
-     104,   105,     0,     0,   106,    73,    74,    75,   107,    76,
-       0,    77,    78,     0,     0,    79,    80,    81,    82,    83,
-      84,     4,     5,    85,     0,     0,    86,    87,    88,     0,
-      89,     0,     0,     0,     0,     0,    90,    91,    92,     0,
-       0,     0,     0,    93,     0,    94,     0,    95,    96,     0,
-       0,     0,    12,    13,    14,     0,     0,    97,    98,    99,
-     100,   191,   192,   193,   194,   195,   196,   197,   198,   199,
-     200,   201,   202,   203,   204,   205,     0,   101,   259,   190,
-     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
-     201,   202,   203,   204,   205,   102,     0,     0,     0,     0,
-       0,   103,     0,     0,   104,   105,     0,     0,   106,    73,
-      74,    75,   107,   232,     0,    77,    78,     0,     0,    79,
-      80,    81,    82,    83,    84,     4,     5,    85,     0,     0,
-      86,    87,    88,     0,    89,     0,     0,     0,     0,     0,
-      90,    91,    92,     0,     0,     0,     0,    93,     0,    94,
-       0,    95,    96,     0,     0,     0,     0,     0,     0,     0,
-       0,    97,    98,    99,   100,     0,     0,     0,    73,     0,
-       0,     0,   147,     0,    77,     0,     0,     0,    79,    80,
-       0,   101,     0,     0,     0,     0,    85,     0,     0,    86,
-      87,    88,     0,    89,     0,     0,     0,     0,     0,   102,
-       0,     0,     0,     0,     0,   103,     0,     0,   104,   105,
-      95,    96,   106,     0,     0,     0,   107,     0,     0,     0,
-       0,     0,     0,    73,     0,     0,     0,   147,     0,    77,
-       0,     0,     0,    79,    80,    81,     0,     0,     0,     0,
-     101,    85,     0,     0,    86,    87,    88,     0,    89,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   102,     0,
-       0,     0,     0,     0,   103,    95,    96,   104,   105,     0,
-       0,   165,     0,   342,     0,    97,    98,    99,   100,     0,
-       0,     0,    73,     0,     0,   262,   147,     0,    77,     0,
-       0,     0,    79,    80,     0,   101,     0,     0,     0,     0,
-      85,     0,     0,    86,    87,    88,     0,    89,     0,     0,
-       0,     0,     0,   102,     0,     0,     0,     0,     0,   103,
-       0,     0,   104,   105,    95,    96,   106,   188,   189,   190,
-     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
-     201,   202,   203,   204,   205,   262,     0,     0,     0,     0,
-       0,     0,     0,     0,   101,   263,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,     0,
-       0,     0,   102,     0,     0,     0,     0,     0,   103,     0,
-       0,   104,   105,     0,     0,   165,     0,   258,   259,   190,
-     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
-     201,   202,   203,   204,   205,   -54,     0,   -54,     0,     0,
-       0,     0,     0,     0,     0,   263,     0,     0,     4,     5,
-       0,     6,     7,     0,     0,     0,     0,     0,     8,     0,
-       9,     0,     0,     0,     0,     0,    10,     0,     0,   -54,
-       0,   -54,     0,     0,     0,     0,    11,   -21,   -21,    12,
-      13,    14,     4,     5,     0,     6,     7,     0,     0,     0,
-      15,    16,     8,     0,     9,     0,     0,     0,     0,     0,
-      10,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      11,     0,     0,    12,    13,    14,     0,     0,     0,     0,
-       0,     0,     0,     0,    15,    16,   258,   259,   190,   191,
-     192,   193,   194,   195,   196,   197,   198,   199,   200,   201,
-     202,   203,   204,   205,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   377,     0,     0,     0,     0,     0,     0,
-     355,   258,   259,   190,   191,   192,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,   195,
-     196,   197,   198,   199,   200,   201,   202,   203,   204,   205,
-       0,     0,     0,     0,     0,   355,   258,   259,   190,   191,
-     192,   193,   194,   195,   196,   197,   198,   199,   200,   201,
-     202,   203,   204,   205,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,   428,
-     258,   259,   190,   191,   192,   193,   194,   195,   196,   197,
-     198,   199,   200,   201,   202,   203,   204,   205,     0,     0,
+     126,   115,   179,   155,   250,    31,   278,   248,   285,   285,
+     138,   431,   146,   223,   181,   236,   365,   153,   224,   -60,
+     178,    31,   438,  -130,  -130,  -130,   298,   366,   481,    32,
+     274,   331,   213,   214,   258,    48,   240,    49,   153,   331,
+      12,    13,    14,   287,   462,   486,   158,   153,   159,   255,
+     256,   331,   287,   301,   115,    70,   153,   115,   264,   265,
+     277,   343,   344,   345,   346,   347,   348,   369,   463,   288,
+      40,    41,   221,    29,   348,   345,   346,   347,   288,     3,
+     242,   181,   191,   287,    36,   281,   348,   153,   115,    29,
+      63,   383,   384,   115,   468,   469,   470,   471,  -130,   -66,
+     215,   475,   259,   282,   153,   353,   261,   303,   305,   288,
+     115,   115,   266,   267,   268,   269,   482,   107,    33,   432,
+     225,   433,    37,   367,   115,   323,   325,   397,   115,   399,
+     400,   289,   293,   293,   403,   404,   299,   290,   107,   115,
+      54,    30,   181,    70,    55,   147,   290,   107,   401,   148,
+     291,   247,   292,    34,   232,   402,   107,    30,   233,   291,
+      52,   221,   221,   221,   221,   221,   181,   181,    53,   216,
+     217,   296,   218,   221,   128,   129,   219,   290,   359,   184,
+     185,   186,   187,   188,   149,   115,    57,   107,   150,   147,
+     291,   151,   297,   371,   444,    50,   446,   445,   447,    12,
+      13,    14,   189,   190,   107,    51,   139,   220,    49,   115,
+     115,   439,   440,   441,   442,   191,    59,   494,   453,   495,
+     439,   440,   441,   442,   210,   211,   212,    60,   443,    62,
+     248,   331,    67,    70,   293,   467,   293,   293,    68,   458,
+     459,   293,   293,   335,   336,   337,   338,   339,   340,   341,
+     342,    45,    46,   343,   344,   345,   346,   347,   172,   173,
+     174,    73,   426,   177,   213,   214,   348,   206,   207,   208,
+     209,   210,   211,   212,   441,   442,   221,   221,   221,   221,
+     221,   221,   221,   221,   221,   221,   221,   221,   221,   221,
+     221,   221,   221,   221,   125,   134,    74,   140,   473,   484,
+     127,   142,   244,   141,   249,   143,   152,   252,   208,   209,
+     210,   211,   212,   156,   157,   161,   115,   262,   263,   326,
+     327,   328,   329,   330,   162,   163,   270,   164,   176,   194,
+     273,   352,   165,   167,   168,   166,   472,   169,   170,   175,
+     283,   283,   230,   235,   192,   228,   293,   293,   231,   275,
+     302,   304,   306,   307,   308,   309,   310,   311,   312,   313,
+     314,   315,   316,   317,   318,   319,   320,   321,   322,   324,
+     234,   237,   241,   153,   181,   426,   243,   251,   147,   466,
+     257,   260,   279,   350,   351,   355,   357,   358,   115,   363,
+     362,   364,   426,   195,   196,   197,   198,   199,   200,   201,
+     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
+     212,   498,   374,   375,   292,   252,   297,   115,   377,   378,
+     380,   276,   385,   386,   387,   388,   389,   390,   396,   398,
+     393,   493,   394,   214,   407,   408,   409,   410,   411,   412,
+     413,   414,   415,   416,   417,   418,   419,   420,   421,   422,
+     423,   424,   405,    75,    76,    77,   428,    78,   430,    79,
+      80,   434,   435,   448,   449,    81,    82,    83,    84,    85,
+      86,     4,     5,    87,   450,   451,    88,    89,    90,   455,
+      91,   457,   456,   460,   474,   461,    92,    93,    94,   180,
+     483,   477,   465,    95,   480,    96,   479,    97,    98,   487,
+     488,   331,    12,    13,    14,   425,   490,    99,   100,   101,
+     102,   333,   334,   335,   336,   337,   338,   339,   340,   341,
+     342,   491,   492,   343,   344,   345,   346,   347,   252,   103,
+     252,   499,   500,   501,    44,   436,   348,   300,   392,   379,
+     502,   286,    61,     0,   229,   227,     0,   104,     0,     0,
+     252,   454,     0,   105,     0,     0,   106,   107,     0,     0,
+     108,     0,     0,     0,   109,  -129,    75,    76,    77,   -54,
+      78,   -54,    79,    80,     0,     0,     0,     0,    81,    82,
+      83,    84,    85,    86,     4,     5,    87,     0,     0,    88,
+      89,    90,     0,    91,     0,     0,     0,     0,     0,    92,
+      93,    94,   180,     0,     0,     0,    95,   476,    96,     0,
+      97,    98,     0,     0,   331,    12,    13,    14,   425,     0,
+      99,   100,   101,   102,     0,   334,   335,   336,   337,   338,
+     339,   340,   341,   342,     0,   425,   343,   344,   345,   346,
+     347,     0,   103,     0,     0,     0,     0,     0,     0,   348,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     352,   258,   259,   190,   191,   192,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,     0,
+     104,     0,     0,     0,     0,     0,   105,     0,     0,   106,
+     107,     0,     0,   108,    75,    76,    77,   109,    78,     0,
+      79,    80,     0,     0,     0,     0,    81,    82,    83,    84,
+      85,    86,     4,     5,    87,     0,     0,    88,    89,    90,
+       0,    91,     0,     0,     0,     0,     0,    92,    93,    94,
+       0,     0,     0,     0,    95,     0,    96,     0,    97,    98,
+     331,     0,     0,    12,    13,    14,     0,     0,    99,   100,
+     101,   102,     0,   336,   337,   338,   339,   340,   341,   342,
+       0,     0,   343,   344,   345,   346,   347,   331,     0,     0,
+     103,     0,     0,     0,     0,   348,   332,   333,   334,   335,
+     336,   337,   338,   339,   340,   341,   342,     0,   104,   343,
+     344,   345,   346,   347,   105,     0,     0,   106,   107,     0,
+       0,   108,   348,   239,   406,   109,    75,    76,    77,     0,
+     245,     0,    79,    80,     0,     0,     0,     0,    81,    82,
+      83,    84,    85,    86,     4,     5,    87,     0,     0,    88,
+      89,    90,     0,    91,     0,     0,     0,     0,     0,    92,
+      93,    94,     0,     0,     0,     0,    95,     0,    96,     0,
+      97,    98,   331,     0,     0,    12,    13,    14,     0,     0,
+      99,   100,   101,   102,   246,     0,   337,   338,   339,   340,
+     341,   342,   331,     0,   343,   344,   345,   346,   347,     0,
+       0,     0,   103,     0,     0,     0,     0,   348,   339,   340,
+     341,   342,     0,     0,   343,   344,   345,   346,   347,     0,
+     104,     0,     0,     0,     0,     0,   105,   348,     0,   106,
+     107,     0,     0,   108,    75,    76,    77,   109,    78,     0,
+      79,    80,     0,     0,     0,     0,    81,    82,    83,    84,
+      85,    86,     4,     5,    87,     0,     0,    88,    89,    90,
+       0,    91,     0,     0,     0,     0,     0,    92,    93,    94,
+     280,     0,     0,     0,    95,     0,    96,     0,    97,    98,
+       0,     0,     0,    12,    13,    14,     0,     0,    99,   100,
+     101,   102,   271,   272,   197,   198,   199,   200,   201,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
+     103,     0,     0,     0,     0,     0,     0,     0,     0,   395,
+       0,     0,     0,     0,     0,     0,   373,     0,   104,     0,
+       0,     0,     0,     0,   105,     0,     0,   106,   107,     0,
+       0,   108,    75,    76,    77,   109,    78,     0,    79,    80,
+       0,     0,     0,     0,    81,    82,    83,    84,    85,    86,
+       4,     5,    87,     0,     0,    88,    89,    90,     0,    91,
+       0,     0,     0,     0,     0,    92,    93,    94,     0,     0,
+       0,     0,    95,     0,    96,     0,    97,    98,     0,     0,
+       0,    12,    13,    14,     0,     0,    99,   100,   101,   102,
+     271,   272,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   207,   208,   209,   210,   211,   212,   103,   198,
+     199,   200,   201,   202,   203,   204,   205,   206,   207,   208,
+     209,   210,   211,   212,   373,     0,   104,     0,     0,     0,
+       0,     0,   105,     0,     0,   106,   107,     0,     0,   108,
+      75,    76,    77,   109,   245,     0,    79,    80,     0,     0,
+       0,     0,    81,    82,    83,    84,    85,    86,     4,     5,
+      87,     0,     0,    88,    89,    90,    75,    91,     0,     0,
+     153,     0,    79,    92,    93,    94,     0,     0,    81,    82,
+      95,     0,    96,     0,    97,    98,    87,     0,     0,    88,
+      89,    90,     0,    91,    99,   100,   101,   102,     0,     0,
+       0,    75,     0,     0,     0,   153,     0,    79,     0,     0,
+      97,    98,     0,    81,    82,    83,   103,     0,     0,     0,
+       0,    87,     0,     0,    88,    89,    90,     0,    91,     0,
+       0,     0,     0,     0,   104,     0,     0,     0,     0,     0,
+     105,     0,   103,   106,   107,    97,    98,   108,     0,     0,
+       0,   109,     0,     0,     0,    99,   100,   101,   102,     0,
+     104,     0,     0,     0,     0,     0,   105,     0,     0,   106,
+     107,     0,     0,   171,     0,   360,     0,   103,     0,     0,
+       0,     0,     0,     0,     0,     0,    75,     0,   275,     0,
+     153,     0,    79,     0,     0,   104,     0,     0,    81,    82,
+       0,   105,     0,     0,   106,   107,    87,     0,   108,    88,
+      89,    90,     0,    91,   197,   198,   199,   200,   201,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
+      97,    98,   271,   272,   197,   198,   199,   200,   201,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
+       0,   -54,     0,   -54,     0,     0,     0,     0,     0,     0,
+     276,     0,   103,     0,     0,     0,     4,     5,     0,     6,
+       7,     0,     0,     0,     0,     0,     8,     0,     9,     0,
+     104,     0,     0,     0,    10,   -54,   105,   -54,     0,   106,
+     107,     0,     0,   171,    11,   -21,   -21,    12,    13,    14,
+       4,     5,     0,     6,     7,     0,     0,     0,    15,    16,
+       8,     0,     9,     0,     0,     0,     0,     0,    10,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    11,     0,
+       0,    12,    13,    14,     0,   331,     0,     0,     0,     0,
+       0,     0,    15,    16,   332,   333,   334,   335,   336,   337,
+     338,   339,   340,   341,   342,     0,     0,   343,   344,   345,
+     346,   347,     0,     0,     0,     0,     0,     0,   331,     0,
+     348,     0,     0,     0,     0,     0,   349,   332,   333,   334,
+     335,   336,   337,   338,   339,   340,   341,   342,     0,     0,
+     343,   344,   345,   346,   347,     0,     0,     0,     0,     0,
+       0,   331,     0,   348,     0,     0,     0,     0,     0,   429,
+     332,   333,   334,   335,   336,   337,   338,   339,   340,   341,
+     342,     0,     0,   343,   344,   345,   346,   347,     0,     0,
+       0,     0,     0,     0,     0,     0,   348,   271,   272,   197,
+     198,   199,   200,   201,   202,   203,   204,   205,   206,   207,
+     208,   209,   210,   211,   212,   199,   200,   201,   202,   203,
+     204,   205,   206,   207,   208,   209,   210,   211,   212,     0,
+     452,   271,   272,   197,   198,   199,   200,   201,   202,   203,
+     204,   205,   206,   207,   208,   209,   210,   211,   212,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
+       0,   370,   271,   272,   197,   198,   199,   200,   201,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   354,   258,   259,   190,   191,   192,   193,   194,   195,
-     196,   197,   198,   199,   200,   201,   202,   203,   204,   205,
+       0,     0,   372,   271,   272,   197,   198,   199,   200,   201,
+     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
+     212,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   381,   271,   272,   197,   198,   199,   200,   201,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     363,   258,   259,   190,   191,   192,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,   364,
-     258,   259,   190,   191,   192,   193,   194,   195,   196,   197,
-     198,   199,   200,   201,   202,   203,   204,   205,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   373,   258,
-     259,   190,   191,   192,   193,   194,   195,   196,   197,   198,
-     199,   200,   201,   202,   203,   204,   205,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,   452,   258,   259,
-     190,   191,   192,   193,   194,   195,   196,   197,   198,   199,
-     200,   201,   202,   203,   204,   205,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,   457,   188,   189,   190,
-     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
-     201,   202,   203,   204,   205,   258,   259,   190,   191,   192,
-     193,   194,   195,   196,   197,   198,   199,   200,   201,   202,
-     203,   204,   205
+     382,   271,   272,   197,   198,   199,   200,   201,   202,   203,
+     204,   205,   206,   207,   208,   209,   210,   211,   212,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,   391,
+     271,   272,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   207,   208,   209,   210,   211,   212,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,   478,   271,
+     272,   197,   198,   199,   200,   201,   202,   203,   204,   205,
+     206,   207,   208,   209,   210,   211,   212,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   485,   195,   196,
+     197,   198,   199,   200,   201,   202,   203,   204,   205,   206,
+     207,   208,   209,   210,   211,   212,   271,   272,   197,   198,
+     199,   200,   201,   202,   203,   204,   205,   206,   207,   208,
+     209,   210,   211,   212,   196,   197,   198,   199,   200,   201,
+     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
+     212,   272,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   207,   208,   209,   210,   211,   212,   200,   201,
+     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
+     212
 };
 
 static const yytype_int16 yycheck[] =
 {
-      57,    55,    82,   110,   144,   107,   173,   142,   179,   180,
-       7,    64,     3,   134,     7,    75,     2,   106,     7,    37,
-      37,    12,     3,   425,     3,     7,     7,     2,     7,   108,
-     170,     2,    18,    79,    80,   137,   438,   106,   182,     0,
-      38,    39,    40,    18,   113,    37,    27,    18,    92,    93,
-      94,    95,   187,   107,    72,    72,   110,   159,   160,    11,
-     227,   107,    11,   107,     3,    51,   173,   110,     7,     3,
-     177,   125,    73,     7,    92,    93,    94,    95,    96,   139,
-      72,    74,   108,   137,   251,   252,   112,     3,   142,   115,
-       3,     7,   112,    27,     7,   115,   217,   151,   178,   188,
-     189,   155,    94,    95,    96,   159,   160,   161,   162,   163,
-     164,    27,    93,   111,   111,   106,   113,   206,   207,   173,
-     227,   103,   103,   177,   103,   106,    11,   181,   182,    68,
-      69,    11,   276,   187,   278,   279,    75,   110,   108,   283,
-     284,   349,   112,   108,   251,   252,     7,   112,   134,    92,
-      93,    94,    95,    87,    48,    49,   142,   211,   212,    93,
-       6,   215,     8,     6,   103,     8,   109,   106,   221,   103,
-      53,    87,   106,   227,   108,     7,   108,    93,   211,   212,
-     112,     7,   215,     9,   355,     7,   357,   103,    11,     6,
-     106,     8,   108,    50,    51,    52,    11,   251,   252,    37,
-      79,    80,    50,    51,    52,   109,   377,   415,   416,   417,
-     418,   109,    74,    75,    76,    77,    78,     3,   353,    94,
-      95,    96,   276,   110,   278,   279,    77,    78,     7,   283,
-     284,   217,    68,    69,    72,    97,    98,    37,   111,   383,
-     384,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    94,    95,    92,    93,    94,    95,    96,   107,
-     314,   315,   316,   317,   318,   319,   320,   321,   322,   323,
-     324,   325,   326,   327,   328,   329,   330,   331,   106,   446,
-     420,   314,   315,   316,   317,   318,   319,   320,   321,   322,
-     323,   324,   325,   326,   327,   328,   329,   330,   331,   353,
-      80,    81,    82,    83,    84,    85,    86,    87,    88,    89,
-      90,    91,    92,    93,    94,    95,    96,   419,   101,   102,
-     103,    40,   106,   106,    92,    93,    94,    95,    96,   383,
-     384,    90,    91,    92,    93,    94,    95,    96,     7,   446,
-      81,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,   413,   106,   141,   106,
-     143,   106,   106,   146,   106,   419,   114,   110,   106,   106,
-     110,   106,   106,   156,   157,   106,    44,   106,   114,    74,
-     110,   461,   165,     7,    38,   113,   169,    39,     7,     7,
-     108,    11,   446,   106,   111,     7,   179,   180,     3,     3,
-     107,   113,   459,   107,   113,   188,   189,   190,   191,   192,
-     193,   194,   195,   196,   197,   198,   199,   200,   201,   202,
-     203,   204,   205,   206,   207,    83,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,   222,
-       3,     4,     5,   108,     7,   108,     9,    10,   107,   111,
-      13,    14,    15,    16,    17,    18,    19,    20,    21,   107,
-     107,    24,    25,    26,   247,    28,   107,   107,   107,   107,
-      37,    34,    35,    36,    37,   258,   259,   106,    41,   262,
-      43,     3,    45,    46,    80,   107,   109,    50,    51,    52,
-       3,   107,    55,    56,    57,    58,   107,   111,   111,    86,
-     107,   109,    86,   109,     7,    72,   109,   107,   107,    37,
-      33,    54,    75,    80,    81,    82,    83,    84,    85,    86,
-      87,    88,    89,   106,   110,    92,    93,    94,    95,    96,
-      93,   113,   111,   107,    18,   345,    99,   468,   261,   102,
-     103,   185,   247,   106,    72,   180,    42,   110,   111,   216,
-      -1,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    -1,    -1,    92,    93,    94,    95,    96,    -1,
-      -1,    -1,   355,    -1,   357,     3,     4,     5,     6,     7,
-       8,     9,    10,   111,    -1,    13,    14,    15,    16,    17,
-      18,    19,    20,    21,   377,   378,    24,    25,    26,    -1,
-      28,    -1,    -1,    -1,    37,    -1,    34,    35,    36,    37,
-      -1,    -1,    -1,    41,    -1,    43,    -1,    45,    46,    -1,
-      -1,    -1,    50,    51,    52,    -1,    -1,    55,    56,    57,
-      58,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    72,
-      -1,    -1,    -1,    -1,    -1,   428,    -1,    75,    81,    82,
-      83,    84,    85,    86,    87,    88,    89,    -1,    -1,    92,
-      93,    94,    95,    96,    -1,    93,    -1,    -1,    -1,    -1,
-      -1,    99,    -1,    -1,   102,   103,    -1,    -1,   106,     3,
-       4,     5,   110,     7,    -1,     9,    10,    -1,    37,    13,
-      14,    15,    16,    17,    18,    19,    20,    21,    -1,    -1,
-      24,    25,    26,    -1,    28,    -1,    -1,    -1,    -1,    -1,
-      34,    35,    36,    -1,    -1,    37,    -1,    41,    -1,    43,
-      -1,    45,    46,    72,    -1,    -1,    50,    51,    52,    -1,
-      -1,    55,    56,    57,    58,    84,    85,    86,    87,    88,
-      89,    -1,    -1,    92,    93,    94,    95,    96,    -1,    -1,
-      72,    75,    -1,    -1,    -1,    -1,    -1,    79,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    -1,    93,
-      92,    93,    94,    95,    96,    99,    -1,    -1,   102,   103,
-      -1,    -1,   106,    -1,   108,   107,   110,     3,     4,     5,
-      -1,     7,    -1,     9,    10,    -1,    37,    13,    14,    15,
-      16,    17,    18,    19,    20,    21,    -1,    -1,    24,    25,
-      26,    -1,    28,    -1,    -1,    37,    -1,    -1,    34,    35,
-      36,    -1,    -1,    -1,    -1,    41,    -1,    43,    -1,    45,
-      46,    72,    -1,    -1,    50,    51,    52,    -1,    -1,    55,
-      56,    57,    58,    59,    -1,    86,    87,    88,    89,    -1,
-      72,    92,    93,    94,    95,    96,    -1,    -1,    -1,    75,
-      82,    83,    84,    85,    86,    87,    88,    89,    -1,    -1,
-      92,    93,    94,    95,    96,    -1,    -1,    93,    -1,    -1,
-      -1,    -1,    -1,    99,    -1,    -1,   102,   103,    -1,    -1,
-     106,     3,     4,     5,   110,     7,    -1,     9,    10,    -1,
-      -1,    13,    14,    15,    16,    17,    18,    19,    20,    21,
-      -1,    -1,    24,    25,    26,    -1,    28,    -1,    37,    -1,
-      -1,    -1,    34,    35,    36,    37,    -1,    -1,    -1,    41,
-      -1,    43,    -1,    45,    46,    -1,    -1,    -1,    50,    51,
-      52,    -1,    -1,    55,    56,    57,    58,    -1,    -1,    -1,
-      -1,    -1,    -1,    72,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    75,    83,    84,    85,    86,    87,    88,
-      89,    -1,    -1,    92,    93,    94,    95,    96,    -1,    -1,
-      -1,    93,    -1,    -1,    -1,    -1,    -1,    99,    -1,    -1,
-     102,   103,    -1,    -1,   106,     3,     4,     5,   110,     7,
-      -1,     9,    10,    -1,    -1,    13,    14,    15,    16,    17,
-      18,    19,    20,    21,    -1,    -1,    24,    25,    26,    -1,
-      28,    -1,    -1,    -1,    -1,    -1,    34,    35,    36,    -1,
-      -1,    -1,    -1,    41,    -1,    43,    -1,    45,    46,    -1,
-      -1,    -1,    50,    51,    52,    -1,    -1,    55,    56,    57,
-      58,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    -1,    75,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-      92,    93,    94,    95,    96,    93,    -1,    -1,    -1,    -1,
-      -1,    99,    -1,    -1,   102,   103,    -1,    -1,   106,     3,
-       4,     5,   110,     7,    -1,     9,    10,    -1,    -1,    13,
-      14,    15,    16,    17,    18,    19,    20,    21,    -1,    -1,
-      24,    25,    26,    -1,    28,    -1,    -1,    -1,    -1,    -1,
-      34,    35,    36,    -1,    -1,    -1,    -1,    41,    -1,    43,
-      -1,    45,    46,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    55,    56,    57,    58,    -1,    -1,    -1,     3,    -1,
-      -1,    -1,     7,    -1,     9,    -1,    -1,    -1,    13,    14,
-      -1,    75,    -1,    -1,    -1,    -1,    21,    -1,    -1,    24,
-      25,    26,    -1,    28,    -1,    -1,    -1,    -1,    -1,    93,
-      -1,    -1,    -1,    -1,    -1,    99,    -1,    -1,   102,   103,
-      45,    46,   106,    -1,    -1,    -1,   110,    -1,    -1,    -1,
-      -1,    -1,    -1,     3,    -1,    -1,    -1,     7,    -1,     9,
-      -1,    -1,    -1,    13,    14,    15,    -1,    -1,    -1,    -1,
-      75,    21,    -1,    -1,    24,    25,    26,    -1,    28,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    93,    -1,
-      -1,    -1,    -1,    -1,    99,    45,    46,   102,   103,    -1,
-      -1,   106,    -1,   108,    -1,    55,    56,    57,    58,    -1,
-      -1,    -1,     3,    -1,    -1,    37,     7,    -1,     9,    -1,
-      -1,    -1,    13,    14,    -1,    75,    -1,    -1,    -1,    -1,
-      21,    -1,    -1,    24,    25,    26,    -1,    28,    -1,    -1,
-      -1,    -1,    -1,    93,    -1,    -1,    -1,    -1,    -1,    99,
-      -1,    -1,   102,   103,    45,    46,   106,    79,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-      92,    93,    94,    95,    96,    37,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    75,   107,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,    -1,
-      -1,    -1,    93,    -1,    -1,    -1,    -1,    -1,    99,    -1,
-      -1,   102,   103,    -1,    -1,   106,    -1,    79,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-      92,    93,    94,    95,    96,     6,    -1,     8,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,   107,    -1,    -1,    19,    20,
-      -1,    22,    23,    -1,    -1,    -1,    -1,    -1,    29,    -1,
-      31,    -1,    -1,    -1,    -1,    -1,    37,    -1,    -1,     6,
-      -1,     8,    -1,    -1,    -1,    -1,    47,    48,    49,    50,
-      51,    52,    19,    20,    -1,    22,    23,    -1,    -1,    -1,
-      61,    62,    29,    -1,    31,    -1,    -1,    -1,    -1,    -1,
-      37,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      47,    -1,    -1,    50,    51,    52,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    61,    62,    79,    80,    81,    82,
+      58,    56,   109,    84,   150,     2,   179,   148,   185,   186,
+      66,     7,    77,     7,   112,   140,     3,     7,    12,     7,
+     108,    18,   367,    40,    41,    42,   188,    14,   463,    13,
+     176,    74,    83,    84,     3,     6,   143,     8,     7,    74,
+      52,    53,    54,     3,    88,   480,     7,     7,     9,    81,
+      82,    74,     3,   194,   109,    52,     7,   112,   165,   166,
+     111,    96,    97,    98,    99,   100,   109,   240,   112,    29,
+      76,    77,   127,     2,   109,    98,    99,   100,    29,     0,
+     145,   179,   114,     3,   112,   183,   109,     7,   143,    18,
+      78,   264,   265,   148,   439,   440,   441,   442,   115,   111,
+       3,   449,   157,   184,     7,   230,   161,   195,   196,    29,
+     165,   166,   167,   168,   169,   170,   464,   107,    13,   115,
+     114,   117,   114,   110,   179,   213,   214,   289,   183,   291,
+     292,    91,   187,   188,   296,   297,   191,    97,   107,   194,
+       3,     2,   240,   140,     7,   112,    97,   107,   110,   116,
+     110,   148,   112,     7,   112,   117,   107,    18,   116,   110,
+     114,   216,   217,   218,   219,   220,   264,   265,     7,    72,
+      73,    91,    75,   228,    70,    71,    79,    97,   234,    78,
+      79,    80,    81,    82,   112,   240,    55,   107,   116,   112,
+     110,   119,   112,   116,   116,    13,   373,   119,   375,    52,
+      53,    54,   101,   102,   107,    13,     6,   110,     8,   264,
+     265,    96,    97,    98,    99,   114,     7,     6,   395,     8,
+      96,    97,    98,    99,    98,    99,   100,     7,   113,     7,
+     371,    74,    13,   230,   289,   111,   291,   292,    13,   401,
+     402,   296,   297,    86,    87,    88,    89,    90,    91,    92,
+      93,    50,    51,    96,    97,    98,    99,   100,   103,   104,
+     105,   113,   350,   108,    83,    84,   109,    94,    95,    96,
+      97,    98,    99,   100,    98,    99,   331,   332,   333,   334,
+     335,   336,   337,   338,   339,   340,   341,   342,   343,   344,
+     345,   346,   347,   348,     3,     7,   113,    39,   444,   472,
+     114,   110,   147,   115,   149,    42,   110,   152,    96,    97,
+      98,    99,   100,   110,   110,   110,   371,   162,   163,   216,
+     217,   218,   219,   220,   110,   110,   171,     7,   118,    46,
+     175,   228,   114,   110,   110,   114,   443,   110,   110,   110,
+     185,   186,   110,    78,   118,   114,   401,   402,   114,    39,
+     195,   196,   197,   198,   199,   200,   201,   202,   203,   204,
+     205,   206,   207,   208,   209,   210,   211,   212,   213,   214,
+     117,     7,    40,     7,   472,   463,    41,     7,   112,   437,
+      13,   110,   115,    88,     7,     7,     3,     3,   443,   117,
+     235,   111,   480,    83,    84,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100,   492,   111,   117,   112,   260,   112,   472,   111,   111,
+     111,   111,   111,   111,   111,   111,   271,   272,   110,     3,
+     275,   489,   115,    84,   331,   332,   333,   334,   335,   336,
+     337,   338,   339,   340,   341,   342,   343,   344,   345,   346,
+     347,   348,   115,     3,     4,     5,   115,     7,   111,     9,
+      10,   113,     3,   111,   111,    15,    16,    17,    18,    19,
+      20,    21,    22,    23,   115,   115,    26,    27,    28,    90,
+      30,   113,   111,    90,     7,   113,    36,    37,    38,    39,
+      35,   111,   113,    43,   112,    45,   111,    47,    48,   113,
+      56,    74,    52,    53,    54,   350,   114,    57,    58,    59,
+      60,    84,    85,    86,    87,    88,    89,    90,    91,    92,
+      93,   113,   110,    96,    97,    98,    99,   100,   373,    79,
+     375,   117,   115,   111,    18,   363,   109,   192,   274,   260,
+     499,   186,    43,    -1,   131,   129,    -1,    97,    -1,    -1,
+     395,   396,    -1,   103,    -1,    -1,   106,   107,    -1,    -1,
+     110,    -1,    -1,    -1,   114,   115,     3,     4,     5,     6,
+       7,     8,     9,    10,    -1,    -1,    -1,    -1,    15,    16,
+      17,    18,    19,    20,    21,    22,    23,    -1,    -1,    26,
+      27,    28,    -1,    30,    -1,    -1,    -1,    -1,    -1,    36,
+      37,    38,    39,    -1,    -1,    -1,    43,   452,    45,    -1,
+      47,    48,    -1,    -1,    74,    52,    53,    54,   463,    -1,
+      57,    58,    59,    60,    -1,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    -1,   480,    96,    97,    98,    99,
+     100,    -1,    79,    -1,    -1,    -1,    -1,    -1,    -1,   109,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      97,    -1,    -1,    -1,    -1,    -1,   103,    -1,    -1,   106,
+     107,    -1,    -1,   110,     3,     4,     5,   114,     7,    -1,
+       9,    10,    -1,    -1,    -1,    -1,    15,    16,    17,    18,
+      19,    20,    21,    22,    23,    -1,    -1,    26,    27,    28,
+      -1,    30,    -1,    -1,    -1,    -1,    -1,    36,    37,    38,
+      -1,    -1,    -1,    -1,    43,    -1,    45,    -1,    47,    48,
+      74,    -1,    -1,    52,    53,    54,    -1,    -1,    57,    58,
+      59,    60,    -1,    87,    88,    89,    90,    91,    92,    93,
+      -1,    -1,    96,    97,    98,    99,   100,    74,    -1,    -1,
+      79,    -1,    -1,    -1,    -1,   109,    83,    84,    85,    86,
+      87,    88,    89,    90,    91,    92,    93,    -1,    97,    96,
+      97,    98,    99,   100,   103,    -1,    -1,   106,   107,    -1,
+      -1,   110,   109,   112,   111,   114,     3,     4,     5,    -1,
+       7,    -1,     9,    10,    -1,    -1,    -1,    -1,    15,    16,
+      17,    18,    19,    20,    21,    22,    23,    -1,    -1,    26,
+      27,    28,    -1,    30,    -1,    -1,    -1,    -1,    -1,    36,
+      37,    38,    -1,    -1,    -1,    -1,    43,    -1,    45,    -1,
+      47,    48,    74,    -1,    -1,    52,    53,    54,    -1,    -1,
+      57,    58,    59,    60,    61,    -1,    88,    89,    90,    91,
+      92,    93,    74,    -1,    96,    97,    98,    99,   100,    -1,
+      -1,    -1,    79,    -1,    -1,    -1,    -1,   109,    90,    91,
+      92,    93,    -1,    -1,    96,    97,    98,    99,   100,    -1,
+      97,    -1,    -1,    -1,    -1,    -1,   103,   109,    -1,   106,
+     107,    -1,    -1,   110,     3,     4,     5,   114,     7,    -1,
+       9,    10,    -1,    -1,    -1,    -1,    15,    16,    17,    18,
+      19,    20,    21,    22,    23,    -1,    -1,    26,    27,    28,
+      -1,    30,    -1,    -1,    -1,    -1,    -1,    36,    37,    38,
+      39,    -1,    -1,    -1,    43,    -1,    45,    -1,    47,    48,
+      -1,    -1,    -1,    52,    53,    54,    -1,    -1,    57,    58,
+      59,    60,    83,    84,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
+      79,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   110,
+      -1,    -1,    -1,    -1,    -1,    -1,   117,    -1,    97,    -1,
+      -1,    -1,    -1,    -1,   103,    -1,    -1,   106,   107,    -1,
+      -1,   110,     3,     4,     5,   114,     7,    -1,     9,    10,
+      -1,    -1,    -1,    -1,    15,    16,    17,    18,    19,    20,
+      21,    22,    23,    -1,    -1,    26,    27,    28,    -1,    30,
+      -1,    -1,    -1,    -1,    -1,    36,    37,    38,    -1,    -1,
+      -1,    -1,    43,    -1,    45,    -1,    47,    48,    -1,    -1,
+      -1,    52,    53,    54,    -1,    -1,    57,    58,    59,    60,
       83,    84,    85,    86,    87,    88,    89,    90,    91,    92,
-      93,    94,    95,    96,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,   106,    -1,    -1,    -1,    -1,    -1,    -1,
-     113,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,    86,
+      93,    94,    95,    96,    97,    98,    99,   100,    79,    86,
       87,    88,    89,    90,    91,    92,    93,    94,    95,    96,
-      -1,    -1,    -1,    -1,    -1,   113,    79,    80,    81,    82,
+      97,    98,    99,   100,   117,    -1,    97,    -1,    -1,    -1,
+      -1,    -1,   103,    -1,    -1,   106,   107,    -1,    -1,   110,
+       3,     4,     5,   114,     7,    -1,     9,    10,    -1,    -1,
+      -1,    -1,    15,    16,    17,    18,    19,    20,    21,    22,
+      23,    -1,    -1,    26,    27,    28,     3,    30,    -1,    -1,
+       7,    -1,     9,    36,    37,    38,    -1,    -1,    15,    16,
+      43,    -1,    45,    -1,    47,    48,    23,    -1,    -1,    26,
+      27,    28,    -1,    30,    57,    58,    59,    60,    -1,    -1,
+      -1,     3,    -1,    -1,    -1,     7,    -1,     9,    -1,    -1,
+      47,    48,    -1,    15,    16,    17,    79,    -1,    -1,    -1,
+      -1,    23,    -1,    -1,    26,    27,    28,    -1,    30,    -1,
+      -1,    -1,    -1,    -1,    97,    -1,    -1,    -1,    -1,    -1,
+     103,    -1,    79,   106,   107,    47,    48,   110,    -1,    -1,
+      -1,   114,    -1,    -1,    -1,    57,    58,    59,    60,    -1,
+      97,    -1,    -1,    -1,    -1,    -1,   103,    -1,    -1,   106,
+     107,    -1,    -1,   110,    -1,   112,    -1,    79,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,     3,    -1,    39,    -1,
+       7,    -1,     9,    -1,    -1,    97,    -1,    -1,    15,    16,
+      -1,   103,    -1,    -1,   106,   107,    23,    -1,   110,    26,
+      27,    28,    -1,    30,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
+      47,    48,    83,    84,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
+      -1,     6,    -1,     8,    -1,    -1,    -1,    -1,    -1,    -1,
+     111,    -1,    79,    -1,    -1,    -1,    21,    22,    -1,    24,
+      25,    -1,    -1,    -1,    -1,    -1,    31,    -1,    33,    -1,
+      97,    -1,    -1,    -1,    39,     6,   103,     8,    -1,   106,
+     107,    -1,    -1,   110,    49,    50,    51,    52,    53,    54,
+      21,    22,    -1,    24,    25,    -1,    -1,    -1,    63,    64,
+      31,    -1,    33,    -1,    -1,    -1,    -1,    -1,    39,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    49,    -1,
+      -1,    52,    53,    54,    -1,    74,    -1,    -1,    -1,    -1,
+      -1,    -1,    63,    64,    83,    84,    85,    86,    87,    88,
+      89,    90,    91,    92,    93,    -1,    -1,    96,    97,    98,
+      99,   100,    -1,    -1,    -1,    -1,    -1,    -1,    74,    -1,
+     109,    -1,    -1,    -1,    -1,    -1,   115,    83,    84,    85,
+      86,    87,    88,    89,    90,    91,    92,    93,    -1,    -1,
+      96,    97,    98,    99,   100,    -1,    -1,    -1,    -1,    -1,
+      -1,    74,    -1,   109,    -1,    -1,    -1,    -1,    -1,   115,
       83,    84,    85,    86,    87,    88,    89,    90,    91,    92,
-      93,    94,    95,    96,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   112,
-      79,    80,    81,    82,    83,    84,    85,    86,    87,    88,
-      89,    90,    91,    92,    93,    94,    95,    96,    -1,    -1,
+      93,    -1,    -1,    96,    97,    98,    99,   100,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   109,    83,    84,    85,
+      86,    87,    88,    89,    90,    91,    92,    93,    94,    95,
+      96,    97,    98,    99,   100,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100,    -1,
+     116,    83,    84,    85,    86,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
+      -1,   113,    83,    84,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-     109,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,    -1,
+      -1,    -1,   113,    83,    84,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,   111,    83,    84,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,    97,    98,    99,   100,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,   109,    79,    80,    81,    82,    83,    84,    85,    86,
-      87,    88,    89,    90,    91,    92,    93,    94,    95,    96,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-     107,    79,    80,    81,    82,    83,    84,    85,    86,    87,
-      88,    89,    90,    91,    92,    93,    94,    95,    96,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   107,
-      79,    80,    81,    82,    83,    84,    85,    86,    87,    88,
-      89,    90,    91,    92,    93,    94,    95,    96,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   107,    79,
-      80,    81,    82,    83,    84,    85,    86,    87,    88,    89,
-      90,    91,    92,    93,    94,    95,    96,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,   107,    79,    80,
-      81,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,   107,    79,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-      92,    93,    94,    95,    96,    79,    80,    81,    82,    83,
+     111,    83,    84,    85,    86,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,
+      83,    84,    85,    86,    87,    88,    89,    90,    91,    92,
+      93,    94,    95,    96,    97,    98,    99,   100,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,    83,
       84,    85,    86,    87,    88,    89,    90,    91,    92,    93,
-      94,    95,    96
+      94,    95,    96,    97,    98,    99,   100,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,   111,    83,    84,
+      85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
+      95,    96,    97,    98,    99,   100,    83,    84,    85,    86,
+      87,    88,    89,    90,    91,    92,    93,    94,    95,    96,
+      97,    98,    99,   100,    84,    85,    86,    87,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100,    84,    85,    86,    87,    88,    89,    90,    91,    92,
+      93,    94,    95,    96,    97,    98,    99,   100,    88,    89,
+      90,    91,    92,    93,    94,    95,    96,    97,    98,    99,
+     100
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,   117,   118,     0,    19,    20,    22,    23,    29,    31,
-      37,    47,    50,    51,    52,    61,    62,   119,   120,   121,
-     122,   126,   127,   129,   130,   131,   133,   137,   138,   139,
-     145,   147,    11,    11,     7,   134,   108,   110,   141,   128,
-      73,   185,   186,   121,    48,    49,   125,     6,     8,    11,
-      11,   110,     7,     3,     7,   142,    53,   173,     7,   185,
-       7,    74,   146,   148,   149,    11,    11,   145,   147,   150,
-     135,   109,   109,     3,     4,     5,     7,     9,    10,    13,
-      14,    15,    16,    17,    18,    21,    24,    25,    26,    28,
-      34,    35,    36,    41,    43,    45,    46,    55,    56,    57,
-      58,    75,    93,    99,   102,   103,   106,   110,   139,   140,
-     143,   144,   147,   159,   160,   161,   163,   164,   165,   172,
-     174,   176,   177,     3,   141,   110,   123,   132,     7,   152,
-     153,   158,   152,     6,    37,   111,   106,    40,   166,   167,
-     166,   108,   112,   108,   112,   115,   106,     7,   159,   174,
-     106,   106,     7,     9,   171,   106,   106,   106,     7,   110,
-     110,   106,   106,   106,   106,   106,   172,   172,   172,   106,
-     114,   172,   176,   143,    37,   144,   169,   170,    74,    75,
-      76,    77,    78,    97,    98,   114,   162,    44,    79,    80,
-      81,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      91,    92,    93,    94,    95,    96,    79,    80,     3,    68,
-      69,    75,   106,   159,   187,   188,   189,   106,   110,   108,
-     112,   113,    74,   150,     7,   154,   108,   143,    38,   166,
-      39,   172,     7,    59,   147,   163,   172,   160,     7,   172,
-     178,   181,    77,    78,    11,     3,   159,   106,   159,   172,
-     172,   143,   143,   159,   159,   159,   159,   172,    79,    80,
-     172,   160,    37,   107,   107,   169,   111,    37,   144,   174,
-     172,   180,   181,   180,     3,    27,    87,    93,   106,   108,
-     159,   182,   183,    87,   108,   183,   161,   163,   172,   176,
-     172,   176,   172,   172,   172,   172,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   172,   172,   172,   176,
-     172,   176,   187,   187,    37,    72,    79,    80,    81,    82,
-      83,    84,    85,    86,    87,    88,    89,    92,    93,    94,
-      95,    96,   111,   187,   188,   150,   151,     7,   184,     3,
-       3,   152,   108,   155,   172,   113,   107,     3,    12,   106,
-     168,   169,   109,   112,   109,   113,   107,   113,   179,   107,
-     107,   178,   107,   107,   107,   169,   169,   107,   107,   107,
-     107,   172,   172,   107,   162,   172,   111,   106,   106,   183,
-       3,   183,   183,   106,   113,   183,   183,   107,   187,   187,
-     187,   187,   187,   187,   187,   187,   187,   187,   187,   187,
-     187,   187,   187,   187,   187,   187,   107,     7,   111,   113,
-     109,     3,   154,   136,   168,    92,    93,    94,    95,   109,
-     112,   115,   181,   181,   107,   107,   111,   111,   112,   181,
-     172,    86,   107,   109,   183,   183,    86,   109,   124,   109,
-     141,   107,   168,   168,   168,   168,   143,   160,     7,   173,
-     172,   107,   107,   107,   173,    33,   169,   107,    54,   175,
-     110,   106,   141,     6,     8,   156,   157,   174,   113,   111,
-     107,   157
+       0,   121,   122,     0,    21,    22,    24,    25,    31,    33,
+      39,    49,    52,    53,    54,    63,    64,   123,   124,   125,
+     126,   130,   131,   133,   134,   135,   137,   141,   142,   143,
+     149,   151,    13,    13,     7,   138,   112,   114,   145,   132,
+      76,    77,   190,   191,   125,    50,    51,   129,     6,     8,
+      13,    13,   114,     7,     3,     7,   146,    55,   177,     7,
+       7,   190,     7,    78,   150,   152,   153,    13,    13,   149,
+     151,   154,   139,   113,   113,     3,     4,     5,     7,     9,
+      10,    15,    16,    17,    18,    19,    20,    23,    26,    27,
+      28,    30,    36,    37,    38,    43,    45,    47,    48,    57,
+      58,    59,    60,    79,    97,   103,   106,   107,   110,   114,
+     143,   144,   147,   148,   151,   163,   164,   165,   167,   168,
+     169,   176,   178,   180,   182,     3,   145,   114,    70,    71,
+     193,   194,   127,   136,     7,   156,   157,   162,   156,     6,
+      39,   115,   110,    42,   170,   171,   170,   112,   116,   112,
+     116,   119,   110,     7,   163,   178,   110,   110,     7,     9,
+     175,   110,   110,   110,     7,   114,   114,   110,   110,   110,
+     110,   110,   176,   176,   176,   110,   118,   176,   180,   147,
+      39,   148,   173,   174,    78,    79,    80,    81,    82,   101,
+     102,   114,   118,   166,    46,    83,    84,    85,    86,    87,
+      88,    89,    90,    91,    92,    93,    94,    95,    96,    97,
+      98,    99,   100,    83,    84,     3,    72,    73,    75,    79,
+     110,   163,   192,     7,    12,   114,   195,   195,   114,   193,
+     110,   114,   112,   116,   117,    78,   154,     7,   158,   112,
+     147,    40,   170,    41,   176,     7,    61,   151,   167,   176,
+     164,     7,   176,   183,   186,    81,    82,    13,     3,   163,
+     110,   163,   176,   176,   147,   147,   163,   163,   163,   163,
+     176,    83,    84,   176,   164,    39,   111,   111,   173,   115,
+      39,   148,   178,   176,   185,   186,   185,     3,    29,    91,
+      97,   110,   112,   163,   187,   188,    91,   112,   188,   163,
+     165,   167,   176,   180,   176,   180,   176,   176,   176,   176,
+     176,   176,   176,   176,   176,   176,   176,   176,   176,   176,
+     176,   176,   176,   180,   176,   180,   192,   192,   192,   192,
+     192,    74,    83,    84,    85,    86,    87,    88,    89,    90,
+      91,    92,    93,    96,    97,    98,    99,   100,   109,   115,
+      88,     7,   192,   154,   155,     7,   189,     3,     3,   156,
+     112,   159,   176,   117,   111,     3,    14,   110,   172,   173,
+     113,   116,   113,   117,   111,   117,   184,   111,   111,   183,
+     111,   111,   111,   173,   173,   111,   111,   111,   111,   176,
+     176,   111,   166,   176,   115,   110,   110,   188,     3,   188,
+     188,   110,   117,   188,   188,   115,   111,   192,   192,   192,
+     192,   192,   192,   192,   192,   192,   192,   192,   192,   192,
+     192,   192,   192,   192,   192,   176,   180,   181,   115,   115,
+     111,     7,   115,   117,   113,     3,   158,   140,   172,    96,
+      97,    98,    99,   113,   116,   119,   186,   186,   111,   111,
+     115,   115,   116,   186,   176,    90,   111,   113,   188,   188,
+      90,   113,    88,   112,   128,   113,   145,   111,   172,   172,
+     172,   172,   147,   164,     7,   177,   176,   111,   111,   111,
+     112,   181,   177,    35,   173,   111,   181,   113,    56,   179,
+     114,   113,   110,   145,     6,     8,   160,   161,   178,   117,
+     115,   111,   161
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,   116,   118,   117,   119,   120,   120,   121,   121,   121,
-     121,   121,   121,   121,   121,   121,   123,   124,   122,   125,
-     125,   126,   126,   126,   126,   128,   127,   129,   130,   132,
-     131,   134,   135,   136,   133,   137,   137,   138,   138,   138,
-     138,   139,   139,   140,   142,   141,   143,   143,   143,   144,
-     144,   144,   144,   144,   145,   145,   145,   145,   146,   146,
-     148,   147,   149,   147,   150,   150,   151,   151,   152,   152,
-     153,   153,   153,   154,   154,   154,   155,   156,   156,   157,
-     157,   158,   158,   158,   159,   160,   160,   161,   161,   162,
-     162,   163,   163,   164,   164,   164,   164,   164,   164,   164,
-     165,   165,   165,   165,   165,   165,   165,   165,   165,   165,
-     165,   165,   165,   165,   165,   165,   165,   165,   166,   166,
-     167,   167,   168,   168,   168,   168,   168,   168,   168,   169,
-     169,   170,   170,   171,   171,   172,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   173,   173,   174,   174,
-     175,   175,   176,   176,   176,   176,   176,   176,   176,   176,
-     176,   177,   177,   177,   177,   178,   178,   179,   179,   180,
-     180,   181,   181,   182,   182,   182,   182,   183,   183,   183,
-     183,   184,   184,   184,   185,   185,   185,   186,   187,   187,
-     187,   187,   187,   187,   187,   187,   187,   187,   187,   187,
-     187,   187,   187,   187,   187,   187,   187,   187,   187,   187,
-     187,   188,   188,   189,   189
+       0,   120,   122,   121,   123,   124,   124,   125,   125,   125,
+     125,   125,   125,   125,   125,   125,   127,   128,   126,   129,
+     129,   130,   130,   130,   130,   132,   131,   133,   134,   136,
+     135,   138,   139,   140,   137,   141,   141,   142,   142,   142,
+     142,   143,   143,   144,   146,   145,   147,   147,   147,   148,
+     148,   148,   148,   148,   149,   149,   149,   149,   150,   150,
+     152,   151,   153,   151,   154,   154,   155,   155,   156,   156,
+     157,   157,   157,   158,   158,   158,   159,   160,   160,   161,
+     161,   162,   162,   162,   163,   164,   164,   165,   165,   166,
+     166,   167,   167,   168,   168,   168,   168,   168,   168,   168,
+     169,   169,   169,   169,   169,   169,   169,   169,   169,   169,
+     169,   169,   169,   169,   169,   169,   169,   169,   170,   170,
+     171,   171,   172,   172,   172,   172,   172,   172,   172,   173,
+     173,   174,   174,   175,   175,   176,   176,   176,   176,   176,
+     176,   176,   176,   176,   176,   176,   176,   176,   176,   176,
+     176,   176,   176,   176,   176,   176,   176,   176,   176,   176,
+     176,   176,   176,   176,   176,   176,   176,   176,   176,   176,
+     176,   176,   176,   176,   176,   176,   176,   177,   177,   178,
+     178,   179,   179,   180,   180,   180,   180,   180,   180,   180,
+     180,   180,   181,   182,   182,   182,   182,   183,   183,   184,
+     184,   185,   185,   186,   186,   187,   187,   187,   187,   188,
+     188,   188,   188,   189,   189,   189,   190,   190,   190,   191,
+     191,   192,   192,   192,   192,   192,   192,   192,   192,   192,
+     192,   192,   192,   192,   192,   192,   192,   192,   192,   192,
+     192,   192,   192,   192,   192,   192,   193,   193,   194,   194,
+     195,   195,   195,   195,   195
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1436,15 +1455,16 @@ static const yytype_int8 yyr2[] =
        1,     1,     2,     1,     1,     3,     3,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
        3,     3,     3,     3,     4,     2,     2,     2,     7,     6,
-       4,     4,     5,     5,     1,     1,     1,     1,     1,     1,
-       1,     4,     6,     6,     3,     3,     0,     2,     1,     1,
-       0,     4,     1,     3,     3,     3,     3,     3,     3,     3,
-       1,     4,     4,     4,     4,     0,     1,     0,     2,     1,
-       4,     1,     3,     1,     4,     1,     2,     1,     3,     4,
-       3,     1,     2,     2,     0,     1,     2,     5,     3,     2,
-       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     3,     3,     2,     1,
-       1,     1,     2,     1,     1
+       4,     4,     5,     5,     4,     1,     1,     1,     1,     1,
+       1,     1,     4,     6,     6,     3,     3,     0,     2,     1,
+       1,     0,     4,     1,     3,     3,     3,     3,     3,     3,
+       3,     1,     1,     4,     4,     4,     4,     0,     1,     0,
+       2,     1,     4,     1,     3,     1,     4,     1,     2,     1,
+       3,     4,     3,     1,     2,     2,     0,     1,     2,     5,
+       6,     3,     2,     2,     2,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     3,     2,     1,     1,     3,     3,
+       3,     3,     3,     3,     3,     3,     1,     2,     2,     2,
+       6,     7,     1,     3,     1
 };
 
 
@@ -2188,49 +2208,49 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* $@1: %empty  */
-#line 146 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 149 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { *globalSymTab = new symTable("global"); symTable::addPredefinedSym(*globalSymTab); currentSymTab = *globalSymTab; }
-#line 2194 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 4: /* program: units  */
-#line 151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: units -> program\n")*/}
-#line 2200 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2220 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 5: /* units: unit  */
-#line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 157 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: unit -> units\n")*/ }
-#line 2206 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2226 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 6: /* units: units unit  */
-#line 155 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: units unit -> units\n")*/ }
-#line 2212 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2232 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 7: /* unit: proc  */
-#line 158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 161 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { /*DBUG("REDUCE: proc -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2218 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2238 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 8: /* unit: init  */
-#line 159 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 162 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: init -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2224 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2244 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 9: /* unit: events  */
-#line 160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 163 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { assert(false); std::cout << "The 'events' construct is currently not supported."; }
-#line 2230 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2250 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 10: /* unit: one_decl  */
-#line 161 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 164 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { 
 													/*DBUG("REDUCE: one_decl -> unit\n")*/
 													stmnt* decl = nullptr;
@@ -2244,35 +2264,35 @@ yyreduce:
 													declSyms.clear();
 													*program = stmnt::merge(*program, decl);
 												}
-#line 2248 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2268 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 11: /* unit: utypedef  */
-#line 174 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: utype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2254 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2274 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 12: /* unit: mtypedef  */
-#line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 178 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: mtype -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); }
-#line 2260 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2280 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 13: /* unit: c_fcts  */
-#line 176 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 179 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { std::cout << "Embedded C code is not supported."; 						}
-#line 2266 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2286 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 14: /* unit: ns  */
-#line 177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 180 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { /*DBUG("REDUCE: ns -> unit\n")*/ *program = stmnt::merge(*program, (yyvsp[0].pStmntVal)); 	}
-#line 2272 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2292 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 16: /* $@2: %empty  */
-#line 184 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 187 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                 { 
 													nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; 
 													currentSymTab = currentSymTab->createSubTable(nameSpace); 
@@ -2280,17 +2300,17 @@ yyreduce:
 													predef->setMask(symbol::READ_ACCESS | symbol::PREDEFINED); 
 													currentSymTab->insert(predef);
 												}
-#line 2284 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2304 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 17: /* $@3: %empty  */
-#line 192 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 195 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { currentSymTab = savedSymTab; }
-#line 2290 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2310 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 18: /* proc: inst proctype NAME $@2 '(' decl ')' $@3 Opt_priority Opt_enabler body  */
-#line 195 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 198 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
 		  											/*DBUG("REDUCE: inst proctype NAME ( decl ) prio ena body -> proc\n")*/
 													auto procNbLine = (yyvsp[0].pStmntVal)->getLineNb();
@@ -2301,41 +2321,41 @@ yyreduce:
 		  											nameSpace = "global";
 		  											free((yyvsp[-8].sVal));
 		  										}
-#line 2305 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2325 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 19: /* proctype: PROCTYPE  */
-#line 207 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 210 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: -> PROCTYPE proctype\n")*/ }
-#line 2311 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2331 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 20: /* proctype: D_PROCTYPE  */
-#line 208 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Deterministic proctypes are not supported (only useful for simulation)."; }
-#line 2317 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2337 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 21: /* inst: %empty  */
-#line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: void -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(0, nbrLines); 	}
-#line 2323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2343 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 22: /* inst: ACTIVE  */
-#line 212 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 215 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: ACTIVE -> inst\n")*/ (yyval.pConstExprVal) = new exprConst(1, nbrLines); }
-#line 2329 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2349 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 23: /* inst: ACTIVE '[' CONST ']'  */
-#line 213 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 216 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: ACTIVE [ CONST ] -> inst \n")*/ (yyval.pConstExprVal) = new exprConst((yyvsp[-1].iVal), nbrLines); }
-#line 2335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2355 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 24: /* inst: ACTIVE '[' NAME ']'  */
-#line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
 													/*DBUG("REDUCE: ACTIVE [ NAME ] -> inst\n")*/
 													varSymNode* var = *globalSymTab? static_cast<varSymNode*>((*globalSymTab)->lookup((yyvsp[-1].sVal))) : nullptr;
@@ -2347,17 +2367,17 @@ yyreduce:
 													}
 													free((yyvsp[-1].sVal));											
 												}
-#line 2351 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2371 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 25: /* $@4: %empty  */
-#line 228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 231 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                 { nameSpace = "init"; }
-#line 2357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 26: /* init: INIT $@4 Opt_priority body  */
-#line 230 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 233 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {	
 													/*DBUG("REDUCE: INIT Opt_priority body -> init\n")*/
 													if(*globalSymTab && (*globalSymTab)->lookup("init") != nullptr) 
@@ -2369,17 +2389,17 @@ yyreduce:
 													}
 													nameSpace = "global";
 												}
-#line 2373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 27: /* events: TRACE body  */
-#line 243 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Event sequences (traces) are not supported."; }
-#line 2379 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2399 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 28: /* utypedef: TYPEDEF NAME '{' decl_lst '}'  */
-#line 246 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 249 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         {	
 													/*DBUG("REDUCE: TYPEDEF NAME '{' decl_lst '}' -> utype\n")*/
 													tdefSymNode* tdef = new tdefSymNode((yyvsp[-3].sVal), *globalSymTab, declSyms, nbrLines);
@@ -2390,17 +2410,17 @@ yyreduce:
 													declSyms.clear();
 													free((yyvsp[-3].sVal));  
 												}
-#line 2394 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2414 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 29: /* $@5: %empty  */
-#line 258 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 261 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         {	mtypeDef = new mtypedefSymNode(nbrLines);	}
-#line 2400 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2420 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 30: /* mtypedef: vis TYPE asgn $@5 '{' nlst '}'  */
-#line 259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 262 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 {
 													assert(mtypeDef->getMTypeList().size() != 0);
 													(*globalSymTab)->insert(mtypeDef);
@@ -2413,32 +2433,32 @@ yyreduce:
 													(yyval.pStmntVal) = new mtypeDecl(mtypeDef, nbrLines);
 													// The mtype values are added in the nlst rule.
 												}
-#line 2417 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2437 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 31: /* $@6: %empty  */
-#line 277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 280 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                          { inInline = true; }
-#line 2423 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 32: /* $@7: %empty  */
-#line 278 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 281 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                        { nameSpace = (yyvsp[0].sVal); savedSymTab = currentSymTab; currentSymTab = currentSymTab->createSubTable(nameSpace); }
-#line 2429 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2449 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 33: /* $@8: %empty  */
-#line 280 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 283 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                   { for(std::string it : params) 
 		  		currentSymTab->insert(varSymNode::createSymbol(symbol::T_NA, nbrLines, it));
 		    currentSymTab = savedSymTab;
 		  }
-#line 2438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2458 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 34: /* ns: INLINE $@6 NAME $@7 '(' param_list ')' $@8 body  */
-#line 284 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 287 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         {
 													/*DBUG("REDUCE: INLINE nm ( param_list ) body -> ns\n")*/
 													auto sym = new inlineSymNode((yyvsp[-6].sVal), params, (yyvsp[0].pStmntVal), nbrLines);
@@ -2448,222 +2468,222 @@ yyreduce:
 													inInline = false;
 													free((yyvsp[-6].sVal));
 												}
-#line 2452 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2472 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 44: /* $@9: %empty  */
-#line 312 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 315 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													savedSymTab = currentSymTab; 
 													if(!(currentSymTab = (*globalSymTab)->getSubSymTab(nameSpace)))
 														currentSymTab = savedSymTab->createSubTable(nameSpace); 
 													nameSpace = "";
 												}
-#line 2463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2483 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 45: /* body: '{' $@9 sequence OS '}'  */
-#line 319 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: '{' sequence OS '}' -> body\n")*/ (yyval.pStmntVal) = (yyvsp[-2].pStmntVal); (yyval.pStmntVal)->setLocalSymTab(currentSymTab); currentSymTab->setBlock((yyvsp[-2].pStmntVal)); currentSymTab = savedSymTab; }
-#line 2469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2489 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 46: /* sequence: step  */
-#line 322 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 325 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: step -> sequence\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal);  }
-#line 2475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2495 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 47: /* sequence: sequence MS step  */
-#line 323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 326 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: sequence MS step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-2].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2501 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 48: /* sequence: sequence step  */
-#line 324 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 327 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: sequence step -> sequence\n")*/ (yyval.pStmntVal) = stmnt::merge((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntVal)); }
-#line 2487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2507 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 49: /* step: one_decl  */
-#line 327 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 330 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 													assert(declSyms.front()->getType() != symbol::T_MTYPE_DEF); 
 												 	(yyval.pStmntVal) = new varDecl(static_cast<std::list<varSymNode*>>(declSyms), nbrLines);
 												 	declSyms.clear();
 												}
-#line 2497 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2517 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 50: /* step: NAME ':' one_decl  */
-#line 332 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Declarations with labels are not suported."; }
-#line 2503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2523 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 51: /* step: NAME ':' XU  */
-#line 333 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 336 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "Channel assertions are currently not supported."; }
-#line 2509 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2529 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 52: /* step: stmnt  */
-#line 334 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 337 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: stmnt -> step\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2535 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 53: /* step: stmnt UNLESS stmnt  */
-#line 335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 338 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Unless statements are currently not supported."; }
-#line 2521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2541 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 55: /* vis: HIDDEN  */
-#line 344 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 347 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'hidden' keyword is not supported."; }
-#line 2527 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2547 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 56: /* vis: SHOW  */
-#line 345 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 348 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'show' keyword is not supported."; }
-#line 2533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2553 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 57: /* vis: ISLOCAL  */
-#line 346 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 349 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "The 'local' keyword is not supported."; }
-#line 2539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2559 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 60: /* $@10: %empty  */
-#line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 359 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                    { declType = (yyvsp[0].iType); }
-#line 2545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2565 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 61: /* one_decl: vis TYPE $@10 var_list  */
-#line 356 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 359 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                 { /*DBUG("REDUCE: vis TYPE var_list -> one_decl\n")*/ }
-#line 2551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2571 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 62: /* $@11: %empty  */
-#line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                             { declType = symbol::T_UTYPE; typeDef = *globalSymTab? static_cast<tdefSymNode*>((*globalSymTab)->lookup((yyvsp[0].sVal))) : nullptr; assert(typeDef); }
-#line 2557 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2577 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 63: /* one_decl: vis UNAME $@11 var_list  */
-#line 357 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                                                                                                                         { /*DBUG("REDUCE: vis UNAME var_list -> one_decl\n")*/ free((yyvsp[-2].sVal)); }
-#line 2563 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2583 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 64: /* decl_lst: one_decl  */
-#line 360 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 363 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: one_decl -> decl_list\n")*/ }
-#line 2569 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2589 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 65: /* decl_lst: one_decl SEMI decl_lst  */
-#line 361 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 364 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: one_decl SEMI decl_list -> decl_lst\n")*/ }
-#line 2575 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2595 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 66: /* decl: %empty  */
-#line 365 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 368 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: void -> decl\n")*/ }
-#line 2581 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2601 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 67: /* decl: decl_lst  */
-#line 366 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 369 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: decl_list -> decl\n")*/ }
-#line 2587 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2607 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 68: /* var_list: ivar  */
-#line 373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 376 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: ivar -> var_list\n")*/ currentSymTab->insert((yyvsp[0].pVarSymVal)); declSyms.push_front((yyvsp[0].pVarSymVal)); }
-#line 2593 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2613 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 69: /* var_list: ivar ',' var_list  */
-#line 374 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: ivar , var_list -> var_list\n")*/ currentSymTab->insert((yyvsp[-2].pVarSymVal)); declSyms.push_front((yyvsp[-2].pVarSymVal)); }
-#line 2599 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 70: /* ivar: vardcl  */
-#line 377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 380 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { 
 												  /*DBUG("REDUCE: var_decl -> ivar\n")*/ (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[0].pDataVal).sVal, (yyvsp[0].pDataVal).iVal); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2609 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2629 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 71: /* ivar: vardcl ASGN expr  */
-#line 382 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 385 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: var_decl ASGN expr -> ivar\n")*/ 
 												  (yyval.pVarSymVal) = varSymNode::createSymbol(declType, nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pExprVal)); 
 												  if(declType == symbol::T_UTYPE) { assert(typeDef); static_cast<utypeSymNode*>((yyval.pVarSymVal))->setUType(typeDef); }
 												  if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 72: /* ivar: vardcl ASGN ch_init  */
-#line 387 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { /*DBUG("REDUCE: var_decl ASGN ch_init -> ivar\n")*/ (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, typeLst);	
-												  typeLst.clear(); if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal); //double free???if($3.sVal) free($3.sVal); 
-												}
-#line 2627 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 73: /* param_list: %empty  */
-#line 392 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { }
-#line 2633 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 74: /* param_list: NAME  */
-#line 393 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { params.push_front(std::string((yyvsp[0].sVal))); free((yyvsp[0].sVal)); }
 #line 2639 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
+  case 72: /* ivar: vardcl ASGN ch_init  */
+#line 390 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { /*DBUG("REDUCE: var_decl ASGN ch_init -> ivar\n")*/ (yyval.pVarSymVal) = new chanSymNode(nbrLines, (yyvsp[-2].pDataVal).sVal, (yyvsp[-2].pDataVal).iVal, (yyvsp[0].pDataVal).iVal, typeLst);	
+												  typeLst.clear(); if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal); //double free???if($3.sVal) free($3.sVal); 
+												}
+#line 2647 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 73: /* param_list: %empty  */
+#line 395 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { }
+#line 2653 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 74: /* param_list: NAME  */
+#line 396 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { params.push_front(std::string((yyvsp[0].sVal))); free((yyvsp[0].sVal)); }
+#line 2659 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
   case 75: /* param_list: NAME ',' param_list  */
-#line 394 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 397 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                             { params.push_front(std::string((yyvsp[-2].sVal))); free((yyvsp[-2].sVal)); }
-#line 2645 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2665 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 76: /* ch_init: '[' CONST ']' OF '{' typ_list '}'  */
-#line 398 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 401 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { /*DBUG("REDUCE: [ CONST ] OF { typ_list } -> ch_init\n")*/ (yyval.pDataVal).iVal = (yyvsp[-5].iVal); }
-#line 2651 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2671 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 77: /* basetype: TYPE  */
-#line 401 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 404 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pDataVal).sVal = nullptr; (yyval.pDataVal).iType = (yyvsp[0].iType); }
-#line 2657 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2677 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 78: /* basetype: UNAME  */
-#line 402 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 405 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iType = symbol::T_UTYPE; }
-#line 2663 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2683 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 79: /* typ_list: basetype  */
-#line 406 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 409 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 {	/*DBUG("REDUCE: basetype -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if((yyvsp[0].pDataVal).iType != symbol::T_UTYPE && (yyvsp[0].pDataVal).iType != symbol::T_NA) {
@@ -2679,11 +2699,11 @@ yyreduce:
 													typeLst.push_back(typ);
 													if((yyvsp[0].pDataVal).sVal) free((yyvsp[0].pDataVal).sVal);
 												}
-#line 2683 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2703 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 80: /* typ_list: basetype ',' typ_list  */
-#line 421 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 424 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         {	/*DBUG("REDUCE: basetype , typ_list -> typ_list\n")*/
 													varSymNode* typ = nullptr;
 													if((yyvsp[-2].pDataVal).iType != symbol::T_UTYPE && (yyvsp[-2].pDataVal).iType != symbol::T_NA) {
@@ -2699,466 +2719,466 @@ yyreduce:
 													typeLst.push_front(typ);
 													if((yyvsp[-2].pDataVal).sVal) free((yyvsp[-2].pDataVal).sVal);
 												}
-#line 2703 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2723 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 81: /* vardcl: NAME  */
-#line 438 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 441 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*/*DBUG("REDUCE: NAME -> vardcl\n"*)*/ (yyval.pDataVal).sVal = (yyvsp[0].sVal); (yyval.pDataVal).iVal = 1; }
-#line 2709 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2729 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 82: /* vardcl: NAME ':' CONST  */
-#line 439 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 442 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { std::cout << "The 'unsigned' data type is not supported."; }
-#line 2715 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2735 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 83: /* vardcl: NAME '[' CONST ']'  */
-#line 440 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: NAME [ CONST ] -> vardcl\n")*/ (yyval.pDataVal).sVal = (yyvsp[-3].sVal); (yyval.pDataVal).iVal = (yyvsp[-1].iVal); }
-#line 2721 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2741 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 84: /* varref: cmpnd  */
-#line 443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 446 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: cmpnd -> varref\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal); symbol* sym = nullptr; if(!inInline) sym = (yyval.pExprVarRefVal)->resolve(currentSymTab); assert(sym || inInline); }
-#line 2727 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2747 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 85: /* pfld: NAME  */
-#line 446 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 449 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: NAME -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2733 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2753 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 86: /* pfld: NAME '[' expr ']'  */
-#line 447 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: NAME [ expr ] -> pfld\n")*/ (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-3].sVal), (yyvsp[-1].pExprVal), nbrLines); free((yyvsp[-3].sVal)); }
-#line 2739 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2759 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 87: /* cmpnd: pfld sfld  */
-#line 450 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 453 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2745 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2765 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 88: /* cmpnd: CONTEXT '.' pfld sfld  */
-#line 451 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 454 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: CONTEX . pfld sfld -> cmpnd\n")*/ (yyval.pExprVarRefVal) = new exprVarRef(nbrLines, (yyvsp[-1].pExprVarRefNameVal), (yyvsp[0].pExprVarRefVal)); }
-#line 2751 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2771 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 89: /* sfld: %empty  */
-#line 454 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 457 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: void -> sfld\n")*/ (yyval.pExprVarRefVal) = nullptr; }
-#line 2757 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2777 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 90: /* sfld: '.' cmpnd  */
-#line 455 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 458 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { /*DBUG("REDUCE: . cmpnd -> sfld\n")*/ (yyval.pExprVarRefVal) = (yyvsp[0].pExprVarRefVal);   }
-#line 2763 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2783 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 91: /* stmnt: Special  */
-#line 459 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 462 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { /*DBUG("REDUCE: special -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2769 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2789 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 92: /* stmnt: Stmnt  */
-#line 460 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { /*DBUG("REDUCE: Stmnt -> stmnt\n")*/ (yyval.pStmntVal) = (yyvsp[0].pStmntVal); }
-#line 2775 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2795 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 93: /* Special: varref RCV rargs  */
-#line 463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 466 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntChanRecv((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 2781 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2801 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 94: /* Special: varref SND margs  */
-#line 464 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 467 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntChanSnd((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 2787 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2807 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 95: /* Special: IF options FI  */
-#line 465 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntIf((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2793 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2813 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 96: /* Special: DO options OD  */
-#line 466 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pStmntVal) = new stmntDo((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
-#line 2799 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 97: /* Special: BREAK  */
-#line 467 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pStmntVal) = new stmntBreak(nbrLines); }
-#line 2805 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 98: /* Special: GOTO NAME  */
-#line 468 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
-#line 2811 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 99: /* Special: NAME ':' stmnt  */
 #line 469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>((yyvsp[0].pStmntVal))->getLabelled()->getType() == astNode::E_STMNT_LABEL) 
-													std::cout << "Only two labels per state are supported."; 
-												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); free((yyvsp[-2].sVal)); }
+                                                                                { (yyval.pStmntVal) = new stmntDo((yyvsp[-1].pStmntOptVal), (yyvsp[-2].iVal)); }
 #line 2819 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 100: /* Stmnt: varref ASGN full_expr  */
-#line 473 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { (yyval.pStmntVal) = new stmntAsgn((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprVal), nbrLines); }
+  case 97: /* Special: BREAK  */
+#line 470 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { (yyval.pStmntVal) = new stmntBreak(nbrLines); }
 #line 2825 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 101: /* Stmnt: varref INCR  */
-#line 474 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pStmntVal) = new stmntIncr((yyvsp[-1].pExprVarRefVal), nbrLines); }
+  case 98: /* Special: GOTO NAME  */
+#line 471 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { (yyval.pStmntVal) = new stmntGoto((yyvsp[0].sVal), nbrLines); free((yyvsp[0].sVal)); }
 #line 2831 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
+  case 99: /* Special: NAME ':' stmnt  */
+#line 472 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { if((yyvsp[0].pStmntVal)->getType() == astNode::E_STMNT_LABEL && static_cast<stmntLabel*>((yyvsp[0].pStmntVal))->getLabelled()->getType() == astNode::E_STMNT_LABEL) 
+													std::cout << "Only two labels per state are supported."; 
+												  (yyval.pStmntVal) = new stmntLabel((yyvsp[-2].sVal), (yyvsp[0].pStmntVal), nbrLines); free((yyvsp[-2].sVal)); }
+#line 2839 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 100: /* Stmnt: varref ASGN full_expr  */
+#line 476 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pStmntVal) = new stmntAsgn((yyvsp[-2].pExprVarRefVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 2845 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 101: /* Stmnt: varref INCR  */
+#line 477 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pStmntVal) = new stmntIncr((yyvsp[-1].pExprVarRefVal), nbrLines); }
+#line 2851 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
   case 102: /* Stmnt: varref DECR  */
-#line 475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 478 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntDecr((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2837 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2857 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 103: /* Stmnt: PRINT '(' STRING prargs ')'  */
-#line 476 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 479 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntPrint((yyvsp[-2].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); }
-#line 2843 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2863 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 104: /* Stmnt: PRINTM '(' varref ')'  */
-#line 477 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 2849 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2869 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 105: /* Stmnt: PRINTM '(' CONST ')'  */
-#line 478 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntPrintm((yyvsp[-1].iVal), nbrLines); }
-#line 2855 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2875 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 106: /* Stmnt: ASSERT full_expr  */
-#line 479 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 482 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntVal) = new stmntAssert((yyvsp[0].pExprVal), nbrLines); }
-#line 2861 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2881 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 107: /* Stmnt: ccode  */
-#line 480 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 483 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { std::cout << "Embedded C code is not supported."; }
-#line 2867 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2887 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 108: /* Stmnt: varref R_RCV rargs  */
-#line 481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 484 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2873 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2893 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 109: /* Stmnt: varref RCV LT rargs GT  */
-#line 482 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 485 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2879 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2899 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 110: /* Stmnt: varref R_RCV LT rargs GT  */
-#line 483 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Channel poll operations are not supported."; }
-#line 2885 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2905 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 111: /* Stmnt: varref O_SND margs  */
-#line 484 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Sorted send and random receive are not supported."; }
-#line 2891 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2911 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 112: /* Stmnt: full_expr  */
-#line 485 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 488 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntExpr((yyvsp[0].pExprVal), nbrLines); }
-#line 2897 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2917 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 113: /* Stmnt: ELSE  */
-#line 486 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 489 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pStmntVal) = new stmntElse(nbrLines); }
-#line 2903 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2923 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 114: /* Stmnt: ATOMIC '{' sequence OS '}'  */
-#line 487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 490 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntAtomic((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2909 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2929 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 115: /* Stmnt: D_STEP '{' sequence OS '}'  */
-#line 488 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 491 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = new stmntDStep((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2915 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2935 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 116: /* Stmnt: '{' sequence OS '}'  */
-#line 489 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 492 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = new stmntSeq((yyvsp[-2].pStmntVal), nbrLines); }
-#line 2921 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2941 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 117: /* Stmnt: INAME '(' args ')'  */
-#line 490 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 493 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 
 													(yyval.pStmntVal) = new stmntCall((yyvsp[-3].sVal), (yyvsp[-1].pExprArgListVal), nbrLines); 
 													auto fctSym = (*globalSymTab)->lookup((yyvsp[-3].sVal));
-													std::cout << "Inline call "<< (yyvsp[-3].sVal) <<" at line "<< nbrLines <<"\n";
+													//std::cout << "Inline call "<< $1 <<" at line "<< nbrLines <<"\n";
 													assert(fctSym->getType() == symbol::T_INLINE);
 													assert(dynamic_cast<inlineSymNode*>(fctSym) != nullptr);
 													if((yyvsp[-1].pExprArgListVal))
 														assert(dynamic_cast<inlineSymNode*>(fctSym)->getParams().size() == (yyvsp[-1].pExprArgListVal)->getSize());
 													free((yyvsp[-3].sVal)); 
 												}
-#line 2936 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2956 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 118: /* options: option  */
-#line 502 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 505 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[0].pStmntVal), nbrLines); }
-#line 2942 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2962 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 119: /* options: option options  */
-#line 503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 506 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pStmntOptVal) = new stmntOpt((yyvsp[-1].pStmntVal), (yyvsp[0].pStmntOptVal), nbrLines); }
-#line 2948 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2968 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 120: /* option: SEP sequence OS  */
-#line 506 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 509 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); }
-#line 2954 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2974 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 121: /* option: SEP '[' real_expr ']' sequence OS  */
-#line 507 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 510 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pStmntVal) = (yyvsp[-1].pStmntVal); (yyvsp[-1].pStmntVal)->setProb((yyvsp[-3].rVal)); }
-#line 2960 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2980 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 122: /* real_expr: '(' real_expr ')'  */
-#line 511 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-1].rVal); }
-#line 2966 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2986 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 123: /* real_expr: real_expr '+' real_expr  */
-#line 512 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) + (yyvsp[0].rVal); }
-#line 2972 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2992 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 124: /* real_expr: real_expr '-' real_expr  */
-#line 513 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 516 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.rVal) = (yyvsp[-2].rVal) - (yyvsp[0].rVal); }
-#line 2978 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 2998 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 125: /* real_expr: real_expr '*' real_expr  */
-#line 514 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 517 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) * (yyvsp[0].rVal); }
-#line 2984 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3004 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 126: /* real_expr: real_expr '/' real_expr  */
-#line 515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 518 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                     { (yyval.rVal) = (yyvsp[-2].rVal) / (yyvsp[0].rVal); }
-#line 2990 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3010 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 127: /* real_expr: REAL  */
-#line 516 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 519 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].rVal);}
-#line 2996 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3016 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 128: /* real_expr: CONST  */
-#line 517 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 520 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                                         { (yyval.rVal) = (yyvsp[0].iVal);}
-#line 3002 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3022 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 130: /* OS: SEMI  */
-#line 521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 524 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* redundant semi at end of sequence */ }
-#line 3008 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3028 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 131: /* MS: SEMI  */
-#line 524 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 527 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* at least one semi-colon */ }
-#line 3014 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3034 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 132: /* MS: MS SEMI  */
-#line 525 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 528 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                         { /* but more are okay too   */ }
-#line 3020 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3040 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 133: /* aname: NAME  */
-#line 528 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 531 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3026 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3046 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 134: /* aname: PNAME  */
-#line 529 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.sVal) = (yyvsp[0].sVal); }
-#line 3032 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3052 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 135: /* expr: '(' expr ')'  */
-#line 532 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 535 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprPar		((yyvsp[-1].pExprVal), nbrLines); }
-#line 3038 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3058 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 136: /* expr: expr '+' expr  */
-#line 533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 536 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprPlus		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3044 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3064 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 137: /* expr: expr '-' expr  */
-#line 534 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 537 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMinus	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3050 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3070 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 138: /* expr: expr '*' expr  */
-#line 535 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprTimes	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3056 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3076 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 139: /* expr: expr '/' expr  */
-#line 536 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprDiv		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3062 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3082 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 140: /* expr: expr '%' expr  */
-#line 537 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 540 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprMod		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3068 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3088 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 141: /* expr: expr '&' expr  */
-#line 538 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 541 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3074 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3094 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 142: /* expr: expr '^' expr  */
-#line 539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 542 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwXor	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3080 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3100 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 143: /* expr: expr '|' expr  */
-#line 540 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 543 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprBitwOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3086 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3106 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 144: /* expr: expr GT expr  */
-#line 541 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3092 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3112 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 145: /* expr: expr LT expr  */
-#line 542 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLT		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3098 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3118 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 146: /* expr: expr GE expr  */
-#line 543 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 546 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprGE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3104 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3124 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 147: /* expr: expr LE expr  */
-#line 544 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 547 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3110 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3130 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 148: /* expr: expr EQ expr  */
-#line 545 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 548 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprEQ		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3116 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3136 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 149: /* expr: expr NE expr  */
-#line 546 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 549 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprNE		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3122 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3142 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 150: /* expr: expr AND expr  */
-#line 547 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprAnd		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3128 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3148 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 151: /* expr: expr OR expr  */
-#line 548 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprOr		((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3134 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 152: /* expr: expr LSHIFT expr  */
-#line 549 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 552 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprLShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3140 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 153: /* expr: expr RSHIFT expr  */
-#line 550 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 553 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = new exprRShift	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3146 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3166 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 154: /* expr: COUNT '(' expr ')'  */
-#line 551 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 554 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprCount	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3152 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3172 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 155: /* expr: '~' expr  */
-#line 552 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 555 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = new exprBitwNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3178 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 156: /* expr: '-' expr  */
-#line 553 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 556 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { 	if((yyvsp[0].pExprVal)->getType() != astNode::E_EXPR_CONST) 
 														(yyval.pExprVal) = new exprUMin((yyvsp[0].pExprVal), nbrLines);
 													else {
@@ -3167,345 +3187,576 @@ yyreduce:
 														delete tmp;
 													}
 												}
-#line 3171 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3191 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 157: /* expr: SND expr  */
-#line 561 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 564 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprNeg	((yyvsp[0].pExprVal), nbrLines); }
-#line 3177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3197 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 158: /* expr: '(' expr SEMI expr ':' expr ')'  */
-#line 562 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 565 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                 { (yyval.pExprVal) = new exprCond	((yyvsp[-5].pExprVal), (yyvsp[-3].pExprVal), (yyvsp[-1].pExprVal), nbrLines); }
-#line 3183 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3203 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 159: /* expr: RUN aname '(' args ')' Opt_priority  */
-#line 563 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 566 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                         { auto run = new exprRun ((yyvsp[-4].sVal), (yyvsp[-2].pExprArgListVal), nbrLines);
 												  (yyval.pExprVal) = run;
 												  auto procSym = run->resolve(*globalSymTab); 
 												  assert(procSym); free((yyvsp[-4].sVal)); 
 												}
-#line 3193 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3213 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 160: /* expr: LEN '(' varref ')'  */
-#line 568 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 571 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { (yyval.pExprVal) = new exprLen	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3199 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3219 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 161: /* expr: ENABLED '(' expr ')'  */
-#line 569 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 572 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "The enabled keyword is not supported."; }
-#line 3205 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3225 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 162: /* expr: varref RCV '[' rargs ']'  */
-#line 570 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 573 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                         { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3231 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
   case 163: /* expr: varref R_RCV '[' rargs ']'  */
-#line 571 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { std::cout << "Sorted send and random receive are not supported."; }
-#line 3217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 164: /* expr: varref  */
-#line 572 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprVar	((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 165: /* expr: cexpr  */
-#line 573 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { std::cout << "Embedded C code is not supported."; }
-#line 3229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 166: /* expr: CONST  */
 #line 574 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines); }
-#line 3235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                { std::cout << "Sorted send and random receive are not supported."; }
+#line 3237 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 167: /* expr: TRUE  */
+  case 164: /* expr: varref '{' varref '}'  */
 #line 575 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprTrue	(nbrLines); }
-#line 3241 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                        { (yyval.pExprVal) = new exprProjVar((yyvsp[-3].pExprVarRefVal), (yyvsp[-1].pExprVarRefVal), nbrLines); 
+													assert((yyvsp[-3].pExprVarRefVal)->getFinalSymbol()->getType() != symbol::T_VARIANT && (yyvsp[-1].pExprVarRefVal)->getFinalSymbol()->getType() == symbol::T_VARIANT) ; 
+												}
+#line 3245 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 168: /* expr: FALSE  */
-#line 576 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprFalse(nbrLines); }
-#line 3247 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 169: /* expr: TIMEOUT  */
-#line 577 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprTimeout(nbrLines); }
-#line 3253 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 170: /* expr: NONPROGRESS  */
+  case 165: /* expr: varref  */
 #line 578 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { std::cout << "The 'np_' variable is not supported."; }
-#line 3259 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprVar	((yyvsp[0].pExprVarRefVal), nbrLines); }
+#line 3251 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 171: /* expr: PC_VAL '(' expr ')'  */
+  case 166: /* expr: cexpr  */
 #line 579 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { std::cout << "The 'pc_value()' construct is not supported."; }
-#line 3265 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { std::cout << "Embedded C code is not supported."; }
+#line 3257 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 172: /* expr: PNAME '[' expr ']' '@' NAME  */
+  case 167: /* expr: CONST  */
 #line 580 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3271 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines); }
+#line 3263 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 173: /* expr: PNAME '[' expr ']' ':' pfld  */
+  case 168: /* expr: TRUE  */
 #line 581 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3277 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprTrue	(nbrLines); }
+#line 3269 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 174: /* expr: PNAME '@' NAME  */
+  case 169: /* expr: FALSE  */
 #line 582 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3283 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprFalse(nbrLines); }
+#line 3275 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 175: /* expr: PNAME ':' pfld  */
+  case 170: /* expr: TIMEOUT  */
 #line 583 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { std::cout << "Construct not supported."; /* Unclear */ }
-#line 3289 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprTimeout(nbrLines); }
+#line 3281 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 177: /* Opt_priority: PRIORITY CONST  */
+  case 171: /* expr: NONPROGRESS  */
+#line 584 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { std::cout << "The 'np_' variable is not supported."; }
+#line 3287 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 172: /* expr: PC_VAL '(' expr ')'  */
+#line 585 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { std::cout << "The 'pc_value()' construct is not supported."; }
+#line 3293 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 173: /* expr: PNAME '[' expr ']' '@' NAME  */
+#line 586 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { std::cout << "Construct not supported."; /* Unclear */ }
+#line 3299 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 174: /* expr: PNAME '[' expr ']' ':' pfld  */
 #line 587 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { std::cout << "Construct not supported."; /* Unclear */ }
+#line 3305 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 175: /* expr: PNAME '@' NAME  */
+#line 588 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { std::cout << "Construct not supported."; /* Unclear */ }
+#line 3311 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 176: /* expr: PNAME ':' pfld  */
+#line 589 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { std::cout << "Construct not supported."; /* Unclear */ }
+#line 3317 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 178: /* Opt_priority: PRIORITY CONST  */
+#line 593 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { assert(false); std::cout << "The 'priority' construct is related to simulation and not supported."; }
-#line 3295 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3323 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 178: /* full_expr: expr  */
-#line 590 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+  case 179: /* full_expr: expr  */
+#line 596 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                 { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3301 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3329 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 179: /* full_expr: Expr  */
-#line 591 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+  case 180: /* full_expr: Expr  */
+#line 597 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
                                                                                         { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3307 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+#line 3335 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 181: /* Opt_enabler: PROVIDED '(' full_expr ')'  */
-#line 595 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { assert(false); std::cout << "The 'provided' construct is currently not supported."; }
-#line 3313 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 182: /* Expr: Probe  */
-#line 600 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
-#line 3319 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 183: /* Expr: '(' Expr ')'  */
+  case 182: /* Opt_enabler: PROVIDED '(' full_expr ')'  */
 #line 601 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprPar	((yyvsp[-1].pExprVal), nbrLines); }
-#line 3325 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                { assert(false); std::cout << "The 'provided' construct is currently not supported."; }
+#line 3341 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 184: /* Expr: Expr AND Expr  */
-#line 602 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3331 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 185: /* Expr: Expr AND expr  */
-#line 603 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3337 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 186: /* Expr: Expr OR Expr  */
-#line 604 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3343 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 187: /* Expr: Expr OR expr  */
-#line 605 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3349 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 188: /* Expr: expr AND Expr  */
+  case 183: /* Expr: Probe  */
 #line 606 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3355 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
+#line 3347 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 189: /* Expr: expr OR Expr  */
+  case 184: /* Expr: '(' Expr ')'  */
 #line 607 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
-#line 3361 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = new exprPar	((yyvsp[-1].pExprVal), nbrLines); }
+#line 3353 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 190: /* Expr: SKIP  */
+  case 185: /* Expr: Expr AND Expr  */
 #line 608 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprVal) = new exprSkip	(nbrLines); }
-#line 3367 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3359 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 191: /* Probe: FULL '(' varref ')'  */
+  case 186: /* Expr: Expr AND expr  */
+#line 609 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3365 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 187: /* Expr: Expr OR Expr  */
+#line 610 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3371 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 188: /* Expr: Expr OR expr  */
 #line 611 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { (yyval.pExprVal) = new exprFull	((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3373 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3377 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 192: /* Probe: NFULL '(' varref ')'  */
+  case 189: /* Expr: expr AND Expr  */
 #line 612 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprVal) = new exprNFull((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3379 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = new exprAnd	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3383 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 193: /* Probe: EMPTY '(' varref ')'  */
+  case 190: /* Expr: expr OR Expr  */
 #line 613 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprVal) = new exprEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3385 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprVal) = new exprOr	((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3389 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 194: /* Probe: NEMPTY '(' varref ')'  */
+  case 191: /* Expr: SKIP  */
 #line 614 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprVal) = new exprNEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
-#line 3391 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprVal) = new exprSkip	(nbrLines); }
+#line 3395 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 195: /* args: %empty  */
-#line 618 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                { (yyval.pExprArgListVal) = nullptr; }
-#line 3397 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 192: /* feat_expr: Expr  */
+#line 617 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprVal) = (yyvsp[0].pExprVal); }
+#line 3401 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 196: /* args: arg  */
-#line 619 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3403 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 193: /* Probe: FULL '(' varref ')'  */
+#line 620 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprFull	((yyvsp[-1].pExprVarRefVal), nbrLines); }
+#line 3407 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 197: /* prargs: %empty  */
+  case 194: /* Probe: NFULL '(' varref ')'  */
+#line 621 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprVal) = new exprNFull((yyvsp[-1].pExprVarRefVal), nbrLines); }
+#line 3413 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 195: /* Probe: EMPTY '(' varref ')'  */
+#line 622 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprVal) = new exprEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
+#line 3419 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 196: /* Probe: NEMPTY '(' varref ')'  */
 #line 623 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprArgListVal) = nullptr; }
-#line 3409 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                        { (yyval.pExprVal) = new exprNEmpty((yyvsp[-1].pExprVarRefVal), nbrLines); }
+#line 3425 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 198: /* prargs: ',' arg  */
-#line 624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3415 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 197: /* args: %empty  */
+#line 627 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                { (yyval.pExprArgListVal) = nullptr; }
+#line 3431 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 199: /* margs: arg  */
+  case 198: /* args: arg  */
 #line 628 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
-#line 3421 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
+#line 3437 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 200: /* margs: expr '(' arg ')'  */
-#line 629 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { assert(false); }
-#line 3427 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 201: /* arg: expr  */
+  case 199: /* prargs: %empty  */
 #line 632 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[0].pExprVal), nbrLines), nbrLines); }
-#line 3433 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                        { (yyval.pExprArgListVal) = nullptr; }
+#line 3443 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 202: /* arg: expr ',' arg  */
+  case 200: /* prargs: ',' arg  */
 #line 633 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[-2].pExprVal), nbrLines), (yyvsp[0].pExprArgListVal), nbrLines); }
-#line 3439 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                        { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
+#line 3449 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 203: /* rarg: varref  */
-#line 636 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
-#line 3445 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 204: /* rarg: EVAL '(' expr ')'  */
+  case 201: /* margs: arg  */
 #line 637 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
-#line 3451 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprArgListVal) = (yyvsp[0].pExprArgListVal); }
+#line 3455 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 205: /* rarg: CONST  */
+  case 202: /* margs: expr '(' arg ')'  */
 #line 638 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst((yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3457 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { assert(false); }
+#line 3461 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 206: /* rarg: '-' CONST  */
-#line 639 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst(-(yyvsp[0].iVal), nbrLines), nbrLines); }
-#line 3463 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 203: /* arg: expr  */
+#line 641 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[0].pExprVal), nbrLines), nbrLines); }
+#line 3467 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 207: /* rargs: rarg  */
-#line 643 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[0].pExprRArgVal), nbrLines); }
-#line 3469 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 204: /* arg: expr ',' arg  */
+#line 642 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprArgListVal) = new exprArgList(new exprArg((yyvsp[-2].pExprVal), nbrLines), (yyvsp[0].pExprArgListVal), nbrLines); }
+#line 3473 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 208: /* rargs: rarg ',' rargs  */
-#line 644 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
-#line 3475 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
-    break;
-
-  case 209: /* rargs: rarg '(' rargs ')'  */
+  case 205: /* rarg: varref  */
 #line 645 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                        { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprRArgListVal), nbrLines); }
-#line 3481 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprRArgVal) = new exprRArgVar((yyvsp[0].pExprVarRefVal), nbrLines); }
+#line 3479 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 210: /* rargs: '(' rargs ')'  */
+  case 206: /* rarg: EVAL '(' expr ')'  */
 #line 646 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { (yyval.pExprRArgListVal) = (yyvsp[-1].pExprRArgListVal); }
-#line 3487 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+                                                                                { (yyval.pExprRArgVal) = new exprRArgEval((yyvsp[-1].pExprVal), nbrLines); }
+#line 3485 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 211: /* nlst: NAME  */
-#line 649 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                { /*DBUG("REDUCE: NAME -> nlst\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3493 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 207: /* rarg: CONST  */
+#line 647 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst((yyvsp[0].iVal), nbrLines), nbrLines); }
+#line 3491 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 212: /* nlst: nlst NAME  */
-#line 650 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                                        { /*DBUG("REDUCE: nlst NAME -> NAME\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
-#line 3499 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 208: /* rarg: '-' CONST  */
+#line 648 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprRArgVal) = new exprRArgConst(new exprConst(-(yyvsp[0].iVal), nbrLines), nbrLines); }
+#line 3497 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-  case 213: /* nlst: nlst ','  */
-#line 651 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
-                                                                { /*DBUG("REDUCE: nlst , -> nlst\n")*/ }
-#line 3505 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+  case 209: /* rargs: rarg  */
+#line 652 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[0].pExprRArgVal), nbrLines); }
+#line 3503 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
     break;
 
-
+  case 210: /* rargs: rarg ',' rargs  */
+#line 653 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-2].pExprRArgVal), (yyvsp[0].pExprRArgListVal), nbrLines); }
 #line 3509 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 211: /* rargs: rarg '(' rargs ')'  */
+#line 654 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprRArgListVal) = new exprRArgList((yyvsp[-3].pExprRArgVal), (yyvsp[-1].pExprRArgListVal), nbrLines); }
+#line 3515 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 212: /* rargs: '(' rargs ')'  */
+#line 655 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprRArgListVal) = (yyvsp[-1].pExprRArgListVal); }
+#line 3521 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 213: /* nlst: NAME  */
+#line 658 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { /*DBUG("REDUCE: NAME -> nlst\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
+#line 3527 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 214: /* nlst: nlst NAME  */
+#line 659 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { /*DBUG("REDUCE: nlst NAME -> NAME\n")*/ cmtypeSymNode* sym = new cmtypeSymNode(nbrLines, mtypeDef, (yyvsp[0].sVal), mtypeId++); (*globalSymTab)->insert(sym); free((yyvsp[0].sVal)); }
+#line 3533 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 215: /* nlst: nlst ','  */
+#line 660 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { /*DBUG("REDUCE: nlst , -> nlst\n")*/ }
+#line 3539 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 220: /* prop: FMULTILTL NAME variant_quants '{' ltl_prop '}'  */
+#line 670 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                 { /*DBUG("REDUCE: one_decl -> unit\n")*/
+															auto sym = new fMultiLTLSymNode((yyvsp[-4].sVal), variants, (yyvsp[-1].pExprVal), nbrLines);
+															(*globalSymTab)->insert(sym);
+															variants.clear();
+															stmnt* decl = new fMultiLTLDecl(sym, nbrLines);
+															assert(decl);
+															*program = stmnt::merge(*program, decl);
+														  }
+#line 3552 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 221: /* ltl_prop: '(' ltl_prop ')'  */
+#line 681 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprPar((yyvsp[-1].pExprVal), nbrLines); 		}
+#line 3558 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 222: /* ltl_prop: GLOBALLY ltl_prop  */
+#line 682 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprVal) = new exprGlobally((yyvsp[0].pExprVal), nbrLines); 	}
+#line 3564 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 223: /* ltl_prop: FINALLY ltl_prop  */
+#line 683 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprVal) = new exprFinally((yyvsp[0].pExprVal), nbrLines); 	}
+#line 3570 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 224: /* ltl_prop: NEXT ltl_prop  */
+#line 684 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pExprVal) = new exprNext((yyvsp[0].pExprVal), nbrLines); 		}
+#line 3576 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 225: /* ltl_prop: ltl_prop UNTIL ltl_prop  */
+#line 685 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprUntil((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3582 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 226: /* ltl_prop: ltl_prop GT ltl_prop  */
+#line 686 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprGT((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3588 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 227: /* ltl_prop: ltl_prop LT ltl_prop  */
+#line 687 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprLT((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3594 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 228: /* ltl_prop: ltl_prop GE ltl_prop  */
+#line 688 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprGE((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3600 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 229: /* ltl_prop: ltl_prop LE ltl_prop  */
+#line 689 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprLE((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3606 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 230: /* ltl_prop: ltl_prop EQ ltl_prop  */
+#line 690 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprEQ((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3612 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 231: /* ltl_prop: ltl_prop NE ltl_prop  */
+#line 691 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprNE((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3618 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 232: /* ltl_prop: ltl_prop AND ltl_prop  */
+#line 692 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprAnd((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3624 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 233: /* ltl_prop: ltl_prop OR ltl_prop  */
+#line 693 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprOr((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3630 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 234: /* ltl_prop: ltl_prop IMPLIES ltl_prop  */
+#line 694 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprImplies((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3636 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 235: /* ltl_prop: SND ltl_prop  */
+#line 695 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprNeg((yyvsp[0].pExprVal), nbrLines); 		}
+#line 3642 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 236: /* ltl_prop: varref  */
+#line 696 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprVal) = new exprVar((yyvsp[0].pExprVarRefVal), nbrLines);		}
+#line 3648 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 237: /* ltl_prop: CONST  */
+#line 697 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                { (yyval.pExprVal) = new exprConst((yyvsp[0].iVal), nbrLines);		}
+#line 3654 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 238: /* ltl_prop: ltl_prop '+' ltl_prop  */
+#line 698 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprPlus((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3660 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 239: /* ltl_prop: ltl_prop '-' ltl_prop  */
+#line 699 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprMinus((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3666 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 240: /* ltl_prop: ltl_prop '*' ltl_prop  */
+#line 700 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprTimes((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3672 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 241: /* ltl_prop: ltl_prop '/' ltl_prop  */
+#line 701 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprDiv((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3678 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 242: /* ltl_prop: ltl_prop '%' ltl_prop  */
+#line 702 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprMod((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); 	}
+#line 3684 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 243: /* ltl_prop: ltl_prop '&' ltl_prop  */
+#line 703 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprBitwAnd((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3690 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 244: /* ltl_prop: ltl_prop '^' ltl_prop  */
+#line 704 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprBitwXor((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines); }
+#line 3696 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 245: /* ltl_prop: ltl_prop '|' ltl_prop  */
+#line 705 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { (yyval.pExprVal) = new exprBitwOr((yyvsp[-2].pExprVal), (yyvsp[0].pExprVal), nbrLines);}
+#line 3702 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 246: /* variant_quants: variant_quant  */
+#line 708 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { variants.push_front((yyvsp[0].pVarQuantVal)); }
+#line 3708 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 247: /* variant_quants: variant_quant variant_quants  */
+#line 709 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                { variants.push_front((yyvsp[-1].pVarQuantVal)); }
+#line 3714 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 248: /* variant_quant: ALWAYS variant_expr  */
+#line 712 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { (yyval.pVarQuantVal) = new exprAlways((yyvsp[0].pExprVarRefNameVal), nbrLines); }
+#line 3720 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 249: /* variant_quant: EVENTUALLY variant_expr  */
+#line 713 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { (yyval.pVarQuantVal) = new exprEventually((yyvsp[0].pExprVarRefNameVal), nbrLines); }
+#line 3726 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 250: /* variant_expr: '{' NAME '}' '[' feat_expr ']'  */
+#line 716 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                        { auto sym = new variantSymNode(nbrLines, (yyvsp[-4].sVal), (yyvsp[-1].pExprVal)); (*globalSymTab)->insert(sym); (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-4].sVal), sym, nbrLines); }
+#line 3732 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 251: /* variant_expr: '{' NAME '}' EQ '[' feat_expr ']'  */
+#line 717 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                        { auto sym = new variantSymNode(nbrLines, (yyvsp[-5].sVal), (yyvsp[-1].pExprVal)); (*globalSymTab)->insert(sym); (yyval.pExprVarRefNameVal) = new exprVarRefName((yyvsp[-5].sVal), sym, nbrLines); }
+#line 3738 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 252: /* variant_expr: NAME  */
+#line 718 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                                { assert(false); /*find symbol in symbol table -> assert if null*/		         }
+#line 3744 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 253: /* variant_expr: NAME EQ feat_expr  */
+#line 719 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                        { assert(false); /*find symbol in symbol table and assigh expr -> assert if null*/ }
+#line 3750 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+  case 254: /* variant_expr: BASE  */
+#line 720 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+                                                                                                { assert(false); /*auto sym = new variantSymNode(nbrLines, $3); (*globalSymTab)->insert(sym);*/ }
+#line 3756 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
+    break;
+
+
+#line 3760 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/y.tab.cpp"
 
       default: break;
     }
@@ -3729,5 +3980,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 696 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
+#line 722 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.y"
 

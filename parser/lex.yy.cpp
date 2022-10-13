@@ -367,8 +367,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 119
-#define YY_END_OF_BUFFER 120
+#define YY_NUM_RULES 123
+#define YY_END_OF_BUFFER 124
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -376,46 +376,47 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[343] =
+static const flex_int16_t yy_accept[356] =
     {   0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,  120,  118,  119,  106,  105,   17,   96,  114,
-      101,  101,  101,  101,  101,  104,  101,    3,    8,   14,
-       12,   19,   26,  102,  102,   24,   28,  101,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  101,  110,
-      109,  110,  113,  112,  100,   99,   97,  100,  117,  115,
-      116,  106,   16,   15,   20,    5,    4,    2,  107,  111,
-        0,  104,    1,    6,    7,   25,   13,   11,   10,    9,
-       18,  102,  102,   27,  102,  102,  102,  102,  102,  102,
+        0,    0,  124,  122,  123,  110,  109,   17,  100,  118,
+      105,  105,  105,  105,  105,  108,  105,    3,    8,   14,
+       12,   19,   28,  106,  106,   25,   26,   30,   31,  105,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      105,  114,  113,  114,  117,  116,  104,  103,  101,  104,
+      121,  119,  120,  110,   16,   15,   20,    5,    4,    2,
+      111,  115,    0,  108,    1,    6,    7,   27,   13,   11,
+       10,    9,   18,  106,  106,   29,  106,  106,  106,  106,
 
-      102,  102,  102,  102,  102,  102,   47,   41,  102,  102,
-      102,  102,  102,   46,  102,   52,  102,  102,   51,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,   61,   62,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,   76,   77,   21,  108,   98,
-      116,  103,  102,  102,  102,  102,   82,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,   87,
-       54,  102,   23,  102,  102,  102,  102,  102,   60,  102,
-       85,  102,  102,  102,   69,  102,  102,  102,  102,  102,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,   51,
+       45,  106,  106,  106,  106,  106,  106,   50,  106,   56,
+      106,  106,   55,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,   65,   66,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,   80,
+       81,   21,  112,  102,  120,  107,  106,  106,  106,  106,
+      106,   86,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,   91,   58,  106,   23,  106,
+      106,  106,  106,  106,   64,  106,   89,  106,  106,  106,
 
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,   83,  102,   84,  102,  102,  102,  102,  102,
-       29,   89,  102,  102,   42,  102,  102,   45,  102,   48,
-       49,  102,   53,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,   73,   95,   22,
-       30,  102,  102,   94,  102,  102,  102,   80,   78,  102,
-      102,  102,  102,  102,   34,  102,  102,  102,  102,  102,
-       91,  102,   43,  102,   93,  102,  102,   55,   90,  102,
-       57,   58,  102,  102,  102,  102,  102,  102,   81,   86,
-      102,   72,  102,  102,  102,   79,  102,   31,   32,   33,
+       73,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,   34,   87,
+      106,   88,  106,  106,  106,  106,  106,   32,   93,  106,
+      106,   46,  106,  106,   49,  106,  106,   52,   53,  106,
+       57,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,   77,   99,   22,   33,  106,
+      106,   98,  106,  106,  106,   84,   82,  106,  106,  106,
+      106,  106,   38,  106,  106,  106,  106,  106,   95,  106,
+       47,  106,  106,   97,  106,  106,   59,   94,  106,   61,
+       62,  106,  106,  106,  106,  106,  106,   85,   90,  106,
 
-       35,   36,   37,  102,  102,   70,  102,   50,   92,   56,
-      102,  102,   64,   65,  102,  102,  102,  102,  102,   75,
-      102,  102,   38,   39,   44,   59,  102,  102,  102,  102,
-       71,   74,  102,  102,   63,   66,   67,   68,   88,  102,
-       40,    0
+       76,  106,  106,  106,   83,  106,   35,   36,   37,   39,
+       40,   41,  106,  106,   74,  106,  106,   54,   96,   60,
+      106,  106,   68,   69,  106,  106,  106,  106,  106,   79,
+      106,  106,   42,   43,   48,  106,   63,  106,  106,  106,
+      106,   75,   78,  106,  106,  106,   67,   70,   71,   72,
+       92,  106,   24,   44,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -426,14 +427,14 @@ static const YY_CHAR yy_ec[256] =
         1,    2,    4,    5,    6,    1,    7,    8,    1,    7,
         7,    9,   10,    7,   11,   12,   13,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,   15,   16,   17,
-       18,   19,   20,    1,   21,   22,   22,   23,   24,   22,
-       22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   25,   22,   22,   22,   22,   22,
-       26,   27,   28,    7,   29,    1,   30,   31,   32,   33,
+       18,   19,   20,    1,   21,   22,   22,   23,   24,   25,
+       22,   22,   22,   22,   22,   26,   27,   22,   22,   22,
+       22,   22,   22,   22,   28,   22,   22,   29,   22,   22,
+       30,   31,   32,    7,   33,    1,   34,   35,   36,   37,
 
-       34,   35,   36,   37,   38,   22,   39,   40,   41,   42,
-       43,   44,   22,   45,   46,   47,   48,   49,   50,   51,
-       52,   22,    7,   53,    7,    7,    1,    1,    1,    1,
+       38,   39,   40,   41,   42,   22,   43,   44,   45,   46,
+       47,   48,   22,   49,   50,   51,   52,   53,   54,   55,
+       56,   22,    7,   57,    7,    7,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -450,198 +451,204 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[54] =
+static const YY_CHAR yy_meta[58] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    2,    1,    1,    1,    1,    1,    1,
-        2,    2,    2,    2,    2,    1,    1,    1,    2,    2,
+        2,    2,    2,    2,    2,    2,    2,    2,    2,    1,
+        1,    1,    2,    2,    2,    2,    2,    2,    2,    2,
         2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
-        2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
-        2,    2,    1
+        2,    2,    2,    2,    2,    2,    1
     } ;
 
-static const flex_int16_t yy_base[349] =
+static const flex_int16_t yy_base[362] =
     {   0,
-      354,  353,    0,    0,   51,   52,  352,  351,   53,   54,
-       59,   60,  353,  358,  358,  350,  358,   60,  358,  358,
-      358,  343,  340,   56,   56,   54,  334,  358,   53,   58,
-       64,  328,    0,    0,  318,    0,    0,  318,   47,   46,
-       66,   56,   60,   67,   71,  307,   75,   73,  297,   78,
-       53,   86,   77,   89,   92,  301,   97,   90,  289,  358,
-      358,  328,  358,  358,  358,  358,  358,  335,  358,  358,
-      325,  336,  358,  358,  358,  358,  358,  358,  358,  358,
-      323,  126,  358,  358,  358,  358,  358,  358,  358,  358,
-      358,    0,  292,  358,  288,  288,  290,  285,  288,  296,
+      369,  368,    0,    0,   55,   56,  367,  366,   57,   58,
+       63,   64,  368,  373,  373,  365,  373,   64,  373,  373,
+      373,  358,  355,   60,   60,   58,  349,  373,   57,   62,
+       65,  343,    0,    0,  329,    0,    0,    0,    0,  329,
+       49,   56,   53,   62,   62,   77,   54,  318,   71,   75,
+      308,   85,   77,   85,   87,   87,   95,  312,   97,   43,
+      300,  373,  373,  343,  373,  373,  373,  373,  373,  350,
+      373,  373,  340,  351,  373,  373,  373,  373,  373,  373,
+      373,  373,  338,  106,  373,  373,  373,  373,  373,  373,
+      373,  373,  373,    0,  303,  373,  299,  299,  301,  297,
 
-      282,  109,  283,  297,  283,  279,    0,    0,  278,  279,
-      292,  291,  280,    0,  279,    0,  271,  284,    0,  107,
-      274,  283,  274,  261,  108,  264,  264,  281,    0,    0,
-      280,  275,  108,  261,  264,  262,  266,  269,  264,  260,
-       60,  256,  112,  261,   85,    0,    0,  358,  358,  358,
-      284,  283,  251,  257,  260,  252,    0,  252,  261,  256,
-      246,  254,  236,  239,  240,  251,  241,  250,  234,  246,
-      232,  247,  237,  230,  235,  231,  240,  225,  233,    0,
-        0,  240,    0,  225,  224,  233,  226,  220,    0,  215,
-        0,  117,  116,  229,    0,  116,  218,  229,  214,  225,
+      295,  298,  306,  292,  104,  293,  307,  293,  289,    0,
+        0,  288,  289,  302,  301,  282,  289,    0,  288,    0,
+      280,  293,    0,  101,  283,  292,  283,  270,  103,  273,
+      273,  290,    0,    0,  289,  284,  111,  270,  273,  271,
+      275,  278,  273,  269,  112,  265,  113,  270,  123,    0,
+        0,  373,  373,  373,  297,  296,  260,  266,  269,  261,
+      267,    0,  260,  269,  264,  254,  262,  244,  247,  248,
+      259,  249,  258,  242,  254,  240,  255,  245,  244,  237,
+      242,  238,  247,  232,  240,    0,    0,  247,    0,  232,
+      231,  240,  233,  227,    0,  222,    0,  103,  123,  236,
 
-      226,  223,  222,  221,  216,  206,  210,  211,  207,  200,
-      203,  209,    0,  207,    0,  212,  212,  199,  212,  211,
-        0,    0,  201,  205,    0,  186,  197,    0,  202,    0,
-        0,  201,    0,  192,  193,  198,  184,  185,  189,  198,
-      197,  179,  180,  177,  185,  175,  174,    0,    0,    0,
-        0,  177,  185,    0,  185,  171,  180,    0,    0,  181,
-      182,  179,  165,  179,    0,  176,  169,  163,  160,  174,
-        0,  161,    0,  170,    0,  161,  168,    0,    0,  149,
-        0,    0,  168,  159,  127,  160,  145,  163,    0,    0,
-      147,    0,  160,  147,  150,    0,  144,    0,    0,    0,
+        0,  113,  225,  236,  221,  232,  233,  230,  229,  228,
+      223,  213,  217,  218,  214,  207,  210,  216,    0,    0,
+      214,    0,  219,  219,  206,  219,  218,    0,    0,  208,
+      212,    0,  193,  204,    0,  196,  208,    0,    0,  207,
+        0,  198,  199,  204,  190,  191,  195,  204,  203,  185,
+      186,  183,  191,  181,  180,    0,    0,    0,    0,  183,
+      191,    0,  191,  177,  186,    0,    0,  187,  188,  185,
+      171,  185,    0,  182,  175,  169,  166,  180,    0,  167,
+        0,  176,  171,    0,  166,  173,    0,    0,  154,    0,
+        0,  173,  164,  121,  165,  150,  168,    0,    0,  152,
 
-        0,    0,    0,  156,  150,    0,  155,    0,    0,    0,
-      153,  138,    0,    0,  138,  140,  149,  135,  146,    0,
-      146,  127,    0,    0,    0,    0,  133,  112,  129,  120,
-        0,    0,  117,   95,    0,    0,    0,    0,    0,   98,
-        0,  358,  168,  170,  172,  174,  176,   85
+        0,  165,  152,  155,    0,  149,    0,    0,    0,    0,
+        0,    0,  161,  155,    0,  160,  170,    0,    0,    0,
+      157,  142,    0,    0,  142,  144,  153,  139,  150,    0,
+      150,  131,    0,    0,    0,  124,    0,  136,  117,  134,
+      134,    0,    0,  133,  121,  124,    0,    0,    0,    0,
+        0,  109,    0,    0,  373,  176,  178,  180,  182,  184,
+       94
     } ;
 
-static const flex_int16_t yy_def[349] =
+static const flex_int16_t yy_def[362] =
     {   0,
-      343,  343,  342,    3,  344,  344,  345,  345,  346,  346,
-      347,  347,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  348,  348,  348,  348,  348,  342,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  348,  348,  342,  348,  348,  348,  348,  348,  348,
+      356,  356,  355,    3,  357,  357,  358,  358,  359,  359,
+      360,  360,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  361,  361,  361,  361,  361,  361,  361,  355,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  361,  361,  355,  361,  361,  361,  361,
 
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  342,  342,  342,
-      342,  342,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  355,  355,  355,  355,  355,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
 
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
 
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,  348,  348,  348,  348,  348,  348,  348,  348,  348,
-      348,    0,  342,  342,  342,  342,  342,  342
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,  361,  361,  361,  361,  361,  361,
+      361,  361,  361,  361,    0,  355,  355,  355,  355,  355,
+      355
     } ;
 
-static const flex_int16_t yy_nxt[412] =
+static const flex_int16_t yy_nxt[431] =
     {   0,
        14,   16,   17,   18,   19,   20,   21,   22,   21,   23,
        24,   21,   25,   26,   27,   28,   29,   30,   31,   32,
-       33,   34,   35,   36,   37,   38,   14,   21,   34,   39,
-       40,   41,   42,   43,   44,   45,   46,   47,   34,   48,
-       49,   50,   51,   52,   53,   54,   55,   56,   34,   57,
-       58,   34,   59,   61,   61,   66,   66,   67,   67,   62,
-       62,   70,   70,   73,   79,   81,   77,   82,   80,   84,
-       85,   86,   71,   71,   78,   87,   88,   74,   95,   68,
-       68,   89,   90,   98,  106,  129,   92,  130,   99,  201,
-      100,  107,   96,   97,  102,  103,  113,  101,  108,  109,
+       33,   34,   35,   36,   37,   34,   34,   38,   39,   40,
+       14,   21,   34,   41,   42,   43,   44,   45,   46,   47,
+       48,   49,   34,   50,   51,   52,   53,   54,   55,   56,
+       57,   58,   34,   59,   60,   34,   61,   63,   63,   68,
+       68,   69,   69,   64,   64,   72,   72,   75,   81,   83,
+       79,   84,   82,   86,   87,   88,   73,   73,   80,   89,
+       90,   76,   91,   92,   97,  105,  106,   70,   70,  100,
+      120,  150,  151,  107,  109,   94,  108,  101,   98,   99,
 
-      110,  111,  104,  116,  114,  105,  121,  202,  112,  119,
-      134,  125,  126,  117,  115,  122,  120,  131,  207,  123,
-      127,  128,  208,  132,  135,  136,  144,  137,  139,  140,
-      133,  341,  138,  145,  146,  147,  141,   81,  340,   82,
-      161,  162,  163,  142,  178,  192,  179,  244,  185,  339,
-      193,  204,  338,  180,  164,  165,  186,  205,  242,  243,
-      247,  313,  337,  336,  245,  248,  335,  314,   14,   14,
-       60,   60,   63,   63,   65,   65,   69,   69,  334,  333,
-      332,  331,  330,  329,  328,  327,  326,  325,  324,  323,
-      322,  321,  320,  319,  318,  317,  316,  315,  312,  311,
+      121,  110,  102,  116,  103,  112,  113,  114,  111,  123,
+      117,  104,  125,  133,  115,  134,  124,   83,  118,   84,
+      135,  126,  129,  130,  138,  127,  136,  140,  119,  141,
+      148,  131,  132,  137,  142,  143,  144,  149,  139,  166,
+      167,  168,  184,  145,  185,  207,  354,  191,  250,  251,
+      146,  186,  198,  169,  170,  192,  210,  199,  252,  323,
+      213,  255,  211,  208,  214,  324,  256,  353,  352,  351,
+      350,  349,  348,  347,  346,  253,   14,   14,   62,   62,
+       65,   65,   67,   67,   71,   71,  345,  344,  343,  342,
+      341,  340,  339,  338,  337,  336,  335,  334,  333,  332,
 
-      310,  309,  308,  307,  306,  305,  304,  303,  302,  301,
-      300,  299,  298,  297,  296,  295,  294,  293,  292,  291,
-      290,  289,  288,  287,  286,  285,  284,  283,  282,  281,
-      280,  279,  278,  277,  276,  275,  274,  273,  272,  271,
-      270,  269,  268,  267,  266,  265,  264,  263,  262,  261,
-      260,  259,  258,  257,  256,  255,  254,  253,  252,  251,
-      250,  249,  246,  241,  240,  239,  238,  237,  236,  235,
-      234,  233,  232,  231,  230,  229,  228,  227,  226,  225,
-      224,  223,  222,  221,  220,  219,  218,  217,  216,  215,
-      214,  213,  212,  211,  210,  209,  152,  151,  206,  203,
+      331,  330,  329,  328,  327,  326,  325,  322,  321,  320,
+      319,  318,  317,  316,  315,  314,  313,  312,  311,  310,
+      309,  308,  307,  306,  305,  304,  303,  302,  301,  300,
+      299,  298,  297,  296,  295,  294,  293,  292,  291,  290,
+      289,  288,  287,  286,  285,  284,  283,  282,  281,  280,
+      279,  278,  277,  276,  275,  274,  273,  272,  271,  270,
+      269,  268,  267,  266,  265,  264,  263,  262,  261,  260,
+      259,  258,  257,  254,  249,  248,  247,  246,  245,  244,
+      243,  242,  241,  240,  239,  238,  237,  236,  235,  234,
+      233,  232,  231,  230,  229,  228,  227,  226,  225,  224,
 
-      200,  199,  198,  197,  196,  195,  194,  191,  190,  189,
-      188,  187,  184,  183,  182,  181,  177,  176,  175,  174,
-      173,  172,  171,  170,  169,  168,  167,  166,  160,  159,
-      158,  157,  156,  155,  154,  153,  152,   72,  151,  150,
-      149,  148,  143,  124,  118,   94,   93,   91,   83,   76,
-       75,   72,  342,   64,   64,   15,   15,   13,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
+      223,  222,  221,  220,  219,  218,  217,  216,  215,  156,
+      155,  212,  209,  206,  205,  204,  203,  202,  201,  200,
+      197,  196,  195,  194,  193,  190,  189,  188,  187,  183,
+      182,  181,  180,  179,  178,  177,  176,  175,  174,  173,
+      172,  171,  165,  164,  163,  162,  161,  160,  159,  158,
+      157,  156,   74,  155,  154,  153,  152,  147,  128,  122,
+       96,   95,   93,   85,   78,   77,   74,  355,   66,   66,
+       15,   15,   13,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
 
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355
     } ;
 
-static const flex_int16_t yy_chk[412] =
+static const flex_int16_t yy_chk[431] =
     {   0,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    5,    6,    9,   10,    9,   10,    5,
-        6,   11,   12,   18,   25,   26,   24,   26,   25,   29,
-       29,   29,   11,   12,   24,   30,   30,   18,   39,    9,
-       10,   31,   31,   40,   42,   51,  348,   51,   40,  141,
-       40,   42,   39,   39,   41,   41,   44,   40,   42,   43,
+        3,    3,    3,    3,    3,    3,    3,    5,    6,    9,
+       10,    9,   10,    5,    6,   11,   12,   18,   25,   26,
+       24,   26,   25,   29,   29,   29,   11,   12,   24,   30,
+       30,   18,   31,   31,   41,   43,   43,    9,   10,   42,
+       47,   60,   60,   43,   44,  361,   43,   42,   41,   41,
 
-       43,   43,   41,   45,   44,   41,   48,  141,   43,   47,
-       53,   50,   50,   45,   44,   48,   47,   52,  145,   48,
-       50,   50,  145,   52,   53,   54,   57,   54,   55,   55,
-       52,  340,   54,   57,   58,   58,   55,   82,  334,   82,
-      102,  102,  102,   55,  120,  133,  120,  193,  125,  333,
-      133,  143,  330,  120,  102,  102,  125,  143,  192,  192,
-      196,  285,  329,  328,  193,  196,  327,  285,  343,  343,
-      344,  344,  345,  345,  346,  346,  347,  347,  322,  321,
-      319,  318,  317,  316,  315,  312,  311,  307,  305,  304,
-      297,  295,  294,  293,  291,  288,  287,  286,  284,  283,
+       47,   44,   42,   46,   42,   45,   45,   45,   44,   49,
+       46,   42,   50,   53,   45,   53,   49,   84,   46,   84,
+       54,   50,   52,   52,   55,   50,   54,   56,   46,   56,
+       59,   52,   52,   54,   56,   57,   57,   59,   55,  105,
+      105,  105,  124,   57,  124,  145,  352,  129,  198,  198,
+       57,  124,  137,  105,  105,  129,  147,  137,  199,  294,
+      149,  202,  147,  145,  149,  294,  202,  346,  345,  344,
+      341,  340,  339,  338,  336,  199,  356,  356,  357,  357,
+      358,  358,  359,  359,  360,  360,  332,  331,  329,  328,
+      327,  326,  325,  322,  321,  317,  316,  314,  313,  306,
 
-      280,  277,  276,  274,  272,  270,  269,  268,  267,  266,
-      264,  263,  262,  261,  260,  257,  256,  255,  253,  252,
-      247,  246,  245,  244,  243,  242,  241,  240,  239,  238,
-      237,  236,  235,  234,  232,  229,  227,  226,  224,  223,
-      220,  219,  218,  217,  216,  214,  212,  211,  210,  209,
-      208,  207,  206,  205,  204,  203,  202,  201,  200,  199,
-      198,  197,  194,  190,  188,  187,  186,  185,  184,  182,
-      179,  178,  177,  176,  175,  174,  173,  172,  171,  170,
-      169,  168,  167,  166,  165,  164,  163,  162,  161,  160,
-      159,  158,  156,  155,  154,  153,  152,  151,  144,  142,
+      304,  303,  302,  300,  297,  296,  295,  293,  292,  289,
+      286,  285,  283,  282,  280,  278,  277,  276,  275,  274,
+      272,  271,  270,  269,  268,  265,  264,  263,  261,  260,
+      255,  254,  253,  252,  251,  250,  249,  248,  247,  246,
+      245,  244,  243,  242,  240,  237,  236,  234,  233,  231,
+      230,  227,  226,  225,  224,  223,  221,  218,  217,  216,
+      215,  214,  213,  212,  211,  210,  209,  208,  207,  206,
+      205,  204,  203,  200,  196,  194,  193,  192,  191,  190,
+      188,  185,  184,  183,  182,  181,  180,  179,  178,  177,
+      176,  175,  174,  173,  172,  171,  170,  169,  168,  167,
 
-      140,  139,  138,  137,  136,  135,  134,  132,  131,  128,
-      127,  126,  124,  123,  122,  121,  118,  117,  115,  113,
-      112,  111,  110,  109,  106,  105,  104,  103,  101,  100,
-       99,   98,   97,   96,   95,   93,   81,   72,   71,   68,
-       62,   59,   56,   49,   46,   38,   35,   32,   27,   23,
-       22,   16,   13,    8,    7,    2,    1,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
+      166,  165,  164,  163,  161,  160,  159,  158,  157,  156,
+      155,  148,  146,  144,  143,  142,  141,  140,  139,  138,
+      136,  135,  132,  131,  130,  128,  127,  126,  125,  122,
+      121,  119,  117,  116,  115,  114,  113,  112,  109,  108,
+      107,  106,  104,  103,  102,  101,  100,   99,   98,   97,
+       95,   83,   74,   73,   70,   64,   61,   58,   51,   48,
+       40,   35,   32,   27,   23,   22,   16,   13,    8,    7,
+        2,    1,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
 
-      342,  342,  342,  342,  342,  342,  342,  342,  342,  342,
-      342
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355,
+      355,  355,  355,  355,  355,  355,  355,  355,  355,  355
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -684,9 +691,9 @@ int strBufferLen = 0;
 	#define DBUG_CHAR(CHAR) ;
 #endif
 
-#line 688 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
+#line 695 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
-#line 690 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
+#line 697 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
 #define INITIAL 0
 #define CODE 1
@@ -922,7 +929,7 @@ YY_DECL
 
 
 
-#line 926 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
+#line 933 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -949,13 +956,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 343 )
+				if ( yy_current_state >= 356 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 358 );
+		while ( yy_base[yy_current_state] != 373 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -1097,7 +1104,7 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 67 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(EVENTUALLY);return EVENTUALLY; }
+{ DBUG(FMULTILTL); return FMULTILTL; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
@@ -1107,377 +1114,397 @@ YY_RULE_SETUP
 case 26:
 YY_RULE_SETUP
 #line 69 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ALWAYS);return ALWAYS; }
+{ DBUG(FINALLY);return FINALLY; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 70 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ALWAYS);return ALWAYS; }
+{ DBUG(FINALLY);return FINALLY; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 71 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(UNTIL);return UNTIL; }
+{ DBUG(ALWAYS);return ALWAYS; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 72 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(COUNT);return COUNT; }
+{ DBUG(GLOBALLY);return GLOBALLY; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 73 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(CONTEXT);return CONTEXT; }
+{ DBUG(UNTIL);return UNTIL; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 75 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ACTIVE);return ACTIVE; }
+#line 74 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(NEXT);return NEXT; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 76 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ASSERT);return ASSERT; }
+#line 75 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(COUNT);return COUNT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 77 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ATOMIC);return ATOMIC; }
+#line 76 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(CONTEXT);return CONTEXT; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 78 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(BREAK);return BREAK; }
+#line 77 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(BASE);return BASE;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 79 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(C_CODE);return C_CODE; }
+{ DBUG(ACTIVE);return ACTIVE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 80 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(C_DECL);return C_DECL; }
+{ DBUG(ASSERT);return ASSERT; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 81 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(C_EXPR);return C_EXPR; }
+{ DBUG(ATOMIC);return ATOMIC; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 82 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(C_STATE);return C_STATE; }
+{ DBUG(BREAK);return BREAK; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 83 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(C_TRACK);return C_TRACK; }
+{ DBUG(C_CODE);return C_CODE; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 84 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(D_PROTOTYPE);return D_PROCTYPE; }
+{ DBUG(C_DECL);return C_DECL; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 85 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(DO);yylval->iVal = nbrLines; 
-					  return DO; }
+{ DBUG(C_EXPR);return C_EXPR; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 87 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ELSE);return ELSE; }
+#line 86 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(C_STATE);return C_STATE; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 88 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(EMPTY);return EMPTY; }
+#line 87 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(C_TRACK);return C_TRACK; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 89 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ENABLED);return ENABLED; }
+#line 88 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(D_PROTOTYPE);return D_PROCTYPE; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 90 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(EVAL);return EVAL; }
+#line 89 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(DO);yylval->iVal = nbrLines; 
+					  return DO; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 91 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(FI);return FI; }
+{ DBUG(ELSE);return ELSE; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 92 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(FI);return FI; }
+{ DBUG(EMPTY);return EMPTY; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 93 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(FULL);return FULL; }
+{ DBUG(ENABLED);return ENABLED; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
 #line 94 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(GOTO);return GOTO; }
+{ DBUG(EVAL);return EVAL; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 95 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(HIDDEN);return HIDDEN; }
+{ DBUG(FI);return FI; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 #line 96 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ yylval->iVal = nbrLines; DBUG(IF);return IF; }
+{ DBUG(FI);return FI; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 #line 97 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ yylval->iVal = nbrLines; DBUG(IF); return IF; }
+{ DBUG(FULL);return FULL; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 99 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(HIDDEN);return INIT; }
+#line 98 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(GOTO);return GOTO; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 100 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(LEN); return LEN; }
+#line 99 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(HIDDEN);return HIDDEN; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 101 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(ISLOCAL); return ISLOCAL; }
+#line 100 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ yylval->iVal = nbrLines; DBUG(IF);return IF; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 102 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(NEMPTY); return NEMPTY; }
+#line 101 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ yylval->iVal = nbrLines; DBUG(IF); return IF; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
 #line 103 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(CLAIM); return CLAIM; }
+{ DBUG(HIDDEN);return INIT; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
 #line 104 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(NFULL); return NFULL; }
+{ DBUG(LEN); return LEN; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
 #line 105 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TRACE); return TRACE; }
+{ DBUG(ISLOCAL); return ISLOCAL; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
 #line 106 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(NONPROGRESS); return NONPROGRESS; }
+{ DBUG(NEMPTY); return NEMPTY; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
 #line 107 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(OD); return OD; }
+{ DBUG(CLAIM); return CLAIM; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
 #line 108 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(OF); return OF; }
+{ DBUG(NFULL); return NFULL; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
 #line 109 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PC_VAL); return PC_VAL; }
+{ DBUG(TRACE); return TRACE; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
 #line 110 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PRINT); return PRINT; }
+{ DBUG(NONPROGRESS); return NONPROGRESS; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
 #line 111 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PRINTM); return PRINTM; }
+{ DBUG(OD); return OD; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
 #line 112 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PRIORITY); return PRIORITY; }
+{ DBUG(OF); return OF; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
 #line 113 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PROCTYPE); return PROCTYPE; }
+{ DBUG(PC_VAL); return PC_VAL; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
 #line 114 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(PROVIDED); return PROVIDED; }
+{ DBUG(PRINT); return PRINT; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
 #line 115 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(RUN); return RUN; }
+{ DBUG(PRINTM); return PRINTM; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
 #line 116 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(D_STEP); return D_STEP; }
+{ DBUG(PRIORITY); return PRIORITY; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
 #line 117 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TIMEOUT); return TIMEOUT; }
+{ DBUG(PROCTYPE); return PROCTYPE; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
 #line 118 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TRACE); return TRACE; }
+{ DBUG(PROVIDED); return PROVIDED; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
 #line 119 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(SHOW); return SHOW; }
+{ DBUG(RUN); return RUN; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
 #line 120 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPEDEF); return TYPEDEF; }
+{ DBUG(D_STEP); return D_STEP; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
 #line 121 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(UNLESS); return UNLESS; }
+{ DBUG(TIMEOUT); return TIMEOUT; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
 #line 122 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(XU); return XU; }
+{ DBUG(TRACE); return TRACE; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
 #line 123 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(XU); return XU; }
+{ DBUG(SHOW); return SHOW; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
 #line 124 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(WHEN); return WHEN; }
+{ DBUG(TYPEDEF); return TYPEDEF; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
 #line 125 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(WHILE); return WHILE; }
+{ DBUG(UNLESS); return UNLESS; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
 #line 126 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(WAIT); return WAIT; }
+{ DBUG(XU); return XU; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
 #line 127 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(RESET); return RESET; }
+{ DBUG(XU); return XU; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 129 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ yylval->iType = symbol::T_BIT;
-					  DBUG(TYPE); return TYPE; }
+#line 128 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(WHEN); return WHEN; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 131 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_BOOL;
-					  return TYPE; }
+#line 129 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(WHILE); return WHILE; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 133 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_BYTE;
-					  return TYPE; }
+#line 130 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(WAIT); return WAIT; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 135 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_PID;
-					  return TYPE; }
+#line 131 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(RESET); return RESET; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 137 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_SHORT;
-					  return TYPE; }
+#line 133 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ yylval->iType = symbol::T_BIT;
+					  DBUG(TYPE); return TYPE; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 139 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TYPE); yylval->iType = symbol::T_INT;
+#line 135 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TYPE); yylval->iType = symbol::T_BOOL;
 					  return TYPE; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
+#line 137 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TYPE); yylval->iType = symbol::T_BYTE;
+					  return TYPE; }
+	YY_BREAK
+case 89:
+YY_RULE_SETUP
+#line 139 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TYPE); yylval->iType = symbol::T_PID;
+					  return TYPE; }
+	YY_BREAK
+case 90:
+YY_RULE_SETUP
 #line 141 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TYPE); yylval->iType = symbol::T_SHORT;
+					  return TYPE; }
+	YY_BREAK
+case 91:
+YY_RULE_SETUP
+#line 143 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TYPE); yylval->iType = symbol::T_INT;
+					  return TYPE; }
+	YY_BREAK
+case 92:
+YY_RULE_SETUP
+#line 145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { fprintf(stderr, "The 'unsigned' type is not supported.\n");
 					  exit(1);			
 						/*	yylval->iVal = T_UNSGN; 
 							return TYPE; */ }
 	YY_BREAK
-case 89:
+case 93:
 YY_RULE_SETUP
-#line 145 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 149 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_CID;
 					  return TYPE; }
 	YY_BREAK
-case 90:
+case 94:
 YY_RULE_SETUP
-#line 147 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 151 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_MTYPE;
 					  return TYPE; }
 	YY_BREAK
-case 91:
+case 95:
 YY_RULE_SETUP
-#line 149 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 153 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG(TYPE); yylval->iType = symbol::T_CLOCK;
 					  return TYPE; }
 	YY_BREAK
-case 92:
-YY_RULE_SETUP
-#line 152 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ return INLINE; }
-	YY_BREAK
-case 93:
-YY_RULE_SETUP
-#line 154 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(FALSE);  yylval->iVal = 0; 
-					  return FALSE; }
-	YY_BREAK
-case 94:
-YY_RULE_SETUP
-#line 157 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(TRUE); 	yylval->iVal = 1; 
-					  return TRUE; }
-	YY_BREAK
-case 95:
-YY_RULE_SETUP
-#line 160 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(SKIP); return SKIP; }
-	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 162 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN STRINGBLOCK; 													/* printf("BEGIN STRINGBLOCK AT L %d\n", nbrLines); */
-					  strBufferLen = 0; }
+#line 156 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ return INLINE; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
+#line 158 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(FALSE);  yylval->iVal = 0; 
+					  return FALSE; }
+	YY_BREAK
+case 98:
+YY_RULE_SETUP
+#line 161 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(TRUE); 	yylval->iVal = 1; 
+					  return TRUE; }
+	YY_BREAK
+case 99:
+YY_RULE_SETUP
 #line 164 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(SKIP); return SKIP; }
+	YY_BREAK
+case 100:
+YY_RULE_SETUP
+#line 166 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ BEGIN STRINGBLOCK; 													/* printf("BEGIN STRINGBLOCK AT L %d\n", nbrLines); */
+					  strBufferLen = 0; }
+	YY_BREAK
+case 101:
+YY_RULE_SETUP
+#line 168 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */
 					  strBuffer[strBufferLen] = '\0';
 					  yylval->sVal = (char*) calloc(strBufferLen + 1, sizeof(char));
@@ -1486,33 +1513,33 @@ YY_RULE_SETUP
 					  
 					  return STRING; }
 	YY_BREAK
-case 98:
+case 102:
 YY_RULE_SETUP
-#line 171 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = '"';
 					  strBufferLen++; }
 	YY_BREAK
-case 99:
-/* rule 99 can match eol */
+case 103:
+/* rule 103 can match eol */
 YY_RULE_SETUP
-#line 173 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 177 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = '\n';
 					  strBufferLen++; }
 	YY_BREAK
-case 100:
+case 104:
 YY_RULE_SETUP
-#line 175 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 179 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { strBuffer[strBufferLen] = yytext[0];
 					  strBufferLen++; }
 	YY_BREAK
-case 101:
+case 105:
 YY_RULE_SETUP
-#line 179 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 183 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { DBUG_CHAR(yytext[0]); return yytext[0]; } 
 	YY_BREAK
-case 102:
+case 106:
 YY_RULE_SETUP
-#line 181 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 185 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 {
 					  yylval->sVal = (char*) calloc(strlen(yytext) + 1, sizeof(char));
 					  strcpy(yylval->sVal, yytext);
@@ -1532,6 +1559,11 @@ YY_RULE_SETUP
 							  case symbol::T_INLINE:
 							     DBUG(INAME);
 								 return INAME;
+
+							  case symbol::T_VARIANT:
+							  	DBUG(VNAME)
+								 return VNAME; 
+
 							  default: 
 							  	 break;
 						  }
@@ -1541,99 +1573,99 @@ YY_RULE_SETUP
 					  return NAME;
 					}
 	YY_BREAK
-case 103:
+case 107:
 YY_RULE_SETUP
-#line 209 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 218 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { yylval->rVal = atof(yytext);
 					  DBUG(REAL); return REAL;  }
 	YY_BREAK
-case 104:
-YY_RULE_SETUP
-#line 211 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ DBUG(CONST); yylval->iVal = atoi(yytext);
-					  return CONST; }
-	YY_BREAK
-case 105:
-/* rule 105 can match eol */
-YY_RULE_SETUP
-#line 214 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ nbrLines++; }
-	YY_BREAK
-case 106:
-YY_RULE_SETUP
-#line 215 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ }
-	YY_BREAK
-case 107:
-YY_RULE_SETUP
-#line 217 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN COMMENTBLOCK; 													/* printf("BEGIN COMMENTBLOCK AT L %d\n", nbrLines); */ }
-	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 218 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
+#line 220 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ DBUG(CONST); yylval->iVal = atoi(yytext);
+					  return CONST; }
 	YY_BREAK
 case 109:
 /* rule 109 can match eol */
 YY_RULE_SETUP
-#line 219 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { nbrLines++; }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 220 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 224 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 222 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN COMMENTLINE; 													/* printf("BEGIN COMMENTLINE AT L %d\n", nbrLines); */ }
+#line 226 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ BEGIN COMMENTBLOCK; 													/* printf("BEGIN COMMENTBLOCK AT L %d\n", nbrLines); */ }
 	YY_BREAK
 case 112:
-/* rule 112 can match eol */
-YY_RULE_SETUP
-#line 223 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ nbrLines++; BEGIN CODE; 												/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
-	YY_BREAK
-case 113:
-YY_RULE_SETUP
-#line 224 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ }
-	YY_BREAK
-case 114:
-YY_RULE_SETUP
-#line 226 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN CPPBLOCK; }
-	YY_BREAK
-case 115:
-/* rule 115 can match eol */
 YY_RULE_SETUP
 #line 227 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ BEGIN CODE; }
+{ BEGIN CODE;															/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
 	YY_BREAK
-case 116:
+case 113:
+/* rule 113 can match eol */
 YY_RULE_SETUP
 #line 228 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
-{ nbrLines = atoi(yytext); }
+{ nbrLines++; }
 	YY_BREAK
-case 117:
+case 114:
 YY_RULE_SETUP
 #line 229 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { }
 	YY_BREAK
-case 118:
+case 115:
 YY_RULE_SETUP
 #line 231 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ BEGIN COMMENTLINE; 													/* printf("BEGIN COMMENTLINE AT L %d\n", nbrLines); */ }
+	YY_BREAK
+case 116:
+/* rule 116 can match eol */
+YY_RULE_SETUP
+#line 232 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ nbrLines++; BEGIN CODE; 												/* printf("BEGIN CODE AT L %d\n", nbrLines); */ }
+	YY_BREAK
+case 117:
+YY_RULE_SETUP
+#line 233 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ }
+	YY_BREAK
+case 118:
+YY_RULE_SETUP
+#line 235 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ BEGIN CPPBLOCK; }
+	YY_BREAK
+case 119:
+/* rule 119 can match eol */
+YY_RULE_SETUP
+#line 236 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ BEGIN CODE; }
+	YY_BREAK
+case 120:
+YY_RULE_SETUP
+#line 237 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ nbrLines = atoi(yytext); }
+	YY_BREAK
+case 121:
+YY_RULE_SETUP
+#line 238 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+{ }
+	YY_BREAK
+case 122:
+YY_RULE_SETUP
+#line 240 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 { fprintf(stderr, "Invalid char '%s' at line %d\n", yytext, nbrLines);
 					  exit(1); }
 	YY_BREAK
-case 119:
+case 123:
 YY_RULE_SETUP
-#line 234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 243 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 ECHO;
 	YY_BREAK
-#line 1637 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
+#line 1669 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/lex.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CODE):
 case YY_STATE_EOF(COMMENTBLOCK):
@@ -1935,7 +1967,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 343 )
+			if ( yy_current_state >= 356 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1963,11 +1995,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 343 )
+		if ( yy_current_state >= 356 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 342);
+	yy_is_jam = (yy_current_state == 355);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2643,7 +2675,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 234 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
+#line 243 "/home/slazreg/Work/Research/Mutation/mutantgenerator/parser/promela.l"
 
 
 void init_lex(){

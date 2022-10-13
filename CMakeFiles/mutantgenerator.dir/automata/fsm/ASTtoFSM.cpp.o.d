@@ -202,6 +202,8 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o: \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/inlineSymNode.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/procSymNode.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/typedef/mtypedefSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/vardef/variantSymNode.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/symbol/logic/fMultiLTLSymNode.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/ast.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/astNode.hpp \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
@@ -238,6 +240,10 @@ CMakeFiles/mutantgenerator.dir/automata/fsm/ASTtoFSM.cpp.o: \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/binaryExpr.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/constExpr.hpp \
  /usr/include/c++/11/limits \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/temporalExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/unaryExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/expr/binaryExpr.hpp \
+ /home/slazreg/Work/Research/Mutation/mutantgenerator/./automata/ast/stmnt/logicDecl.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/automata.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsm.hpp \
  /home/slazreg/Work/Research/Mutation/mutantgenerator/automata/fsm/fsmNode.hpp \
