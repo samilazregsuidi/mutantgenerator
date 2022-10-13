@@ -15,6 +15,8 @@ Where 1 is the number of iteration of mutant generation, #include is the include
 
 ## How to assess the mutants?
 
+install spin model checker first https://spinroot.com/spin/Man/README.html#S1a
+
 ```console
 ubuntu@pp10:~/Research/mutantgenerator$ cd ./models/minepump/
 ubuntu@pp10:~/Research/mutantgenerator$ python3 script.py
