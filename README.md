@@ -4,7 +4,7 @@
 ubuntu@pp10:~/Research/mutantgenerator$ cmake .
 ubuntu@pp10:~/Research/mutantgenerator$ cmake --build .
 ```
-## How to use the mutant generator to generate Minepump and ADAPRO mutants (STEP 1)?
+## How to generate mutants (STEP 1)?
 
 ```console
 ubuntu@pp10:~/Research/mutantgenerator$ ./mutantgenerator 1 '#include "./ltl.inc" ./models/minepump/original.pml
