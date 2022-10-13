@@ -19,4 +19,4 @@ Where 1 is the number of iteration of mutant generation, #include is the include
 ubuntu@pp10:~/Research/mutantgenerator$ cd ./models/minepump/
 ubuntu@pp10:~/Research/mutantgenerator$ python3 script.py
 ```
-mutation score are written in log.txt
+mutation scores are written in log.txt
